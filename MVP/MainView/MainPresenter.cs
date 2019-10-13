@@ -1,7 +1,7 @@
-﻿using Furmanov.MVP.EditResource.UndoRedoCommands;
+﻿using Furmanov.MVP.Login;
 using Furmanov.MVP.MainView.UndoRedoCommands;
+using Furmanov.MVP.Services.UndoRedo;
 using SwissClean.Services.UndoRedo.Commands;
-using System.Windows.Forms;
 
 namespace Furmanov.MVP.MainView
 {
@@ -22,12 +22,12 @@ namespace Furmanov.MVP.MainView
 				_undoService.Reset();
 				_view.UpdateLogin(sender, user);
 			};
-			_model.ResOpsUpdated += (sender, modelView) =>
+			_model.SalaryPayUpdated += (sender, modelView) =>
 			{
 				_view.UpdateAllResOps(sender, modelView);
 				_view.UpdateUndoRedo(_undoService.UndoItems, _undoService.RedoItems);
 			};
-			_model.SelectedResOp += (sender, modelView) => _view.UpdateSelectedResOp(sender, modelView);
+			_model.SelectedSalaryPay += (sender, modelView) => _view.UpdateSelectedResOp(sender, modelView);
 			_model.Error += (sender, error) => _view.ShowError(error);
 
 			_view.Logging += (sender, args) => ShowLoginView(false);
@@ -36,19 +36,6 @@ namespace Furmanov.MVP.MainView
 				_model.Logout();
 				_undoService.Reset();
 				ShowLoginView(false);
-			};
-
-			_view.CreatingResource += (sender, viewModel) => ShowCreateResourceView(viewModel);
-			_view.EditingResource += (sender, args) => ShowEditResourceView();
-			_view.ReplacingResource += (sender, args) =>
-			{
-				var cmd = new ReplaceResourceCmd(_model, args);
-				_undoService.Execute(cmd);
-			};
-			_view.DeletingResOp += (sender, viewModel) =>
-			{
-				var cmd = new DeleteResOpCmd(_model, viewModel);
-				_undoService.Execute(cmd);
 			};
 
 			_view.ChangedMonth += (sender, month) =>
@@ -60,32 +47,32 @@ namespace Furmanov.MVP.MainView
 
 			_view.WorkDaysOnlyClick += (sender, args) =>
 			{
-				var tabels = _model.GenTabels(false, true);
-				var cmd = new TabelsCmd(_model, tabels);
+				var days = _model.GenWorkedDays(false, true);
+				var cmd = new WorkedDaysCmd(_model, days);
 				_undoService.Execute(cmd);
 			};
 			_view.AllDaysClick += (sender, args) =>
 			{
-				var tabels = _model.GenTabels(true, true);
-				var cmd = new TabelsCmd(_model, tabels);
+				var days = _model.GenWorkedDays(true, true);
+				var cmd = new WorkedDaysCmd(_model, days);
 				_undoService.Execute(cmd);
 			};
 			_view.DeletingAllDays += (sender, args) =>
 			{
-				var tabels = _model.GenTabels(true, false);
-				var cmd = new TabelsCmd(_model, tabels);
+				var days = _model.GenWorkedDays(true, false);
+				var cmd = new WorkedDaysCmd(_model, days);
 				_undoService.Execute(cmd);
 			};
 
 			_view.ChangedResOp += (sender, args) =>
 			{
-				var cmd = new ResOpCmd(_model, args);
+				var cmd = new SalaryPayCmd(_model, args);
 				_undoService.Execute(cmd);
 			};
-			_view.SelectResource += (sender, viewModel) => _model.SelectResOp(viewModel);
+			_view.SelectResource += (sender, viewModel) => _model.SelectSalaryPay(viewModel);
 			_view.ChangedTabel += (sender, viewModel) =>
 			{
-				var cmd = new TabelCmd(_model, viewModel);
+				var cmd = new WorkedDayCmd(_model, viewModel);
 				_undoService.Execute(cmd);
 			};
 
@@ -103,22 +90,6 @@ namespace Furmanov.MVP.MainView
 			var model = _model.LoginModel;
 			var view = _view.LoginView;
 			new LoginPresenter(model, view, isStartApp);
-		}
-
-		private void ShowCreateResourceView(ResOPViewModel vm)
-		{
-			var model = _model.GetCreateResourceModel(vm);
-			var view = _view.CreateResourceView;
-			new CreateResourcePresenter(model, view, _undoService);
-		}
-		private void ShowEditResourceView()
-		{
-			var view = _view.EditResourceView;
-			if (view.ShowDialog() == DialogResult.OK)
-			{
-				var cmd = new EditResourceCmd(_model, view.ResOp, view.ResourceName);
-				_undoService.Execute(cmd);
-			}
 		}
 	}
 }

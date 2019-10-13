@@ -1,7 +1,5 @@
-﻿using System.ComponentModel;
+﻿using LinqToDB.Mapping;
 using System.ComponentModel.DataAnnotations;
-using System.Data;
-using LinqToDB.Mapping;
 
 namespace Furmanov.Dal.Dto
 {
@@ -23,19 +21,15 @@ namespace Furmanov.Dal.Dto
 		[Required(ErrorMessage = "Пароль не может быть пустым")]
 		public string Password { get; set; }
 
-		[Column(Name = "Role_ID")]
-		public int Role_ID { get; set; }
+		[Column(Name = "RoleId")]
+		public int RoleId { get; set; }
 	}
 
-	public class UserView : UserDb
+	public class UserVisual : UserDb
 	{
-		public Role Role => (Role)Role_ID;
+		public Role Role => (Role)RoleId;
 
 		[Display(Name = "Роль")]
 		public string RoleName { get; set; }
-
-		[Display(Name = "Подтверждение пароля")]
-		[Compare("Password", ErrorMessage = "Пароль и подтверждение пароля не совпадают")]
-		public string PasswordConfirm { get; set; }
 	}
 }

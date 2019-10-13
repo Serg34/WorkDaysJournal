@@ -1,4 +1,6 @@
-﻿using Furmanov.MVP.Services.UI;
+﻿using Furmanov.Dal;
+using Furmanov.Dal.Dto;
+using Services.UI;
 using System;
 
 namespace Furmanov.MVP.Login
@@ -15,12 +17,12 @@ namespace Furmanov.MVP.Login
 	}
 	public class LoginModel : ILoginModel
 	{
-		private readonly IdataAccessService _db;
+		private readonly IDataAccessService _db;
 		private LoginViewModel _vm;
 
 		public bool LoginChecked { get; private set; }
 
-		public LoginModel(IdataAccessService dataAccessService)
+		public LoginModel(IDataAccessService dataAccessService)
 		{
 			_db = dataAccessService;
 		}
@@ -32,7 +34,7 @@ namespace Furmanov.MVP.Login
 		public void Update(bool isStartApp)
 		{
 			_vm = new LoginViewModel { CanLogin = isStartApp };
-			var loginPass = _db.GetLoginPassword();
+			var loginPass = _db.GetAutoLoginPassword();
 			if (loginPass != null)
 			{
 				_vm.Login = loginPass.Login;
@@ -68,7 +70,7 @@ namespace Furmanov.MVP.Login
 					if (_vm.IsAutoLoginOnStart) loginPass.Password = _vm.Password;
 				}
 
-				_db.SaveLoginPassword(loginPass);
+				_db.SaveAutoLoginPassword(loginPass);
 				LoginChecked = true;
 
 				if (_vm.CanLogin)

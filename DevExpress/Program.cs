@@ -1,6 +1,9 @@
-﻿using Furmanov;
-using System;
+﻿using System;
 using System.Windows.Forms;
+using Furmanov.MVP.MainView;
+using Furmanov.MVP.Services.UndoRedo;
+using Furmanov.UI;
+using Furmanov.UI.IoC;
 
 namespace Linq2db_MVP_IoC_DevExpress_WinForm
 {
@@ -14,7 +17,16 @@ namespace Linq2db_MVP_IoC_DevExpress_WinForm
 		{
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
-			Application.Run(new MainView());
+
+			var connectionString = "Server =.\\SQLExpress; Database = SwissClean; Trusted_Connection = True;";
+			var resolver = IoCContainerBuilder.Build(connectionString);
+
+			var model = resolver.Resolve<IMainModel>();
+			var view = new MainView();
+			var undoRedoService = resolver.Resolve<IUndoRedoService>();
+			new MainPresenter(model, view, undoRedoService);
+
+			Application.Run(view);
 		}
 	}
 }

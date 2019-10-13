@@ -36,9 +36,6 @@
     <Reference Include="Autofac, Version=4.9.4.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
       <HintPath>..\packages\Autofac.4.9.4\lib\net45\Autofac.dll</HintPath>
     </Reference>
-    <Reference Include="DeepCloner, Version=0.10.0.0, Culture=neutral, PublicKeyToken=dc0b95cf99bf4e99, processorArchitecture=MSIL">
-      <HintPath>..\packages\DeepCloner.0.10.2\lib\net40\DeepCloner.dll</HintPath>
-    </Reference>
     <Reference Include="DevExpress.Data.v19.1, Version=19.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.Printing.v19.1.Core, Version=19.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.Utils.v19.1, Version=19.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
@@ -62,19 +59,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CreateResourceView.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="CreateResourceView.designer.cs">
-      <DependentUpon>CreateResourceView.cs</DependentUpon>
-    </Compile>
-    <Compile Include="EditResourceView.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="EditResourceView.designer.cs">
-      <DependentUpon>EditResourceView.cs</DependentUpon>
-    </Compile>
-    <Compile Include="IoC\IocContainerBuilder.cs" />
+    <Compile Include="IoC\IoCContainerBuilder.cs" />
     <Compile Include="IoC\Resolver.cs" />
     <Compile Include="LoginView.cs">
       <SubType>Form</SubType>
@@ -88,30 +73,15 @@
     <Compile Include="MainView.Designer.cs">
       <DependentUpon>MainView.cs</DependentUpon>
     </Compile>
-    <Compile Include="MainView2.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="MainView2.Designer.cs">
-      <DependentUpon>MainView2.cs</DependentUpon>
-    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\GridViewStateSaver.cs" />
     <Compile Include="Services\TreeListStateSaver.cs" />
-    <EmbeddedResource Include="CreateResourceView.resx">
-      <DependentUpon>CreateResourceView.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="EditResourceView.resx">
-      <DependentUpon>EditResourceView.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="LoginView.resx">
       <DependentUpon>LoginView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainView.resx">
       <DependentUpon>MainView.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="MainView2.resx">
-      <DependentUpon>MainView2.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -167,6 +137,10 @@
     <ProjectReference Include="..\MVP\MVP.csproj">
       <Project>{bc065b48-916e-4c57-baa0-eb7c6b1e555d}</Project>
       <Name>MVP</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Services\Services.csproj">
+      <Project>{CDD99DBE-F76B-4988-A9E3-621963E46A82}</Project>
+      <Name>Services</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

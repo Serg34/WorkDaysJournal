@@ -1,6 +1,4 @@
 ﻿using Furmanov.Dal.Dto;
-using Furmanov.MVP.CreateResource;
-using Furmanov.MVP.EditResource;
 using Furmanov.MVP.Login;
 using Furmanov.MVP.MainView.ViewModels;
 using Furmanov.MVP.Services.UndoRedo;
@@ -14,11 +12,7 @@ namespace Furmanov.MVP.MainView
 		ILoginView LoginView { get; }
 		event EventHandler Logging;
 		event EventHandler Logout;
-		ICreateResourceView CreateResourceView { get; }
-		event EventHandler<ResOPViewModel> CreatingResource;
-		IEditResourceView EditResourceView { get; }
-		event EventHandler EditingResource;
-		event EventHandler<ResOPViewModel> DeletingResOp;
+
 
 		event EventHandler<DateTime> ChangedMonth;
 		event EventHandler WorkDaysOnlyClick;
@@ -26,18 +20,18 @@ namespace Furmanov.MVP.MainView
 		event EventHandler DeletingAllDays;
 		event EventHandler<int> VedomostClick;
 
-		event EventHandler<UndoRedoEventArgs<ResOPViewModel>> ChangedResOp;
-		event EventHandler<UndoRedoEventArgs<ResOPViewModel>> ReplacingResource;
-		event EventHandler<ResOPViewModel> SelectResource;
+		event EventHandler<UndoRedoEventArgs<SalaryPayVisual>> ChangedResOp;
+		event EventHandler<UndoRedoEventArgs<SalaryPayVisual>> ReplacingResource;
+		event EventHandler<SalaryPayVisual> SelectResource;
 
-		event EventHandler<TabelViewModel> ChangedTabel;
+		event EventHandler<WorkedDayVisual> ChangedTabel;
 
 		event EventHandler<int> Undo;
 		event EventHandler<int> Redo;
 
-		void UpdateLogin(object sender, UserView user);
+		void UpdateLogin(object sender, UserVisual user);
 		void UpdateAllResOps(object sender, MainViewModel viewModel);
-		void UpdateSelectedResOp(object sender, SelectionResOpViewModel viewModel);
+		void UpdateSelectedResOp(object sender, List<WorkedDayVisual> viewModel);
 		void UpdateUndoRedo(IEnumerable<string> undoItems, IEnumerable<string> redoItems);
 	}
 }

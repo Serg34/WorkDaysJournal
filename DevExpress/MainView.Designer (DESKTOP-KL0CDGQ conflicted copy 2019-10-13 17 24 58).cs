@@ -1,6 +1,4 @@
-﻿using Furmanov.Dal.Dto;
-
-namespace Furmanov.UI
+﻿namespace Furmanov.UI
 {
 	partial class MainView
 	{
@@ -118,6 +116,7 @@ namespace Furmanov.UI
 			this.tabelViewModelBindingSource = new System.Windows.Forms.BindingSource(this.components);
 			this.gridTabels = new DevExpress.XtraGrid.Views.Grid.GridView();
 			this.colDate = new DevExpress.XtraGrid.Columns.GridColumn();
+			this.colIsExit = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.resOpViewModelBindingSource = new System.Windows.Forms.BindingSource(this.components);
 			((System.ComponentModel.ISupportInitialize)(this.menuMain)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.riMonths)).BeginInit();
@@ -509,7 +508,7 @@ namespace Furmanov.UI
 			// 
 			// resOPViewModelBindingSource1
 			// 
-			this.resOPViewModelBindingSource1.DataSource = typeof(SalaryPayVisual);
+			this.resOPViewModelBindingSource1.DataSource = typeof(Furmanov.MVP.MainView.ViewModels.ResOPViewModel);
 			// 
 			// treeResOp
 			// 
@@ -661,7 +660,7 @@ namespace Furmanov.UI
 			// 
 			// colFactSalary
 			// 
-			this.colFactSalary.FieldName = "SalaryPay";
+			this.colFactSalary.FieldName = "SalaryPaid";
 			this.colFactSalary.MinWidth = 23;
 			this.colFactSalary.Name = "colFactSalary";
 			this.colFactSalary.OptionsColumn.AllowEdit = false;
@@ -671,7 +670,7 @@ namespace Furmanov.UI
 			// 
 			// colAvans
 			// 
-			this.colAvans.FieldName = "Advance";
+			this.colAvans.FieldName = "Avans";
 			this.colAvans.MinWidth = 23;
 			this.colAvans.Name = "colAvans";
 			this.colAvans.Visible = true;
@@ -759,12 +758,13 @@ namespace Furmanov.UI
 			// 
 			// tabelViewModelBindingSource
 			// 
-			this.tabelViewModelBindingSource.DataSource = typeof(WorkedDayVisual);
+			this.tabelViewModelBindingSource.DataSource = typeof(Furmanov.MVP.MainView.ViewModels.TabelViewModel);
 			// 
 			// gridTabels
 			// 
 			this.gridTabels.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
-            this.colDate});
+            this.colDate,
+            this.colIsExit});
 			this.gridTabels.DetailHeight = 404;
 			this.gridTabels.FixedLineWidth = 3;
 			this.gridTabels.GridControl = this.gcTabels;
@@ -790,9 +790,18 @@ namespace Furmanov.UI
 			this.colDate.VisibleIndex = 0;
 			this.colDate.Width = 87;
 			// 
+			// colIsExit
+			// 
+			this.colIsExit.FieldName = "IsExit";
+			this.colIsExit.MinWidth = 23;
+			this.colIsExit.Name = "colIsExit";
+			this.colIsExit.Visible = true;
+			this.colIsExit.VisibleIndex = 1;
+			this.colIsExit.Width = 87;
+			// 
 			// resOpViewModelBindingSource
 			// 
-			this.resOpViewModelBindingSource.DataSource = typeof(SalaryPayVisual);
+			this.resOpViewModelBindingSource.DataSource = typeof(Furmanov.MVP.MainView.ViewModels.ResOPViewModel);
 			// 
 			// MainView
 			// 
@@ -857,6 +866,7 @@ namespace Furmanov.UI
 		private DevExpress.XtraBars.BarStaticItem lblUser;
 		private DevExpress.XtraBars.BarButtonItem btnLogOut;
 		private DevExpress.XtraGrid.Columns.GridColumn colDate;
+		private DevExpress.XtraGrid.Columns.GridColumn colIsExit;
 		private DevExpress.XtraTreeList.TreeList treeResOp;
 		private DevExpress.XtraTreeList.Columns.TreeListColumn colName;
 		private DevExpress.XtraTreeList.Columns.TreeListColumn colPhone;

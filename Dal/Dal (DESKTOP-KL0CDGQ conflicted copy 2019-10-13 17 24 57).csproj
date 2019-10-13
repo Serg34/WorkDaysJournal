@@ -51,8 +51,10 @@
     <Compile Include="DbContext.cs" />
     <Compile Include="Dto\IViewModel.cs" />
     <Compile Include="Dto\LoginPassword.cs" />
+    <Compile Include="Dto\CObject.cs" />
     <Compile Include="Dto\SalaryPay.cs" />
-    <Compile Include="Dto\WorkDays.cs" />
+    <Compile Include="Dto\Resource.cs" />
+    <Compile Include="Dto\Tabel.cs" />
     <Compile Include="Dto\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Queries\_QueriesService.cs" />
@@ -66,9 +68,6 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Queries\SalaryPayViewForProjectManager.sql" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Queries\SalaryPayViewForManager.sql" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,6 +1,6 @@
-﻿using System;
-using DevExpress.XtraGrid.Columns;
+﻿using DevExpress.XtraGrid.Columns;
 using DevExpress.XtraGrid.Views.Grid;
+using System;
 
 namespace Furmanov.UI.Services
 {

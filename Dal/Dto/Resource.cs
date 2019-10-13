@@ -13,8 +13,8 @@ namespace Furmanov.Dal.Dto
 	public class Employee
 	{
 		public int Id { get; set; }
-		public int? Object_Id { get; set; }
-		public int? Manager_Id { get; set; }
+		public int? ObjectId { get; set; }
+		public int? ManagerId { get; set; }
 		public string Name { get; set; }
 		public string Phone { get; set; }
 		public string Description { get; set; }

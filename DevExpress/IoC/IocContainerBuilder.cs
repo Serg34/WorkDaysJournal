@@ -6,9 +6,9 @@ using Furmanov.MVP.Services.UndoRedo;
 
 namespace Furmanov.UI.IoC
 {
-	public static class IocContainerBuilder
+	public static class IoCContainerBuilder
 	{
-		public static IResolver Build()
+		public static IResolver Build(string connectionString)
 		{
 			IContainer container = null;
 
@@ -19,11 +19,9 @@ namespace Furmanov.UI.IoC
 				.As<IResolver>()
 				.SingleInstance();
 
-			builder.Register(a => new DbDataContext())
-				.As<DbDataContext>()
+			builder.Register(a => new DataAccessService(connectionString))
+				.As<IDataAccessService>()
 				.SingleInstance();
-
-			builder.RegisterType<DataAccessService>().As<IdataAccessService>().SingleInstance();
 
 			builder.RegisterType<LoginModel>().As<ILoginModel>().SingleInstance();
 			builder.RegisterType<MainModel>().As<IMainModel>().SingleInstance();

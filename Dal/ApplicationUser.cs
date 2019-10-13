@@ -24,6 +24,6 @@ namespace Furmanov.Dal
 			}
 		}
 
-		public UserDb User { get; internal set; }
+		public UserVisual User { get; set; }
 	}
 }

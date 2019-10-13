@@ -7,10 +7,10 @@ select
 	u.Id, 
 	u.Login, 
 	u.Name, 
-	u.Role_Id, 
+	u.RoleId, 
 	Role.Name RoleName
 from [User] u 
 	left join Role 
-		on u.Role_Id = Role.Id
+		on u.RoleId = Role.Id
 where Login = @login
 	and Pass = @password

@@ -1,7 +1,7 @@
 ﻿using DevExpress.XtraEditors;
-using Furmanov.MVP;
 using Furmanov.MVP.Login;
 using System;
+using Services.UI;
 
 namespace Furmanov.UI
 {
@@ -12,7 +12,6 @@ namespace Furmanov.UI
 		public LoginView()
 		{
 			InitializeComponent();
-			G.OnError += error => ShowError($"Ошибка в базе данных:\n{error}");
 		}
 		public event EventHandler<LoginViewModel> Logging;
 

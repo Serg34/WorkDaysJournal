@@ -3,16 +3,15 @@ using DevExpress.XtraEditors;
 using DevExpress.XtraGrid.Views.Grid;
 using DevExpress.XtraGrid.Views.Grid.ViewInfo;
 using DevExpress.XtraTreeList;
+using Force.DeepCloner;
 using Furmanov.Dal;
 using Furmanov.Dal.Dto;
-using Furmanov.MVP.Login;
-using Furmanov.MVP.MainView;
+using Furmanov.MVP;
 using Furmanov.MVP.MainView.ViewModels;
+using Furmanov.MVP.Services.UI;
 using Furmanov.MVP.Services.UndoRedo;
 using Furmanov.UI.Properties;
 using Furmanov.UI.Services;
-using Services;
-using Services.UI;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -21,17 +20,18 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using Furmanov.MVP.MainView;
 
 namespace Furmanov.UI
 {
 	public partial class MainView : XtraForm, IMainView
 	{
 		#region Fields
-		private SalaryPayVisual _salaryPayCash;
-		private SalaryPayVisual _salaryPayBeforeChanged;
+		private ResOPViewModel _currentResOpViewModel;
+		private ResOPViewModel _currentResOpViewModelBeforeChanged;
 
 		private readonly string _appUserDataFolder =
-			Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "SC.WorkedDaysDb");
+			Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "SC.Tabel");
 
 		private bool _updating;
 		#endregion
@@ -42,6 +42,7 @@ namespace Furmanov.UI
 			{
 				InitializeComponent();
 
+				G.OnError += error => ShowError($"Ошибка в базе данных:\n{error}");
 #if DEBUG
 				WindowState = FormWindowState.Maximized;
 #endif
@@ -74,15 +75,15 @@ namespace Furmanov.UI
 		public event EventHandler WorkDaysOnlyClick;
 		public event EventHandler AllDaysClick;
 
-		public event EventHandler<UndoRedoEventArgs<SalaryPayVisual>> ChangedResOp;
-		public event EventHandler<UndoRedoEventArgs<SalaryPayVisual>> ReplacingResource;
+		public event EventHandler<UndoRedoEventArgs<ResOPViewModel>> ChangedResOp;
+		public event EventHandler<UndoRedoEventArgs<ResOPViewModel>> ReplacingResource;
 		public event EventHandler EditingResource;
-		public event EventHandler<SalaryPayVisual> SelectResource;
+		public event EventHandler<ResOPViewModel> SelectResource;
 
-		public event EventHandler<WorkedDayVisual> ChangedTabel;
+		public event EventHandler<TabelViewModel> ChangedTabel;
 
-		public event EventHandler<SalaryPayVisual> CreatingResource;
-		public event EventHandler<SalaryPayVisual> DeletingResOp;
+		public event EventHandler<ResOPViewModel> CreatingResource;
+		public event EventHandler<ResOPViewModel> DeletingResOp;
 		public event EventHandler<int> VedomostClick;
 		public event EventHandler DeletingAllDays;
 
@@ -91,7 +92,7 @@ namespace Furmanov.UI
 		#endregion
 
 		#region Login
-		public void UpdateLogin(object sender, UserVisual user)
+		public void UpdateLogin(object sender, UserView user)
 		{
 			pnTabelMain.BeginInit();
 
@@ -148,11 +149,18 @@ namespace Furmanov.UI
 		#endregion
 
 		#region TopMenu
+		public ICreateResourceView CreateResourceView
+		{
+			get => new CreateResourceView(_currentResOpViewModel) { Owner = this };
+		}
 		private void BtnCreateResource_ItemClick(object sender, ItemClickEventArgs e)
 		{
-			CreatingResource?.Invoke(this, _salaryPayCash);
+			CreatingResource?.Invoke(this, _currentResOpViewModel);
 		}
-
+		public IEditResourceView EditResourceView
+		{
+			get => new EditResourceView(_currentResOpViewModel) { Owner = this };
+		}
 		private void BtnEditResource_ItemClick(object sender, ItemClickEventArgs e)
 		{
 			EditingResource?.Invoke(this, EventArgs.Empty);
@@ -177,7 +185,7 @@ namespace Furmanov.UI
 		}
 		private void BtnVedomostForObject_ItemClick(object sender, ItemClickEventArgs e)
 		{
-			VedomostClick?.Invoke(this, _salaryPayCash.ObjectId);
+			VedomostClick?.Invoke(this, _currentResOpViewModel.ObjectId);
 		}
 
 		private void BtnWorkDaysOnly_ItemClick(object sender, ItemClickEventArgs e)
@@ -203,7 +211,7 @@ namespace Furmanov.UI
 
 				using (new TreeListStateSaver(treeResOp))
 				{
-					treeResOp.DataSource = viewModel.SalaryPays;
+					treeResOp.DataSource = viewModel.ResOps;
 				}
 
 				SelectionResOpChange();
@@ -217,11 +225,17 @@ namespace Furmanov.UI
 				_updating = false;
 			}
 		}
-		public void UpdateSelectedResOp(object sender, List<WorkedDayVisual> viewModel)
+		public void UpdateSelectedResOp(object sender, SelectionResOpViewModel viewModel)
 		{
+			riPositions.Items.Clear();
+			riPositions.Items.AddRange(viewModel.PositionNames ?? Array.Empty<object>());
+
+			riResourceNames.Items.Clear();
+			riResourceNames.Items.AddRange(viewModel.ResourceNames ?? Array.Empty<object>());
+
 			using (new GridViewStateSaver(gridTabels))
 			{
-				gcTabels.DataSource = viewModel;
+				gcTabels.DataSource = viewModel.Tabels ?? new TabelViewModel[0];
 			}
 		}
 		public void UpdateUndoRedo(IEnumerable<string> undoItems, IEnumerable<string> redoItems)
@@ -257,14 +271,14 @@ namespace Furmanov.UI
 		{
 			if (e.Column == colName)
 			{
-				if (_salaryPayCash.FactDays > 0)
+				if (_currentResOpViewModel.FactDays > 0)
 				{
-					MessageService.ShowMessage($"Замена сотрудника '{_salaryPayCash.Name}' невозможна, " +
+					MessageService.ShowMessage($"Замена сотрудника '{_currentResOpViewModel.Name}' невозможна, " +
 											   "так как у него есть отработанные дни.\n" +
 											   "Удалите отработанные дни сотрудника и повторите попытку.");
 				}
 			}
-			_salaryPayBeforeChanged = Cloner.DeepCopy(_salaryPayCash);
+			_currentResOpViewModelBeforeChanged = _currentResOpViewModel.DeepClone();
 		}
 		private void TreeResOp_CellValueChanged(object sender, CellValueChangedEventArgs e)
 		{
@@ -282,7 +296,7 @@ namespace Furmanov.UI
 		private void TreeResOp_NodeCellStyle(object sender, GetCustomNodeCellStyleEventArgs e)
 		{
 			if (sender is TreeList view &&
-				view.GetRow(e.Node.Id) is SalaryPayVisual vm)
+				view.GetRow(e.Node.Id) is ResOPViewModel vm)
 			{
 				if (vm.Type == ObjType.Project)
 				{
@@ -300,7 +314,7 @@ namespace Furmanov.UI
 					e.Appearance.BackColor = Color.FromArgb(150, 213, 238, 255);
 					e.Appearance.BorderColor = Color.FromArgb(255, 150, 153, 169);
 				}
-				else if (vm.Type == ObjType.Salary)
+				else if (vm.Type == ObjType.ResOP)
 				{
 				}
 			}
@@ -310,16 +324,16 @@ namespace Furmanov.UI
 		private void TreeResOp_ShowingEditor(object sender, CancelEventArgs e)
 		{
 			if (sender is TreeList view &&
-				view.GetRow(view.Selection.FirstOrDefault()?.Id ?? -1) is SalaryPayVisual vm)
-				e.Cancel = vm.Type != ObjType.Salary;
+				view.GetRow(view.Selection.FirstOrDefault()?.Id ?? -1) is ResOPViewModel vm)
+				e.Cancel = vm.Type != ObjType.ResOP;
 		}
 
 		[DebuggerStepThrough]
 		private void TreeResOp_CustomDrawNodeCell(object sender, CustomDrawNodeCellEventArgs e)
 		{
 			if (sender is TreeList view &&
-				view.GetRow(e.Node.Id) is SalaryPayVisual vm &&
-				vm.Type != ObjType.Salary)
+				view.GetRow(e.Node.Id) is ResOPViewModel vm &&
+				vm.Type != ObjType.ResOP)
 			{
 				if (e.Column == colIsStaff)
 				{
@@ -347,7 +361,7 @@ namespace Furmanov.UI
 
 		private void TreeResOp_DoubleClick(object sender, EventArgs e)
 		{
-			if (_salaryPayCash.Type == ObjType.Salary)
+			if (_currentResOpViewModel.Type == ObjType.ResOP)
 			{
 				EditingResource?.Invoke(this, EventArgs.Empty);
 			}
@@ -355,9 +369,9 @@ namespace Furmanov.UI
 
 		private void DeleteResOp()
 		{
-			if (_salaryPayCash.Type != ObjType.Salary) return;
-			var resName = _salaryPayCash.Name;
-			if (_salaryPayCash.FactDays > 0)
+			if (_currentResOpViewModel.Type != ObjType.ResOP) return;
+			var resName = _currentResOpViewModel.Name;
+			if (_currentResOpViewModel.FactDays > 0)
 			{
 				MessageService.ShowMessage($"Удаление сотрудника '{resName}' невозможно, так как у него есть отработанные дни.\n" +
 										   "Удалите отработанные дни сотрудника и повторите попытку.");
@@ -366,7 +380,7 @@ namespace Furmanov.UI
 
 			if (MessageService.ShowQuestion($"Будет удален сотрудник '{resName}'.\nПродолжить?") == DialogResult.Yes)
 			{
-				DeletingResOp?.Invoke(this, _salaryPayCash);
+				DeletingResOp?.Invoke(this, _currentResOpViewModel);
 			}
 		}
 		private void TreeResOp_Enter(object sender, EventArgs e)
@@ -376,19 +390,19 @@ namespace Furmanov.UI
 		private void SelectionResOpChange()
 		{
 			if (treeResOp.Tag?.Equals(TreeListStateSaver.State.Updating) ?? false) return;
-			if (treeResOp.GetRow(treeResOp.FocusedNode?.Id ?? -1) is SalaryPayVisual vm)
+			if (treeResOp.GetRow(treeResOp.FocusedNode?.Id ?? -1) is ResOPViewModel vm)
 			{
-				_salaryPayCash = vm;
+				_currentResOpViewModel = vm;
 
 				btnCreateResource.Enabled = btnEditResource.Enabled
 					= btnVedomostForObject.Enabled
 					= vm.Type == ObjType.Object ||
-					  vm.Type == ObjType.Salary;
+					  vm.Type == ObjType.ResOP;
 
 				btnDeleteResource.Enabled
 					= btnAllDays.Enabled = btnWorkDaysOnly.Enabled
 					= btnDeleteAllDays.Enabled
-					= vm.Type == ObjType.Salary;
+					= vm.Type == ObjType.ResOP;
 
 				SelectResource?.Invoke(this, vm);
 			}
@@ -399,8 +413,9 @@ namespace Furmanov.UI
 		private void GridTabels_CellValueChanging(object sender,
 			DevExpress.XtraGrid.Views.Base.CellValueChangedEventArgs e)
 		{
-			if (sender is GridView view && view.GetRow(e.RowHandle) is WorkedDayVisual vm)
+			if (sender is GridView view && view.GetRow(e.RowHandle) is TabelViewModel vm)
 			{
+				vm.DeepClone();
 				ChangedTabel?.Invoke(this, vm);
 			}
 		}
@@ -409,7 +424,7 @@ namespace Furmanov.UI
 		private void GridTabels_RowStyle(object sender, RowStyleEventArgs e)
 		{
 			if (sender is GridView view &&
-				view.GetRow(e.RowHandle) is WorkedDayVisual vm &&
+				view.GetRow(e.RowHandle) is TabelViewModel vm &&
 				(vm.Date.DayOfWeek == DayOfWeek.Saturday ||
 				 vm.Date.DayOfWeek == DayOfWeek.Sunday))
 			{
@@ -450,7 +465,7 @@ namespace Furmanov.UI
 			}
 			else if (e.KeyCode == Keys.Insert || e.KeyCode == Keys.Add)
 			{
-				CreatingResource?.Invoke(this, _salaryPayCash);
+				CreatingResource?.Invoke(this, _currentResOpViewModel);
 			}
 			else if (e.Control && e.Shift && e.KeyCode == Keys.Z) Redo?.Invoke(this, 1);
 			else if (e.Control && e.KeyCode == Keys.Z) Undo?.Invoke(this, 1);
@@ -480,11 +495,11 @@ namespace Furmanov.UI
 				new TreeListStateSaver(treeResOp).SaveLayoutToXml($"{treeFile} NodeState.xml");
 			}
 		}
-		private UndoRedoEventArgs<SalaryPayVisual> ResOpArgs
+		private UndoRedoEventArgs<ResOPViewModel> ResOpArgs
 		{
-			get => new UndoRedoEventArgs<SalaryPayVisual>(
-						_salaryPayCash,
-						_salaryPayBeforeChanged);
+			get => new UndoRedoEventArgs<ResOPViewModel>(
+						_currentResOpViewModel,
+						_currentResOpViewModelBeforeChanged);
 		}
 		private void MenuUndo_PaintMenuBar(object sender, BarCustomDrawEventArgs e)
 		{
