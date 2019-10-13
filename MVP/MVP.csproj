@@ -7,7 +7,7 @@
     <ProjectGuid>{BC065B48-916E-4C57-BAA0-EB7C6B1E555D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MVP</RootNamespace>
+    <RootNamespace>Furmanov.MVP</RootNamespace>
     <AssemblyName>MVP</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -32,7 +32,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -41,7 +43,46 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CreateResource\CreateResourceModel.cs" />
+    <Compile Include="CreateResource\CreateResourcePresenter.cs" />
+    <Compile Include="CreateResource\ICreateResourceView.cs" />
+    <Compile Include="CreateResource\CreateResourceViewModel.cs" />
+    <Compile Include="CreateResource\UndoRedoCommands\CreateResourceCmd.cs" />
+    <Compile Include="EditResource\EditResourceView.cs" />
+    <Compile Include="EditResource\UndoRedoCommands\EditResourceCmd.cs" />
+    <Compile Include="IView.cs" />
+    <Compile Include="IViewModel.cs" />
+    <Compile Include="Login\LoginModel.cs" />
+    <Compile Include="Login\LoginPresenter.cs" />
+    <Compile Include="Login\LoginView.cs" />
+    <Compile Include="Login\LoginViewModel.cs" />
+    <Compile Include="MainView\MainModel.cs" />
+    <Compile Include="MainView\MainPresenter.cs" />
+    <Compile Include="MainView\MainView.cs" />
+    <Compile Include="MainView\UndoRedoCommands\DeleteResOpCmd.cs" />
+    <Compile Include="MainView\UndoRedoCommands\MonthCmd.cs" />
+    <Compile Include="MainView\UndoRedoCommands\ReplaceResourceCmd.cs" />
+    <Compile Include="MainView\UndoRedoCommands\ResOPCmd.cs" />
+    <Compile Include="MainView\UndoRedoCommands\TabelCmd.cs" />
+    <Compile Include="MainView\UndoRedoCommands\TabelsCmd.cs" />
+    <Compile Include="MainView\ViewModels\MainViewModel.cs" />
+    <Compile Include="MainView\ViewModels\ResOPViewModel.cs" />
+    <Compile Include="MainView\ViewModels\SelectionResOpViewModel.cs" />
+    <Compile Include="MainView\ViewModels\TabelViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\IEnumerableMethods.cs" />
+    <Compile Include="Services\MoneyToString.cs" />
+    <Compile Include="Services\UI\MessageService.cs" />
+    <Compile Include="Services\UI\ValidateServise.cs" />
+    <Compile Include="Services\UndoRedo\ICommand.cs" />
+    <Compile Include="Services\UndoRedo\UndoRedoEventArgs.cs" />
+    <Compile Include="Services\UndoRedo\UndoRedoService.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Dal\Dal.csproj">
+      <Project>{f0a6c913-5a13-4da9-97e2-e75d2f469ec9}</Project>
+      <Name>Dal</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

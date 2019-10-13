@@ -1,0 +1,194 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{EE6A2B8B-5C3E-496A-8200-CC232F06DD4F}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>Furmanov.UI</RootNamespace>
+    <AssemblyName>Linq2db_MVP_IoC_DevExpress_WinForm</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Autofac, Version=4.9.4.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.4.9.4\lib\net45\Autofac.dll</HintPath>
+    </Reference>
+    <Reference Include="DeepCloner, Version=0.10.0.0, Culture=neutral, PublicKeyToken=dc0b95cf99bf4e99, processorArchitecture=MSIL">
+      <HintPath>..\packages\DeepCloner.0.10.2\lib\net40\DeepCloner.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Data.v19.1, Version=19.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Printing.v19.1.Core, Version=19.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Utils.v19.1, Version=19.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraBars.v19.1, Version=19.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraEditors.v19.1, Version=19.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraGrid.v19.1, Version=19.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraLayout.v19.1, Version=19.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraPrinting.v19.1, Version=19.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraTreeList.v19.1, Version=19.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CreateResourceView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CreateResourceView.designer.cs">
+      <DependentUpon>CreateResourceView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="EditResourceView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EditResourceView.designer.cs">
+      <DependentUpon>EditResourceView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="IoC\IocContainerBuilder.cs" />
+    <Compile Include="IoC\Resolver.cs" />
+    <Compile Include="LoginView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LoginView.designer.cs">
+      <DependentUpon>LoginView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainView.Designer.cs">
+      <DependentUpon>MainView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainView2.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainView2.Designer.cs">
+      <DependentUpon>MainView2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\GridViewStateSaver.cs" />
+    <Compile Include="Services\TreeListStateSaver.cs" />
+    <EmbeddedResource Include="CreateResourceView.resx">
+      <DependentUpon>CreateResourceView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EditResourceView.resx">
+      <DependentUpon>EditResourceView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LoginView.resx">
+      <DependentUpon>LoginView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainView.resx">
+      <DependentUpon>MainView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainView2.resx">
+      <DependentUpon>MainView2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\licenses.licx" />
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\AddUser.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\EditUser.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\DeleteUser.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\undo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\redo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\RedoNoEnabled.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\UndoNoEnabled.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Dal\Dal.csproj">
+      <Project>{f0a6c913-5a13-4da9-97e2-e75d2f469ec9}</Project>
+      <Name>Dal</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MVP\MVP.csproj">
+      <Project>{bc065b48-916e-4c57-baa0-eb7c6b1e555d}</Project>
+      <Name>MVP</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\AllDays.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\login.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\NoDays.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\OnlyWorkDays.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Report.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ReportAll.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\save.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

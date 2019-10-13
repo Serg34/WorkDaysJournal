@@ -1,5 +1,4 @@
 ﻿using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 // Общие сведения об этой сборке предоставляются следующим набором
@@ -19,7 +18,7 @@ using System.Runtime.InteropServices;
 // COM, задайте атрибуту ComVisible значение TRUE для этого типа.
 [assembly: ComVisible(false)]
 
-// Следующий GUID служит для идентификации библиотеки типов, если этот проект будет видимым для COM
+// Следующий GUId служит для идентификации библиотеки типов, если этот проект будет видимым для COM
 [assembly: Guid("f0a6c913-5a13-4da9-97e2-e75d2f469ec9")]
 
 // Сведения о версии сборки состоят из указанных ниже четырех значений:

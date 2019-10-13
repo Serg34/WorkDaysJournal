@@ -7,7 +7,7 @@
     <ProjectGuid>{F0A6C913-5A13-4DA9-97E2-E75D2F469EC9}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Dal</RootNamespace>
+    <RootNamespace>Furmanov.Dal</RootNamespace>
     <AssemblyName>Dal</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -35,7 +35,9 @@
       <HintPath>..\packages\linq2db.2.9.1\lib\net46\linq2db.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -44,12 +46,32 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApplicationUser.cs" />
+    <Compile Include="DataAccessService.cs" />
     <Compile Include="DbContext.cs" />
+    <Compile Include="Dto\LoginPassword.cs" />
+    <Compile Include="Dto\CObject.cs" />
+    <Compile Include="Dto\Position.cs" />
+    <Compile Include="Dto\Project.cs" />
+    <Compile Include="Dto\SalaryPay.cs" />
+    <Compile Include="Dto\Resource.cs" />
+    <Compile Include="Dto\Tabel.cs" />
+    <Compile Include="Dto\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Sql.cs" />
+    <Compile Include="Queries\_QueriesService.cs" />
+    <Compile Include="XmlRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Queries\User.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Queries\Objects.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Queries\Positions.sql" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

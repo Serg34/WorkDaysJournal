@@ -3,23 +3,23 @@ using System.Runtime.InteropServices;
 
 // Общие сведения об этой сборке предоставляются следующим набором
 // набора атрибутов. Измените значения этих атрибутов для изменения сведений,
-// связанные со сборкой.
-[assembly: AssemblyTitle("MVP")]
+// связанных со сборкой.
+[assembly: AssemblyTitle("Linq2db_MVP_IoC_DevExpress_WinForm")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("MVP")]
+[assembly: AssemblyProduct("Linq2db_MVP_IoC_DevExpress_WinForm")]
 [assembly: AssemblyCopyright("Copyright ©  2019")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
 // Установка значения False для параметра ComVisible делает типы в этой сборке невидимыми
 // для компонентов COM. Если необходимо обратиться к типу в этой сборке через
-// COM, задайте атрибуту ComVisible значение TRUE для этого типа.
+// COM, следует установить атрибут ComVisible в TRUE для этого типа.
 [assembly: ComVisible(false)]
 
 // Следующий GUId служит для идентификации библиотеки типов, если этот проект будет видимым для COM
-[assembly: Guid("bc065b48-916e-4c57-baa0-eb7c6b1e555d")]
+[assembly: Guid("ee6a2b8b-5c3e-496a-8200-cc232f06dd4f")]
 
 // Сведения о версии сборки состоят из указанных ниже четырех значений:
 //

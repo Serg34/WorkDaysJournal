@@ -2,11 +2,11 @@
 using LinqToDB.DataProvider;
 using LinqToDB.DataProvider.SqlServer;
 
-namespace Dal
+namespace Furmanov.Dal
 {
 	public class DbDataContext : DataConnection
 	{
-		public DbDataContext() : base(GetDataProvider(), GetConnectionString()) { }
+		public DbDataContext(string connectionString) : base(GetDataProvider(), connectionString) { }
 
 		private static IDataProvider GetDataProvider()
 		{
@@ -15,10 +15,6 @@ namespace Dal
 			LinqToDB.Common.Configuration.AvoidSpecificDataProviderAPI = true;
 
 			return new SqlServerDataProvider("", SqlServerVersion.v2017);
-		}
-		private static string GetConnectionString()
-		{
-			return "Server =.\\SQLExpress; Database = Furmanov; Trusted_Connection = True;";
 		}
 	}
 }
