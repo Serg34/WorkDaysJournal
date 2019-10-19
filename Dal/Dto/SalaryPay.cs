@@ -24,17 +24,14 @@ namespace Furmanov.Dal.Dto
 		public int PositionId { get; set; }
 
 		[Column(Name = "Advance")]
-		[Range(0, 999999)]
 		[Display(Name = "Аванс")]
 		public decimal? Advance { get; set; }
 
 		[Column(Name = "Penalty")]
-		[Range(0, 999999)]
 		[Display(Name = "Штрафы")]
 		public decimal? Penalty { get; set; }
 
 		[Column(Name = "Premium")]
-		[Range(0, 999999)]
 		[Display(Name = "Премии")]
 		public decimal? Premium { get; set; }
 
@@ -43,7 +40,6 @@ namespace Furmanov.Dal.Dto
 		public string Comment { get; set; }
 
 		[Column(Name = "RateDays")]
-		[Range(0, 31)]
 		[Display(Name = "Норма")]
 		public int RateDays { get; set; }
 

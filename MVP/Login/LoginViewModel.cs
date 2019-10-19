@@ -1,13 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace Furmanov.MVP.Login
+﻿namespace Furmanov.MVP.Login
 {
 	public class LoginViewModel
 	{
-		[Required(ErrorMessage = "Не указан логин")]
 		public string Login { get; set; }
 
-		[Required(ErrorMessage = "Не указан Пароль")]
 		public string Password { get; set; }
 
 		public bool IsRemember { get; set; }

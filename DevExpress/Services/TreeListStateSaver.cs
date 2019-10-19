@@ -12,8 +12,6 @@ namespace Furmanov.UI.Services
 {
 	public sealed class TreeListStateSaver : IDisposable
 	{
-		public enum State { Updating, Updated }
-
 		private readonly TreeList _treeList;
 		private List<string> _expandedIds = new List<string>();
 		private string _selectedId;
@@ -27,7 +25,6 @@ namespace Furmanov.UI.Services
 			_selectedId = (_treeList.GetRow(_treeList.FocusedNode?.Id ?? -1) as IVisual)?.VisualId;
 			_selectedColumnName = _treeList.FocusedColumn?.Name;
 			_topVisibleNodeIndex = _treeList.TopVisibleNodeIndex;
-			_treeList.Tag = State.Updating;
 		}
 
 		private void GetExpanded(TreeListNode node)
@@ -51,7 +48,7 @@ namespace Furmanov.UI.Services
 
 		public void SaveLayoutToXml(string xmlFile)
 		{
-			new XmlDataContractRepository<Data>(xmlFile).Save(new Data
+			new XmlRepository<Data>(xmlFile).Save(new Data
 			{
 				ExpandedIds = _expandedIds,
 				SelectedColumnName = _selectedColumnName,
@@ -61,7 +58,7 @@ namespace Furmanov.UI.Services
 		}
 		public void RestoreLayoutFromXml(string xmlFile)
 		{
-			var data = new XmlDataContractRepository<Data>(xmlFile).Load();
+			var data = new XmlRepository<Data>(xmlFile).Load();
 			_expandedIds = data.ExpandedIds;
 			_selectedColumnName = data.SelectedColumnName;
 			_selectedId = data.SelectedId;
@@ -74,7 +71,6 @@ namespace Furmanov.UI.Services
 
 			_treeList.Nodes.ForEach(SetState);
 			_treeList.TopVisibleNodeIndex = _topVisibleNodeIndex;
-			_treeList.Tag = State.Updated;
 
 			_treeList.EndInit();
 

@@ -1,9 +1,9 @@
-﻿using System;
-using System.Windows.Forms;
-using Furmanov.MVP.MainView;
+﻿using Furmanov.MVP.MainView;
 using Furmanov.MVP.Services.UndoRedo;
 using Furmanov.UI;
 using Furmanov.UI.IoC;
+using System;
+using System.Windows.Forms;
 
 namespace Linq2db_MVP_IoC_DevExpress_WinForm
 {
@@ -19,7 +19,7 @@ namespace Linq2db_MVP_IoC_DevExpress_WinForm
 			Application.SetCompatibleTextRenderingDefault(false);
 
 			var connectionString = "Server =.\\SQLExpress; Database = Furmanov; Trusted_Connection = True;";
-			var resolver = IoCContainerBuilder.Build(connectionString);
+			var resolver = IoCBuilder.Build(connectionString);
 
 			var model = resolver.Resolve<IMainModel>();
 			var view = new MainView();

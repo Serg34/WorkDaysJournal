@@ -1,7 +1,7 @@
 ﻿using DevExpress.XtraEditors;
 using Furmanov.MVP.Login;
-using System;
 using Services.UI;
+using System;
 
 namespace Furmanov.UI
 {

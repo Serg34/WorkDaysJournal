@@ -1,7 +1,6 @@
-﻿using System;
-using Furmanov.Dal;
+﻿using Furmanov.Dal;
 using Furmanov.Dal.Dto;
-using Services.UI;
+using System;
 
 namespace Furmanov.MVP.Login
 {
@@ -18,7 +17,7 @@ namespace Furmanov.MVP.Login
 	public class LoginModel : ILoginModel
 	{
 		private readonly IDataAccessService _db;
-		private LoginViewModel _vm;
+		private LoginViewModel _viewModel;
 
 		public bool LoginChecked { get; private set; }
 
@@ -33,47 +32,47 @@ namespace Furmanov.MVP.Login
 
 		public void Update(bool isStartApp)
 		{
-			_vm = new LoginViewModel { CanLogin = isStartApp };
+			_viewModel = new LoginViewModel { CanLogin = isStartApp };
 			var loginPass = _db.GetAutoLoginPassword();
 			if (loginPass != null)
 			{
-				_vm.Login = loginPass.Login;
-				_vm.Password = loginPass.Password;
-				_vm.IsRemember = !string.IsNullOrEmpty(loginPass.Login);
-				_vm.IsAutoLoginOnStart = !string.IsNullOrEmpty(loginPass.Password);
-				if (_vm.IsRemember && _vm.IsAutoLoginOnStart)
+				_viewModel.Login = loginPass.Login;
+				_viewModel.Password = loginPass.Password;
+				_viewModel.IsRemember = !string.IsNullOrEmpty(loginPass.Login);
+				_viewModel.IsAutoLoginOnStart = !string.IsNullOrEmpty(loginPass.Password);
+				if (_viewModel.IsRemember && _viewModel.IsAutoLoginOnStart)
 				{
-					Login(this, _vm);
+					Login(this, _viewModel);
 				}
 			}
-			Updated?.Invoke(this, _vm);
+			Updated?.Invoke(this, _viewModel);
 		}
 
 		public void Login(object sender, LoginViewModel viewModel)
 		{
-			_vm = viewModel;
-			var (isError, error) = ValidateService.Validate(_vm);
-			if (isError)
+			_viewModel = viewModel;
+			var validateResult = new LoginValidator().Validate(_viewModel);
+			if (!validateResult.IsValid)
 			{
-				Error?.Invoke(this, error);
+				Error?.Invoke(this, string.Join("\n", validateResult.Errors));
 				return;
 			}
 
-			var user = _db.GetUser(_vm.Login, _vm.Password);
+			var user = _db.GetUser(_viewModel.Login, _viewModel.Password);
 			if (user != null)
 			{
 				ApplicationUser.Instance.User = user;
 				var loginPass = new LoginPassword();
-				if (_vm.IsRemember)
+				if (_viewModel.IsRemember)
 				{
-					loginPass.Login = _vm.Login;
-					if (_vm.IsAutoLoginOnStart) loginPass.Password = _vm.Password;
+					loginPass.Login = _viewModel.Login;
+					if (_viewModel.IsAutoLoginOnStart) loginPass.Password = _viewModel.Password;
 				}
 
 				_db.SaveAutoLoginPassword(loginPass);
 				LoginChecked = true;
 
-				if (_vm.CanLogin)
+				if (_viewModel.CanLogin)
 				{
 					Logged?.Invoke(this, EventArgs.Empty);
 				}
@@ -83,7 +82,7 @@ namespace Furmanov.MVP.Login
 				ApplicationUser.Instance.User = null;
 				LoginChecked = false;
 
-				Error?.Invoke(this, "Неверные данные");
+				Error?.Invoke(this, "Неверный логин или пароль");
 			}
 		}
 	}

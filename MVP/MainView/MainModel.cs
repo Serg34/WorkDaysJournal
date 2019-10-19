@@ -95,7 +95,7 @@ namespace Furmanov.MVP.MainView
 		{
 			try
 			{
-				var dt = _db.GetVedomost(_user, objectId);
+				var dt = _db.Report(_user, objectId);
 				new Excel().CreateVedomost(dt);
 			}
 			catch (Exception ex) { Error?.Invoke(this, ex.ToString()); }

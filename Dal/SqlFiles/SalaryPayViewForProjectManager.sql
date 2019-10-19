@@ -14,7 +14,10 @@ with projects as(
 		 null EmployeeId,
 		 pr.Name Name,
 		 'Выплат: ' + CAST(Count(sal.Id) AS nvarchar) Phone,
-		 'Объектов: ' + CAST(Count(obj.Id) AS nvarchar) PositionName,
+		 'Объектов: ' + CAST((select Count(*) 
+							  from Object 
+							  where Project_ID = pr.ID and IsDeleted = 0) 
+							  AS nvarchar) PositionName,
 		 SUM(okl.Salary) Salary,
 		 SUM(sal.RateDays) RateDays,
 		 SUM(sal.FactDays) FactDays,

@@ -23,7 +23,7 @@ namespace Furmanov.Dal
 
 		List<WorkedDayDb> GetWorkedDays(int resOpId, DateTime month);
 		void SaveWorkedDays(params WorkedDayVisual[] workedDayDb);
-		DataTable GetVedomost(UserVisual user, int objectId = 0);
+		DataTable Report(UserVisual user, int objectId = 0);
 	}
 	#endregion
 
@@ -54,7 +54,7 @@ namespace Furmanov.Dal
 				"SC.WorkedDaysDb",
 				"LoginPassword.xml");
 
-			var res = new XmlDataContractRepository<LoginPassword>(file).Load();
+			var res = new XmlRepository<LoginPassword>(file).Load();
 			return res;
 		}
 		public void SaveAutoLoginPassword(LoginPassword loginPassword)
@@ -62,7 +62,7 @@ namespace Furmanov.Dal
 			var file = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
 				"SC.WorkedDaysDb",
 				"LoginPassword.xml");
-			new XmlDataContractRepository<LoginPassword>(file).Save(loginPassword);
+			new XmlRepository<LoginPassword>(file).Save(loginPassword);
 		}
 
 		public List<SalaryPayVisual> GetSalaryPays(UserVisual user, DateTime month)
@@ -71,12 +71,12 @@ namespace Furmanov.Dal
 
 			using (var db = new DbDataContext(_connectionString))
 			{
-				var fileName = user.Role == Role.Manager ? "SalaryPayViewForManager.sql" 
+				var fileName = user.Role == Role.Manager ? "SalaryPayViewForManager.sql"
 					: "SalaryPayViewForProjectManager.sql";
 				var sql = SqlFiles.Get(fileName);
 
-				var res = db.Query<SalaryPayVisual>(sql, 
-					new DataParameter("@userId", user.Id), 
+				var res = db.Query<SalaryPayVisual>(sql,
+					new DataParameter("@userId", user.Id),
 					new DataParameter("@month", month.ToString("yyyyMMdd")))
 					.ToList();
 				return res;
@@ -118,7 +118,7 @@ namespace Furmanov.Dal
 				var noWork = workedDay.Where(t => !t.IsWorked).ToArray();
 				foreach (var day in noWork)
 				{
-					db.Execute(sqlNoWork, 
+					db.Execute(sqlNoWork,
 						new DataParameter("@payId", day.SalaryPayId),
 						new DataParameter("@day", day.Date.ToString("yyyyMMdd")));
 				}
@@ -127,14 +127,14 @@ namespace Furmanov.Dal
 				var work = workedDay.Where(t => t.IsWorked).ToArray();
 				foreach (var day in work)
 				{
-					db.Execute(sqlWork, 
+					db.Execute(sqlWork,
 						new DataParameter("@payId", day.SalaryPayId),
 						new DataParameter("@day", day.Date.ToString("yyyyMMdd")));
 				}
 			}
 		}
 
-		public DataTable GetVedomost(UserVisual user, int objectId = 0)
+		public DataTable Report(UserVisual user, int objectId = 0)
 		{
 			throw new NotImplementedException();
 		}

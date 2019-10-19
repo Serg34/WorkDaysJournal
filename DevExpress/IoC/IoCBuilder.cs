@@ -6,7 +6,7 @@ using Furmanov.MVP.Services.UndoRedo;
 
 namespace Furmanov.UI.IoC
 {
-	public static class IoCContainerBuilder
+	public static class IoCBuilder
 	{
 		public static IResolver Build(string connectionString)
 		{

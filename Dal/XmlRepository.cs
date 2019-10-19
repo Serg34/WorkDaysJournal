@@ -12,13 +12,13 @@ namespace Furmanov.Dal
 		TType Load();
 		void Save(TType item);
 	}
-	public class XmlDataContractRepository<TType> : IRepository<TType> where TType : new()
+	public class XmlRepository<TType> : IRepository<TType> where TType : new()
 	{
 		private readonly string _fileName;
 
 		protected Type[] ExtraTypes = null;
 
-		public XmlDataContractRepository(string fileName = null)
+		public XmlRepository(string fileName = null)
 		{
 			if (string.IsNullOrEmpty(fileName))
 			{
