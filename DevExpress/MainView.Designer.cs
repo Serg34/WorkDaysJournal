@@ -31,39 +31,39 @@ namespace Furmanov.UI
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			DevExpress.Utils.SuperToolTip superToolTip1 = new DevExpress.Utils.SuperToolTip();
-			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem1 = new DevExpress.Utils.ToolTipTitleItem();
-			DevExpress.Utils.ToolTipItem toolTipItem1 = new DevExpress.Utils.ToolTipItem();
-			DevExpress.Utils.SuperToolTip superToolTip2 = new DevExpress.Utils.SuperToolTip();
-			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem2 = new DevExpress.Utils.ToolTipTitleItem();
-			DevExpress.Utils.ToolTipItem toolTipItem2 = new DevExpress.Utils.ToolTipItem();
-			DevExpress.Utils.SuperToolTip superToolTip3 = new DevExpress.Utils.SuperToolTip();
-			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem3 = new DevExpress.Utils.ToolTipTitleItem();
-			DevExpress.Utils.ToolTipItem toolTipItem3 = new DevExpress.Utils.ToolTipItem();
-			DevExpress.Utils.SuperToolTip superToolTip4 = new DevExpress.Utils.SuperToolTip();
-			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem4 = new DevExpress.Utils.ToolTipTitleItem();
-			DevExpress.Utils.ToolTipItem toolTipItem4 = new DevExpress.Utils.ToolTipItem();
-			DevExpress.Utils.SuperToolTip superToolTip5 = new DevExpress.Utils.SuperToolTip();
-			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem5 = new DevExpress.Utils.ToolTipTitleItem();
-			DevExpress.Utils.ToolTipItem toolTipItem5 = new DevExpress.Utils.ToolTipItem();
-			DevExpress.Utils.SuperToolTip superToolTip6 = new DevExpress.Utils.SuperToolTip();
-			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem6 = new DevExpress.Utils.ToolTipTitleItem();
-			DevExpress.Utils.ToolTipItem toolTipItem6 = new DevExpress.Utils.ToolTipItem();
+			DevExpress.Utils.SuperToolTip superToolTip12 = new DevExpress.Utils.SuperToolTip();
+			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem12 = new DevExpress.Utils.ToolTipTitleItem();
+			DevExpress.Utils.ToolTipItem toolTipItem12 = new DevExpress.Utils.ToolTipItem();
+			DevExpress.Utils.SuperToolTip superToolTip13 = new DevExpress.Utils.SuperToolTip();
+			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem13 = new DevExpress.Utils.ToolTipTitleItem();
+			DevExpress.Utils.ToolTipItem toolTipItem13 = new DevExpress.Utils.ToolTipItem();
+			DevExpress.Utils.SuperToolTip superToolTip14 = new DevExpress.Utils.SuperToolTip();
+			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem14 = new DevExpress.Utils.ToolTipTitleItem();
+			DevExpress.Utils.ToolTipItem toolTipItem14 = new DevExpress.Utils.ToolTipItem();
+			DevExpress.Utils.SuperToolTip superToolTip15 = new DevExpress.Utils.SuperToolTip();
+			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem15 = new DevExpress.Utils.ToolTipTitleItem();
+			DevExpress.Utils.ToolTipItem toolTipItem15 = new DevExpress.Utils.ToolTipItem();
+			DevExpress.Utils.SuperToolTip superToolTip16 = new DevExpress.Utils.SuperToolTip();
+			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem16 = new DevExpress.Utils.ToolTipTitleItem();
+			DevExpress.Utils.ToolTipItem toolTipItem16 = new DevExpress.Utils.ToolTipItem();
+			DevExpress.Utils.SuperToolTip superToolTip17 = new DevExpress.Utils.SuperToolTip();
+			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem17 = new DevExpress.Utils.ToolTipTitleItem();
+			DevExpress.Utils.ToolTipItem toolTipItem17 = new DevExpress.Utils.ToolTipItem();
+			DevExpress.Utils.SuperToolTip superToolTip18 = new DevExpress.Utils.SuperToolTip();
+			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem18 = new DevExpress.Utils.ToolTipTitleItem();
+			DevExpress.Utils.ToolTipItem toolTipItem18 = new DevExpress.Utils.ToolTipItem();
 			DevExpress.Utils.SuperToolTip superToolTip7 = new DevExpress.Utils.SuperToolTip();
 			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem7 = new DevExpress.Utils.ToolTipTitleItem();
 			DevExpress.Utils.ToolTipItem toolTipItem7 = new DevExpress.Utils.ToolTipItem();
-			DevExpress.Utils.SuperToolTip superToolTip8 = new DevExpress.Utils.SuperToolTip();
-			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem8 = new DevExpress.Utils.ToolTipTitleItem();
-			DevExpress.Utils.ToolTipItem toolTipItem8 = new DevExpress.Utils.ToolTipItem();
-			DevExpress.Utils.SuperToolTip superToolTip9 = new DevExpress.Utils.SuperToolTip();
-			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem9 = new DevExpress.Utils.ToolTipTitleItem();
-			DevExpress.Utils.ToolTipItem toolTipItem9 = new DevExpress.Utils.ToolTipItem();
-			DevExpress.Utils.SuperToolTip superToolTip10 = new DevExpress.Utils.SuperToolTip();
-			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem10 = new DevExpress.Utils.ToolTipTitleItem();
-			DevExpress.Utils.ToolTipItem toolTipItem10 = new DevExpress.Utils.ToolTipItem();
-			DevExpress.Utils.SuperToolTip superToolTip11 = new DevExpress.Utils.SuperToolTip();
-			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem11 = new DevExpress.Utils.ToolTipTitleItem();
-			DevExpress.Utils.ToolTipItem toolTipItem11 = new DevExpress.Utils.ToolTipItem();
+			DevExpress.Utils.SuperToolTip superToolTip19 = new DevExpress.Utils.SuperToolTip();
+			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem19 = new DevExpress.Utils.ToolTipTitleItem();
+			DevExpress.Utils.ToolTipItem toolTipItem19 = new DevExpress.Utils.ToolTipItem();
+			DevExpress.Utils.SuperToolTip superToolTip20 = new DevExpress.Utils.SuperToolTip();
+			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem20 = new DevExpress.Utils.ToolTipTitleItem();
+			DevExpress.Utils.ToolTipItem toolTipItem20 = new DevExpress.Utils.ToolTipItem();
+			DevExpress.Utils.SuperToolTip superToolTip21 = new DevExpress.Utils.SuperToolTip();
+			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem21 = new DevExpress.Utils.ToolTipTitleItem();
+			DevExpress.Utils.ToolTipItem toolTipItem21 = new DevExpress.Utils.ToolTipItem();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainView));
 			this.menuMain = new DevExpress.XtraBars.Ribbon.RibbonControl();
 			this.btnEditResource = new DevExpress.XtraBars.BarButtonItem();
@@ -90,56 +90,51 @@ namespace Furmanov.UI
 			this.pageVedomost = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
 			this.pageDaysMode = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
 			this.statusBar = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
-			this.pnTabelMain = new DevExpress.XtraEditors.GroupControl();
-			this.pnTabel = new DevExpress.XtraEditors.SplitContainerControl();
-			this.pnReOps = new DevExpress.XtraEditors.GroupControl();
-			this.resOPViewModelBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
-			this.treeResOp = new DevExpress.XtraTreeList.TreeList();
+			this.pnMain = new DevExpress.XtraEditors.GroupControl();
+			this.sccMain = new DevExpress.XtraEditors.SplitContainerControl();
+			this.pnPays = new DevExpress.XtraEditors.GroupControl();
+			this.treeSalary = new DevExpress.XtraTreeList.TreeList();
 			this.colName = new DevExpress.XtraTreeList.Columns.TreeListColumn();
-			this.riResourceNames = new DevExpress.XtraEditors.Repository.RepositoryItemComboBox();
 			this.colPhone = new DevExpress.XtraTreeList.Columns.TreeListColumn();
 			this.colPositionName = new DevExpress.XtraTreeList.Columns.TreeListColumn();
-			this.riPositions = new DevExpress.XtraEditors.Repository.RepositoryItemComboBox();
 			this.colSalary = new DevExpress.XtraTreeList.Columns.TreeListColumn();
-			this.colOfficialSalary = new DevExpress.XtraTreeList.Columns.TreeListColumn();
-			this.colIsStaff = new DevExpress.XtraTreeList.Columns.TreeListColumn();
-			this.colRateDays = new DevExpress.XtraTreeList.Columns.TreeListColumn();
-			this.colFactDays = new DevExpress.XtraTreeList.Columns.TreeListColumn();
-			this.colFactSalary = new DevExpress.XtraTreeList.Columns.TreeListColumn();
-			this.colAvans = new DevExpress.XtraTreeList.Columns.TreeListColumn();
+			this.colAdvance = new DevExpress.XtraTreeList.Columns.TreeListColumn();
 			this.colPenalty = new DevExpress.XtraTreeList.Columns.TreeListColumn();
 			this.colPremium = new DevExpress.XtraTreeList.Columns.TreeListColumn();
 			this.colComment = new DevExpress.XtraTreeList.Columns.TreeListColumn();
-			this.colMedBook = new DevExpress.XtraTreeList.Columns.TreeListColumn();
-			this.colSpecWear = new DevExpress.XtraTreeList.Columns.TreeListColumn();
+			this.colRateDays = new DevExpress.XtraTreeList.Columns.TreeListColumn();
+			this.colFactDays = new DevExpress.XtraTreeList.Columns.TreeListColumn();
+			this.colSalaryPay = new DevExpress.XtraTreeList.Columns.TreeListColumn();
+			this.salaryPayBindingSource = new System.Windows.Forms.BindingSource(this.components);
+			this.riPositions = new DevExpress.XtraEditors.Repository.RepositoryItemComboBox();
+			this.riResourceNames = new DevExpress.XtraEditors.Repository.RepositoryItemComboBox();
 			this.imageCollection = new DevExpress.Utils.ImageCollection(this.components);
-			this.pnTabels = new DevExpress.XtraEditors.GroupControl();
-			this.gcTabels = new DevExpress.XtraGrid.GridControl();
-			this.tabelViewModelBindingSource = new System.Windows.Forms.BindingSource(this.components);
-			this.gridTabels = new DevExpress.XtraGrid.Views.Grid.GridView();
+			this.pnWorkedDays = new DevExpress.XtraEditors.GroupControl();
+			this.gcWorkedDays = new DevExpress.XtraGrid.GridControl();
+			this.workedDayBindingSource = new System.Windows.Forms.BindingSource(this.components);
+			this.gvWorkedDays = new DevExpress.XtraGrid.Views.Grid.GridView();
+			this.colIsWorked = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colDate = new DevExpress.XtraGrid.Columns.GridColumn();
-			this.resOpViewModelBindingSource = new System.Windows.Forms.BindingSource(this.components);
 			((System.ComponentModel.ISupportInitialize)(this.menuMain)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.riMonths)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.menuUndo)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.menuRedo)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.pnTabelMain)).BeginInit();
-			this.pnTabelMain.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.pnTabel)).BeginInit();
-			this.pnTabel.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.pnReOps)).BeginInit();
-			this.pnReOps.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.resOPViewModelBindingSource1)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.treeResOp)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.riResourceNames)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.pnMain)).BeginInit();
+			this.pnMain.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.sccMain)).BeginInit();
+			this.sccMain.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.pnPays)).BeginInit();
+			this.pnPays.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.treeSalary)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.salaryPayBindingSource)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.riPositions)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.riResourceNames)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.imageCollection)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.pnTabels)).BeginInit();
-			this.pnTabels.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.gcTabels)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.tabelViewModelBindingSource)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.gridTabels)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.resOpViewModelBindingSource)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.pnWorkedDays)).BeginInit();
+			this.pnWorkedDays.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.gcWorkedDays)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.workedDayBindingSource)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.gvWorkedDays)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// menuMain
@@ -164,7 +159,7 @@ namespace Furmanov.UI
             this.btnUndo,
             this.btnRedo});
 			this.menuMain.Location = new System.Drawing.Point(0, 0);
-			this.menuMain.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+			this.menuMain.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
 			this.menuMain.MaxItemId = 6;
 			this.menuMain.Name = "menuMain";
 			this.menuMain.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
@@ -173,7 +168,7 @@ namespace Furmanov.UI
 			this.menuMain.QuickToolbarItemLinks.Add(this.btnRedo);
 			this.menuMain.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
             this.riMonths});
-			this.menuMain.Size = new System.Drawing.Size(1275, 148);
+			this.menuMain.Size = new System.Drawing.Size(1261, 158);
 			this.menuMain.StatusBar = this.statusBar;
 			// 
 			// btnEditResource
@@ -184,15 +179,15 @@ namespace Furmanov.UI
 			this.btnEditResource.ImageOptions.Image = global::Furmanov.UI.Properties.Resources.EditUser;
 			this.btnEditResource.Name = "btnEditResource";
 			this.btnEditResource.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large;
-			toolTipTitleItem1.Text = "Назначить сотрудника";
-			toolTipItem1.ImageOptions.Image = global::Furmanov.UI.Properties.Resources.EditUser;
-			toolTipItem1.LeftIndent = 6;
-			toolTipItem1.Text = "Назначить позицию для одного из доступных сотрудников на выбранном объекте.\r\n\r\nГо" +
+			toolTipTitleItem12.Text = "Назначить сотрудника";
+			toolTipItem12.ImageOptions.Image = global::Furmanov.UI.Properties.Resources.EditUser;
+			toolTipItem12.LeftIndent = 6;
+			toolTipItem12.Text = "Назначить позицию для одного из доступных сотрудников на выбранном объекте.\r\n\r\nГо" +
     "рячие клавиши: двойной клик на любом сотруднике внутри объекта";
-			superToolTip1.Items.Add(toolTipTitleItem1);
-			superToolTip1.Items.Add(toolTipItem1);
-			this.btnEditResource.SuperTip = superToolTip1;
-			this.btnEditResource.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.BtnEditResource_ItemClick);
+			superToolTip12.Items.Add(toolTipTitleItem12);
+			superToolTip12.Items.Add(toolTipItem12);
+			this.btnEditResource.SuperTip = superToolTip12;
+			this.btnEditResource.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.ShowNoImplementCode);
 			// 
 			// btnCreateResource
 			// 
@@ -202,15 +197,15 @@ namespace Furmanov.UI
 			this.btnCreateResource.ImageOptions.Image = global::Furmanov.UI.Properties.Resources.AddUser;
 			this.btnCreateResource.Name = "btnCreateResource";
 			this.btnCreateResource.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large;
-			toolTipTitleItem2.Text = "Создать сотрудника";
-			toolTipItem2.ImageOptions.Image = global::Furmanov.UI.Properties.Resources.AddUser;
-			toolTipItem2.LeftIndent = 6;
-			toolTipItem2.Text = "Создает сотрудника в базе данных.\r\nПосле создания сотружник будет доступен для на" +
+			toolTipTitleItem13.Text = "Создать сотрудника";
+			toolTipItem13.ImageOptions.Image = global::Furmanov.UI.Properties.Resources.AddUser;
+			toolTipItem13.LeftIndent = 6;
+			toolTipItem13.Text = "Создает сотрудника в базе данных.\r\nПосле создания сотружник будет доступен для на" +
     "значения.\r\n\r\nГорячие клавиши:  \"+\" или \"Insert\"";
-			superToolTip2.Items.Add(toolTipTitleItem2);
-			superToolTip2.Items.Add(toolTipItem2);
-			this.btnCreateResource.SuperTip = superToolTip2;
-			this.btnCreateResource.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.BtnCreateResource_ItemClick);
+			superToolTip13.Items.Add(toolTipTitleItem13);
+			superToolTip13.Items.Add(toolTipItem13);
+			this.btnCreateResource.SuperTip = superToolTip13;
+			this.btnCreateResource.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.ShowNoImplementCode);
 			// 
 			// btnVedomostTotal
 			// 
@@ -220,13 +215,13 @@ namespace Furmanov.UI
 			this.btnVedomostTotal.ImageOptions.Image = global::Furmanov.UI.Properties.Resources.ReportAll;
 			this.btnVedomostTotal.Name = "btnVedomostTotal";
 			this.btnVedomostTotal.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large;
-			toolTipTitleItem3.Text = "Сводная ведомость";
-			toolTipItem3.ImageOptions.Image = global::Furmanov.UI.Properties.Resources.ReportAll;
-			toolTipItem3.LeftIndent = 6;
-			toolTipItem3.Text = "Создать в Excel сводную ведомость по всем объектам";
-			superToolTip3.Items.Add(toolTipTitleItem3);
-			superToolTip3.Items.Add(toolTipItem3);
-			this.btnVedomostTotal.SuperTip = superToolTip3;
+			toolTipTitleItem14.Text = "Сводная ведомость";
+			toolTipItem14.ImageOptions.Image = global::Furmanov.UI.Properties.Resources.ReportAll;
+			toolTipItem14.LeftIndent = 6;
+			toolTipItem14.Text = "Создать в Excel сводную ведомость по всем объектам";
+			superToolTip14.Items.Add(toolTipTitleItem14);
+			superToolTip14.Items.Add(toolTipItem14);
+			this.btnVedomostTotal.SuperTip = superToolTip14;
 			this.btnVedomostTotal.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.BtnVedomostTotal_ItemClick);
 			// 
 			// btnWorkDaysOnly
@@ -237,14 +232,14 @@ namespace Furmanov.UI
 			this.btnWorkDaysOnly.ImageOptions.Image = global::Furmanov.UI.Properties.Resources.OnlyWorkDays;
 			this.btnWorkDaysOnly.Name = "btnWorkDaysOnly";
 			this.btnWorkDaysOnly.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large;
-			toolTipTitleItem4.Text = "5-2";
-			toolTipItem4.ImageOptions.Image = global::Furmanov.UI.Properties.Resources.OnlyWorkDays;
-			toolTipItem4.LeftIndent = 6;
-			toolTipItem4.Text = "Заполнить отработанные дни в текущем месяце для выбранного сторудника по графику " +
+			toolTipTitleItem15.Text = "5-2";
+			toolTipItem15.ImageOptions.Image = global::Furmanov.UI.Properties.Resources.OnlyWorkDays;
+			toolTipItem15.LeftIndent = 6;
+			toolTipItem15.Text = "Заполнить отработанные дни в текущем месяце для выбранного сторудника по графику " +
     "5/2";
-			superToolTip4.Items.Add(toolTipTitleItem4);
-			superToolTip4.Items.Add(toolTipItem4);
-			this.btnWorkDaysOnly.SuperTip = superToolTip4;
+			superToolTip15.Items.Add(toolTipTitleItem15);
+			superToolTip15.Items.Add(toolTipItem15);
+			this.btnWorkDaysOnly.SuperTip = superToolTip15;
 			this.btnWorkDaysOnly.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.BtnWorkDaysOnly_ItemClick);
 			// 
 			// btnAllDays
@@ -256,13 +251,13 @@ namespace Furmanov.UI
 			this.btnAllDays.ImageOptions.SvgImageSize = new System.Drawing.Size(34, 32);
 			this.btnAllDays.Name = "btnAllDays";
 			this.btnAllDays.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large;
-			toolTipTitleItem5.Text = "Все дни";
-			toolTipItem5.ImageOptions.Image = global::Furmanov.UI.Properties.Resources.AllDays;
-			toolTipItem5.LeftIndent = 6;
-			toolTipItem5.Text = "Заполнить все дни в текущем месяце как отработанные для выбранного сотрудника";
-			superToolTip5.Items.Add(toolTipTitleItem5);
-			superToolTip5.Items.Add(toolTipItem5);
-			this.btnAllDays.SuperTip = superToolTip5;
+			toolTipTitleItem16.Text = "Все дни";
+			toolTipItem16.ImageOptions.Image = global::Furmanov.UI.Properties.Resources.AllDays;
+			toolTipItem16.LeftIndent = 6;
+			toolTipItem16.Text = "Заполнить все дни в текущем месяце как отработанные для выбранного сотрудника";
+			superToolTip16.Items.Add(toolTipTitleItem16);
+			superToolTip16.Items.Add(toolTipItem16);
+			this.btnAllDays.SuperTip = superToolTip16;
 			this.btnAllDays.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.BtnAllDays_ItemClick);
 			// 
 			// lblVersion
@@ -294,14 +289,14 @@ namespace Furmanov.UI
 			this.btnDeleteResource.ImageOptions.Image = global::Furmanov.UI.Properties.Resources.DeleteUser;
 			this.btnDeleteResource.Name = "btnDeleteResource";
 			this.btnDeleteResource.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large;
-			toolTipTitleItem6.Text = "Удалить сотрудника";
-			toolTipItem6.ImageOptions.Image = global::Furmanov.UI.Properties.Resources.DeleteUser;
-			toolTipItem6.LeftIndent = 6;
-			toolTipItem6.Text = "Удалить выбранного сотрудника.\r\n\r\nГорячие клавиши: \"-\" или \"Delete\"";
-			superToolTip6.Items.Add(toolTipTitleItem6);
-			superToolTip6.Items.Add(toolTipItem6);
-			this.btnDeleteResource.SuperTip = superToolTip6;
-			this.btnDeleteResource.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.BtnDeleteResource_ItemClick);
+			toolTipTitleItem17.Text = "Удалить сотрудника";
+			toolTipItem17.ImageOptions.Image = global::Furmanov.UI.Properties.Resources.DeleteUser;
+			toolTipItem17.LeftIndent = 6;
+			toolTipItem17.Text = "Удалить выбранного сотрудника.\r\n\r\nГорячие клавиши: \"-\" или \"Delete\"";
+			superToolTip17.Items.Add(toolTipTitleItem17);
+			superToolTip17.Items.Add(toolTipItem17);
+			this.btnDeleteResource.SuperTip = superToolTip17;
+			this.btnDeleteResource.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.ShowNoImplementCode);
 			// 
 			// btnLogin
 			// 
@@ -318,13 +313,13 @@ namespace Furmanov.UI
 			this.cbMonth.Enabled = false;
 			this.cbMonth.Id = 22;
 			this.cbMonth.Name = "cbMonth";
-			toolTipTitleItem7.Text = "Месяц";
-			toolTipItem7.LeftIndent = 6;
-			toolTipItem7.Text = "До 15 числа (включительно) доступно редактирование текущего и предыдущего месяца." +
+			toolTipTitleItem18.Text = "Месяц";
+			toolTipItem18.LeftIndent = 6;
+			toolTipItem18.Text = "До 15 числа (включительно) доступно редактирование текущего и предыдущего месяца." +
     "\r\n\r\nПосле 15 числа доступно редактирование только текущего месяца.";
-			superToolTip7.Items.Add(toolTipTitleItem7);
-			superToolTip7.Items.Add(toolTipItem7);
-			this.cbMonth.SuperTip = superToolTip7;
+			superToolTip18.Items.Add(toolTipTitleItem18);
+			superToolTip18.Items.Add(toolTipItem18);
+			this.cbMonth.SuperTip = superToolTip18;
 			this.cbMonth.EditValueChanged += new System.EventHandler(this.CbMonth_EditValueChanged);
 			// 
 			// riMonths
@@ -343,13 +338,13 @@ namespace Furmanov.UI
 			this.btnVedomostForObject.ImageOptions.Image = global::Furmanov.UI.Properties.Resources.Report;
 			this.btnVedomostForObject.Name = "btnVedomostForObject";
 			this.btnVedomostForObject.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large;
-			toolTipTitleItem8.Text = "Ведомость по объекту";
-			toolTipItem8.ImageOptions.Image = global::Furmanov.UI.Properties.Resources.Report;
-			toolTipItem8.LeftIndent = 6;
-			toolTipItem8.Text = "Создать в Excel ведомость по выбранному объекту";
-			superToolTip8.Items.Add(toolTipTitleItem8);
-			superToolTip8.Items.Add(toolTipItem8);
-			this.btnVedomostForObject.SuperTip = superToolTip8;
+			toolTipTitleItem7.Text = "Ведомость по объекту";
+			toolTipItem7.ImageOptions.Image = global::Furmanov.UI.Properties.Resources.Report;
+			toolTipItem7.LeftIndent = 6;
+			toolTipItem7.Text = "Создать в Excel ведомость по выбранному объекту";
+			superToolTip7.Items.Add(toolTipTitleItem7);
+			superToolTip7.Items.Add(toolTipItem7);
+			this.btnVedomostForObject.SuperTip = superToolTip7;
 			this.btnVedomostForObject.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.BtnVedomostForObject_ItemClick);
 			// 
 			// btnDeleteAllDays
@@ -360,13 +355,13 @@ namespace Furmanov.UI
 			this.btnDeleteAllDays.ImageOptions.Image = global::Furmanov.UI.Properties.Resources.NoDays;
 			this.btnDeleteAllDays.Name = "btnDeleteAllDays";
 			this.btnDeleteAllDays.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large;
-			toolTipTitleItem9.Text = "Удалить дни";
-			toolTipItem9.ImageOptions.Image = global::Furmanov.UI.Properties.Resources.NoDays;
-			toolTipItem9.LeftIndent = 6;
-			toolTipItem9.Text = "Удалить все отработанные дни в текущем месяце для выбранного сторудника";
-			superToolTip9.Items.Add(toolTipTitleItem9);
-			superToolTip9.Items.Add(toolTipItem9);
-			this.btnDeleteAllDays.SuperTip = superToolTip9;
+			toolTipTitleItem19.Text = "Удалить дни";
+			toolTipItem19.ImageOptions.Image = global::Furmanov.UI.Properties.Resources.NoDays;
+			toolTipItem19.LeftIndent = 6;
+			toolTipItem19.Text = "Удалить все отработанные дни в текущем месяце для выбранного сторудника";
+			superToolTip19.Items.Add(toolTipTitleItem19);
+			superToolTip19.Items.Add(toolTipItem19);
+			this.btnDeleteAllDays.SuperTip = superToolTip19;
 			this.btnDeleteAllDays.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.BtnDeleteAllDays_ItemClick);
 			// 
 			// btnUndo
@@ -378,13 +373,13 @@ namespace Furmanov.UI
 			this.btnUndo.Id = 26;
 			this.btnUndo.ImageOptions.Image = global::Furmanov.UI.Properties.Resources.undo;
 			this.btnUndo.Name = "btnUndo";
-			toolTipTitleItem10.Text = "Отменить действие";
-			toolTipItem10.ImageOptions.Image = global::Furmanov.UI.Properties.Resources.undo;
-			toolTipItem10.LeftIndent = 6;
-			toolTipItem10.Text = "Отменяет последнее действие\r\n\r\nГорячие клавиши: ctrl+z";
-			superToolTip10.Items.Add(toolTipTitleItem10);
-			superToolTip10.Items.Add(toolTipItem10);
-			this.btnUndo.SuperTip = superToolTip10;
+			toolTipTitleItem20.Text = "Отменить действие";
+			toolTipItem20.ImageOptions.Image = global::Furmanov.UI.Properties.Resources.undo;
+			toolTipItem20.LeftIndent = 6;
+			toolTipItem20.Text = "Отменяет последнее действие\r\n\r\nГорячие клавиши: ctrl+z";
+			superToolTip20.Items.Add(toolTipTitleItem20);
+			superToolTip20.Items.Add(toolTipItem20);
+			this.btnUndo.SuperTip = superToolTip20;
 			// 
 			// menuUndo
 			// 
@@ -401,13 +396,13 @@ namespace Furmanov.UI
 			this.btnRedo.Id = 27;
 			this.btnRedo.ImageOptions.Image = global::Furmanov.UI.Properties.Resources.redo;
 			this.btnRedo.Name = "btnRedo";
-			toolTipTitleItem11.Text = "Повторить действие";
-			toolTipItem11.ImageOptions.Image = global::Furmanov.UI.Properties.Resources.redo;
-			toolTipItem11.LeftIndent = 6;
-			toolTipItem11.Text = "Повторяет отменённое действие\r\n\r\nГорячие клавиши: ctrl + shift + z";
-			superToolTip11.Items.Add(toolTipTitleItem11);
-			superToolTip11.Items.Add(toolTipItem11);
-			this.btnRedo.SuperTip = superToolTip11;
+			toolTipTitleItem21.Text = "Повторить действие";
+			toolTipItem21.ImageOptions.Image = global::Furmanov.UI.Properties.Resources.redo;
+			toolTipItem21.LeftIndent = 6;
+			toolTipItem21.Text = "Повторяет отменённое действие\r\n\r\nГорячие клавиши: ctrl + shift + z";
+			superToolTip21.Items.Add(toolTipTitleItem21);
+			superToolTip21.Items.Add(toolTipItem21);
+			this.btnRedo.SuperTip = superToolTip21;
 			// 
 			// menuRedo
 			// 
@@ -461,145 +456,187 @@ namespace Furmanov.UI
 			this.statusBar.ItemLinks.Add(this.lblUser);
 			this.statusBar.ItemLinks.Add(this.btnLogin);
 			this.statusBar.ItemLinks.Add(this.btnLogOut);
-			this.statusBar.Location = new System.Drawing.Point(0, 715);
-			this.statusBar.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+			this.statusBar.Location = new System.Drawing.Point(0, 801);
+			this.statusBar.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
 			this.statusBar.Name = "statusBar";
 			this.statusBar.Ribbon = this.menuMain;
-			this.statusBar.Size = new System.Drawing.Size(1275, 28);
+			this.statusBar.Size = new System.Drawing.Size(1261, 30);
 			// 
-			// pnTabelMain
+			// pnMain
 			// 
-			this.pnTabelMain.Controls.Add(this.pnTabel);
-			this.pnTabelMain.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.pnTabelMain.Location = new System.Drawing.Point(0, 148);
-			this.pnTabelMain.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-			this.pnTabelMain.Name = "pnTabelMain";
-			this.pnTabelMain.ShowCaption = false;
-			this.pnTabelMain.Size = new System.Drawing.Size(1275, 567);
-			this.pnTabelMain.TabIndex = 2;
-			this.pnTabelMain.Text = "groupRp";
-			this.pnTabelMain.Visible = false;
+			this.pnMain.Controls.Add(this.sccMain);
+			this.pnMain.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.pnMain.Location = new System.Drawing.Point(0, 158);
+			this.pnMain.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
+			this.pnMain.Name = "pnMain";
+			this.pnMain.ShowCaption = false;
+			this.pnMain.Size = new System.Drawing.Size(1261, 643);
+			this.pnMain.TabIndex = 2;
+			this.pnMain.Text = "groupRp";
+			this.pnMain.Visible = false;
 			// 
-			// pnTabel
+			// sccMain
 			// 
-			this.pnTabel.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.pnTabel.FixedPanel = DevExpress.XtraEditors.SplitFixedPanel.Panel2;
-			this.pnTabel.Location = new System.Drawing.Point(2, 2);
-			this.pnTabel.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-			this.pnTabel.Name = "pnTabel";
-			this.pnTabel.Panel1.Controls.Add(this.pnReOps);
-			this.pnTabel.Panel1.Text = "Panel1";
-			this.pnTabel.Panel2.Controls.Add(this.pnTabels);
-			this.pnTabel.Panel2.Text = "Panel2";
-			this.pnTabel.Size = new System.Drawing.Size(1271, 563);
-			this.pnTabel.SplitterPosition = 240;
-			this.pnTabel.TabIndex = 2;
+			this.sccMain.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.sccMain.FixedPanel = DevExpress.XtraEditors.SplitFixedPanel.Panel2;
+			this.sccMain.Location = new System.Drawing.Point(2, 2);
+			this.sccMain.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
+			this.sccMain.Name = "sccMain";
+			this.sccMain.Panel1.Controls.Add(this.pnPays);
+			this.sccMain.Panel1.Text = "Panel1";
+			this.sccMain.Panel2.Controls.Add(this.pnWorkedDays);
+			this.sccMain.Panel2.Text = "Panel2";
+			this.sccMain.Size = new System.Drawing.Size(1257, 639);
+			this.sccMain.SplitterPosition = 240;
+			this.sccMain.TabIndex = 2;
 			// 
-			// pnReOps
+			// pnPays
 			// 
-			this.pnReOps.Controls.Add(this.treeResOp);
-			this.pnReOps.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.pnReOps.Location = new System.Drawing.Point(0, 0);
-			this.pnReOps.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-			this.pnReOps.Name = "pnReOps";
-			this.pnReOps.ShowCaption = false;
-			this.pnReOps.Size = new System.Drawing.Size(1019, 563);
-			this.pnReOps.TabIndex = 1;
-			this.pnReOps.Text = "groupRPInnerleft";
+			this.pnPays.Controls.Add(this.treeSalary);
+			this.pnPays.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.pnPays.Location = new System.Drawing.Point(0, 0);
+			this.pnPays.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
+			this.pnPays.Name = "pnPays";
+			this.pnPays.ShowCaption = false;
+			this.pnPays.Size = new System.Drawing.Size(1005, 639);
+			this.pnPays.TabIndex = 1;
+			this.pnPays.Text = "groupRPInnerleft";
 			// 
-			// resOPViewModelBindingSource1
+			// treeSalary
 			// 
-			this.resOPViewModelBindingSource1.DataSource = typeof(SalaryPayVisual);
-			// 
-			// treeResOp
-			// 
-			this.treeResOp.Appearance.Empty.BorderColor = System.Drawing.Color.Black;
-			this.treeResOp.Appearance.Empty.Options.UseBorderColor = true;
-			this.treeResOp.Appearance.FocusedRow.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-			this.treeResOp.Appearance.FocusedRow.Options.UseBackColor = true;
-			this.treeResOp.Appearance.HideSelectionRow.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-			this.treeResOp.Appearance.HideSelectionRow.Options.UseBackColor = true;
-			this.treeResOp.Appearance.SelectedRow.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-			this.treeResOp.Appearance.SelectedRow.Options.UseBackColor = true;
-			this.treeResOp.Columns.AddRange(new DevExpress.XtraTreeList.Columns.TreeListColumn[] {
+			this.treeSalary.Appearance.Empty.BorderColor = System.Drawing.Color.Black;
+			this.treeSalary.Appearance.Empty.Options.UseBorderColor = true;
+			this.treeSalary.Appearance.FocusedRow.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+			this.treeSalary.Appearance.FocusedRow.Options.UseBackColor = true;
+			this.treeSalary.Appearance.HideSelectionRow.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+			this.treeSalary.Appearance.HideSelectionRow.Options.UseBackColor = true;
+			this.treeSalary.Appearance.SelectedRow.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+			this.treeSalary.Appearance.SelectedRow.Options.UseBackColor = true;
+			this.treeSalary.Columns.AddRange(new DevExpress.XtraTreeList.Columns.TreeListColumn[] {
             this.colName,
             this.colPhone,
             this.colPositionName,
             this.colSalary,
-            this.colOfficialSalary,
-            this.colIsStaff,
-            this.colRateDays,
-            this.colFactDays,
-            this.colFactSalary,
-            this.colAvans,
+            this.colAdvance,
             this.colPenalty,
             this.colPremium,
             this.colComment,
-            this.colMedBook,
-            this.colSpecWear});
-			this.treeResOp.CustomizationFormBounds = new System.Drawing.Rectangle(1629, 793, 266, 252);
-			this.treeResOp.DataSource = this.resOPViewModelBindingSource1;
-			this.treeResOp.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.treeResOp.ImageIndexFieldName = "Type";
-			this.treeResOp.Location = new System.Drawing.Point(2, 2);
-			this.treeResOp.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-			this.treeResOp.MinWidth = 23;
-			this.treeResOp.Name = "treeResOp";
-			this.treeResOp.OptionsBehavior.PopulateServiceColumns = true;
-			this.treeResOp.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
+            this.colRateDays,
+            this.colFactDays,
+            this.colSalaryPay});
+			this.treeSalary.CustomizationFormBounds = new System.Drawing.Rectangle(1629, 793, 266, 252);
+			this.treeSalary.DataSource = this.salaryPayBindingSource;
+			this.treeSalary.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.treeSalary.ImageIndexFieldName = "Type";
+			this.treeSalary.KeyFieldName = "VisualId";
+			this.treeSalary.Location = new System.Drawing.Point(2, 2);
+			this.treeSalary.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
+			this.treeSalary.MinWidth = 23;
+			this.treeSalary.Name = "treeSalary";
+			this.treeSalary.ParentFieldName = "ParentId";
+			this.treeSalary.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
             this.riPositions,
             this.riResourceNames});
-			this.treeResOp.SelectImageList = this.imageCollection;
-			this.treeResOp.Size = new System.Drawing.Size(1015, 559);
-			this.treeResOp.TabIndex = 7;
-			this.treeResOp.TreeLevelWidth = 21;
-			this.treeResOp.NodeCellStyle += new DevExpress.XtraTreeList.GetCustomNodeCellStyleEventHandler(this.TreeResOp_NodeCellStyle);
-			this.treeResOp.FocusedNodeChanged += new DevExpress.XtraTreeList.FocusedNodeChangedEventHandler(this.TreeResOp_FocusedNodeChanged);
-			this.treeResOp.CustomDrawNodeCell += new DevExpress.XtraTreeList.CustomDrawNodeCellEventHandler(this.TreeResOp_CustomDrawNodeCell);
-			this.treeResOp.CellValueChanging += new DevExpress.XtraTreeList.CellValueChangedEventHandler(this.TreeResOp_CellValueChanging);
-			this.treeResOp.CellValueChanged += new DevExpress.XtraTreeList.CellValueChangedEventHandler(this.TreeResOp_CellValueChanged);
-			this.treeResOp.ShowingEditor += new System.ComponentModel.CancelEventHandler(this.TreeResOp_ShowingEditor);
-			this.treeResOp.DoubleClick += new System.EventHandler(this.TreeResOp_DoubleClick);
-			this.treeResOp.Enter += new System.EventHandler(this.TreeResOp_Enter);
-			this.treeResOp.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TreeResOp_KeyDown);
+			this.treeSalary.SelectImageList = this.imageCollection;
+			this.treeSalary.Size = new System.Drawing.Size(1001, 635);
+			this.treeSalary.TabIndex = 7;
+			this.treeSalary.TreeLevelWidth = 21;
+			this.treeSalary.NodeCellStyle += new DevExpress.XtraTreeList.GetCustomNodeCellStyleEventHandler(this.TreePay_NodeCellStyle);
+			this.treeSalary.FocusedNodeChanged += new DevExpress.XtraTreeList.FocusedNodeChangedEventHandler(this.TreePay_FocusedNodeChanged);
+			this.treeSalary.CustomDrawNodeCell += new DevExpress.XtraTreeList.CustomDrawNodeCellEventHandler(this.TreePay_CustomDrawNodeCell);
+			this.treeSalary.CellValueChanging += new DevExpress.XtraTreeList.CellValueChangedEventHandler(this.TreePay_CellValueChanging);
+			this.treeSalary.CellValueChanged += new DevExpress.XtraTreeList.CellValueChangedEventHandler(this.TreePay_CellValueChanged);
+			this.treeSalary.ShowingEditor += new System.ComponentModel.CancelEventHandler(this.TreePay_ShowingEditor);
+			this.treeSalary.DoubleClick += new System.EventHandler(this.TreePay_DoubleClick);
+			this.treeSalary.Enter += new System.EventHandler(this.TreePay_Enter);
+			this.treeSalary.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TreePay_KeyDown);
 			// 
 			// colName
 			// 
-			this.colName.ColumnEdit = this.riResourceNames;
 			this.colName.FieldName = "Name";
-			this.colName.MinWidth = 23;
 			this.colName.Name = "colName";
+			this.colName.OptionsColumn.AllowEdit = false;
 			this.colName.Visible = true;
 			this.colName.VisibleIndex = 0;
-			this.colName.Width = 233;
-			// 
-			// riResourceNames
-			// 
-			this.riResourceNames.AutoHeight = false;
-			this.riResourceNames.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-			this.riResourceNames.Name = "riResourceNames";
-			this.riResourceNames.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
 			// 
 			// colPhone
 			// 
 			this.colPhone.FieldName = "Phone";
-			this.colPhone.MinWidth = 23;
 			this.colPhone.Name = "colPhone";
 			this.colPhone.OptionsColumn.AllowEdit = false;
 			this.colPhone.Visible = true;
 			this.colPhone.VisibleIndex = 1;
-			this.colPhone.Width = 76;
 			// 
 			// colPositionName
 			// 
-			this.colPositionName.ColumnEdit = this.riPositions;
 			this.colPositionName.FieldName = "PositionName";
-			this.colPositionName.MinWidth = 23;
 			this.colPositionName.Name = "colPositionName";
+			this.colPositionName.OptionsColumn.AllowEdit = false;
 			this.colPositionName.Visible = true;
 			this.colPositionName.VisibleIndex = 2;
-			this.colPositionName.Width = 76;
+			// 
+			// colSalary
+			// 
+			this.colSalary.FieldName = "Salary";
+			this.colSalary.Name = "colSalary";
+			this.colSalary.OptionsColumn.AllowEdit = false;
+			this.colSalary.Visible = true;
+			this.colSalary.VisibleIndex = 3;
+			// 
+			// colAdvance
+			// 
+			this.colAdvance.FieldName = "Advance";
+			this.colAdvance.Name = "colAdvance";
+			this.colAdvance.Visible = true;
+			this.colAdvance.VisibleIndex = 7;
+			// 
+			// colPenalty
+			// 
+			this.colPenalty.FieldName = "Penalty";
+			this.colPenalty.Name = "colPenalty";
+			this.colPenalty.Visible = true;
+			this.colPenalty.VisibleIndex = 8;
+			// 
+			// colPremium
+			// 
+			this.colPremium.FieldName = "Premium";
+			this.colPremium.Name = "colPremium";
+			this.colPremium.Visible = true;
+			this.colPremium.VisibleIndex = 9;
+			// 
+			// colComment
+			// 
+			this.colComment.FieldName = "Comment";
+			this.colComment.Name = "colComment";
+			this.colComment.Visible = true;
+			this.colComment.VisibleIndex = 10;
+			// 
+			// colRateDays
+			// 
+			this.colRateDays.FieldName = "RateDays";
+			this.colRateDays.Name = "colRateDays";
+			this.colRateDays.Visible = true;
+			this.colRateDays.VisibleIndex = 5;
+			// 
+			// colFactDays
+			// 
+			this.colFactDays.FieldName = "FactDays";
+			this.colFactDays.Name = "colFactDays";
+			this.colFactDays.OptionsColumn.AllowEdit = false;
+			this.colFactDays.Visible = true;
+			this.colFactDays.VisibleIndex = 6;
+			// 
+			// colSalaryPay
+			// 
+			this.colSalaryPay.FieldName = "SalaryPay";
+			this.colSalaryPay.Name = "colSalaryPay";
+			this.colSalaryPay.OptionsColumn.AllowEdit = false;
+			this.colSalaryPay.Visible = true;
+			this.colSalaryPay.VisibleIndex = 4;
+			// 
+			// salaryPayBindingSource
+			// 
+			this.salaryPayBindingSource.DataSource = typeof(Furmanov.Dal.Dto.SalaryPayVisual);
 			// 
 			// riPositions
 			// 
@@ -609,120 +646,13 @@ namespace Furmanov.UI
 			this.riPositions.Name = "riPositions";
 			this.riPositions.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
 			// 
-			// colSalary
+			// riResourceNames
 			// 
-			this.colSalary.FieldName = "Salary";
-			this.colSalary.MinWidth = 23;
-			this.colSalary.Name = "colSalary";
-			this.colSalary.OptionsColumn.AllowEdit = false;
-			this.colSalary.Visible = true;
-			this.colSalary.VisibleIndex = 3;
-			this.colSalary.Width = 87;
-			// 
-			// colOfficialSalary
-			// 
-			this.colOfficialSalary.FieldName = "OfficialSalary";
-			this.colOfficialSalary.MinWidth = 23;
-			this.colOfficialSalary.Name = "colOfficialSalary";
-			this.colOfficialSalary.OptionsColumn.AllowEdit = false;
-			this.colOfficialSalary.ToolTip = "Официальный оклад";
-			this.colOfficialSalary.Visible = true;
-			this.colOfficialSalary.VisibleIndex = 4;
-			this.colOfficialSalary.Width = 77;
-			// 
-			// colIsStaff
-			// 
-			this.colIsStaff.FieldName = "IsStaff";
-			this.colIsStaff.MinWidth = 23;
-			this.colIsStaff.Name = "colIsStaff";
-			this.colIsStaff.OptionsColumn.AllowEdit = false;
-			this.colIsStaff.Visible = true;
-			this.colIsStaff.VisibleIndex = 5;
-			this.colIsStaff.Width = 87;
-			// 
-			// colRateDays
-			// 
-			this.colRateDays.FieldName = "RateDays";
-			this.colRateDays.MinWidth = 23;
-			this.colRateDays.Name = "colRateDays";
-			this.colRateDays.Visible = true;
-			this.colRateDays.VisibleIndex = 6;
-			this.colRateDays.Width = 77;
-			// 
-			// colFactDays
-			// 
-			this.colFactDays.FieldName = "FactDays";
-			this.colFactDays.MinWidth = 23;
-			this.colFactDays.Name = "colFactDays";
-			this.colFactDays.OptionsColumn.AllowEdit = false;
-			this.colFactDays.Visible = true;
-			this.colFactDays.VisibleIndex = 7;
-			this.colFactDays.Width = 77;
-			// 
-			// colFactSalary
-			// 
-			this.colFactSalary.FieldName = "SalaryPay";
-			this.colFactSalary.MinWidth = 23;
-			this.colFactSalary.Name = "colFactSalary";
-			this.colFactSalary.OptionsColumn.AllowEdit = false;
-			this.colFactSalary.Visible = true;
-			this.colFactSalary.VisibleIndex = 8;
-			this.colFactSalary.Width = 77;
-			// 
-			// colAvans
-			// 
-			this.colAvans.FieldName = "Advance";
-			this.colAvans.MinWidth = 23;
-			this.colAvans.Name = "colAvans";
-			this.colAvans.Visible = true;
-			this.colAvans.VisibleIndex = 9;
-			this.colAvans.Width = 77;
-			// 
-			// colPenalty
-			// 
-			this.colPenalty.FieldName = "Penalty";
-			this.colPenalty.MinWidth = 23;
-			this.colPenalty.Name = "colPenalty";
-			this.colPenalty.Visible = true;
-			this.colPenalty.VisibleIndex = 10;
-			this.colPenalty.Width = 77;
-			// 
-			// colPremium
-			// 
-			this.colPremium.FieldName = "Premium";
-			this.colPremium.MinWidth = 23;
-			this.colPremium.Name = "colPremium";
-			this.colPremium.Visible = true;
-			this.colPremium.VisibleIndex = 11;
-			this.colPremium.Width = 77;
-			// 
-			// colComment
-			// 
-			this.colComment.FieldName = "Comment";
-			this.colComment.MinWidth = 23;
-			this.colComment.Name = "colComment";
-			this.colComment.Width = 77;
-			// 
-			// colMedBook
-			// 
-			this.colMedBook.FieldName = "MedBook";
-			this.colMedBook.MinWidth = 23;
-			this.colMedBook.Name = "colMedBook";
-			this.colMedBook.OptionsColumn.AllowEdit = false;
-			this.colMedBook.ToolTip = "Медицинская книжка";
-			this.colMedBook.Visible = true;
-			this.colMedBook.VisibleIndex = 12;
-			this.colMedBook.Width = 87;
-			// 
-			// colSpecWear
-			// 
-			this.colSpecWear.FieldName = "SpecWear";
-			this.colSpecWear.MinWidth = 23;
-			this.colSpecWear.Name = "colSpecWear";
-			this.colSpecWear.OptionsColumn.AllowEdit = false;
-			this.colSpecWear.Visible = true;
-			this.colSpecWear.VisibleIndex = 13;
-			this.colSpecWear.Width = 87;
+			this.riResourceNames.AutoHeight = false;
+			this.riResourceNames.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+			this.riResourceNames.Name = "riResourceNames";
+			this.riResourceNames.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
 			// 
 			// imageCollection
 			// 
@@ -731,79 +661,81 @@ namespace Furmanov.UI
 			this.imageCollection.Images.SetKeyName(1, "Object16.png");
 			this.imageCollection.Images.SetKeyName(2, "Resource.png");
 			// 
-			// pnTabels
+			// pnWorkedDays
 			// 
-			this.pnTabels.Controls.Add(this.gcTabels);
-			this.pnTabels.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.pnTabels.Location = new System.Drawing.Point(0, 0);
-			this.pnTabels.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-			this.pnTabels.Name = "pnTabels";
-			this.pnTabels.ShowCaption = false;
-			this.pnTabels.Size = new System.Drawing.Size(240, 563);
-			this.pnTabels.TabIndex = 1;
-			this.pnTabels.Text = "groupRPInnerRight";
+			this.pnWorkedDays.Controls.Add(this.gcWorkedDays);
+			this.pnWorkedDays.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.pnWorkedDays.Location = new System.Drawing.Point(0, 0);
+			this.pnWorkedDays.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
+			this.pnWorkedDays.Name = "pnWorkedDays";
+			this.pnWorkedDays.ShowCaption = false;
+			this.pnWorkedDays.Size = new System.Drawing.Size(240, 639);
+			this.pnWorkedDays.TabIndex = 1;
+			this.pnWorkedDays.Text = "groupRPInnerRight";
 			// 
-			// gcTabels
+			// gcWorkedDays
 			// 
-			this.gcTabels.DataSource = this.tabelViewModelBindingSource;
-			this.gcTabels.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.gcTabels.EmbeddedNavigator.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-			this.gcTabels.Location = new System.Drawing.Point(2, 2);
-			this.gcTabels.MainView = this.gridTabels;
-			this.gcTabels.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-			this.gcTabels.Name = "gcTabels";
-			this.gcTabels.Size = new System.Drawing.Size(236, 559);
-			this.gcTabels.TabIndex = 0;
-			this.gcTabels.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
-            this.gridTabels});
+			this.gcWorkedDays.DataSource = this.workedDayBindingSource;
+			this.gcWorkedDays.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.gcWorkedDays.EmbeddedNavigator.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
+			this.gcWorkedDays.Location = new System.Drawing.Point(2, 2);
+			this.gcWorkedDays.MainView = this.gvWorkedDays;
+			this.gcWorkedDays.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
+			this.gcWorkedDays.Name = "gcWorkedDays";
+			this.gcWorkedDays.Size = new System.Drawing.Size(236, 635);
+			this.gcWorkedDays.TabIndex = 0;
+			this.gcWorkedDays.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
+            this.gvWorkedDays});
 			// 
-			// tabelViewModelBindingSource
+			// workedDayBindingSource
 			// 
-			this.tabelViewModelBindingSource.DataSource = typeof(WorkedDayVisual);
+			this.workedDayBindingSource.DataSource = typeof(Furmanov.Dal.Dto.WorkedDayVisual);
 			// 
-			// gridTabels
+			// gvWorkedDays
 			// 
-			this.gridTabels.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
+			this.gvWorkedDays.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
+            this.colIsWorked,
             this.colDate});
-			this.gridTabels.DetailHeight = 404;
-			this.gridTabels.FixedLineWidth = 3;
-			this.gridTabels.GridControl = this.gcTabels;
-			this.gridTabels.Name = "gridTabels";
-			this.gridTabels.OptionsBehavior.AllowAddRows = DevExpress.Utils.DefaultBoolean.False;
-			this.gridTabels.OptionsBehavior.AllowDeleteRows = DevExpress.Utils.DefaultBoolean.False;
-			this.gridTabels.OptionsBehavior.AllowFixedGroups = DevExpress.Utils.DefaultBoolean.False;
-			this.gridTabels.OptionsCustomization.AllowColumnMoving = false;
-			this.gridTabels.OptionsCustomization.AllowGroup = false;
-			this.gridTabels.OptionsCustomization.AllowSort = false;
-			this.gridTabels.OptionsView.ShowFooter = true;
-			this.gridTabels.OptionsView.ShowGroupPanel = false;
-			this.gridTabels.RowStyle += new DevExpress.XtraGrid.Views.Grid.RowStyleEventHandler(this.GridTabels_RowStyle);
-			this.gridTabels.CellValueChanging += new DevExpress.XtraGrid.Views.Base.CellValueChangedEventHandler(this.GridTabels_CellValueChanging);
+			this.gvWorkedDays.DetailHeight = 458;
+			this.gvWorkedDays.FixedLineWidth = 3;
+			this.gvWorkedDays.GridControl = this.gcWorkedDays;
+			this.gvWorkedDays.Name = "gvWorkedDays";
+			this.gvWorkedDays.OptionsBehavior.AllowAddRows = DevExpress.Utils.DefaultBoolean.False;
+			this.gvWorkedDays.OptionsBehavior.AllowDeleteRows = DevExpress.Utils.DefaultBoolean.False;
+			this.gvWorkedDays.OptionsBehavior.AllowFixedGroups = DevExpress.Utils.DefaultBoolean.False;
+			this.gvWorkedDays.OptionsCustomization.AllowColumnMoving = false;
+			this.gvWorkedDays.OptionsCustomization.AllowGroup = false;
+			this.gvWorkedDays.OptionsCustomization.AllowSort = false;
+			this.gvWorkedDays.OptionsView.ShowFooter = true;
+			this.gvWorkedDays.OptionsView.ShowGroupPanel = false;
+			this.gvWorkedDays.RowStyle += new DevExpress.XtraGrid.Views.Grid.RowStyleEventHandler(this.GvWorkedDays_RowStyle);
+			this.gvWorkedDays.CellValueChanging += new DevExpress.XtraGrid.Views.Base.CellValueChangedEventHandler(this.GvWorkedDays_CellValueChanging);
+			// 
+			// colIsWorked
+			// 
+			this.colIsWorked.FieldName = "IsWorked";
+			this.colIsWorked.Name = "colIsWorked";
+			this.colIsWorked.Visible = true;
+			this.colIsWorked.VisibleIndex = 1;
 			// 
 			// colDate
 			// 
 			this.colDate.FieldName = "Date";
-			this.colDate.MinWidth = 23;
 			this.colDate.Name = "colDate";
 			this.colDate.OptionsColumn.AllowEdit = false;
 			this.colDate.Visible = true;
 			this.colDate.VisibleIndex = 0;
-			this.colDate.Width = 87;
-			// 
-			// resOpViewModelBindingSource
-			// 
-			this.resOpViewModelBindingSource.DataSource = typeof(SalaryPayVisual);
 			// 
 			// MainView
 			// 
-			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(1275, 743);
-			this.Controls.Add(this.pnTabelMain);
+			this.ClientSize = new System.Drawing.Size(1261, 831);
+			this.Controls.Add(this.pnMain);
 			this.Controls.Add(this.statusBar);
 			this.Controls.Add(this.menuMain);
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-			this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+			this.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
 			this.Name = "MainView";
 			this.Text = "Табель учёта рабочего времени";
 			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainView_FormClosed);
@@ -811,23 +743,22 @@ namespace Furmanov.UI
 			((System.ComponentModel.ISupportInitialize)(this.riMonths)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.menuUndo)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.menuRedo)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.pnTabelMain)).EndInit();
-			this.pnTabelMain.ResumeLayout(false);
-			((System.ComponentModel.ISupportInitialize)(this.pnTabel)).EndInit();
-			this.pnTabel.ResumeLayout(false);
-			((System.ComponentModel.ISupportInitialize)(this.pnReOps)).EndInit();
-			this.pnReOps.ResumeLayout(false);
-			((System.ComponentModel.ISupportInitialize)(this.resOPViewModelBindingSource1)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.treeResOp)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.riResourceNames)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.pnMain)).EndInit();
+			this.pnMain.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.sccMain)).EndInit();
+			this.sccMain.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.pnPays)).EndInit();
+			this.pnPays.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.treeSalary)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.salaryPayBindingSource)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.riPositions)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.riResourceNames)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.imageCollection)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.pnTabels)).EndInit();
-			this.pnTabels.ResumeLayout(false);
-			((System.ComponentModel.ISupportInitialize)(this.gcTabels)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.tabelViewModelBindingSource)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.gridTabels)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.resOpViewModelBindingSource)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.pnWorkedDays)).EndInit();
+			this.pnWorkedDays.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.gcWorkedDays)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.workedDayBindingSource)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.gvWorkedDays)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -839,39 +770,24 @@ namespace Furmanov.UI
 		private DevExpress.XtraBars.Ribbon.RibbonPage pageMain;
 		private DevExpress.XtraBars.Ribbon.RibbonPageGroup pageResourses;
 		private DevExpress.XtraBars.Ribbon.RibbonStatusBar statusBar;
-		private DevExpress.XtraEditors.GroupControl pnReOps;
-		private DevExpress.XtraEditors.GroupControl pnTabelMain;
-		private DevExpress.XtraEditors.SplitContainerControl pnTabel;
-		private DevExpress.XtraGrid.GridControl gcTabels;
-		private DevExpress.XtraGrid.Views.Grid.GridView gridTabels;
+		private DevExpress.XtraEditors.GroupControl pnPays;
+		private DevExpress.XtraEditors.GroupControl pnMain;
+		private DevExpress.XtraEditors.SplitContainerControl sccMain;
+		private DevExpress.XtraGrid.GridControl gcWorkedDays;
+		private DevExpress.XtraGrid.Views.Grid.GridView gvWorkedDays;
 		private DevExpress.XtraBars.BarButtonItem btnEditResource;
 		private DevExpress.XtraBars.BarButtonItem btnCreateResource;
 		private DevExpress.XtraBars.BarButtonItem btnVedomostTotal;
 		private DevExpress.XtraBars.Ribbon.RibbonPageGroup pageMonth;
 		private DevExpress.XtraBars.Ribbon.RibbonPageGroup pageVedomost;
-		private DevExpress.XtraEditors.GroupControl pnTabels;
+		private DevExpress.XtraEditors.GroupControl pnWorkedDays;
 		private DevExpress.XtraBars.BarButtonItem btnWorkDaysOnly;
 		private DevExpress.XtraBars.Ribbon.RibbonPageGroup pageDaysMode;
 		private DevExpress.XtraBars.BarButtonItem btnAllDays;
 		private DevExpress.XtraBars.BarStaticItem lblVersion;
 		private DevExpress.XtraBars.BarStaticItem lblUser;
 		private DevExpress.XtraBars.BarButtonItem btnLogOut;
-		private DevExpress.XtraGrid.Columns.GridColumn colDate;
-		private DevExpress.XtraTreeList.TreeList treeResOp;
-		private DevExpress.XtraTreeList.Columns.TreeListColumn colName;
-		private DevExpress.XtraTreeList.Columns.TreeListColumn colPhone;
-		private DevExpress.XtraTreeList.Columns.TreeListColumn colPositionName;
-		private DevExpress.XtraTreeList.Columns.TreeListColumn colOfficialSalary;
-		private DevExpress.XtraTreeList.Columns.TreeListColumn colRateDays;
-		private DevExpress.XtraTreeList.Columns.TreeListColumn colFactDays;
-		private DevExpress.XtraTreeList.Columns.TreeListColumn colFactSalary;
-		private DevExpress.XtraTreeList.Columns.TreeListColumn colAvans;
-		private DevExpress.XtraTreeList.Columns.TreeListColumn colPenalty;
-		private DevExpress.XtraTreeList.Columns.TreeListColumn colPremium;
-		private DevExpress.XtraTreeList.Columns.TreeListColumn colComment;
-		private System.Windows.Forms.BindingSource resOpViewModelBindingSource;
-		private System.Windows.Forms.BindingSource tabelViewModelBindingSource;
-		private System.Windows.Forms.BindingSource resOPViewModelBindingSource1;
+		private DevExpress.XtraTreeList.TreeList treeSalary;
 		private DevExpress.Utils.ImageCollection imageCollection;
 		private DevExpress.XtraBars.BarButtonItem btnDeleteResource;
 		private DevExpress.XtraBars.BarButtonItem btnLogin;
@@ -879,15 +795,26 @@ namespace Furmanov.UI
 		private DevExpress.XtraEditors.Repository.RepositoryItemComboBox riResourceNames;
 		private DevExpress.XtraBars.BarEditItem cbMonth;
 		private DevExpress.XtraEditors.Repository.RepositoryItemComboBox riMonths;
-		private DevExpress.XtraTreeList.Columns.TreeListColumn colIsStaff;
-		private DevExpress.XtraTreeList.Columns.TreeListColumn colSalary;
-		private DevExpress.XtraTreeList.Columns.TreeListColumn colMedBook;
-		private DevExpress.XtraTreeList.Columns.TreeListColumn colSpecWear;
 		private DevExpress.XtraBars.BarButtonItem btnVedomostForObject;
 		private DevExpress.XtraBars.BarButtonItem btnDeleteAllDays;
 		private DevExpress.XtraBars.BarButtonItem btnUndo;
 		private DevExpress.XtraBars.BarButtonItem btnRedo;
 		private DevExpress.XtraBars.PopupMenu menuRedo;
 		private DevExpress.XtraBars.PopupMenu menuUndo;
+		private System.Windows.Forms.BindingSource workedDayBindingSource;
+		private DevExpress.XtraGrid.Columns.GridColumn colIsWorked;
+		private DevExpress.XtraGrid.Columns.GridColumn colDate;
+		private DevExpress.XtraTreeList.Columns.TreeListColumn colName;
+		private DevExpress.XtraTreeList.Columns.TreeListColumn colPhone;
+		private DevExpress.XtraTreeList.Columns.TreeListColumn colPositionName;
+		private DevExpress.XtraTreeList.Columns.TreeListColumn colSalary;
+		private DevExpress.XtraTreeList.Columns.TreeListColumn colAdvance;
+		private DevExpress.XtraTreeList.Columns.TreeListColumn colPenalty;
+		private DevExpress.XtraTreeList.Columns.TreeListColumn colPremium;
+		private DevExpress.XtraTreeList.Columns.TreeListColumn colComment;
+		private DevExpress.XtraTreeList.Columns.TreeListColumn colRateDays;
+		private DevExpress.XtraTreeList.Columns.TreeListColumn colFactDays;
+		private DevExpress.XtraTreeList.Columns.TreeListColumn colSalaryPay;
+		private System.Windows.Forms.BindingSource salaryPayBindingSource;
 	}
 }

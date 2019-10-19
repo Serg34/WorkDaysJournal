@@ -6,11 +6,11 @@ using System.Reflection;
 
 namespace Furmanov.Dal.Queries
 {
-	public static class QueriesService
+	public static class SqlFiles
 	{
-		public static IDictionary<string, string> Queries { get; }
+		private static readonly IDictionary<string, string> _queries;
 
-		static QueriesService()
+		static SqlFiles()
 		{
 			string GetShortResourceName(string r)
 			{
@@ -21,7 +21,7 @@ namespace Furmanov.Dal.Queries
 				return res;
 			}
 
-			var assembly = Assembly.GetEntryAssembly();
+			var assembly = Assembly.GetExecutingAssembly();
 			var resources = assembly?.GetManifestResourceNames()
 				.Where(n => n.EndsWith(".sql", true, CultureInfo.CurrentCulture))
 				.Select(r => new
@@ -31,7 +31,8 @@ namespace Furmanov.Dal.Queries
 				})
 				.ToArray();
 
-			Queries = resources?.ToDictionary(r => r.key, r => r.query);
+			_queries = resources?.ToDictionary(r => r.key, r => r.query);
 		}
+		public static string Get(string fileName) => _queries[fileName];
 	}
 }

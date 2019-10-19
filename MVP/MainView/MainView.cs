@@ -13,25 +13,23 @@ namespace Furmanov.MVP.MainView
 		event EventHandler Logging;
 		event EventHandler Logout;
 
-
 		event EventHandler<DateTime> ChangedMonth;
 		event EventHandler WorkDaysOnlyClick;
 		event EventHandler AllDaysClick;
 		event EventHandler DeletingAllDays;
 		event EventHandler<int> VedomostClick;
 
-		event EventHandler<UndoRedoEventArgs<SalaryPayVisual>> ChangedResOp;
-		event EventHandler<UndoRedoEventArgs<SalaryPayVisual>> ReplacingResource;
-		event EventHandler<SalaryPayVisual> SelectResource;
+		event EventHandler<UndoRedoEventArgs<SalaryPayVisual>> ChangedSalaryPay;
+		event EventHandler<SalaryPayVisual> SelectSalaryPay;
 
-		event EventHandler<WorkedDayVisual> ChangedTabel;
+		event EventHandler<WorkedDayVisual> ChangedWorkedDay;
 
 		event EventHandler<int> Undo;
 		event EventHandler<int> Redo;
 
 		void UpdateLogin(object sender, UserVisual user);
-		void UpdateAllResOps(object sender, MainViewModel viewModel);
-		void UpdateSelectedResOp(object sender, List<WorkedDayVisual> viewModel);
+		void UpdatePays(object sender, MainViewModel viewModel);
+		void UpdateDays(object sender, List<WorkedDayVisual> viewModel);
 		void UpdateUndoRedo(IEnumerable<string> undoItems, IEnumerable<string> redoItems);
 	}
 }

@@ -10,27 +10,19 @@ namespace Furmanov.MVP.MainView.UndoRedoCommands
 			_model = model;
 			_value = e.Value;
 			_prevValue = e.PevValue;
+			Name = $"Изменение оплаты сотруднику '{_value.Name}'";
 		}
 
 		private readonly IMainModel _model;
 		private readonly SalaryPayVisual _value;
 		private readonly SalaryPayVisual _prevValue;
 
-		/// <summary>
-		/// Name for MenuItem
-		/// </summary>
-		public string Name => $"Изменение оплаты сотруднику '{_value.Name}'";
+		public string Name { get; }
 
-		/// <summary>
-		/// Execute the command
-		/// </summary>
 		public void Execute()
 		{
 			_model.SaveResOp(_value);
 		}
-		/// <summary>
-		/// UnExecute the command
-		/// </summary>
 		public void UnExecute()
 		{
 			_model.SaveResOp(_prevValue);

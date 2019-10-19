@@ -18,7 +18,7 @@ namespace Linq2db_MVP_IoC_DevExpress_WinForm
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
 
-			var connectionString = "Server =.\\SQLExpress; Database = SwissClean; Trusted_Connection = True;";
+			var connectionString = "Server =.\\SQLExpress; Database = Furmanov; Trusted_Connection = True;";
 			var resolver = IoCContainerBuilder.Build(connectionString);
 
 			var model = resolver.Resolve<IMainModel>();

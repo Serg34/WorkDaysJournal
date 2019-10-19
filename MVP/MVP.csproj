@@ -46,7 +46,7 @@
     <Compile Include="IView.cs" />
     <Compile Include="Login\LoginModel.cs" />
     <Compile Include="Login\LoginPresenter.cs" />
-    <Compile Include="Login\LoginView.cs" />
+    <Compile Include="Login\ILoginView.cs" />
     <Compile Include="Login\LoginViewModel.cs" />
     <Compile Include="MainView\MainModel.cs" />
     <Compile Include="MainView\MainPresenter.cs" />

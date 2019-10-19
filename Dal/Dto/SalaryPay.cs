@@ -1,6 +1,7 @@
 ﻿using LinqToDB.Mapping;
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics;
 
 namespace Furmanov.Dal.Dto
 {
@@ -48,29 +49,46 @@ namespace Furmanov.Dal.Dto
 
 		[Column(Name = "FactDays")]
 		[Display(Name = "Факт")]
+		[Editable(false)]
 		public int? FactDays { get; set; }
 
 		[Column(Name = "SalaryPay")]
-		[Display(Name = "ЗП")]
+		[Display(Name = "Зарплата")]
+		[Editable(false)]
 		public decimal? SalaryPay { get; set; }
 	}
 	public enum ObjType { Project, Object, Salary }
-	public class SalaryPayVisual : SalaryPayDb, IViewModel
+
+	[DebuggerDisplay("{VisualId}")]
+	public class SalaryPayVisual : SalaryPayDb, IVisual
 	{
+		[Column(Name = "Type")]
 		public ObjType Type { get; set; }
-		public string ViewModelId { get; set; }
+
+		[Column(Name = "VisualId")]
+		public string VisualId { get; set; }
+
+		[Column(Name = "ParentId")]
 		public string ParentId { get; set; }
 
+		[Column(Name = "Name")]
 		[Display(Name = "ФИО")]
+		[Editable(false)]
 		public string Name { get; set; }
 
+		[Column(Name = "Phone")]
 		[Display(Name = "Телефон")]
+		[Editable(false)]
 		public string Phone { get; set; }
 
+		[Column(Name = "PositionName")]
 		[Display(Name = "Должность")]
+		[Editable(false)]
 		public string PositionName { get; set; }
 
+		[Column(Name = "Salary")]
 		[Display(Name = "Оклад")]
+		[Editable(false)]
 		public decimal Salary { get; set; }
 	}
 }

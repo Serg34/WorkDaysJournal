@@ -9,24 +9,33 @@ namespace Furmanov.MVP.MainView.UndoRedoCommands
 		public WorkedDayCmd(IMainModel model, WorkedDayVisual value)
 		{
 			_model = model;
+			_pay = _model.CurrentPay;
 			_value = value;
 			_prevValue = Cloner.DeepCopy(value);
 			_prevValue.IsWorked = !value.IsWorked;
+			Name = $"Изменение дня выхода для сотрудника '{_model.CurrentEmployeeName}'";
 		}
 
 		private readonly IMainModel _model;
+		private readonly SalaryPayVisual _pay;
 		private readonly WorkedDayVisual _value;
 		private readonly WorkedDayVisual _prevValue;
 
-		public string Name => $"Изменение дня выхода для сотрудника '{_model.CurrentEmployeeName}'";
+		public string Name { get; }
 
 		public void Execute()
 		{
-			_model.SaveWorkDays(_value);
+			var oldPay = _model.CurrentPay;
+			_model.CurrentPay = _pay;
+			_model.SaveWorkDay(_value);
+			_model.CurrentPay = oldPay;
 		}
 		public void UnExecute()
 		{
-			_model.SaveWorkDays(_prevValue);
+			var oldPay = _model.CurrentPay;
+			_model.CurrentPay = _pay;
+			_model.SaveWorkDay(_prevValue);
+			_model.CurrentPay = oldPay;
 		}
 	}
 }

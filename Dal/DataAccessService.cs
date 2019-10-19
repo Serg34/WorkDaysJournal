@@ -17,12 +17,12 @@ namespace Furmanov.Dal
 		void SaveAutoLoginPassword(LoginPassword loginPassword);
 		UserVisual GetUser(string login, string password);
 
-		List<SalaryPayVisual> GetSalaryPayVisuals(UserVisual user, DateTime month);
+		List<SalaryPayVisual> GetSalaryPays(UserVisual user, DateTime month);
 		void SaveSalaryPay(SalaryPayDb salaryPayDb);
 		void DeleteSalaryPay(SalaryPayDb salaryPayDb);
 
-		List<WorkedDayDb> GetTables(int resOpId, DateTime month);
-		void SaveTables(params WorkedDayVisual[] workedDayDb);
+		List<WorkedDayDb> GetWorkedDays(int resOpId, DateTime month);
+		void SaveWorkedDays(params WorkedDayVisual[] workedDayDb);
 		DataTable GetVedomost(UserVisual user, int objectId = 0);
 	}
 	#endregion
@@ -40,7 +40,7 @@ namespace Furmanov.Dal
 		{
 			using (var db = new DbDataContext(_connectionString))
 			{
-				var sql = QueriesService.Queries["User.sql"];
+				var sql = SqlFiles.Get("User.sql");
 				var res = db.Query<UserVisual>(sql,
 					new DataParameter("@login", login),
 					new DataParameter("@password", password))
@@ -65,18 +65,19 @@ namespace Furmanov.Dal
 			new XmlDataContractRepository<LoginPassword>(file).Save(loginPassword);
 		}
 
-		public List<SalaryPayVisual> GetSalaryPayVisuals(UserVisual user, DateTime month)
+		public List<SalaryPayVisual> GetSalaryPays(UserVisual user, DateTime month)
 		{
 			if (user == null) return new List<SalaryPayVisual>();
 
 			using (var db = new DbDataContext(_connectionString))
 			{
-				var sql = user.Role == Role.Manager ? QueriesService.Queries["SalaryPayViewForManager.sql"]
-					: QueriesService.Queries["SalaryPayViewForProjectManager.sql"];
+				var fileName = user.Role == Role.Manager ? "SalaryPayViewForManager.sql" 
+					: "SalaryPayViewForProjectManager.sql";
+				var sql = SqlFiles.Get(fileName);
 
-				var res = db.Query<SalaryPayVisual>(sql,
-						new DataParameter("@userId", user.Id),
-						new DataParameter("@month", month))
+				var res = db.Query<SalaryPayVisual>(sql, 
+					new DataParameter("@userId", user.Id), 
+					new DataParameter("@month", month.ToString("yyyyMMdd")))
 					.ToList();
 				return res;
 			}
@@ -96,7 +97,7 @@ namespace Furmanov.Dal
 			}
 		}
 
-		public List<WorkedDayDb> GetTables(int salaryPayId, DateTime month)
+		public List<WorkedDayDb> GetWorkedDays(int salaryPayId, DateTime month)
 		{
 			using (var db = new DbDataContext(_connectionString))
 			{
@@ -109,20 +110,29 @@ namespace Furmanov.Dal
 				return res;
 			}
 		}
-		public void SaveTables(params WorkedDayVisual[] workedDay)
+		public void SaveWorkedDays(params WorkedDayVisual[] workedDay)
 		{
 			using (var db = new DbDataContext(_connectionString))
 			{
-				db.Delete(workedDay
-					.Where(t => !t.IsWorked)
-					.Select(t => (WorkedDayDb)t));
+				var sqlNoWork = SqlFiles.Get("DeleteWorkDay.sql");
+				var noWork = workedDay.Where(t => !t.IsWorked).ToArray();
+				foreach (var day in noWork)
+				{
+					db.Execute(sqlNoWork, 
+						new DataParameter("@payId", day.SalaryPayId),
+						new DataParameter("@day", day.Date.ToString("yyyyMMdd")));
+				}
 
-				db.Merge(workedDay
-					.Where(t => t.IsWorked)
-					.Select(t => (WorkedDayDb)t));
+				var sqlWork = SqlFiles.Get("InsertWorkDay.sql");
+				var work = workedDay.Where(t => t.IsWorked).ToArray();
+				foreach (var day in work)
+				{
+					db.Execute(sqlWork, 
+						new DataParameter("@payId", day.SalaryPayId),
+						new DataParameter("@day", day.Date.ToString("yyyyMMdd")));
+				}
 			}
 		}
-
 
 		public DataTable GetVedomost(UserVisual user, int objectId = 0)
 		{

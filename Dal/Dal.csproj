@@ -49,26 +49,32 @@
     <Compile Include="ApplicationUser.cs" />
     <Compile Include="DataAccessService.cs" />
     <Compile Include="DbContext.cs" />
-    <Compile Include="Dto\IViewModel.cs" />
+    <Compile Include="Dto\IVisual.cs" />
     <Compile Include="Dto\LoginPassword.cs" />
     <Compile Include="Dto\SalaryPay.cs" />
     <Compile Include="Dto\WorkDays.cs" />
     <Compile Include="Dto\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Queries\_QueriesService.cs" />
+    <Compile Include="SqlFiles\SqlFiles.cs" />
     <Compile Include="XmlRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Queries\User.sql" />
+    <EmbeddedResource Include="SqlFiles\User.sql" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Queries\SalaryPayViewForProjectManager.sql" />
+    <EmbeddedResource Include="SqlFiles\SalaryPayViewForProjectManager.sql" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Queries\SalaryPayViewForManager.sql" />
+    <EmbeddedResource Include="SqlFiles\SalaryPayViewForManager.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="SqlFiles\DeleteWorkDay.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="SqlFiles\InsertWorkDay.sql" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

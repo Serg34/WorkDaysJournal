@@ -10,6 +10,7 @@ namespace Furmanov.MVP.MainView
 		private readonly IMainModel _model;
 		private readonly IMainView _view;
 		private readonly IUndoRedoService _undoService;
+		private LoginPresenter _loginPresenter;
 
 		public MainPresenter(IMainModel model, IMainView view, IUndoRedoService undoService)
 		{
@@ -24,10 +25,10 @@ namespace Furmanov.MVP.MainView
 			};
 			_model.SalaryPayUpdated += (sender, modelView) =>
 			{
-				_view.UpdateAllResOps(sender, modelView);
+				_view.UpdatePays(sender, modelView);
 				_view.UpdateUndoRedo(_undoService.UndoItems, _undoService.RedoItems);
 			};
-			_model.SelectedSalaryPay += (sender, modelView) => _view.UpdateSelectedResOp(sender, modelView);
+			_model.SelectedSalaryPay += (sender, modelView) => _view.UpdateDays(sender, modelView);
 			_model.Error += (sender, error) => _view.ShowError(error);
 
 			_view.Logging += (sender, args) => ShowLoginView(false);
@@ -64,13 +65,13 @@ namespace Furmanov.MVP.MainView
 				_undoService.Execute(cmd);
 			};
 
-			_view.ChangedResOp += (sender, args) =>
+			_view.ChangedSalaryPay += (sender, args) =>
 			{
 				var cmd = new SalaryPayCmd(_model, args);
 				_undoService.Execute(cmd);
 			};
-			_view.SelectResource += (sender, viewModel) => _model.SelectSalaryPay(viewModel);
-			_view.ChangedTabel += (sender, viewModel) =>
+			_view.SelectSalaryPay += (sender, viewModel) => _model.SelectSalaryPay(viewModel);
+			_view.ChangedWorkedDay += (sender, viewModel) =>
 			{
 				var cmd = new WorkedDayCmd(_model, viewModel);
 				_undoService.Execute(cmd);
@@ -89,7 +90,11 @@ namespace Furmanov.MVP.MainView
 		{
 			var model = _model.LoginModel;
 			var view = _view.LoginView;
-			new LoginPresenter(model, view, isStartApp);
+			if (_loginPresenter == null)
+			{
+				_loginPresenter = new LoginPresenter(model, view);
+			}
+			_loginPresenter.ShowView(isStartApp);
 		}
 	}
 }
