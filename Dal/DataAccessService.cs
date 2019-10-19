@@ -15,15 +15,15 @@ namespace Furmanov.Dal
 	{
 		LoginPassword GetAutoLoginPassword();
 		void SaveAutoLoginPassword(LoginPassword loginPassword);
-		UserVisual GetUser(string login, string password);
+		UserViewModel GetUser(string login, string password);
 
-		List<SalaryPayVisual> GetSalaryPays(UserVisual user, DateTime month);
+		List<SalaryPayViewModel> GetSalaryPays(UserViewModel user, DateTime month);
 		void SaveSalaryPay(SalaryPayDb salaryPayDb);
 		void DeleteSalaryPay(SalaryPayDb salaryPayDb);
 
 		List<WorkedDayDb> GetWorkedDays(int resOpId, DateTime month);
-		void SaveWorkedDays(params WorkedDayVisual[] workedDayDb);
-		DataTable Report(UserVisual user, int objectId = 0);
+		void SaveWorkedDays(params WorkedDayViewModel[] workedDayDb);
+		DataTable Report(UserViewModel user, int objectId = 0);
 	}
 	#endregion
 
@@ -36,12 +36,12 @@ namespace Furmanov.Dal
 			_connectionString = connectionString;
 		}
 
-		public UserVisual GetUser(string login, string password)
+		public UserViewModel GetUser(string login, string password)
 		{
 			using (var db = new DbDataContext(_connectionString))
 			{
 				var sql = SqlFiles.Get("User.sql");
-				var res = db.Query<UserVisual>(sql,
+				var res = db.Query<UserViewModel>(sql,
 					new DataParameter("@login", login),
 					new DataParameter("@password", password))
 					.FirstOrDefault();
@@ -65,9 +65,9 @@ namespace Furmanov.Dal
 			new XmlRepository<LoginPassword>(file).Save(loginPassword);
 		}
 
-		public List<SalaryPayVisual> GetSalaryPays(UserVisual user, DateTime month)
+		public List<SalaryPayViewModel> GetSalaryPays(UserViewModel user, DateTime month)
 		{
-			if (user == null) return new List<SalaryPayVisual>();
+			if (user == null) return new List<SalaryPayViewModel>();
 
 			using (var db = new DbDataContext(_connectionString))
 			{
@@ -75,7 +75,7 @@ namespace Furmanov.Dal
 					: "SalaryPayViewForProjectManager.sql";
 				var sql = SqlFiles.Get(fileName);
 
-				var res = db.Query<SalaryPayVisual>(sql,
+				var res = db.Query<SalaryPayViewModel>(sql,
 					new DataParameter("@userId", user.Id),
 					new DataParameter("@month", month.ToString("yyyyMMdd")))
 					.ToList();
@@ -110,7 +110,7 @@ namespace Furmanov.Dal
 				return res;
 			}
 		}
-		public void SaveWorkedDays(params WorkedDayVisual[] workedDay)
+		public void SaveWorkedDays(params WorkedDayViewModel[] workedDay)
 		{
 			using (var db = new DbDataContext(_connectionString))
 			{
@@ -134,7 +134,7 @@ namespace Furmanov.Dal
 			}
 		}
 
-		public DataTable Report(UserVisual user, int objectId = 0)
+		public DataTable Report(UserViewModel user, int objectId = 0)
 		{
 			throw new NotImplementedException();
 		}

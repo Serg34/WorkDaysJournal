@@ -6,9 +6,9 @@ namespace Furmanov.MVP.MainView.ViewModels
 {
 	public class MainViewModel
 	{
-		public UserVisual User { get; set; }
+		public UserViewModel User { get; set; }
 		public DateTime Month { get; set; }
-		public List<SalaryPayVisual> SalaryPays { get; set; }
-		public List<WorkedDayVisual> WorkedDays { get; set; }
+		public List<SalaryPayViewModel> SalaryPays { get; set; }
+		public List<WorkedDayViewModel> WorkedDays { get; set; }
 	}
 }

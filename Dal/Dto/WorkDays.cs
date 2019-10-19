@@ -19,7 +19,7 @@ namespace Furmanov.Dal.Dto
 		public DateTime Date { get; set; }
 	}
 
-	public class WorkedDayVisual : WorkedDayDb
+	public class WorkedDayViewModel : WorkedDayDb
 	{
 		[Display(Name = "Выход")]
 		public bool IsWorked { get; set; }

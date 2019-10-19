@@ -5,7 +5,7 @@ namespace Furmanov.MVP.MainView.UndoRedoCommands
 {
 	public class SalaryPayCmd : ICommand
 	{
-		public SalaryPayCmd(IMainModel model, UndoRedoEventArgs<SalaryPayVisual> e)
+		public SalaryPayCmd(IMainModel model, UndoRedoEventArgs<SalaryPayViewModel> e)
 		{
 			_model = model;
 			_value = e.Value;
@@ -14,8 +14,8 @@ namespace Furmanov.MVP.MainView.UndoRedoCommands
 		}
 
 		private readonly IMainModel _model;
-		private readonly SalaryPayVisual _value;
-		private readonly SalaryPayVisual _prevValue;
+		private readonly SalaryPayViewModel _value;
+		private readonly SalaryPayViewModel _prevValue;
 
 		public string Name { get; }
 

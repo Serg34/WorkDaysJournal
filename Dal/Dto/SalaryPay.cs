@@ -56,7 +56,7 @@ namespace Furmanov.Dal.Dto
 	public enum ObjType { Project, Object, Salary }
 
 	[DebuggerDisplay("{VisualId}")]
-	public class SalaryPayVisual : SalaryPayDb, IVisual
+	public class SalaryPayViewModel : SalaryPayDb, IVisual
 	{
 		[Column(Name = "Type")]
 		public ObjType Type { get; set; }

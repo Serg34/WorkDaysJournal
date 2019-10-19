@@ -19,17 +19,17 @@ namespace Furmanov.MVP.MainView
 		event EventHandler DeletingAllDays;
 		event EventHandler<int> VedomostClick;
 
-		event EventHandler<UndoRedoEventArgs<SalaryPayVisual>> ChangedSalaryPay;
-		event EventHandler<SalaryPayVisual> SelectSalaryPay;
+		event EventHandler<UndoRedoEventArgs<SalaryPayViewModel>> ChangedSalaryPay;
+		event EventHandler<SalaryPayViewModel> SelectSalaryPay;
 
-		event EventHandler<WorkedDayVisual> ChangedWorkedDay;
+		event EventHandler<WorkedDayViewModel> ChangedWorkedDay;
 
 		event EventHandler<int> Undo;
 		event EventHandler<int> Redo;
 
-		void UpdateLogin(object sender, UserVisual user);
+		void UpdateLogin(object sender, UserViewModel user);
 		void UpdatePays(object sender, MainViewModel viewModel);
-		void UpdateDays(object sender, List<WorkedDayVisual> viewModel);
+		void UpdateDays(object sender, List<WorkedDayViewModel> viewModel);
 		void UpdateUndoRedo(IEnumerable<string> undoItems, IEnumerable<string> redoItems);
 	}
 }

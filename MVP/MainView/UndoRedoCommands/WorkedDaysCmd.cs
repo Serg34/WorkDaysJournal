@@ -7,7 +7,7 @@ namespace SwissClean.Services.UndoRedo.Commands
 {
 	public class WorkedDaysCmd : ICommand
 	{
-		public WorkedDaysCmd(IMainModel model, List<WorkedDayVisual> value)
+		public WorkedDaysCmd(IMainModel model, List<WorkedDayViewModel> value)
 		{
 			_model = model;
 			_pay = _model.CurrentPay;
@@ -17,9 +17,9 @@ namespace SwissClean.Services.UndoRedo.Commands
 		}
 
 		private readonly IMainModel _model;
-		private readonly SalaryPayVisual _pay;
-		private readonly List<WorkedDayVisual> _value;
-		private readonly List<WorkedDayVisual> _prevValue;
+		private readonly SalaryPayViewModel _pay;
+		private readonly List<WorkedDayViewModel> _value;
+		private readonly List<WorkedDayViewModel> _prevValue;
 
 		public string Name { get; }
 

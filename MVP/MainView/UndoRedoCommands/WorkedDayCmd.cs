@@ -6,7 +6,7 @@ namespace Furmanov.MVP.MainView.UndoRedoCommands
 {
 	public class WorkedDayCmd : ICommand
 	{
-		public WorkedDayCmd(IMainModel model, WorkedDayVisual value)
+		public WorkedDayCmd(IMainModel model, WorkedDayViewModel value)
 		{
 			_model = model;
 			_pay = _model.CurrentPay;
@@ -17,9 +17,9 @@ namespace Furmanov.MVP.MainView.UndoRedoCommands
 		}
 
 		private readonly IMainModel _model;
-		private readonly SalaryPayVisual _pay;
-		private readonly WorkedDayVisual _value;
-		private readonly WorkedDayVisual _prevValue;
+		private readonly SalaryPayViewModel _pay;
+		private readonly WorkedDayViewModel _value;
+		private readonly WorkedDayViewModel _prevValue;
 
 		public string Name { get; }
 

@@ -25,7 +25,7 @@ namespace Furmanov.Dal.Dto
 		public int RoleId { get; set; }
 	}
 
-	public class UserVisual : UserDb
+	public class UserViewModel : UserDb
 	{
 		public Role Role => (Role)RoleId;
 

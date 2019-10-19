@@ -662,7 +662,7 @@ namespace Furmanov.UI
 			// 
 			// salaryPayBindingSource
 			// 
-			this.salaryPayBindingSource.DataSource = typeof(Furmanov.Dal.Dto.SalaryPayVisual);
+			this.salaryPayBindingSource.DataSource = typeof(Furmanov.Dal.Dto.SalaryPayViewModel);
 			// 
 			// riPositions
 			// 
@@ -715,7 +715,7 @@ namespace Furmanov.UI
 			// 
 			// workedDayBindingSource
 			// 
-			this.workedDayBindingSource.DataSource = typeof(Furmanov.Dal.Dto.WorkedDayVisual);
+			this.workedDayBindingSource.DataSource = typeof(Furmanov.Dal.Dto.WorkedDayViewModel);
 			// 
 			// gvWorkedDays
 			// 

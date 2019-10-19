@@ -27,8 +27,8 @@ namespace Furmanov.UI
 	public partial class MainView : XtraForm, IMainView
 	{
 		#region Fields
-		private SalaryPayVisual _currentPay;
-		private SalaryPayVisual _prevPay;
+		private SalaryPayViewModel _currentPay;
+		private SalaryPayViewModel _prevPay;
 
 		private readonly string _appUserDataFolder =
 			Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "SC.WorkedDaysDb");
@@ -74,10 +74,10 @@ namespace Furmanov.UI
 		public event EventHandler WorkDaysOnlyClick;
 		public event EventHandler AllDaysClick;
 
-		public event EventHandler<UndoRedoEventArgs<SalaryPayVisual>> ChangedSalaryPay;
-		public event EventHandler<SalaryPayVisual> SelectSalaryPay;
+		public event EventHandler<UndoRedoEventArgs<SalaryPayViewModel>> ChangedSalaryPay;
+		public event EventHandler<SalaryPayViewModel> SelectSalaryPay;
 
-		public event EventHandler<WorkedDayVisual> ChangedWorkedDay;
+		public event EventHandler<WorkedDayViewModel> ChangedWorkedDay;
 
 		public event EventHandler<int> VedomostClick;
 		public event EventHandler DeletingAllDays;
@@ -87,7 +87,7 @@ namespace Furmanov.UI
 		#endregion
 
 		#region Login
-		public void UpdateLogin(object sender, UserVisual user)
+		public void UpdateLogin(object sender, UserViewModel user)
 		{
 			pnMain.BeginInit();
 
@@ -199,7 +199,7 @@ namespace Furmanov.UI
 				_updating = false;
 			}
 		}
-		public void UpdateDays(object sender, List<WorkedDayVisual> days)
+		public void UpdateDays(object sender, List<WorkedDayViewModel> days)
 		{
 			using (new GridViewStateSaver(gvWorkedDays))
 			{
@@ -242,14 +242,14 @@ namespace Furmanov.UI
 		private void TreePay_CellValueChanged(object sender, CellValueChangedEventArgs e)
 		{
 			ChangedSalaryPay?.Invoke(this,
-				new UndoRedoEventArgs<SalaryPayVisual>(_currentPay, _prevPay));
+				new UndoRedoEventArgs<SalaryPayViewModel>(_currentPay, _prevPay));
 		}
 
 		[DebuggerStepThrough]
 		private void TreePay_NodeCellStyle(object sender, GetCustomNodeCellStyleEventArgs e)
 		{
 			if (sender is TreeList view &&
-				view.GetRow(e.Node.Id) is SalaryPayVisual vm)
+				view.GetRow(e.Node.Id) is SalaryPayViewModel vm)
 			{
 				if (vm.Type == ObjType.Project)
 				{
@@ -277,7 +277,7 @@ namespace Furmanov.UI
 		private void TreePay_ShowingEditor(object sender, CancelEventArgs e)
 		{
 			if (sender is TreeList view &&
-				view.GetFocusedRow() is SalaryPayVisual vm)
+				view.GetFocusedRow() is SalaryPayViewModel vm)
 			{
 				e.Cancel = vm.Type != ObjType.Salary;
 			}
@@ -287,7 +287,7 @@ namespace Furmanov.UI
 		private void TreePay_CustomDrawNodeCell(object sender, CustomDrawNodeCellEventArgs e)
 		{
 			if (sender is TreeList view &&
-				view.GetRow(e.Node.Id) is SalaryPayVisual vm &&
+				view.GetRow(e.Node.Id) is SalaryPayViewModel vm &&
 				vm.Type != ObjType.Salary)
 			{
 				if (e.Info.Appearance.Options.UseBorderColor)
@@ -339,7 +339,7 @@ namespace Furmanov.UI
 		private void SelectionResOpChange()
 		{
 			if (_updating) return;
-			if (treeSalary.GetFocusedRow() is SalaryPayVisual vm)
+			if (treeSalary.GetFocusedRow() is SalaryPayViewModel vm)
 			{
 				_currentPay = vm;
 
@@ -364,7 +364,7 @@ namespace Furmanov.UI
 		private void GvWorkedDays_CellValueChanging(object sender,
 			DevExpress.XtraGrid.Views.Base.CellValueChangedEventArgs e)
 		{
-			if (sender is GridView view && view.GetRow(e.RowHandle) is WorkedDayVisual vm)
+			if (sender is GridView view && view.GetRow(e.RowHandle) is WorkedDayViewModel vm)
 			{
 				ChangedWorkedDay?.Invoke(this, vm);
 			}
@@ -374,7 +374,7 @@ namespace Furmanov.UI
 		private void GvWorkedDays_RowStyle(object sender, RowStyleEventArgs e)
 		{
 			if (sender is GridView view &&
-				view.GetRow(e.RowHandle) is WorkedDayVisual vm &&
+				view.GetRow(e.RowHandle) is WorkedDayViewModel vm &&
 				(vm.Date.DayOfWeek == DayOfWeek.Saturday ||
 				 vm.Date.DayOfWeek == DayOfWeek.Sunday))
 			{
@@ -473,7 +473,7 @@ namespace Furmanov.UI
 
 		private void treeSalary_ValidatingEditor(object sender, DevExpress.XtraEditors.Controls.BaseContainerValidateEditorEventArgs e)
 		{
-			if (treeSalary.GetFocusedRow() is SalaryPayVisual vm)
+			if (treeSalary.GetFocusedRow() is SalaryPayViewModel vm)
 			{
 				var res = new SalaryPayValidator().Validate(vm);
 				if (!res.IsValid)

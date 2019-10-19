@@ -3,7 +3,7 @@ using Furmanov.Dal.Dto;
 
 namespace Furmanov.MVP.MainView
 {
-	public class SalaryPayValidator : AbstractValidator<SalaryPayVisual>
+	public class SalaryPayValidator : AbstractValidator<SalaryPayViewModel>
 	{
 		public SalaryPayValidator()
 		{
