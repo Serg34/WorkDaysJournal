@@ -120,25 +120,24 @@ namespace Furmanov.UI
 			((System.ComponentModel.ISupportInitialize)(this.menuUndo)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.menuRedo)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pnMain)).BeginInit();
+			this.pnMain.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.sccMain)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.sccMain.Panel1)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.sccMain.Panel2)).BeginInit();
+			this.sccMain.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.pnPays)).BeginInit();
+			this.pnPays.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.treeSalary)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.salaryPayBindingSource)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.riPositions)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.riResourceNames)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.imageCollection)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pnWorkedDays)).BeginInit();
+			this.pnWorkedDays.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.gcWorkedDays)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.workedDayBindingSource)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.gvWorkedDays)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// menuMain
-			// 
-			// 
-			// 
 			// 
 			this.menuMain.ExpandCollapseItem.Id = 0;
 			this.menuMain.Items.AddRange(new DevExpress.XtraBars.BarItem[] {
@@ -160,14 +159,16 @@ namespace Furmanov.UI
             this.btnUndo,
             this.btnRedo});
 			this.menuMain.Location = new System.Drawing.Point(0, 0);
-			this.menuMain.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+			this.menuMain.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
 			this.menuMain.MaxItemId = 6;
 			this.menuMain.Name = "menuMain";
 			this.menuMain.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
             this.pageMain});
+			this.menuMain.QuickToolbarItemLinks.Add(this.btnUndo);
+			this.menuMain.QuickToolbarItemLinks.Add(this.btnRedo);
 			this.menuMain.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
             this.riMonths});
-			this.menuMain.Size = new System.Drawing.Size(1621, 192);
+			this.menuMain.Size = new System.Drawing.Size(1261, 158);
 			this.menuMain.StatusBar = this.statusBar;
 			// 
 			// btnEditResource
@@ -422,41 +423,58 @@ namespace Furmanov.UI
 			// pageResourses
 			// 
 			this.pageResourses.AllowTextClipping = false;
+			this.pageResourses.ItemLinks.Add(this.btnCreateResource);
+			this.pageResourses.ItemLinks.Add(this.btnEditResource);
+			this.pageResourses.ItemLinks.Add(this.btnDeleteResource);
 			this.pageResourses.Name = "pageResourses";
+			this.pageResourses.ShowCaptionButton = false;
 			this.pageResourses.Text = "Сотрудники";
 			// 
 			// pageMonth
 			// 
+			this.pageMonth.ItemLinks.Add(this.cbMonth);
 			this.pageMonth.Name = "pageMonth";
+			this.pageMonth.ShowCaptionButton = false;
 			this.pageMonth.Text = "Фильтры";
 			// 
 			// pageVedomost
 			// 
+			this.pageVedomost.ItemLinks.Add(this.btnVedomostTotal);
+			this.pageVedomost.ItemLinks.Add(this.btnVedomostForObject);
 			this.pageVedomost.Name = "pageVedomost";
+			this.pageVedomost.ShowCaptionButton = false;
 			this.pageVedomost.Text = "Отчеты";
 			// 
 			// pageDaysMode
 			// 
+			this.pageDaysMode.ItemLinks.Add(this.btnWorkDaysOnly);
+			this.pageDaysMode.ItemLinks.Add(this.btnAllDays);
+			this.pageDaysMode.ItemLinks.Add(this.btnDeleteAllDays);
 			this.pageDaysMode.Name = "pageDaysMode";
+			this.pageDaysMode.ShowCaptionButton = false;
 			this.pageDaysMode.Text = "Табель";
 			// 
 			// statusBar
 			// 
-			this.statusBar.Location = new System.Drawing.Point(0, 990);
-			this.statusBar.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+			this.statusBar.ItemLinks.Add(this.lblVersion);
+			this.statusBar.ItemLinks.Add(this.lblUser);
+			this.statusBar.ItemLinks.Add(this.btnLogin);
+			this.statusBar.ItemLinks.Add(this.btnLogOut);
+			this.statusBar.Location = new System.Drawing.Point(0, 801);
+			this.statusBar.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
 			this.statusBar.Name = "statusBar";
 			this.statusBar.Ribbon = this.menuMain;
-			this.statusBar.Size = new System.Drawing.Size(1621, 37);
+			this.statusBar.Size = new System.Drawing.Size(1261, 30);
 			// 
 			// pnMain
 			// 
 			this.pnMain.Controls.Add(this.sccMain);
 			this.pnMain.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.pnMain.Location = new System.Drawing.Point(0, 195);
-			this.pnMain.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+			this.pnMain.Location = new System.Drawing.Point(0, 158);
+			this.pnMain.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
 			this.pnMain.Name = "pnMain";
 			this.pnMain.ShowCaption = false;
-			this.pnMain.Size = new System.Drawing.Size(1621, 794);
+			this.pnMain.Size = new System.Drawing.Size(1261, 643);
 			this.pnMain.TabIndex = 2;
 			this.pnMain.Text = "groupRp";
 			this.pnMain.Visible = false;
@@ -466,30 +484,14 @@ namespace Furmanov.UI
 			this.sccMain.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.sccMain.FixedPanel = DevExpress.XtraEditors.SplitFixedPanel.Panel2;
 			this.sccMain.Location = new System.Drawing.Point(2, 2);
-			this.sccMain.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+			this.sccMain.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
 			this.sccMain.Name = "sccMain";
-			// 
-			// 
-			// 
 			this.sccMain.Panel1.Controls.Add(this.pnPays);
-			this.sccMain.Panel1.Location = new System.Drawing.Point(0, 0);
-			this.sccMain.Panel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-			this.sccMain.Panel1.Name = "";
-			this.sccMain.Panel1.Size = new System.Drawing.Size(1293, 790);
-			this.sccMain.Panel1.TabIndex = 0;
 			this.sccMain.Panel1.Text = "Panel1";
-			// 
-			// 
-			// 
 			this.sccMain.Panel2.Controls.Add(this.pnWorkedDays);
-			this.sccMain.Panel2.Location = new System.Drawing.Point(1308, 0);
-			this.sccMain.Panel2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-			this.sccMain.Panel2.Name = "";
-			this.sccMain.Panel2.Size = new System.Drawing.Size(309, 790);
-			this.sccMain.Panel2.TabIndex = 1;
 			this.sccMain.Panel2.Text = "Panel2";
-			this.sccMain.Size = new System.Drawing.Size(1617, 790);
-			this.sccMain.SplitterPosition = 309;
+			this.sccMain.Size = new System.Drawing.Size(1257, 639);
+			this.sccMain.SplitterPosition = 240;
 			this.sccMain.TabIndex = 2;
 			// 
 			// pnPays
@@ -497,10 +499,10 @@ namespace Furmanov.UI
 			this.pnPays.Controls.Add(this.treeSalary);
 			this.pnPays.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.pnPays.Location = new System.Drawing.Point(0, 0);
-			this.pnPays.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+			this.pnPays.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
 			this.pnPays.Name = "pnPays";
 			this.pnPays.ShowCaption = false;
-			this.pnPays.Size = new System.Drawing.Size(1293, 790);
+			this.pnPays.Size = new System.Drawing.Size(1005, 639);
 			this.pnPays.TabIndex = 1;
 			this.pnPays.Text = "groupRPInnerleft";
 			// 
@@ -526,139 +528,116 @@ namespace Furmanov.UI
             this.colRateDays,
             this.colFactDays,
             this.colSalaryPay});
-			this.treeSalary.CustomizationFormBounds = new System.Drawing.Rectangle(1629, 541, 266, 252);
+			this.treeSalary.CustomizationFormBounds = new System.Drawing.Rectangle(1629, 793, 266, 252);
 			this.treeSalary.DataSource = this.salaryPayBindingSource;
 			this.treeSalary.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.treeSalary.FixedLineWidth = 3;
 			this.treeSalary.ImageIndexFieldName = "Type";
-			this.treeSalary.KeyFieldName = "VisualId";
+			this.treeSalary.KeyFieldName = "ViewModelId";
 			this.treeSalary.Location = new System.Drawing.Point(2, 2);
-			this.treeSalary.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-			this.treeSalary.MinWidth = 30;
+			this.treeSalary.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
+			this.treeSalary.MinWidth = 23;
 			this.treeSalary.Name = "treeSalary";
 			this.treeSalary.ParentFieldName = "ParentId";
 			this.treeSalary.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
             this.riPositions,
             this.riResourceNames});
 			this.treeSalary.SelectImageList = this.imageCollection;
-			this.treeSalary.Size = new System.Drawing.Size(1289, 786);
+			this.treeSalary.Size = new System.Drawing.Size(1001, 635);
 			this.treeSalary.TabIndex = 7;
-			this.treeSalary.TreeLevelWidth = 27;
-			this.treeSalary.NodeCellStyle += new DevExpress.XtraTreeList.GetCustomNodeCellStyleEventHandler(this.TreePay_NodeCellStyle);
-			this.treeSalary.FocusedNodeChanged += new DevExpress.XtraTreeList.FocusedNodeChangedEventHandler(this.TreePay_FocusedNodeChanged);
-			this.treeSalary.ValidatingEditor += new DevExpress.XtraEditors.Controls.BaseContainerValidateEditorEventHandler(this.treeSalary_ValidatingEditor);
-			this.treeSalary.CustomDrawNodeCell += new DevExpress.XtraTreeList.CustomDrawNodeCellEventHandler(this.TreePay_CustomDrawNodeCell);
-			this.treeSalary.CellValueChanging += new DevExpress.XtraTreeList.CellValueChangedEventHandler(this.TreePay_CellValueChanging);
-			this.treeSalary.CellValueChanged += new DevExpress.XtraTreeList.CellValueChangedEventHandler(this.TreePay_CellValueChanged);
-			this.treeSalary.ShowingEditor += new System.ComponentModel.CancelEventHandler(this.TreePay_ShowingEditor);
-			this.treeSalary.DoubleClick += new System.EventHandler(this.TreePay_DoubleClick);
-			this.treeSalary.Enter += new System.EventHandler(this.TreePay_Enter);
-			this.treeSalary.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TreePay_KeyDown);
+			this.treeSalary.TreeLevelWidth = 21;
+			this.treeSalary.NodeCellStyle += new DevExpress.XtraTreeList.GetCustomNodeCellStyleEventHandler(this.TreeSalary_NodeCellStyle);
+			this.treeSalary.FocusedNodeChanged += new DevExpress.XtraTreeList.FocusedNodeChangedEventHandler(this.TreeSalary_FocusedNodeChanged);
+			this.treeSalary.ValidatingEditor += new DevExpress.XtraEditors.Controls.BaseContainerValidateEditorEventHandler(this.TreeSalary_ValidatingEditor);
+			this.treeSalary.CustomDrawNodeCell += new DevExpress.XtraTreeList.CustomDrawNodeCellEventHandler(this.TreeSalary_CustomDrawNodeCell);
+			this.treeSalary.CellValueChanging += new DevExpress.XtraTreeList.CellValueChangedEventHandler(this.TreeSalary_CellValueChanging);
+			this.treeSalary.CellValueChanged += new DevExpress.XtraTreeList.CellValueChangedEventHandler(this.TreeSalary_CellValueChanged);
+			this.treeSalary.ShowingEditor += new System.ComponentModel.CancelEventHandler(this.TreeSalary_ShowingEditor);
+			this.treeSalary.DoubleClick += new System.EventHandler(this.TreeSalary_DoubleClick);
+			this.treeSalary.Enter += new System.EventHandler(this.TreeSalary_Enter);
+			this.treeSalary.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TreeSalary_KeyDown);
 			// 
 			// colName
 			// 
 			this.colName.FieldName = "Name";
-			this.colName.MinWidth = 26;
 			this.colName.Name = "colName";
 			this.colName.OptionsColumn.AllowEdit = false;
 			this.colName.Visible = true;
 			this.colName.VisibleIndex = 0;
-			this.colName.Width = 96;
 			// 
 			// colPhone
 			// 
 			this.colPhone.FieldName = "Phone";
-			this.colPhone.MinWidth = 26;
 			this.colPhone.Name = "colPhone";
 			this.colPhone.OptionsColumn.AllowEdit = false;
 			this.colPhone.Visible = true;
 			this.colPhone.VisibleIndex = 1;
-			this.colPhone.Width = 96;
 			// 
 			// colPositionName
 			// 
 			this.colPositionName.FieldName = "PositionName";
-			this.colPositionName.MinWidth = 26;
 			this.colPositionName.Name = "colPositionName";
 			this.colPositionName.OptionsColumn.AllowEdit = false;
 			this.colPositionName.Visible = true;
 			this.colPositionName.VisibleIndex = 2;
-			this.colPositionName.Width = 96;
 			// 
 			// colSalary
 			// 
 			this.colSalary.FieldName = "Salary";
-			this.colSalary.MinWidth = 26;
 			this.colSalary.Name = "colSalary";
 			this.colSalary.OptionsColumn.AllowEdit = false;
 			this.colSalary.Visible = true;
 			this.colSalary.VisibleIndex = 3;
-			this.colSalary.Width = 96;
 			// 
 			// colAdvance
 			// 
 			this.colAdvance.FieldName = "Advance";
-			this.colAdvance.MinWidth = 26;
 			this.colAdvance.Name = "colAdvance";
 			this.colAdvance.Visible = true;
 			this.colAdvance.VisibleIndex = 7;
-			this.colAdvance.Width = 96;
 			// 
 			// colPenalty
 			// 
 			this.colPenalty.FieldName = "Penalty";
-			this.colPenalty.MinWidth = 26;
 			this.colPenalty.Name = "colPenalty";
 			this.colPenalty.Visible = true;
 			this.colPenalty.VisibleIndex = 8;
-			this.colPenalty.Width = 96;
 			// 
 			// colPremium
 			// 
 			this.colPremium.FieldName = "Premium";
-			this.colPremium.MinWidth = 26;
 			this.colPremium.Name = "colPremium";
 			this.colPremium.Visible = true;
 			this.colPremium.VisibleIndex = 9;
-			this.colPremium.Width = 96;
 			// 
 			// colComment
 			// 
 			this.colComment.FieldName = "Comment";
-			this.colComment.MinWidth = 26;
 			this.colComment.Name = "colComment";
 			this.colComment.Visible = true;
 			this.colComment.VisibleIndex = 10;
-			this.colComment.Width = 96;
 			// 
 			// colRateDays
 			// 
 			this.colRateDays.FieldName = "RateDays";
-			this.colRateDays.MinWidth = 26;
 			this.colRateDays.Name = "colRateDays";
 			this.colRateDays.Visible = true;
 			this.colRateDays.VisibleIndex = 5;
-			this.colRateDays.Width = 96;
 			// 
 			// colFactDays
 			// 
 			this.colFactDays.FieldName = "FactDays";
-			this.colFactDays.MinWidth = 26;
 			this.colFactDays.Name = "colFactDays";
 			this.colFactDays.OptionsColumn.AllowEdit = false;
 			this.colFactDays.Visible = true;
 			this.colFactDays.VisibleIndex = 6;
-			this.colFactDays.Width = 96;
 			// 
 			// colSalaryPay
 			// 
 			this.colSalaryPay.FieldName = "SalaryPay";
-			this.colSalaryPay.MinWidth = 26;
 			this.colSalaryPay.Name = "colSalaryPay";
 			this.colSalaryPay.OptionsColumn.AllowEdit = false;
 			this.colSalaryPay.Visible = true;
 			this.colSalaryPay.VisibleIndex = 4;
-			this.colSalaryPay.Width = 96;
 			// 
 			// salaryPayBindingSource
 			// 
@@ -683,16 +662,19 @@ namespace Furmanov.UI
 			// imageCollection
 			// 
 			this.imageCollection.ImageStream = ((DevExpress.Utils.ImageCollectionStreamer)(resources.GetObject("imageCollection.ImageStream")));
+			this.imageCollection.Images.SetKeyName(0, "case.png");
+			this.imageCollection.Images.SetKeyName(1, "Object16.png");
+			this.imageCollection.Images.SetKeyName(2, "Resource.png");
 			// 
 			// pnWorkedDays
 			// 
 			this.pnWorkedDays.Controls.Add(this.gcWorkedDays);
 			this.pnWorkedDays.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.pnWorkedDays.Location = new System.Drawing.Point(0, 0);
-			this.pnWorkedDays.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+			this.pnWorkedDays.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
 			this.pnWorkedDays.Name = "pnWorkedDays";
 			this.pnWorkedDays.ShowCaption = false;
-			this.pnWorkedDays.Size = new System.Drawing.Size(309, 790);
+			this.pnWorkedDays.Size = new System.Drawing.Size(240, 639);
 			this.pnWorkedDays.TabIndex = 1;
 			this.pnWorkedDays.Text = "groupRPInnerRight";
 			// 
@@ -700,15 +682,12 @@ namespace Furmanov.UI
 			// 
 			this.gcWorkedDays.DataSource = this.workedDayBindingSource;
 			this.gcWorkedDays.Dock = System.Windows.Forms.DockStyle.Fill;
-			// 
-			// 
-			// 
-			this.gcWorkedDays.EmbeddedNavigator.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+			this.gcWorkedDays.EmbeddedNavigator.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
 			this.gcWorkedDays.Location = new System.Drawing.Point(2, 2);
 			this.gcWorkedDays.MainView = this.gvWorkedDays;
-			this.gcWorkedDays.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+			this.gcWorkedDays.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
 			this.gcWorkedDays.Name = "gcWorkedDays";
-			this.gcWorkedDays.Size = new System.Drawing.Size(305, 786);
+			this.gcWorkedDays.Size = new System.Drawing.Size(236, 635);
 			this.gcWorkedDays.TabIndex = 0;
 			this.gcWorkedDays.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gvWorkedDays});
@@ -722,8 +701,8 @@ namespace Furmanov.UI
 			this.gvWorkedDays.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
             this.colIsWorked,
             this.colDate});
-			this.gvWorkedDays.DetailHeight = 566;
-			this.gvWorkedDays.FixedLineWidth = 4;
+			this.gvWorkedDays.DetailHeight = 458;
+			this.gvWorkedDays.FixedLineWidth = 3;
 			this.gvWorkedDays.GridControl = this.gcWorkedDays;
 			this.gvWorkedDays.Name = "gvWorkedDays";
 			this.gvWorkedDays.OptionsBehavior.AllowAddRows = DevExpress.Utils.DefaultBoolean.False;
@@ -740,32 +719,28 @@ namespace Furmanov.UI
 			// colIsWorked
 			// 
 			this.colIsWorked.FieldName = "IsWorked";
-			this.colIsWorked.MinWidth = 26;
 			this.colIsWorked.Name = "colIsWorked";
 			this.colIsWorked.Visible = true;
 			this.colIsWorked.VisibleIndex = 1;
-			this.colIsWorked.Width = 96;
 			// 
 			// colDate
 			// 
 			this.colDate.FieldName = "Date";
-			this.colDate.MinWidth = 26;
 			this.colDate.Name = "colDate";
 			this.colDate.OptionsColumn.AllowEdit = false;
 			this.colDate.Visible = true;
 			this.colDate.VisibleIndex = 0;
-			this.colDate.Width = 96;
 			// 
 			// MainView
 			// 
-			this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
+			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(1621, 1027);
+			this.ClientSize = new System.Drawing.Size(1261, 831);
 			this.Controls.Add(this.pnMain);
 			this.Controls.Add(this.statusBar);
 			this.Controls.Add(this.menuMain);
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-			this.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+			this.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
 			this.Name = "MainView";
 			this.Text = "Табель учёта рабочего времени";
 			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainView_FormClosed);
@@ -774,16 +749,18 @@ namespace Furmanov.UI
 			((System.ComponentModel.ISupportInitialize)(this.menuUndo)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.menuRedo)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.pnMain)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.sccMain.Panel1)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.sccMain.Panel2)).EndInit();
+			this.pnMain.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.sccMain)).EndInit();
+			this.sccMain.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.pnPays)).EndInit();
+			this.pnPays.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.treeSalary)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.salaryPayBindingSource)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.riPositions)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.riResourceNames)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.imageCollection)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.pnWorkedDays)).EndInit();
+			this.pnWorkedDays.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.gcWorkedDays)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.workedDayBindingSource)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.gvWorkedDays)).EndInit();

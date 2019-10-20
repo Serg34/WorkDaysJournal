@@ -55,14 +55,14 @@ namespace Furmanov.Dal.Dto
 	}
 	public enum ObjType { Project, Object, Salary }
 
-	[DebuggerDisplay("{VisualId}")]
-	public class SalaryPayViewModel : SalaryPayDb, IVisual
+	[DebuggerDisplay("{ViewModelId}")]
+	public class SalaryPayViewModel : SalaryPayDb, IViewModel
 	{
 		[Column(Name = "Type")]
 		public ObjType Type { get; set; }
 
-		[Column(Name = "VisualId")]
-		public string VisualId { get; set; }
+		[Column(Name = "ViewModelId")]
+		public string ViewModelId { get; set; }
 
 		[Column(Name = "ParentId")]
 		public string ParentId { get; set; }

@@ -56,7 +56,7 @@
     <Compile Include="Login\LoginViewModel.cs" />
     <Compile Include="MainView\MainModel.cs" />
     <Compile Include="MainView\MainPresenter.cs" />
-    <Compile Include="MainView\MainView.cs" />
+    <Compile Include="MainView\IMainView.cs" />
     <Compile Include="MainView\SalaryPayValidator.cs" />
     <Compile Include="MainView\UndoRedoCommands\MonthCmd.cs" />
     <Compile Include="MainView\UndoRedoCommands\SalaryPayCmd.cs" />

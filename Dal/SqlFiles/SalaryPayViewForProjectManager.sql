@@ -16,7 +16,7 @@ with projects as(
 		 'Выплат: ' + CAST(Count(sal.Id) AS nvarchar) Phone,
 		 'Объектов: ' + CAST((select Count(*) 
 							  from Object 
-							  where Project_ID = pr.ID and IsDeleted = 0) 
+							  where ProjectId = pr.ID and IsDeleted = 0) 
 							  AS nvarchar) PositionName,
 		 SUM(okl.Salary) Salary,
 		 SUM(sal.RateDays) RateDays,

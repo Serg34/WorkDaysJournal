@@ -49,7 +49,7 @@
     <Compile Include="ApplicationUser.cs" />
     <Compile Include="DataAccessService.cs" />
     <Compile Include="DbContext.cs" />
-    <Compile Include="Dto\IVisual.cs" />
+    <Compile Include="Dto\IViewModel.cs" />
     <Compile Include="Dto\LoginPassword.cs" />
     <Compile Include="Dto\SalaryPay.cs" />
     <Compile Include="Dto\WorkDays.cs" />

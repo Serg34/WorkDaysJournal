@@ -6,6 +6,7 @@
 select 
 	u.Id,
 	u.Login,
+	u.Password,
 	u.Name,
 	u.RoleId,
 	Role.Name RoleName

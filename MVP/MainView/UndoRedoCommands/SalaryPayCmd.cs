@@ -21,11 +21,11 @@ namespace Furmanov.MVP.MainView.UndoRedoCommands
 
 		public void Execute()
 		{
-			_model.SaveResOp(_value);
+			_model.SaveSalaryPay(_value);
 		}
 		public void UnExecute()
 		{
-			_model.SaveResOp(_prevValue);
+			_model.SaveSalaryPay(_prevValue);
 		}
 	}
 }

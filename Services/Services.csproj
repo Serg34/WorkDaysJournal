@@ -50,7 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DeepCloner.cs" />
+    <Compile Include="Cloner.cs" />
     <Compile Include="IEnumerableMethods.cs" />
     <Compile Include="MoneyToString.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

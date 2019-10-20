@@ -21,6 +21,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using FluentValidation;
 
 namespace Furmanov.UI
 {
@@ -31,7 +32,7 @@ namespace Furmanov.UI
 		private SalaryPayViewModel _prevPay;
 
 		private readonly string _appUserDataFolder =
-			Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "SC.WorkedDaysDb");
+			Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "WorkDaysJournal");
 
 		private bool _updating;
 		#endregion
@@ -55,8 +56,8 @@ namespace Furmanov.UI
 
 				cbMonth.EditValue = "Текущий";
 
-				var f = Path.Combine(_appUserDataFolder, "Ribbon.xml");
-				if (File.Exists(f)) menuMain.RestoreLayoutFromXml(f);
+				var file = Path.Combine(_appUserDataFolder, "Ribbon.xml");
+				if (File.Exists(file)) menuMain.RestoreLayoutFromXml(file);
 
 				gcWorkedDays.Paint += GcWorkedDays_Paint;
 			}
@@ -75,11 +76,11 @@ namespace Furmanov.UI
 		public event EventHandler AllDaysClick;
 
 		public event EventHandler<UndoRedoEventArgs<SalaryPayViewModel>> ChangedSalaryPay;
-		public event EventHandler<SalaryPayViewModel> SelectSalaryPay;
+		public event EventHandler<SalaryPayViewModel> SelectionChangingSalaryPay;
 
 		public event EventHandler<WorkedDayViewModel> ChangedWorkedDay;
 
-		public event EventHandler<int> VedomostClick;
+		public event EventHandler<int> ReportClick;
 		public event EventHandler DeletingAllDays;
 
 		public event EventHandler<int> Undo;
@@ -87,15 +88,19 @@ namespace Furmanov.UI
 		#endregion
 
 		#region Login
-		public void UpdateLogin(object sender, UserViewModel user)
+		public void UpdateLogin(UserViewModel user)
 		{
 			pnMain.BeginInit();
 
-			pnMain.Visible =
-				btnVedomostTotal.Enabled //Контролы должны быть видимыми до заполнения
-				= btnCreateResource.Enabled = btnEditResource.Enabled = btnDeleteResource.Enabled
+			pnMain.Visible //Контролы должны быть видимыми до заполнения
+				= btnVedomostTotal.Enabled
+				= btnCreateResource.Enabled
+				= btnEditResource.Enabled
+				= btnDeleteResource.Enabled
 				= cbMonth.Enabled
-				= btnWorkDaysOnly.Enabled = btnAllDays.Enabled = btnDeleteAllDays.Enabled
+				= btnWorkDaysOnly.Enabled
+				= btnAllDays.Enabled
+				= btnDeleteAllDays.Enabled
 				= user != null;
 
 			pnMain.EndInit();
@@ -109,7 +114,7 @@ namespace Furmanov.UI
 			{
 				lblUser.Caption = $"Пользователь: {user.Login} / {user.Login} / {user.RoleName}";
 
-				var treeFile = Path.Combine(_appUserDataFolder, $"treeResOp_user({user.Id})");
+				var treeFile = Path.Combine(_appUserDataFolder, $"treeSalaryPay_user({user.Id})");
 				if (File.Exists($"{treeFile} DevState.xml"))
 				{
 					treeSalary.RestoreLayoutFromXml($"{treeFile} DevState.xml");
@@ -118,7 +123,7 @@ namespace Furmanov.UI
 						saver.RestoreLayoutFromXml($"{treeFile} NodeState.xml");
 					}
 				}
-				SelectionResOpChange();
+				TreeSalary_SelectionChange();
 			}
 			else
 			{
@@ -155,11 +160,11 @@ namespace Furmanov.UI
 
 		private void BtnVedomostTotal_ItemClick(object sender, ItemClickEventArgs e)
 		{
-			VedomostClick?.Invoke(this, 0);
+			ReportClick?.Invoke(this, 0);
 		}
 		private void BtnVedomostForObject_ItemClick(object sender, ItemClickEventArgs e)
 		{
-			VedomostClick?.Invoke(this, _currentPay.ObjectId);
+			ReportClick?.Invoke(this, _currentPay.ObjectId);
 		}
 
 		private void BtnWorkDaysOnly_ItemClick(object sender, ItemClickEventArgs e)
@@ -177,7 +182,7 @@ namespace Furmanov.UI
 		#endregion
 
 		#region Update
-		public void UpdatePays(object sender, MainViewModel viewModel)
+		public void UpdateSalaries(object sender, MainViewModel viewModel)
 		{
 			try
 			{
@@ -188,7 +193,7 @@ namespace Furmanov.UI
 					treeSalary.DataSource = viewModel.SalaryPays;
 				}
 
-				SelectionResOpChange();
+				TreeSalary_SelectionChange();
 			}
 			catch (Exception ex)
 			{
@@ -199,7 +204,7 @@ namespace Furmanov.UI
 				_updating = false;
 			}
 		}
-		public void UpdateDays(object sender, List<WorkedDayViewModel> days)
+		public void UpdateDays(List<WorkedDayViewModel> days)
 		{
 			using (new GridViewStateSaver(gvWorkedDays))
 			{
@@ -234,19 +239,117 @@ namespace Furmanov.UI
 		}
 		#endregion
 
-		#region TreePay
-		private void TreePay_CellValueChanging(object sender, CellValueChangedEventArgs e)
+		#region TreeSalary
+		private void TreeSalary_CellValueChanging(object sender, CellValueChangedEventArgs e)
 		{
 			_prevPay = Cloner.DeepCopy(_currentPay);
 		}
-		private void TreePay_CellValueChanged(object sender, CellValueChangedEventArgs e)
+		private void TreeSalary_CellValueChanged(object sender, CellValueChangedEventArgs e)
 		{
 			ChangedSalaryPay?.Invoke(this,
 				new UndoRedoEventArgs<SalaryPayViewModel>(_currentPay, _prevPay));
 		}
+		private void TreeSalary_ValidatingEditor(object sender, DevExpress.XtraEditors.Controls.BaseContainerValidateEditorEventArgs e)
+		{
+			try
+			{
+				if (!(sender is TreeList treeList)) return;
+				if (!(treeList.GetFocusedRow() is SalaryPayViewModel focusedVm)) return;
+
+				var fieldName = treeList.FocusedColumn.FieldName;
+				var prop = typeof(SalaryPayViewModel).GetProperty(fieldName);
+				var type = Nullable.GetUnderlyingType(prop.PropertyType) ?? prop.PropertyType;
+				var val = e.Value == null ? null : Convert.ChangeType(e.Value, type);
+				var vmToValidate = Cloner.DeepCopy(focusedVm);
+				prop.SetValue(vmToValidate, val);
+
+				var res = new SalaryPayValidator().Validate(vmToValidate, fieldName);
+				if (!res?.IsValid ?? false)
+				{
+					e.ErrorText = string.Join("\n", res.Errors);
+					e.Valid = false;
+				}
+				else
+				{
+					prop.SetValue(focusedVm, val);
+				}
+			}
+			catch (Exception ex)
+			{
+				e.ErrorText = ex.Message;
+				e.Valid = false;
+			}
+		}
 
 		[DebuggerStepThrough]
-		private void TreePay_NodeCellStyle(object sender, GetCustomNodeCellStyleEventArgs e)
+		private void TreeSalary_ShowingEditor(object sender, CancelEventArgs e)
+		{
+			if (sender is TreeList view &&
+				view.GetFocusedRow() is SalaryPayViewModel vm)
+			{
+				e.Cancel = vm.Type != ObjType.Salary;
+			}
+		}
+
+		private void TreeSalary_DoubleClick(object sender, EventArgs e)
+		{
+			if (_currentPay.Type == ObjType.Salary)
+			{
+				ShowNoImplementCode(this, null);
+			}
+		}
+		private void DeleteSalaryPay()
+		{
+			if (_currentPay.Type != ObjType.Salary) return;
+			var resName = _currentPay.Name;
+			if (_currentPay.FactDays > 0)
+			{
+				MessageService.ShowMessage($"Удаление сотрудника '{resName}' невозможно, так как у него есть отработанные дни.\n" +
+										   "Удалите отработанные дни сотрудника и повторите попытку.");
+				return;
+			}
+
+			if (MessageService.ShowQuestion($"Будет удален сотрудник '{resName}'.\nПродолжить?") == DialogResult.Yes)
+			{
+				ShowNoImplementCode(this, null);
+			}
+		}
+
+		private void TreeSalary_FocusedNodeChanged(object sender, FocusedNodeChangedEventArgs e)
+		{
+			TreeSalary_SelectionChange();
+		}
+		private void TreeSalary_Enter(object sender, EventArgs e)
+		{
+			TreeSalary_SelectionChange();
+		}
+		private void TreeSalary_SelectionChange()
+		{
+			if (treeSalary.GetFocusedRow() is SalaryPayViewModel vm)
+			{
+				_currentPay = vm;
+
+				btnCreateResource.Enabled
+					= btnEditResource.Enabled
+					= btnVedomostForObject.Enabled
+					= vm.Type == ObjType.Object ||
+					  vm.Type == ObjType.Salary;
+
+				btnDeleteResource.Enabled
+					= btnAllDays.Enabled
+					= btnWorkDaysOnly.Enabled
+					= btnDeleteAllDays.Enabled
+					= vm.Type == ObjType.Salary;
+
+				if (!_updating)
+				{
+					SelectionChangingSalaryPay?.Invoke(this, vm);
+				}
+			}
+		}
+
+		[DebuggerStepThrough]
+		private void TreeSalary_NodeCellStyle(object sender, GetCustomNodeCellStyleEventArgs e)
 		{
 			if (sender is TreeList view &&
 				view.GetRow(e.Node.Id) is SalaryPayViewModel vm)
@@ -272,19 +375,8 @@ namespace Furmanov.UI
 				}
 			}
 		}
-
 		[DebuggerStepThrough]
-		private void TreePay_ShowingEditor(object sender, CancelEventArgs e)
-		{
-			if (sender is TreeList view &&
-				view.GetFocusedRow() is SalaryPayViewModel vm)
-			{
-				e.Cancel = vm.Type != ObjType.Salary;
-			}
-		}
-
-		[DebuggerStepThrough]
-		private void TreePay_CustomDrawNodeCell(object sender, CustomDrawNodeCellEventArgs e)
+		private void TreeSalary_CustomDrawNodeCell(object sender, CustomDrawNodeCellEventArgs e)
 		{
 			if (sender is TreeList view &&
 				view.GetRow(e.Node.Id) is SalaryPayViewModel vm &&
@@ -300,62 +392,6 @@ namespace Furmanov.UI
 					e.Cache.DrawLine(e.Cache.GetPen(e.Info.Appearance.BorderColor),
 						new Point(b.Left, b.Bottom - 1), new Point(b.Right, b.Bottom - 1));
 				}
-			}
-		}
-
-		private void TreePay_FocusedNodeChanged(object sender, FocusedNodeChangedEventArgs e)
-		{
-			SelectionResOpChange();
-		}
-
-		private void TreePay_DoubleClick(object sender, EventArgs e)
-		{
-			if (_currentPay.Type == ObjType.Salary)
-			{
-				ShowNoImplementCode(this, null);
-			}
-		}
-
-		private void DeleteResOp()
-		{
-			if (_currentPay.Type != ObjType.Salary) return;
-			var resName = _currentPay.Name;
-			if (_currentPay.FactDays > 0)
-			{
-				MessageService.ShowMessage($"Удаление сотрудника '{resName}' невозможно, так как у него есть отработанные дни.\n" +
-										   "Удалите отработанные дни сотрудника и повторите попытку.");
-				return;
-			}
-
-			if (MessageService.ShowQuestion($"Будет удален сотрудник '{resName}'.\nПродолжить?") == DialogResult.Yes)
-			{
-				ShowNoImplementCode(this, null);
-			}
-		}
-		private void TreePay_Enter(object sender, EventArgs e)
-		{
-			SelectionResOpChange();
-		}
-		private void SelectionResOpChange()
-		{
-			if (_updating) return;
-			if (treeSalary.GetFocusedRow() is SalaryPayViewModel vm)
-			{
-				_currentPay = vm;
-
-				btnCreateResource.Enabled 
-					= btnEditResource.Enabled
-					= btnVedomostForObject.Enabled
-					= vm.Type == ObjType.Object ||
-					  vm.Type == ObjType.Salary;
-
-				btnDeleteResource.Enabled
-					= btnAllDays.Enabled 
-					= btnWorkDaysOnly.Enabled
-					= btnDeleteAllDays.Enabled
-					= vm.Type == ObjType.Salary;
-
-				SelectSalaryPay?.Invoke(this, vm);
 			}
 		}
 		#endregion
@@ -404,13 +440,13 @@ namespace Furmanov.UI
 		#endregion
 
 		#region Form service
-		private void TreePay_KeyDown(object sender, KeyEventArgs e)
+		private void TreeSalary_KeyDown(object sender, KeyEventArgs e)
 		{
 			if (e.KeyCode == Keys.Delete ||
 				e.KeyCode == Keys.OemMinus ||
 				e.KeyCode == Keys.Subtract)
 			{
-				DeleteResOp();
+				DeleteSalaryPay();
 			}
 			else if (e.KeyCode == Keys.Insert || e.KeyCode == Keys.Add)
 			{
@@ -444,7 +480,7 @@ namespace Furmanov.UI
 			var user = ApplicationUser.Instance.User;
 			if (user != null)
 			{
-				var treeFile = Path.Combine(_appUserDataFolder, $"treeResOp_user({user.Id})");
+				var treeFile = Path.Combine(_appUserDataFolder, $"treeSalaryPay_user({user.Id})");
 				treeSalary.SaveLayoutToXml($"{treeFile} DevState.xml");
 				new TreeListStateSaver(treeSalary).SaveLayoutToXml($"{treeFile} NodeState.xml");
 			}
@@ -470,18 +506,5 @@ namespace Furmanov.UI
 			}
 		}
 		#endregion
-
-		private void treeSalary_ValidatingEditor(object sender, DevExpress.XtraEditors.Controls.BaseContainerValidateEditorEventArgs e)
-		{
-			if (treeSalary.GetFocusedRow() is SalaryPayViewModel vm)
-			{
-				var res = new SalaryPayValidator().Validate(vm);
-				if (!res.IsValid)
-				{
-					e.ErrorText = string.Join("\n", res.Errors);
-					e.Valid = false;
-				}
-			}
-		}
 	}
 }

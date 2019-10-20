@@ -22,24 +22,24 @@ namespace Furmanov.UI.Services
 		{
 			_treeList = treeList;
 			_treeList.Nodes.ForEach(GetExpanded);
-			_selectedId = (_treeList.GetRow(_treeList.FocusedNode?.Id ?? -1) as IVisual)?.VisualId;
+			_selectedId = (_treeList.GetRow(_treeList.FocusedNode?.Id ?? -1) as IViewModel)?.ViewModelId;
 			_selectedColumnName = _treeList.FocusedColumn?.Name;
 			_topVisibleNodeIndex = _treeList.TopVisibleNodeIndex;
 		}
 
 		private void GetExpanded(TreeListNode node)
 		{
-			if (node.Expanded && _treeList.GetRow(node.Id) is IVisual vm)
+			if (node.Expanded && _treeList.GetRow(node.Id) is IViewModel vm)
 			{
-				_expandedIds.Add(vm.VisualId);
+				_expandedIds.Add(vm.ViewModelId);
 			}
 			node.Nodes?.ForEach(GetExpanded);
 		}
 		private void SetState(TreeListNode node)
 		{
-			if (!(_treeList.GetRow(node.Id) is IVisual vm)) return;
-			if (_expandedIds?.Any(id => vm.VisualId == id) ?? false) node.Expanded = true;
-			if (vm.VisualId == _selectedId)
+			if (!(_treeList.GetRow(node.Id) is IViewModel vm)) return;
+			if (_expandedIds?.Any(id => vm.ViewModelId == id) ?? false) node.Expanded = true;
+			if (vm.ViewModelId == _selectedId)
 			{
 				_treeList.SetFocusedNode(node);
 			}

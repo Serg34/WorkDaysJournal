@@ -21,7 +21,7 @@ namespace Furmanov.MVP.MainView
 		DateTime Month { get; }
 		void Reload();
 		void ChangeMonth(DateTime month);
-		void SaveResOp(SalaryPayViewModel viewModel);
+		void SaveSalaryPay(SalaryPayViewModel viewModel);
 		void SelectSalaryPay(SalaryPayViewModel vm);
 
 		string CurrentEmployeeName { get; }
@@ -119,7 +119,7 @@ namespace Furmanov.MVP.MainView
 		}
 
 		#region SalaryPays
-		public void SaveResOp(SalaryPayViewModel pay)
+		public void SaveSalaryPay(SalaryPayViewModel pay)
 		{
 			CurrentPay = pay;
 			CalculateAndSaveSalaryPay(CurrentPay);

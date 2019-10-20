@@ -21,14 +21,14 @@ namespace Furmanov.MVP.MainView
 			_model.LoginChanged += (sender, user) =>
 			{
 				_undoService.Reset();
-				_view.UpdateLogin(sender, user);
+				_view.UpdateLogin(user);
 			};
 			_model.SalaryPayUpdated += (sender, modelView) =>
 			{
-				_view.UpdatePays(sender, modelView);
+				_view.UpdateSalaries(sender, modelView);
 				_view.UpdateUndoRedo(_undoService.UndoItems, _undoService.RedoItems);
 			};
-			_model.SelectedSalaryPay += (sender, modelView) => _view.UpdateDays(sender, modelView);
+			_model.SelectedSalaryPay += (sender, modelView) => _view.UpdateDays(modelView);
 			_model.Error += (sender, error) => _view.ShowError(error);
 
 			_view.Logging += (sender, args) => ShowLoginView(false);
@@ -44,7 +44,7 @@ namespace Furmanov.MVP.MainView
 				var cmd = new MonthCmd(_model, month);
 				_undoService.Execute(cmd);
 			};
-			_view.VedomostClick += (sender, objectId) => _model.CreateVedomost(objectId);
+			_view.ReportClick += (sender, objectId) => _model.CreateVedomost(objectId);
 
 			_view.WorkDaysOnlyClick += (sender, args) =>
 			{
@@ -70,7 +70,7 @@ namespace Furmanov.MVP.MainView
 				var cmd = new SalaryPayCmd(_model, args);
 				_undoService.Execute(cmd);
 			};
-			_view.SelectSalaryPay += (sender, viewModel) => _model.SelectSalaryPay(viewModel);
+			_view.SelectionChangingSalaryPay += (sender, viewModel) => _model.SelectSalaryPay(viewModel);
 			_view.ChangedWorkedDay += (sender, viewModel) =>
 			{
 				var cmd = new WorkedDayCmd(_model, viewModel);

@@ -18,10 +18,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVP", "MVP\MVP.csproj", "{B
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services", "Services\Services.csproj", "{CDD99DBE-F76B-4988-A9E3-621963E46A82}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ReadMe", "ReadMe", "{EB4FA5F0-0579-435C-8232-C81FF497DF36}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Readme", "Readme", "{EB4FA5F0-0579-435C-8232-C81FF497DF36}"
 	ProjectSection(SolutionItems) = preProject
 		Readme.txt = Readme.txt
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "MVPTests1\Tests.csproj", "{65B43ECC-D057-4736-91B6-82714DACC1A1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{CDD99DBE-F76B-4988-A9E3-621963E46A82}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CDD99DBE-F76B-4988-A9E3-621963E46A82}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CDD99DBE-F76B-4988-A9E3-621963E46A82}.Release|Any CPU.Build.0 = Release|Any CPU
+		{65B43ECC-D057-4736-91B6-82714DACC1A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{65B43ECC-D057-4736-91B6-82714DACC1A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{65B43ECC-D057-4736-91B6-82714DACC1A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{65B43ECC-D057-4736-91B6-82714DACC1A1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

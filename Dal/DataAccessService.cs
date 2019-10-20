@@ -10,7 +10,7 @@ using System.Linq;
 
 namespace Furmanov.Dal
 {
-	#region IdataAccessService
+	#region IDataAccessService
 	public interface IDataAccessService
 	{
 		LoginPassword GetAutoLoginPassword();
