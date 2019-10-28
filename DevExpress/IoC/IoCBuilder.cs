@@ -2,7 +2,7 @@
 using Furmanov.Dal;
 using Furmanov.MVP.Login;
 using Furmanov.MVP.MainView;
-using Furmanov.MVP.Services.UndoRedo;
+using Furmanov.Services.UndoRedo;
 
 namespace Furmanov.UI.IoC
 {

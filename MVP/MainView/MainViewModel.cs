@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Furmanov.MVP.MainView.ViewModels
+namespace Furmanov.MVP.MainView
 {
 	public class MainViewModel
 	{

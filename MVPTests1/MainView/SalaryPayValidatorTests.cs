@@ -1,8 +1,11 @@
 ﻿using FluentValidation.TestHelper;
+using Furmanov.Dal.Dto;
 using Furmanov.MVP.MainView;
 using NUnit.Framework;
+using System;
+using System.Linq.Expressions;
 
-namespace Furmanov.Tests
+namespace Furmanov.Tests.MainView
 {
 	[TestFixture]
 	public class SalaryPayValidatorTests
@@ -12,46 +15,55 @@ namespace Furmanov.Tests
 		[SetUp]
 		public void Setup()
 		{
-			_validator = new SalaryPayValidator();
+			_validator = new SalaryPayValidator(DateTime.Now);
 		}
 		[Test]
 		public void SalaryPayValidator_AdvanceTest()
 		{
-			_validator.ShouldNotHaveValidationErrorFor(s => s.Advance, null as decimal?);
-			_validator.ShouldNotHaveValidationErrorFor(s => s.Advance, 0);
-			_validator.ShouldNotHaveValidationErrorFor(s => s.Advance, 500);
-			_validator.ShouldHaveValidationErrorFor(s => s.Advance, -500);
+			NoError(s => s.Advance, null);
+			NoError(s => s.Advance, 0);
+			NoError(s => s.Advance, 500);
+			IsError(s => s.Advance, -500);
 		}
 		[Test]
 		public void SalaryPayValidator_PenaltyTest()
 		{
-			_validator.ShouldNotHaveValidationErrorFor(s => s.Penalty, null as decimal?);
-			_validator.ShouldNotHaveValidationErrorFor(s => s.Penalty, 0);
-			_validator.ShouldNotHaveValidationErrorFor(s => s.Penalty, 500);
-			_validator.ShouldHaveValidationErrorFor(s => s.Penalty, -500);
+			NoError(s => s.Penalty, null);
+			NoError(s => s.Penalty, 0);
+			NoError(s => s.Penalty, 500);
+			IsError(s => s.Penalty, -500);
 		}
 		[Test]
 		public void SalaryPayValidator_PremiumTest()
 		{
-			_validator.ShouldNotHaveValidationErrorFor(s => s.Premium, null as decimal?);
-			_validator.ShouldNotHaveValidationErrorFor(s => s.Premium, 0);
-			_validator.ShouldNotHaveValidationErrorFor(s => s.Premium, 500);
-			_validator.ShouldHaveValidationErrorFor(s => s.Premium, -500);
+			NoError(s => s.Premium, null);
+			NoError(s => s.Premium, 0);
+			NoError(s => s.Premium, 500);
+			IsError(s => s.Premium, -500);
 		}
 		[Test]
 		public void SalaryPayValidator_RateDaysTest()
 		{
-			_validator.ShouldNotHaveValidationErrorFor(s => s.RateDays, 0);
-			_validator.ShouldNotHaveValidationErrorFor(s => s.RateDays, 30);
-			_validator.ShouldHaveValidationErrorFor(s => s.RateDays, -20);
-			_validator.ShouldHaveValidationErrorFor(s => s.RateDays, 32);
+			NoError(s => s.RateDays, 0);
+			NoError(s => s.RateDays, 30);
+			IsError(s => s.RateDays, -20);
+			IsError(s => s.RateDays, 32);
 		}
 		[Test]
 		public void SalaryPayValidator_SalaryTest()
 		{
-			_validator.ShouldNotHaveValidationErrorFor(s => s.Salary, 0);
-			_validator.ShouldNotHaveValidationErrorFor(s => s.Salary, 500);
-			_validator.ShouldHaveValidationErrorFor(s => s.Salary, -500);
+			NoError(s => s.Salary, 0);
+			NoError(s => s.Salary, 500);
+			IsError(s => s.Salary, -500);
+		}
+
+		private void IsError<T>(Expression<Func<SalaryPayViewModel, T>> func, T val)
+		{
+			_validator.ShouldHaveValidationErrorFor(func, val);
+		}
+		private void NoError<T>(Expression<Func<SalaryPayViewModel, T>> func, T val)
+		{
+			_validator.ShouldNotHaveValidationErrorFor(func, val);
 		}
 	}
 }

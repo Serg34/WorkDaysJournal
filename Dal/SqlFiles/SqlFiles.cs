@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 
-namespace Furmanov.Dal.Queries
+namespace Furmanov.Dal.SqlFiles
 {
 	public static class SqlFiles
 	{
@@ -31,7 +31,7 @@ namespace Furmanov.Dal.Queries
 				})
 				.ToArray();
 
-			_queries = resources?.ToDictionary(r => r.key, r => r.query);
+			_queries = resources.ToDictionary(r => r.key, r => r.query);
 		}
 		public static string Get(string fileName) => _queries[fileName];
 	}

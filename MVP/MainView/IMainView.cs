@@ -1,7 +1,6 @@
 ﻿using Furmanov.Dal.Dto;
 using Furmanov.MVP.Login;
-using Furmanov.MVP.MainView.ViewModels;
-using Furmanov.MVP.Services.UndoRedo;
+using Furmanov.Services.UndoRedo;
 using System;
 using System.Collections.Generic;
 

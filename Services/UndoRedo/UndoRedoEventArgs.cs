@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Furmanov.MVP.Services.UndoRedo
+namespace Furmanov.Services.UndoRedo
 {
 	public class UndoRedoEventArgs<T> : EventArgs
 	{

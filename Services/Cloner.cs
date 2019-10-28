@@ -1,6 +1,6 @@
 ﻿using Force.DeepCloner;
 
-namespace Services
+namespace Furmanov.Services
 {
 	public static class Cloner
 	{

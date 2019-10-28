@@ -1,4 +1,4 @@
-namespace Furmanov.MVP.Services.UndoRedo
+namespace Furmanov.Services.UndoRedo
 {
 	/// <summary>
 	/// Support command undo/redo

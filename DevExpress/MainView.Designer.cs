@@ -51,19 +51,18 @@ namespace Furmanov.UI
 			DevExpress.Utils.ToolTipItem toolTipItem6 = new DevExpress.Utils.ToolTipItem();
 			DevExpress.Utils.SuperToolTip superToolTip7 = new DevExpress.Utils.SuperToolTip();
 			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem7 = new DevExpress.Utils.ToolTipTitleItem();
-			DevExpress.Utils.ToolTipItem toolTipItem7 = new DevExpress.Utils.ToolTipItem();
 			DevExpress.Utils.SuperToolTip superToolTip8 = new DevExpress.Utils.SuperToolTip();
 			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem8 = new DevExpress.Utils.ToolTipTitleItem();
-			DevExpress.Utils.ToolTipItem toolTipItem8 = new DevExpress.Utils.ToolTipItem();
+			DevExpress.Utils.ToolTipItem toolTipItem7 = new DevExpress.Utils.ToolTipItem();
 			DevExpress.Utils.SuperToolTip superToolTip9 = new DevExpress.Utils.SuperToolTip();
 			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem9 = new DevExpress.Utils.ToolTipTitleItem();
-			DevExpress.Utils.ToolTipItem toolTipItem9 = new DevExpress.Utils.ToolTipItem();
+			DevExpress.Utils.ToolTipItem toolTipItem8 = new DevExpress.Utils.ToolTipItem();
 			DevExpress.Utils.SuperToolTip superToolTip10 = new DevExpress.Utils.SuperToolTip();
 			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem10 = new DevExpress.Utils.ToolTipTitleItem();
-			DevExpress.Utils.ToolTipItem toolTipItem10 = new DevExpress.Utils.ToolTipItem();
+			DevExpress.Utils.ToolTipItem toolTipItem9 = new DevExpress.Utils.ToolTipItem();
 			DevExpress.Utils.SuperToolTip superToolTip11 = new DevExpress.Utils.SuperToolTip();
 			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem11 = new DevExpress.Utils.ToolTipTitleItem();
-			DevExpress.Utils.ToolTipItem toolTipItem11 = new DevExpress.Utils.ToolTipItem();
+			DevExpress.Utils.ToolTipItem toolTipItem10 = new DevExpress.Utils.ToolTipItem();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainView));
 			this.menuMain = new DevExpress.XtraBars.Ribbon.RibbonControl();
 			this.btnEditResource = new DevExpress.XtraBars.BarButtonItem();
@@ -309,16 +308,13 @@ namespace Furmanov.UI
 			// 
 			this.cbMonth.Caption = "Месяц";
 			this.cbMonth.Edit = this.riMonths;
-			this.cbMonth.EditWidth = 100;
+			this.cbMonth.EditValue = "Текущий";
+			this.cbMonth.EditWidth = 120;
 			this.cbMonth.Enabled = false;
 			this.cbMonth.Id = 22;
 			this.cbMonth.Name = "cbMonth";
 			toolTipTitleItem7.Text = "Месяц";
-			toolTipItem7.LeftIndent = 6;
-			toolTipItem7.Text = "До 15 числа (включительно) доступно редактирование текущего и предыдущего месяца." +
-    "\r\n\r\nПосле 15 числа доступно редактирование только текущего месяца.";
 			superToolTip7.Items.Add(toolTipTitleItem7);
-			superToolTip7.Items.Add(toolTipItem7);
 			this.cbMonth.SuperTip = superToolTip7;
 			this.cbMonth.EditValueChanged += new System.EventHandler(this.CbMonth_EditValueChanged);
 			// 
@@ -327,6 +323,9 @@ namespace Furmanov.UI
 			this.riMonths.AutoHeight = false;
 			this.riMonths.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+			this.riMonths.Items.AddRange(new object[] {
+            "Предыдущий",
+            "Текущий"});
 			this.riMonths.Name = "riMonths";
 			this.riMonths.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
 			// 
@@ -339,11 +338,11 @@ namespace Furmanov.UI
 			this.btnVedomostForObject.Name = "btnVedomostForObject";
 			this.btnVedomostForObject.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large;
 			toolTipTitleItem8.Text = "Ведомость по объекту";
-			toolTipItem8.ImageOptions.Image = global::Furmanov.UI.Properties.Resources.Report;
-			toolTipItem8.LeftIndent = 6;
-			toolTipItem8.Text = "Создать в Excel ведомость по выбранному объекту";
+			toolTipItem7.ImageOptions.Image = global::Furmanov.UI.Properties.Resources.Report;
+			toolTipItem7.LeftIndent = 6;
+			toolTipItem7.Text = "Создать в Excel ведомость по выбранному объекту";
 			superToolTip8.Items.Add(toolTipTitleItem8);
-			superToolTip8.Items.Add(toolTipItem8);
+			superToolTip8.Items.Add(toolTipItem7);
 			this.btnVedomostForObject.SuperTip = superToolTip8;
 			this.btnVedomostForObject.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.BtnVedomostForObject_ItemClick);
 			// 
@@ -356,11 +355,11 @@ namespace Furmanov.UI
 			this.btnDeleteAllDays.Name = "btnDeleteAllDays";
 			this.btnDeleteAllDays.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large;
 			toolTipTitleItem9.Text = "Удалить дни";
-			toolTipItem9.ImageOptions.Image = global::Furmanov.UI.Properties.Resources.NoDays;
-			toolTipItem9.LeftIndent = 6;
-			toolTipItem9.Text = "Удалить все отработанные дни в текущем месяце для выбранного сторудника";
+			toolTipItem8.ImageOptions.Image = global::Furmanov.UI.Properties.Resources.NoDays;
+			toolTipItem8.LeftIndent = 6;
+			toolTipItem8.Text = "Удалить все отработанные дни в текущем месяце для выбранного сторудника";
 			superToolTip9.Items.Add(toolTipTitleItem9);
-			superToolTip9.Items.Add(toolTipItem9);
+			superToolTip9.Items.Add(toolTipItem8);
 			this.btnDeleteAllDays.SuperTip = superToolTip9;
 			this.btnDeleteAllDays.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.BtnDeleteAllDays_ItemClick);
 			// 
@@ -374,11 +373,11 @@ namespace Furmanov.UI
 			this.btnUndo.ImageOptions.Image = global::Furmanov.UI.Properties.Resources.undo;
 			this.btnUndo.Name = "btnUndo";
 			toolTipTitleItem10.Text = "Отменить действие";
-			toolTipItem10.ImageOptions.Image = global::Furmanov.UI.Properties.Resources.undo;
-			toolTipItem10.LeftIndent = 6;
-			toolTipItem10.Text = "Отменяет последнее действие\r\n\r\nГорячие клавиши: ctrl+z";
+			toolTipItem9.ImageOptions.Image = global::Furmanov.UI.Properties.Resources.undo;
+			toolTipItem9.LeftIndent = 6;
+			toolTipItem9.Text = "Отменяет последнее действие\r\n\r\nГорячие клавиши: ctrl+z";
 			superToolTip10.Items.Add(toolTipTitleItem10);
-			superToolTip10.Items.Add(toolTipItem10);
+			superToolTip10.Items.Add(toolTipItem9);
 			this.btnUndo.SuperTip = superToolTip10;
 			// 
 			// menuUndo
@@ -397,11 +396,11 @@ namespace Furmanov.UI
 			this.btnRedo.ImageOptions.Image = global::Furmanov.UI.Properties.Resources.redo;
 			this.btnRedo.Name = "btnRedo";
 			toolTipTitleItem11.Text = "Повторить действие";
-			toolTipItem11.ImageOptions.Image = global::Furmanov.UI.Properties.Resources.redo;
-			toolTipItem11.LeftIndent = 6;
-			toolTipItem11.Text = "Повторяет отменённое действие\r\n\r\nГорячие клавиши: ctrl + shift + z";
+			toolTipItem10.ImageOptions.Image = global::Furmanov.UI.Properties.Resources.redo;
+			toolTipItem10.LeftIndent = 6;
+			toolTipItem10.Text = "Повторяет отменённое действие\r\n\r\nГорячие клавиши: ctrl + shift + z";
 			superToolTip11.Items.Add(toolTipTitleItem11);
-			superToolTip11.Items.Add(toolTipItem11);
+			superToolTip11.Items.Add(toolTipItem10);
 			this.btnRedo.SuperTip = superToolTip11;
 			// 
 			// menuRedo
@@ -583,6 +582,8 @@ namespace Furmanov.UI
 			// colSalary
 			// 
 			this.colSalary.FieldName = "Salary";
+			this.colSalary.Format.FormatString = "{0:N0}";
+			this.colSalary.Format.FormatType = DevExpress.Utils.FormatType.Numeric;
 			this.colSalary.Name = "colSalary";
 			this.colSalary.OptionsColumn.AllowEdit = false;
 			this.colSalary.Visible = true;
@@ -633,7 +634,7 @@ namespace Furmanov.UI
 			// 
 			// colSalaryPay
 			// 
-			this.colSalaryPay.FieldName = "SalaryPay";
+			this.colSalaryPay.FieldName = "Pay";
 			this.colSalaryPay.Name = "colSalaryPay";
 			this.colSalaryPay.OptionsColumn.AllowEdit = false;
 			this.colSalaryPay.Visible = true;

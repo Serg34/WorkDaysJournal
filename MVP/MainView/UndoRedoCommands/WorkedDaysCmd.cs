@@ -1,6 +1,6 @@
 ﻿using Furmanov.Dal.Dto;
 using Furmanov.MVP.MainView;
-using Furmanov.MVP.Services.UndoRedo;
+using Furmanov.Services.UndoRedo;
 using System.Collections.Generic;
 
 namespace SwissClean.Services.UndoRedo.Commands
@@ -12,7 +12,7 @@ namespace SwissClean.Services.UndoRedo.Commands
 			_model = model;
 			_pay = _model.CurrentPay;
 			_value = value;
-			_prevValue = _model.CurrentTables;
+			_prevValue = _model.CurrentDaysInMonth;
 			Name = $"Изменение дней выхода для сотрудника '{_model.CurrentEmployeeName}'";
 		}
 

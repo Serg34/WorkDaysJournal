@@ -7,12 +7,11 @@ using Furmanov.Dal;
 using Furmanov.Dal.Dto;
 using Furmanov.MVP.Login;
 using Furmanov.MVP.MainView;
-using Furmanov.MVP.MainView.ViewModels;
-using Furmanov.MVP.Services.UndoRedo;
+using Furmanov.Services;
+using Furmanov.Services.UI;
+using Furmanov.Services.UndoRedo;
 using Furmanov.UI.Properties;
 using Furmanov.UI.Services;
-using Services;
-using Services.UI;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -21,7 +20,6 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
-using FluentValidation;
 
 namespace Furmanov.UI
 {
@@ -47,14 +45,6 @@ namespace Furmanov.UI
 				WindowState = FormWindowState.Maximized;
 #endif
 				lblVersion.Caption = "Версия: " + Application.ProductVersion;
-
-				riMonths.Items.Add("Текущий");
-				if (DateTime.Today.Day <= 15)
-				{
-					riMonths.Items.Add("Предыдущий");
-				}
-
-				cbMonth.EditValue = "Текущий";
 
 				var file = Path.Combine(_appUserDataFolder, "Ribbon.xml");
 				if (File.Exists(file)) menuMain.RestoreLayoutFromXml(file);
@@ -253,26 +243,8 @@ namespace Furmanov.UI
 		{
 			try
 			{
-				if (!(sender is TreeList treeList)) return;
-				if (!(treeList.GetFocusedRow() is SalaryPayViewModel focusedVm)) return;
-
-				var fieldName = treeList.FocusedColumn.FieldName;
-				var prop = typeof(SalaryPayViewModel).GetProperty(fieldName);
-				var type = Nullable.GetUnderlyingType(prop.PropertyType) ?? prop.PropertyType;
-				var val = e.Value == null ? null : Convert.ChangeType(e.Value, type);
-				var vmToValidate = Cloner.DeepCopy(focusedVm);
-				prop.SetValue(vmToValidate, val);
-
-				var res = new SalaryPayValidator().Validate(vmToValidate, fieldName);
-				if (!res?.IsValid ?? false)
-				{
-					e.ErrorText = string.Join("\n", res.Errors);
-					e.Valid = false;
-				}
-				else
-				{
-					prop.SetValue(focusedVm, val);
-				}
+				var fieldName = treeSalary.FocusedColumn.FieldName;
+				ValidateService.Validate(e, new SalaryPayValidator(_currentPay.Month), _currentPay, fieldName);
 			}
 			catch (Exception ex)
 			{

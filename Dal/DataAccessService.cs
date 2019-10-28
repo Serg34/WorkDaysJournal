@@ -1,5 +1,4 @@
 ﻿using Furmanov.Dal.Dto;
-using Furmanov.Dal.Queries;
 using LinqToDB;
 using LinqToDB.Data;
 using System;
@@ -40,7 +39,7 @@ namespace Furmanov.Dal
 		{
 			using (var db = new DbDataContext(_connectionString))
 			{
-				var sql = SqlFiles.Get("User.sql");
+				var sql = SqlFiles.SqlFiles.Get("User.sql");
 				var res = db.Query<UserViewModel>(sql,
 					new DataParameter("@login", login),
 					new DataParameter("@password", password))
@@ -73,7 +72,7 @@ namespace Furmanov.Dal
 			{
 				var fileName = user.Role == Role.Manager ? "SalaryPayViewForManager.sql"
 					: "SalaryPayViewForProjectManager.sql";
-				var sql = SqlFiles.Get(fileName);
+				var sql = SqlFiles.SqlFiles.Get(fileName);
 
 				var res = db.Query<SalaryPayViewModel>(sql,
 					new DataParameter("@userId", user.Id),
@@ -114,7 +113,7 @@ namespace Furmanov.Dal
 		{
 			using (var db = new DbDataContext(_connectionString))
 			{
-				var sqlNoWork = SqlFiles.Get("DeleteWorkDay.sql");
+				var sqlNoWork = SqlFiles.SqlFiles.Get("DeleteWorkDay.sql");
 				var noWork = workedDay.Where(t => !t.IsWorked).ToArray();
 				foreach (var day in noWork)
 				{
@@ -123,7 +122,7 @@ namespace Furmanov.Dal
 						new DataParameter("@day", day.Date.ToString("yyyyMMdd")));
 				}
 
-				var sqlWork = SqlFiles.Get("InsertWorkDay.sql");
+				var sqlWork = SqlFiles.SqlFiles.Get("InsertWorkDay.sql");
 				var work = workedDay.Where(t => t.IsWorked).ToArray();
 				foreach (var day in work)
 				{

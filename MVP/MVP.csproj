@@ -62,7 +62,7 @@
     <Compile Include="MainView\UndoRedoCommands\SalaryPayCmd.cs" />
     <Compile Include="MainView\UndoRedoCommands\WorkedDayCmd.cs" />
     <Compile Include="MainView\UndoRedoCommands\WorkedDaysCmd.cs" />
-    <Compile Include="MainView\ViewModels\MainViewModel.cs" />
+    <Compile Include="MainView\MainViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

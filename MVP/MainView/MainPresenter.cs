@@ -1,6 +1,6 @@
 ﻿using Furmanov.MVP.Login;
 using Furmanov.MVP.MainView.UndoRedoCommands;
-using Furmanov.MVP.Services.UndoRedo;
+using Furmanov.Services.UndoRedo;
 using SwissClean.Services.UndoRedo.Commands;
 
 namespace Furmanov.MVP.MainView
@@ -44,7 +44,7 @@ namespace Furmanov.MVP.MainView
 				var cmd = new MonthCmd(_model, month);
 				_undoService.Execute(cmd);
 			};
-			_view.ReportClick += (sender, objectId) => _model.CreateVedomost(objectId);
+			_view.ReportClick += (sender, objectId) => _model.Report(objectId);
 
 			_view.WorkDaysOnlyClick += (sender, args) =>
 			{
@@ -80,7 +80,7 @@ namespace Furmanov.MVP.MainView
 			_view.Undo += (sender, count) => _undoService.Undo(count);
 			_view.Redo += (sender, count) => _undoService.Redo(count);
 
-			_model.Reload();
+			_model.Update();
 
 			_view.Show();
 			ShowLoginView(true);

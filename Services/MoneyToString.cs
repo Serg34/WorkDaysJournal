@@ -1,4 +1,4 @@
-namespace Services
+namespace Furmanov.Services
 {
 	public class MoneyToString
 	{

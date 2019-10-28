@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Furmanov.MVP.Services.UndoRedo
+namespace Furmanov.Services.UndoRedo
 {
 	public interface IUndoRedoService
 	{

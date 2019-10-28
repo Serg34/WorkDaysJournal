@@ -8,5 +8,5 @@
 -FluentValidation (https://fluentvalidation.net/)
 -Autofac (https://autofac.org/)
 -MVP
--Паттерн Command
+-Паттерн Command в UndoRedoService
 -DeepCloner

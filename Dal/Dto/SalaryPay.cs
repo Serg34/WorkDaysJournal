@@ -48,10 +48,10 @@ namespace Furmanov.Dal.Dto
 		[Editable(false)]
 		public int? FactDays { get; set; }
 
-		[Column(Name = "SalaryPay")]
+		[Column(Name = "Pay")]
 		[Display(Name = "Зарплата")]
 		[Editable(false)]
-		public decimal? SalaryPay { get; set; }
+		public decimal? Pay { get; set; }
 	}
 	public enum ObjType { Project, Object, Salary }
 

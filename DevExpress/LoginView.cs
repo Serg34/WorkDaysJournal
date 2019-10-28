@@ -1,6 +1,6 @@
 ﻿using DevExpress.XtraEditors;
 using Furmanov.MVP.Login;
-using Services.UI;
+using Furmanov.Services.UI;
 using System;
 
 namespace Furmanov.UI

@@ -1,6 +1,6 @@
 ﻿using Furmanov.Dal.Dto;
-using Furmanov.MVP.Services.UndoRedo;
-using Services;
+using Furmanov.Services;
+using Furmanov.Services.UndoRedo;
 
 namespace Furmanov.MVP.MainView.UndoRedoCommands
 {

@@ -1,9 +1,9 @@
 ﻿using System;
-using System.Data;
 using System.IO;
+using DataTable = System.Data.DataTable;
 using Xls = Microsoft.Office.Interop.Excel;
 
-namespace Services.Tools
+namespace Furmanov.Services.Tools
 {
 	public class Excel
 	{

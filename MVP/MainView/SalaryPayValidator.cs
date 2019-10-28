@@ -1,12 +1,12 @@
-﻿using System;
-using FluentValidation;
+﻿using FluentValidation;
 using Furmanov.Dal.Dto;
+using System;
 
 namespace Furmanov.MVP.MainView
 {
 	public class SalaryPayValidator : AbstractValidator<SalaryPayViewModel>
 	{
-		public SalaryPayValidator()
+		public SalaryPayValidator(DateTime month)
 		{
 			RuleFor(s => s.Advance)
 				.GreaterThanOrEqualTo(0)
@@ -23,11 +23,12 @@ namespace Furmanov.MVP.MainView
 				.When(s => s.Premium != null)
 				.WithMessage("Премия не может быть отрицательной");
 
+			var daysMaxCount = DateTime.DaysInMonth(month.Year, month.Month);
 			RuleFor(s => s.RateDays)
 				.GreaterThanOrEqualTo(0)
 				.WithMessage("Норма не может быть отрицательной")
-				.LessThanOrEqualTo(31)
-				.WithMessage("Норма не может быть больше 31 дня");
+				.LessThanOrEqualTo(daysMaxCount)
+				.WithMessage($"Норма не может быть больше {daysMaxCount}");
 
 			RuleFor(s => s.Salary)
 				.GreaterThanOrEqualTo(0)
