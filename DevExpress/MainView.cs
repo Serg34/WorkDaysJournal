@@ -70,7 +70,6 @@ namespace Furmanov.UI
 
 		public event EventHandler<WorkedDayViewModel> ChangedWorkedDay;
 
-		public event EventHandler<int> ReportClick;
 		public event EventHandler DeletingAllDays;
 
 		public event EventHandler<int> Undo;
@@ -147,16 +146,6 @@ namespace Furmanov.UI
 					? DateTime.Now
 					: DateTime.Now.AddMonths(-1));
 		}
-
-		private void BtnVedomostTotal_ItemClick(object sender, ItemClickEventArgs e)
-		{
-			ReportClick?.Invoke(this, 0);
-		}
-		private void BtnVedomostForObject_ItemClick(object sender, ItemClickEventArgs e)
-		{
-			ReportClick?.Invoke(this, _currentPay.ObjectId);
-		}
-
 		private void BtnWorkDaysOnly_ItemClick(object sender, ItemClickEventArgs e)
 		{
 			WorkDaysOnlyClick?.Invoke(this, EventArgs.Empty);
@@ -267,7 +256,7 @@ namespace Furmanov.UI
 		{
 			if (_currentPay.Type == ObjType.Salary)
 			{
-				ShowNoImplementCode(this, null);
+				ShowNoImplementedCode(this, null);
 			}
 		}
 		private void DeleteSalaryPay()
@@ -283,7 +272,7 @@ namespace Furmanov.UI
 
 			if (MessageService.ShowQuestion($"Будет удален сотрудник '{resName}'.\nПродолжить?") == DialogResult.Yes)
 			{
-				ShowNoImplementCode(this, null);
+				ShowNoImplementedCode(this, null);
 			}
 		}
 
@@ -422,7 +411,7 @@ namespace Furmanov.UI
 			}
 			else if (e.KeyCode == Keys.Insert || e.KeyCode == Keys.Add)
 			{
-				ShowNoImplementCode(this, null);
+				ShowNoImplementedCode(this, null);
 			}
 			else if (e.Control && e.Shift && e.KeyCode == Keys.Z) Redo?.Invoke(this, 1);
 			else if (e.Control && e.KeyCode == Keys.Z) Undo?.Invoke(this, 1);
@@ -432,7 +421,7 @@ namespace Furmanov.UI
 			MessageService.ShowError(error);
 		}
 
-		private void ShowNoImplementCode(object sender, ItemClickEventArgs e)
+		private void ShowNoImplementedCode(object sender, ItemClickEventArgs e)
 		{
 			MessageService.ShowMessage("Раньше здесь был не очень интересный код");
 		}

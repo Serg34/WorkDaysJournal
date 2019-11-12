@@ -2,7 +2,6 @@
 using Furmanov.Dal.Dto;
 using Furmanov.MVP.Login;
 using Furmanov.Services;
-using Furmanov.Services.Tools;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,7 +29,6 @@ namespace Furmanov.MVP.MainView
 		void SaveSalaryPay(SalaryPayViewModel viewModel);
 		void SelectSalaryPay(SalaryPayViewModel vm);
 
-		void Report(int objectId);
 		List<WorkedDayViewModel> GenWorkedDays(bool allDays, bool isExist);
 		void SaveWorkDay(WorkedDayViewModel day);
 		void SaveWorkedDays(List<WorkedDayViewModel> days);
@@ -79,7 +77,7 @@ namespace Furmanov.MVP.MainView
 		public DateTime Month { get; private set; } = DateTime.Now;
 		public string CurrentEmployeeName { get; private set; }
 		public SalaryPayViewModel CurrentPay { get; set; }
-		public List<WorkedDayViewModel> CurrentDaysInMonth { get; private set; } 
+		public List<WorkedDayViewModel> CurrentDaysInMonth { get; private set; }
 		#endregion
 
 		#region TopMenu
@@ -87,15 +85,6 @@ namespace Furmanov.MVP.MainView
 		{
 			Month = month;
 			Update();
-		}
-		public void Report(int objectId)
-		{
-			try
-			{
-				var dt = _db.Report(_user, objectId);
-				new Excel().CreateVedomost(dt);
-			}
-			catch (Exception ex) { Error?.Invoke(this, ex.ToString()); }
 		}
 		#endregion
 
@@ -114,7 +103,7 @@ namespace Furmanov.MVP.MainView
 			{
 				Error?.Invoke(this, ex.ToString());
 			}
-		} 
+		}
 		#endregion
 
 		#region SalaryPays
@@ -238,7 +227,7 @@ namespace Furmanov.MVP.MainView
 			else salaryPay.Pay = null;
 
 			_db.SaveSalaryPay(salaryPay);
-		} 
+		}
 		#endregion
 
 		#region Get ViewModels

@@ -16,7 +16,6 @@ namespace Furmanov.MVP.MainView
 		event EventHandler WorkDaysOnlyClick;
 		event EventHandler AllDaysClick;
 		event EventHandler DeletingAllDays;
-		event EventHandler<int> ReportClick;
 
 		event EventHandler<UndoRedoEventArgs<SalaryPayViewModel>> ChangedSalaryPay;
 		event EventHandler<SalaryPayViewModel> SelectionChangingSalaryPay;

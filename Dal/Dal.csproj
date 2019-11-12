@@ -52,7 +52,7 @@
     <Compile Include="Dto\IViewModel.cs" />
     <Compile Include="Dto\LoginPassword.cs" />
     <Compile Include="Dto\SalaryPay.cs" />
-    <Compile Include="Dto\WorkDays.cs" />
+    <Compile Include="Dto\WorkedDay.cs" />
     <Compile Include="Dto\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SqlFiles\SqlFiles.cs" />

@@ -44,7 +44,6 @@ namespace Furmanov.MVP.MainView
 				var cmd = new MonthCmd(_model, month);
 				_undoService.Execute(cmd);
 			};
-			_view.ReportClick += (sender, objectId) => _model.Report(objectId);
 
 			_view.WorkDaysOnlyClick += (sender, args) =>
 			{

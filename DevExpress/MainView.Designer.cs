@@ -186,7 +186,7 @@ namespace Furmanov.UI
 			superToolTip1.Items.Add(toolTipTitleItem1);
 			superToolTip1.Items.Add(toolTipItem1);
 			this.btnEditResource.SuperTip = superToolTip1;
-			this.btnEditResource.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.ShowNoImplementCode);
+			this.btnEditResource.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.ShowNoImplementedCode);
 			// 
 			// btnCreateResource
 			// 
@@ -204,7 +204,7 @@ namespace Furmanov.UI
 			superToolTip2.Items.Add(toolTipTitleItem2);
 			superToolTip2.Items.Add(toolTipItem2);
 			this.btnCreateResource.SuperTip = superToolTip2;
-			this.btnCreateResource.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.ShowNoImplementCode);
+			this.btnCreateResource.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.ShowNoImplementedCode);
 			// 
 			// btnVedomostTotal
 			// 
@@ -221,7 +221,7 @@ namespace Furmanov.UI
 			superToolTip3.Items.Add(toolTipTitleItem3);
 			superToolTip3.Items.Add(toolTipItem3);
 			this.btnVedomostTotal.SuperTip = superToolTip3;
-			this.btnVedomostTotal.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.BtnVedomostTotal_ItemClick);
+			this.btnVedomostTotal.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.ShowNoImplementedCode);
 			// 
 			// btnWorkDaysOnly
 			// 
@@ -295,7 +295,7 @@ namespace Furmanov.UI
 			superToolTip6.Items.Add(toolTipTitleItem6);
 			superToolTip6.Items.Add(toolTipItem6);
 			this.btnDeleteResource.SuperTip = superToolTip6;
-			this.btnDeleteResource.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.ShowNoImplementCode);
+			this.btnDeleteResource.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.ShowNoImplementedCode);
 			// 
 			// btnLogin
 			// 
@@ -344,7 +344,7 @@ namespace Furmanov.UI
 			superToolTip8.Items.Add(toolTipTitleItem8);
 			superToolTip8.Items.Add(toolTipItem7);
 			this.btnVedomostForObject.SuperTip = superToolTip8;
-			this.btnVedomostForObject.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.BtnVedomostForObject_ItemClick);
+			this.btnVedomostForObject.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.ShowNoImplementedCode);
 			// 
 			// btnDeleteAllDays
 			// 
