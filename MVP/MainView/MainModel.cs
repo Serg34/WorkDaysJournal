@@ -62,12 +62,12 @@ namespace Furmanov.MVP.MainView
 		public ILoginModel LoginModel { get; }
 		public void Logout()
 		{
-			ApplicationUser.Instance.User = null;
+			ApplicationUser.User = null;
 			UpdateLogin();
 		}
 		private void UpdateLogin()
 		{
-			_user = ApplicationUser.Instance.User;
+			_user = ApplicationUser.User;
 			Update();
 			LoginChanged?.Invoke(this, _user); //после обновления восстанавливаем состояние контролов
 		}
@@ -93,7 +93,7 @@ namespace Furmanov.MVP.MainView
 		{
 			try
 			{
-				_user = ApplicationUser.Instance.User;
+				_user = ApplicationUser.User;
 
 				_allPays = _db.GetSalaryPays(_user, Month);
 

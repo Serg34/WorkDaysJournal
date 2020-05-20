@@ -87,5 +87,11 @@
   <ItemGroup>
     <None Include="Sql\ObjectsForManager.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Services\Services.csproj">
+      <Project>{CDD99DBE-F76B-4988-A9E3-621963E46A82}</Project>
+      <Name>Services</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

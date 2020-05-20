@@ -6,7 +6,6 @@ using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraGrid.Views.Grid;
 using DevExpress.XtraPivotGrid;
 using DevExpress.XtraTreeList;
-using SC.Common.Dal;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -15,6 +14,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
+using Furmanov.Services.Repositories;
 
 namespace SC.Common.Services
 {

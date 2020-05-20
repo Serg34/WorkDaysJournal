@@ -1,5 +1,4 @@
 ﻿using LinqToDB;
-using SC.Common.Dal;
 using SC.Common.Model;
 using System;
 using System.Reflection;

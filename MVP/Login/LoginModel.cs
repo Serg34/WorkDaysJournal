@@ -61,7 +61,7 @@ namespace Furmanov.MVP.Login
 			var user = _db.GetUser(_viewModel.Login, _viewModel.Password);
 			if (user != null)
 			{
-				ApplicationUser.Instance.User = user;
+				ApplicationUser.User = user;
 				var loginPass = new LoginPassword();
 				if (_viewModel.IsRemember)
 				{
@@ -79,7 +79,7 @@ namespace Furmanov.MVP.Login
 			}
 			else
 			{
-				ApplicationUser.Instance.User = null;
+				ApplicationUser.User = null;
 				LoginChecked = false;
 
 				Error?.Invoke(this, "Неверный логин или пароль");
