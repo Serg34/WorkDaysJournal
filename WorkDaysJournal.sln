@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevExpress", "DevExpress\De
 		{BC065B48-916E-4C57-BAA0-EB7C6B1E555D} = {BC065B48-916E-4C57-BAA0-EB7C6B1E555D}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dal", "Dal\Dal.csproj", "{F0A6C913-5A13-4DA9-97E2-E75D2F469EC9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data", "Data\Data.csproj", "{F0A6C913-5A13-4DA9-97E2-E75D2F469EC9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVP", "MVP\MVP.csproj", "{BC065B48-916E-4C57-BAA0-EB7C6B1E555D}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -23,7 +23,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Readme", "Readme", "{EB4FA5
 		Readme.txt = Readme.txt
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "MVPTests1\Tests.csproj", "{65B43ECC-D057-4736-91B6-82714DACC1A1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{65B43ECC-D057-4736-91B6-82714DACC1A1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

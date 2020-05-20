@@ -7,8 +7,8 @@
     <ProjectGuid>{F0A6C913-5A13-4DA9-97E2-E75D2F469EC9}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Furmanov.Dal</RootNamespace>
-    <AssemblyName>Dal</AssemblyName>
+    <RootNamespace>Furmanov.Data</RootNamespace>
+    <AssemblyName>Data</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -48,13 +48,12 @@
   <ItemGroup>
     <Compile Include="ApplicationUser.cs" />
     <Compile Include="DataAccessService.cs" />
-    <Compile Include="Data\IViewModel.cs" />
+    <Compile Include="Data\Interfaces.cs" />
     <Compile Include="Data\LoginPassword.cs" />
     <Compile Include="Data\SalaryPay.cs" />
     <Compile Include="Data\User.cs" />
     <Compile Include="Data\WorkedDay.cs" />
     <Compile Include="DbContext.cs" />
-    <Compile Include="MapperBuilder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -71,22 +70,22 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="SqlFiles\User.sql" />
+    <EmbeddedResource Include="Sql\UserDb.sql" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="SqlFiles\SalaryPayViewForProjectManager.sql" />
+    <EmbeddedResource Include="Sql\SalaryPayForProjectManager.sql" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="SqlFiles\SalaryPayViewForManager.sql" />
+    <EmbeddedResource Include="Sql\SalaryPayForManager.sql" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="SqlFiles\DeleteWorkDay.sql" />
+    <EmbeddedResource Include="Sql\DeleteWorkDay.sql" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="SqlFiles\InsertWorkDay.sql" />
+    <EmbeddedResource Include="Sql\InsertWorkDay.sql" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="SqlFiles\ObjectsForManager.sql" />
+    <None Include="Sql\ObjectsForManager.sql" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

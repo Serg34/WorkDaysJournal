@@ -1,5 +1,5 @@
 ﻿using Furmanov.Dal.Data;
-using Furmanov.Dal.Properties;
+using Furmanov.Data.Properties;
 using LinqToDB;
 using LinqToDB.Data;
 using System;
@@ -36,7 +36,7 @@ namespace Furmanov.Dal
 
 		public User GetUser(string login, string password)
 		{
-			using (var db = new DbDataContext(_connectionString))
+			using (var db = new DbContext(_connectionString))
 			{
 				var res = db.Query<User>(Resources.User,
 					new DataParameter("@login", login),
@@ -48,7 +48,8 @@ namespace Furmanov.Dal
 		public LoginPassword GetAutoLoginPassword()
 		{
 			var file = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-				"SC.WorkedDaysDb",
+				"Furmanov",
+				"WorkedDaysJournal",
 				"LoginPassword.xml");
 
 			var res = new XmlRepository<LoginPassword>(file).Load();
@@ -57,7 +58,8 @@ namespace Furmanov.Dal
 		public void SaveAutoLoginPassword(LoginPassword loginPassword)
 		{
 			var file = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-				"SC.WorkedDaysDb",
+				"Furmanov",
+				"WorkedDaysJournal",
 				"LoginPassword.xml");
 			new XmlRepository<LoginPassword>(file).Save(loginPassword);
 		}
@@ -66,10 +68,10 @@ namespace Furmanov.Dal
 		{
 			if (user == null) return new List<SalaryPay>();
 
-			using (var db = new DbDataContext(_connectionString))
+			using (var db = new DbContext(_connectionString))
 			{
-				var sql = user.Role == Role.Manager ? Resources.SalaryPayViewForManager
-					: Resources.SalaryPayViewForProjectManager;
+				var sql = user.Role == Role.Manager ? Resources.SalaryPayForManager
+					: Resources.SalaryPayForProjectManager;
 
 				var res = db.Query<SalaryPay>(sql,
 					new DataParameter("@userId", user.Id),
@@ -80,7 +82,7 @@ namespace Furmanov.Dal
 		}
 		public void SaveSalaryPay(SalaryPayDto salaryPayDto)
 		{
-			using (var db = new DbDataContext(_connectionString))
+			using (var db = new DbContext(_connectionString))
 			{
 				db.Update(salaryPayDto);
 			}
@@ -88,7 +90,7 @@ namespace Furmanov.Dal
 
 		public List<WorkedDayDto> GetWorkedDays(int salaryPayId, DateTime month)
 		{
-			using (var db = new DbDataContext(_connectionString))
+			using (var db = new DbContext(_connectionString))
 			{
 				var res = db.GetTable<WorkedDayDto>()
 						.Where(t => t.SalaryPayId == salaryPayId)
@@ -101,7 +103,7 @@ namespace Furmanov.Dal
 		}
 		public void SaveWorkedDays(params WorkedDay[] workedDay)
 		{
-			using (var db = new DbDataContext(_connectionString))
+			using (var db = new DbContext(_connectionString))
 			{
 				var noWork = workedDay.Where(t => !t.IsWorked).ToArray();
 				foreach (var day in noWork)

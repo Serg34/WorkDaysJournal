@@ -1,10 +1,14 @@
-namespace Furmanov.Services
+namespace SC.Common.Services
 {
 	public class MoneyToString
 	{
 		public static string RurToWord(decimal money)
 		{
 			return CurPhrase(money, "рубль", "рубля", "рублей", "копейка", "копейки", "копеек");
+		}
+		public static string CountToWord(decimal money)
+		{
+			return CurPhrase(money, "наименование", "наименования", "наименований", "", "", "");
 		}
 
 		public static string UsdToWord(decimal money)
@@ -15,10 +19,10 @@ namespace Furmanov.Services
 		public static string NumPhrase(ulong value, bool isMale, bool isGenitive = false)
 		{
 			if (value == 0UL) return "Ноль";
-			string[] dek1 = { "", " од", " дв", " три", " четыре", " пять", " шесть", " семь", " восемь", " девять", " десять", " одиннадцать", " двенадцать", " тринадцать", " четырнадцать", " пятнадцать", " шестнадцать", " семнадцать", " восемнадцать", " девятнадцать" };
-			string[] dek1Genitive = { "", " од", " дв", " трёх", " четырёх", " пять", " шесть", " семь", " восемь", " девять", " десять", " одиннадцать", " двенадцать", " тринадцать", " четырнадцать", " пятнадцать", " шестнадцать", " семнадцать", " восемнадцать", " девятнадцать" };
-			string[] dek2 = { "", "", " двадцать", " тридцать", " сорок", " пятьдесят", " шестьдесят", " семьдесят", " восемьдесят", " девяносто" };
-			string[] dek3 = { "", " сто", " двести", " триста", " четыреста", " пятьсот", " шестьсот", " семьсот", " восемьсот", " девятьсот" };
+			string[] Dek1 = { "", " од", " дв", " три", " четыре", " пять", " шесть", " семь", " восемь", " девять", " десять", " одиннадцать", " двенадцать", " тринадцать", " четырнадцать", " пятнадцать", " шестнадцать", " семнадцать", " восемнадцать", " девятнадцать" };
+			string[] Dek1Genitive = { "", " од", " дв", " трёх", " четырёх", " пять", " шесть", " семь", " восемь", " девять", " десять", " одиннадцать", " двенадцать", " тринадцать", " четырнадцать", " пятнадцать", " шестнадцать", " семнадцать", " восемнадцать", " девятнадцать" };
+			string[] Dek2 = { "", "", " двадцать", " тридцать", " сорок", " пятьдесят", " шестьдесят", " семьдесят", " восемьдесят", " девяносто" };
+			string[] Dek3 = { "", " сто", " двести", " триста", " четыреста", " пятьсот", " шестьсот", " семьсот", " восемьсот", " девятьсот" };
 			string[] Th = { "", "", " тысяч", " миллион", " миллиард", " триллион", " квадрилион", " квинтилион" };
 			string str = "";
 			for (byte th = 1; value > 0; th++)
@@ -32,9 +36,9 @@ namespace Furmanov.Services
 					byte d2 = (byte)((gr - d3 * 100 - d1) / 10);
 					if (d2 == 1) d1 += (byte)10;
 					bool ismale = (th > 2) || ((th == 1) && isMale);
-					str = dek3[d3]
-						+ dek2[d2]
-						+ (isGenitive ? dek1Genitive[d1] : dek1[d1])
+					str = Dek3[d3]
+						+ Dek2[d2]
+						+ (isGenitive ? Dek1Genitive[d1] : Dek1[d1])
 						+ (isGenitive ? EndDek1Genitive(d1, ismale) : EndDek1(d1, ismale))
 						+ Th[th]
 						+ EndTh(th, d1)
@@ -81,11 +85,11 @@ namespace Furmanov.Services
 		}
 		private static string EndTh(byte ThNum, byte Dek)
 		{
-			bool in234 = ((Dek >= 2) && (Dek <= 4));
-			bool more4 = ((Dek > 4) || (Dek == 0));
-			if (((ThNum > 2) && in234) || ((ThNum == 2) && (Dek == 1))) return "а";
-			else if ((ThNum > 2) && more4) return "ов";
-			else if ((ThNum == 2) && in234) return "и";
+			bool In234 = ((Dek >= 2) && (Dek <= 4));
+			bool More4 = ((Dek > 4) || (Dek == 0));
+			if (((ThNum > 2) && In234) || ((ThNum == 2) && (Dek == 1))) return "а";
+			else if ((ThNum > 2) && More4) return "ов";
+			else if ((ThNum == 2) && In234) return "и";
 			else return "";
 		}
 		private static string EndDek1(byte dek, bool isMale)

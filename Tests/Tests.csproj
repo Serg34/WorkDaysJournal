@@ -82,9 +82,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Dal\Dal.csproj">
+    <ProjectReference Include="..\Data\Data.csproj">
       <Project>{F0A6C913-5A13-4DA9-97E2-E75D2F469EC9}</Project>
-      <Name>Dal</Name>
+      <Name>Data</Name>
     </ProjectReference>
     <ProjectReference Include="..\MVP\MVP.csproj">
       <Project>{BC065B48-916E-4C57-BAA0-EB7C6B1E555D}</Project>

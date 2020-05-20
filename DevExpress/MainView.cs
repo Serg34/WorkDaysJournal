@@ -129,7 +129,7 @@ namespace Furmanov.UI
 
 		private void BtnLogOut_ItemClick(object sender, ItemClickEventArgs e)
 		{
-			if (MessageService.ShowQuestion("Вы уверены, что хотите выйти?") == DialogResult.Yes)
+			if (MessageService.Question("Вы уверены, что хотите выйти?") == DialogResult.Yes)
 			{
 				SaveControlsLatoutToXml();
 				Logout?.Invoke(this, EventArgs.Empty);
@@ -265,12 +265,12 @@ namespace Furmanov.UI
 			var resName = _currentPay.Name;
 			if (_currentPay.FactDays > 0)
 			{
-				MessageService.ShowMessage($"Удаление сотрудника '{resName}' невозможно, так как у него есть отработанные дни.\n" +
+				MessageService.Message($"Удаление сотрудника '{resName}' невозможно, так как у него есть отработанные дни.\n" +
 										   "Удалите отработанные дни сотрудника и повторите попытку.");
 				return;
 			}
 
-			if (MessageService.ShowQuestion($"Будет удален сотрудник '{resName}'.\nПродолжить?") == DialogResult.Yes)
+			if (MessageService.Question($"Будет удален сотрудник '{resName}'.\nПродолжить?") == DialogResult.Yes)
 			{
 				ShowNoImplementedCode(this, null);
 			}
@@ -418,12 +418,12 @@ namespace Furmanov.UI
 		}
 		public void ShowError(string error)
 		{
-			MessageService.ShowError(error);
+			MessageService.Error(error);
 		}
 
 		private void ShowNoImplementedCode(object sender, ItemClickEventArgs e)
 		{
-			MessageService.ShowMessage("Раньше здесь был не очень интересный код");
+			MessageService.Message("Раньше здесь был не очень интересный код");
 		}
 		private void MainView_FormClosed(object sender, FormClosedEventArgs e)
 		{

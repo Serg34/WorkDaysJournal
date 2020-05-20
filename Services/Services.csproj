@@ -50,14 +50,33 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BugReporter.cs" />
     <Compile Include="Cloner.cs" />
+    <Compile Include="ColorService.cs" />
+    <Compile Include="DateService.cs" />
+    <Compile Include="Email.cs" />
+    <Compile Include="EnumService.cs" />
+    <Compile Include="ExcelService.cs" />
+    <Compile Include="GridViewStateSaver.cs" />
     <Compile Include="IEnumerableMethods.cs" />
+    <Compile Include="ImageService.cs" />
+    <Compile Include="LayoutSaver.cs" />
+    <Compile Include="Logger.cs" />
+    <Compile Include="MapperService.cs" />
+    <Compile Include="MessageService.cs" />
     <Compile Include="MoneyToString.cs" />
+    <Compile Include="NumberService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ScreenPrinter.cs" />
+    <Compile Include="StringMethods.cs" />
+    <Compile Include="TaskbarProgress.cs" />
+    <Compile Include="TreeListService.cs" />
+    <Compile Include="TreeListStateSaver.cs" />
     <Compile Include="UI\MessageService.cs" />
     <Compile Include="UndoRedo\ICommand.cs" />
     <Compile Include="UndoRedo\UndoRedoEventArgs.cs" />
     <Compile Include="UndoRedo\UndoRedoService.cs" />
+    <Compile Include="ValidateService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

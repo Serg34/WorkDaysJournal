@@ -6,49 +6,40 @@ namespace Furmanov.Services.UI
 	{
 		private static readonly bool isRightToLeft = Application.CurrentCulture.TextInfo.IsRightToLeft;
 		private const string PRODUCT_NAME = "Табель учёта рабочего времени";
-		public static void ShowMessage(string message)
+		public static void Message(string message)
 		{
 			MessageBox.Show(message,
-				PRODUCT_NAME,
+				Application.ProductName,
 				MessageBoxButtons.OK,
 				MessageBoxIcon.Information,
 				MessageBoxDefaultButton.Button1,
 				isRightToLeft ? MessageBoxOptions.RtlReading : 0);
 		}
 
-		public static void ShowExclamation(string message)
+		public static void Exclamation(string message)
 		{
 			MessageBox.Show(message,
-				PRODUCT_NAME,
+				Application.ProductName,
 				MessageBoxButtons.OK,
 				MessageBoxIcon.Exclamation,
 				MessageBoxDefaultButton.Button1,
 				isRightToLeft ? MessageBoxOptions.RtlReading : 0);
 		}
 
-		public static void ShowError(string message)
+		public static void Error(string message)
 		{
 			MessageBox.Show(message,
-				PRODUCT_NAME,
+				Application.ProductName,
 				MessageBoxButtons.OK,
 				MessageBoxIcon.Error,
 				MessageBoxDefaultButton.Button1,
 				isRightToLeft ? MessageBoxOptions.RtlReading : 0);
 		}
 
-		public static DialogResult ShowQuestion(string message)
+		public static DialogResult Question(string message)
 		{
 			return MessageBox.Show(message,
-				PRODUCT_NAME,
-				MessageBoxButtons.YesNo,
-				MessageBoxIcon.Question,
-				MessageBoxDefaultButton.Button1,
-				isRightToLeft ? MessageBoxOptions.RtlReading : 0);
-		}
-		public static DialogResult ShowQuestionWithCancel(string message)
-		{
-			return MessageBox.Show(message,
-				PRODUCT_NAME,
+				Application.ProductName,
 				MessageBoxButtons.YesNo,
 				MessageBoxIcon.Question,
 				MessageBoxDefaultButton.Button1,

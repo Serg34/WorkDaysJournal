@@ -143,9 +143,9 @@
     <None Include="Resources\UndoNoEnabled.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Dal\Dal.csproj">
+    <ProjectReference Include="..\Data\Data.csproj">
       <Project>{f0a6c913-5a13-4da9-97e2-e75d2f469ec9}</Project>
-      <Name>Dal</Name>
+      <Name>Data</Name>
     </ProjectReference>
     <ProjectReference Include="..\MVP\MVP.csproj">
       <Project>{bc065b48-916e-4c57-baa0-eb7c6b1e555d}</Project>

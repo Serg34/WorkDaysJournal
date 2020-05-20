@@ -73,7 +73,7 @@ namespace Furmanov.UI
 		}
 		public void ShowError(string error)
 		{
-			MessageService.ShowError(error);
+			MessageService.Error(error);
 		}
 	}
 }

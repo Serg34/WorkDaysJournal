@@ -9,7 +9,7 @@ namespace Furmanov.Dal
 
 		private ApplicationUser() { }
 
-		public static ApplicationUser Instance
+		private static ApplicationUser Instance
 		{
 			get
 			{
@@ -24,6 +24,11 @@ namespace Furmanov.Dal
 			}
 		}
 
-		public User User { get; set; }
+		private User _user;
+		public static User User
+		{
+			get => Instance._user;
+			set => Instance._user = value;
+		}
 	}
 }

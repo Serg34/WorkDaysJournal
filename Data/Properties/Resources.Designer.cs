@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Furmanov.Dal.Properties {
+namespace Furmanov.Data.Properties {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace Furmanov.Dal.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Furmanov.Dal.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Furmanov.Data.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -153,9 +153,9 @@ namespace Furmanov.Dal.Properties {
         ///		SUM(sal.FactDays) FactDays,
         ///		SUM(sal [остаток строки не уместился]&quot;;.
         /// </summary>
-        internal static string SalaryPayViewForManager {
+        internal static string SalaryPayForManager {
             get {
-                return ResourceManager.GetString("SalaryPayViewForManager", resourceCulture);
+                return ResourceManager.GetString("SalaryPayForManager", resourceCulture);
             }
         }
         
@@ -182,9 +182,9 @@ namespace Furmanov.Dal.Properties {
         ///							  AS nvarchar) PositionName,
         ///		 SU [остаток строки не уместился]&quot;;.
         /// </summary>
-        internal static string SalaryPayViewForProjectManager {
+        internal static string SalaryPayForProjectManager {
             get {
-                return ResourceManager.GetString("SalaryPayViewForProjectManager", resourceCulture);
+                return ResourceManager.GetString("SalaryPayForProjectManager", resourceCulture);
             }
         }
         
@@ -208,9 +208,9 @@ namespace Furmanov.Dal.Properties {
         ///	and Password = @password
         ///.
         /// </summary>
-        internal static string User {
+        internal static string UserDb {
             get {
-                return ResourceManager.GetString("User", resourceCulture);
+                return ResourceManager.GetString("UserDb", resourceCulture);
             }
         }
     }
