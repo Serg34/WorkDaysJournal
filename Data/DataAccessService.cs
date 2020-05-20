@@ -1,14 +1,14 @@
-﻿using Furmanov.Dal.Data;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using Furmanov.Dal;
+using Furmanov.Dal.Data;
 using Furmanov.Data.Properties;
 using LinqToDB;
 using LinqToDB.Data;
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.IO;
-using System.Linq;
 
-namespace Furmanov.Dal
+namespace Furmanov.Data
 {
 	#region IDataAccessService
 	public interface IDataAccessService
@@ -38,7 +38,7 @@ namespace Furmanov.Dal
 		{
 			using (var db = new DbContext(_connectionString))
 			{
-				var res = db.Query<User>(Resources.User,
+				var res = db.Query<User>(Resources.UserDb,
 					new DataParameter("@login", login),
 					new DataParameter("@password", password))
 					.FirstOrDefault();

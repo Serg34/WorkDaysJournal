@@ -1,7 +1,7 @@
 ﻿using DevExpress.XtraTreeList;
 using System.Drawing;
 
-namespace SC.Common.Services
+namespace Furmanov.Services
 {
 	public class TreeListService
 	{

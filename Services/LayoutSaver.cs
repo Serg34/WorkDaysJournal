@@ -1,12 +1,10 @@
-﻿using DevExpress.Utils.Extensions;
-using DevExpress.XtraBars.Ribbon;
+﻿using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraEditors;
 using DevExpress.XtraGrid;
 using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraGrid.Views.Grid;
 using DevExpress.XtraPivotGrid;
 using DevExpress.XtraTreeList;
-using SC.Common.Dal;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -16,7 +14,7 @@ using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
 
-namespace SC.Common.Services
+namespace Furmanov.Services
 {
 	public static class LayoutSaver
 	{
@@ -70,7 +68,7 @@ namespace SC.Common.Services
 				if (dir.Exists)
 				{
 					dir.GetFiles()
-						.Where(f => f.FullName.Contains(assembly))
+						.Where(f => f.FullName.Contains(assembly ?? throw new InvalidOperationException()))
 						.ForEach(f => File.Delete(f.FullName));
 				}
 			}

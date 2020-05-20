@@ -2,7 +2,7 @@
 using System.Drawing.Imaging;
 using System.IO;
 
-namespace UltraZoom.Services
+namespace Furmanov.Services
 {
 	public static class ImageService
 	{

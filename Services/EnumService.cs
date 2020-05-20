@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace SC.Common.Services
+namespace Furmanov.Services
 {
 	public static class EnumService
 	{

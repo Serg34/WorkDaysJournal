@@ -1,13 +1,14 @@
 ﻿using DevExpress.XtraGrid.Columns;
 using DevExpress.XtraGrid.Views.Grid;
+using Furmanov.Data;
 using System;
 
-namespace SC.Common.Services
+namespace Furmanov.Services
 {
 	public class GridViewStateSaver : IDisposable
 	{
 		private readonly GridView _gridView;
-		private readonly int _focusedID;
+		private readonly int _focusedId;
 		private readonly GridColumn _col;
 		private readonly int _top;
 
@@ -16,7 +17,7 @@ namespace SC.Common.Services
 			_gridView = gridView;
 			if (gridView.GetFocusedRow() is IHasID vm)
 			{
-				_focusedID = vm.ID;
+				_focusedId = vm.ID;
 			}
 			_col = _gridView.FocusedColumn;
 			_top = _gridView.TopRowIndex;
@@ -24,11 +25,11 @@ namespace SC.Common.Services
 
 		public void Dispose()
 		{
-			if (_focusedID > 0)
+			if (_focusedId > 0)
 			{
 				for (int r = 0; r < _gridView.RowCount; r++)
 				{
-					if (_gridView.GetRow(r) is IHasID vm && vm.ID == _focusedID)
+					if (_gridView.GetRow(r) is IHasID vm && vm.ID == _focusedId)
 					{
 						_gridView.FocusedRowHandle = r;
 						break;

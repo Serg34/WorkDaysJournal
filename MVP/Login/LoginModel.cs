@@ -1,6 +1,7 @@
 ﻿using Furmanov.Dal;
 using Furmanov.Dal.Data;
 using System;
+using Furmanov.Data;
 
 namespace Furmanov.MVP.Login
 {

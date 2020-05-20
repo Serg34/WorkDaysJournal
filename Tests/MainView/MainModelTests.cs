@@ -4,6 +4,7 @@ using Furmanov.MVP.MainView;
 using Moq;
 using NUnit.Framework;
 using System;
+using Furmanov.Data;
 
 namespace Furmanov.Tests.MainView
 {

@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
-namespace SC.Common.Services
+namespace Furmanov.Services
 {
 	public static class TaskbarProgress
 	{
@@ -58,7 +58,7 @@ namespace SC.Common.Services
 		{
 			if (!taskbarSupported) return;
 			var (isError, handle) = TryGetHandle(form);
-			if (isError) return; 
+			if (isError) return;
 			taskbarInstance.SetProgressState(handle, taskbarState);
 		}
 
@@ -80,7 +80,7 @@ namespace SC.Common.Services
 		{
 			if (!taskbarSupported) return;
 			var (isError, handle) = TryGetHandle(form);
-			if(isError) return;
+			if (isError) return;
 			taskbarInstance.SetProgressState(handle, TaskbarStates.NoProgress);
 		}
 

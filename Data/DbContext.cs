@@ -1,9 +1,13 @@
-﻿using LinqToDB.Data;
+﻿using System;
+using System.Linq;
+using System.Linq.Expressions;
+using Furmanov.Data.Data;
+using LinqToDB;
+using LinqToDB.Data;
 using LinqToDB.DataProvider;
 using LinqToDB.DataProvider.SqlServer;
-using System;
 
-namespace Furmanov.Dal
+namespace Furmanov.Data
 {
 	public class DbContext : DataConnection
 	{
@@ -48,17 +52,17 @@ namespace Furmanov.Dal
 			return new SqlServerDataProvider("", SqlServerVersion.v2017);
 		}
 
-		public T GetByID<T>(int? id) where T : class, IHasID
+		public T GetById<T>(int? id) where T : class, IHasID
 		{
 			if (id == null) return null;
 			return GetTable<T>().FirstOrDefault(o => o.ID == id.Value);
 		}
-		public int GetID<T>(string name) where T : class, IHasID, IHasName
+		public int GetId<T>(string name) where T : class, IHasID, IHasName
 		{
 			var res = GetTable<T>().FirstOrDefault(o => o.Name == name);
 			return res?.ID ?? -1;
 		}
-		public int GetID<T>(Func<T, bool> cond) where T : class, IHasID
+		public int GetId<T>(Func<T, bool> cond) where T : class, IHasID
 		{
 			var res = GetTable<T>().FirstOrDefault(cond);
 			return res?.ID ?? -1;
