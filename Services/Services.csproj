@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=9.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.9.0.0\lib\net461\AutoMapper.dll</HintPath>
+    </Reference>
     <Reference Include="DeepCloner, Version=0.10.0.0, Culture=neutral, PublicKeyToken=dc0b95cf99bf4e99, processorArchitecture=MSIL">
       <HintPath>..\packages\DeepCloner.0.10.2\lib\net40\DeepCloner.dll</HintPath>
     </Reference>
@@ -91,7 +94,6 @@
     <Compile Include="TaskbarProgress.cs" />
     <Compile Include="TreeListService.cs" />
     <Compile Include="TreeListStateSaver.cs" />
-    <Compile Include="UI\MessageService.cs" />
     <Compile Include="UndoRedo\ICommand.cs" />
     <Compile Include="UndoRedo\UndoRedoEventArgs.cs" />
     <Compile Include="UndoRedo\UndoRedoService.cs" />
@@ -99,6 +101,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Data\Data.csproj">
+      <Project>{f0a6c913-5a13-4da9-97e2-e75d2f469ec9}</Project>
+      <Name>Data</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

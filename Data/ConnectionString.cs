@@ -1,10 +1,10 @@
-﻿using Furmanov.Services.Repositories;
+﻿using Furmanov.Dal;
 using System;
 using System.IO;
 
-namespace Furmanov.Services
+namespace Furmanov.Data
 {
-	public class ConnectionStringRepository : XmlRepository<Data.ConnectionString>
+	public class ConnectionStringRepository : XmlRepository<ConnectionString>
 	{
 		private static readonly string FileName =
 			Path.Combine(Path.GetDirectoryName(

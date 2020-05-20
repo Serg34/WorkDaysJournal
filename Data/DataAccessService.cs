@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using Furmanov.Dal;
-using Furmanov.Dal.Data;
+﻿using Furmanov.Dal;
+using Furmanov.Data.Data;
 using Furmanov.Data.Properties;
 using LinqToDB;
 using LinqToDB.Data;
@@ -12,7 +8,6 @@ using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Linq;
-using Furmanov.Data;
 
 namespace Furmanov.Data
 {

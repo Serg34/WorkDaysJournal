@@ -1,11 +1,11 @@
-﻿using Furmanov.Dal.Data;
+﻿using Furmanov.Data.Data;
 
-namespace Furmanov.Dal
+namespace Furmanov.Data
 {
 	public class ApplicationUser
 	{
 		private static ApplicationUser _instance;
-		private static readonly object _lockObject = new object();
+		private static readonly object LockObject = new object();
 
 		private ApplicationUser() { }
 
@@ -15,7 +15,7 @@ namespace Furmanov.Dal
 			{
 				if (_instance == null)
 				{
-					lock (_lockObject)
+					lock (LockObject)
 					{
 						_instance = new ApplicationUser();
 					}

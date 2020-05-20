@@ -1,7 +1,7 @@
 ﻿using LinqToDB.Mapping;
 using System.ComponentModel.DataAnnotations;
 
-namespace Furmanov.Dal.Data
+namespace Furmanov.Data.Data
 {
 	public enum Role { ProjectManager = 4, Manager = 5 }
 
@@ -20,6 +20,11 @@ namespace Furmanov.Dal.Data
 		[Display(Name = "Пароль")]
 		[Required(ErrorMessage = "Пароль не может быть пустым")]
 		public string Password { get; set; }
+
+		[Column(Name = "Email")]
+		[Display(Name = "Почта")]
+		[Required(ErrorMessage = "Почта не может быть пустой")]
+		public string Email { get; set; }
 
 		[Column(Name = "RoleId")]
 		public int RoleId { get; set; }

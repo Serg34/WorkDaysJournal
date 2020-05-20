@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace Furmanov.Dal.Data
+namespace Furmanov.Data.Data
 {
 	[DataContract]
 	[Serializable]

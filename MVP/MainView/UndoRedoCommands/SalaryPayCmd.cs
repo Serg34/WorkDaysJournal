@@ -1,4 +1,4 @@
-﻿using Furmanov.Dal.Data;
+﻿using Furmanov.Data.Data;
 using Furmanov.Services.UndoRedo;
 
 namespace Furmanov.MVP.MainView.UndoRedoCommands

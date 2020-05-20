@@ -1,5 +1,4 @@
-﻿using LinqToDB;
-using SC.Common.Model;
+﻿using Furmanov.Data.Data;
 using System;
 using System.Reflection;
 using System.Windows.Forms;
@@ -8,6 +7,30 @@ namespace Furmanov.Services
 {
 	public static class BugReporter
 	{
+		public static void Report(Exception ex, IWin32Window owner, string infoToDeveloper = null)
+		{
+#if DEBUG
+			MessageService.Error(ex.ToString());
+			return;
+#endif
+			var message = ex.ToString();
+			if (message.Contains("Время ожидания выполнения истекло") ||
+				message.Contains("Сервер не найден или недоступен") ||
+				message.Contains("Ошибка на транспортном уровне при получении результатов с сервера"))
+			{
+				MessageService.Error("Произошла ошибка подключения к серверу SQL.\n" +
+									 "Обратитесь к системному администратору.\n\n" +
+									 $"{ex.Message}");
+				return;
+			}
+
+			using (var form = new FrmReportBug(ex, infoToDeveloper))
+			{
+				if (owner != null) form.ShowDialog(owner);
+				else form.ShowDialog();
+			}
+		}
+
 		public static void Report(Exception ex)
 		{
 			using (var db = new FeedbackDbDataContext())
@@ -27,12 +50,12 @@ namespace Furmanov.Services
 						PrintScreen = printScreen.ToByteArray()
 					};
 					bug.ID = db.InsertWithInt32Identity(bug);
-					MessageService.ShowError($"Новая ошибка: {ex.Message}\n\n" +
+					MessageService.Error($"Новая ошибка: {ex.Message}\n\n" +
 											 "Все необходимые сведения уже отправлены разработчикам");
 				}
 				else
 				{
-					MessageService.ShowError($"Известная ошибка: {ex.Message}\n\n" +
+					MessageService.Error($"Известная ошибка: {ex.Message}\n\n" +
 											 "Все необходимые сведения уже отправлены разработчикам\n\n" +
 											 (bug.DateSolved != null ? $"Планируемая дата решения: {bug.DateSolved:d}\n\n" : "") +
 											 bug.InfoToUser);

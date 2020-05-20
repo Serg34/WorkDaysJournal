@@ -1,10 +1,9 @@
-﻿using Furmanov.Dal;
+﻿using Furmanov.Data;
 using Furmanov.MVP.Login;
 using Furmanov.MVP.MainView;
 using Moq;
 using NUnit.Framework;
 using System;
-using Furmanov.Data;
 
 namespace Furmanov.Tests.MainView
 {

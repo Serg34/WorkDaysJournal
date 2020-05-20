@@ -43,11 +43,15 @@
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationUser.cs" />
+    <Compile Include="ConnectionString.cs" />
     <Compile Include="DataAccessService.cs" />
+    <Compile Include="Data\Bug.cs" />
+    <Compile Include="Data\BugIncident.cs" />
     <Compile Include="Data\Interfaces.cs" />
     <Compile Include="Data\LoginPassword.cs" />
     <Compile Include="Data\SalaryPay.cs" />
@@ -86,12 +90,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Sql\ObjectsForManager.sql" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Services\Services.csproj">
-      <Project>{CDD99DBE-F76B-4988-A9E3-621963E46A82}</Project>
-      <Name>Services</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

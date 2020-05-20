@@ -1,11 +1,10 @@
-﻿using Furmanov.Dal;
-using Furmanov.Dal.Data;
+﻿using Furmanov.Data;
+using Furmanov.Data.Data;
 using Furmanov.MVP.Login;
 using Furmanov.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Furmanov.Data;
 
 namespace Furmanov.MVP.MainView
 {

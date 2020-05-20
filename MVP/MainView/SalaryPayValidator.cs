@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using Furmanov.Dal.Data;
+using Furmanov.Data.Data;
 using System;
 
 namespace Furmanov.MVP.MainView

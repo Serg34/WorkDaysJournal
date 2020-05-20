@@ -71,7 +71,7 @@ namespace Furmanov.Services
 				_wbk.Close(false);
 			}
 			var question = $"Открыть файл '{Path.GetFileNameWithoutExtension(_fileName)}'?";
-			if (MessageService.ShowQuestion(question) == DialogResult.Yes)
+			if (MessageService.Question(question) == DialogResult.Yes)
 			{
 				Process.Start(_fileName);
 			}

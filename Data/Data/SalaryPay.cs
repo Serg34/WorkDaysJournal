@@ -2,10 +2,8 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
-using Furmanov.Data;
-using Furmanov.Data.Data;
 
-namespace Furmanov.Dal.Data
+namespace Furmanov.Data.Data
 {
 	public enum ObjType { Project, Object, Salary }
 

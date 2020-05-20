@@ -1,12 +1,11 @@
-﻿using System;
-using System.Linq;
-using System.Linq.Expressions;
-using Furmanov.Data.Data;
+﻿using Furmanov.Data.Data;
 using LinqToDB;
 using LinqToDB.Data;
 using LinqToDB.DataProvider;
 using LinqToDB.DataProvider.SqlServer;
-using SC.Common.Services;
+using System;
+using System.Linq;
+using System.Linq.Expressions;
 
 namespace Furmanov.Data
 {
@@ -32,7 +31,7 @@ namespace Furmanov.Data
 
 		public static string GetConnectionString()
 		{
-			if (_connectionString.IsEmpty())
+			if (string.IsNullOrEmpty(_connectionString))
 			{
 #if DEBUG
 				_connectionString = $"Data Source = {DataSource}; Initial Catalog = SwissClean; User ID = scuser; Password = !QAZ1qaz;";
@@ -53,17 +52,17 @@ namespace Furmanov.Data
 			return new SqlServerDataProvider("", SqlServerVersion.v2017);
 		}
 
-		public T GetById<T>(int? id) where T : class, IHasID
+		public T GetById<T>(int? id) where T : class, IHasId
 		{
 			if (id == null) return null;
 			return GetTable<T>().FirstOrDefault(o => o.ID == id.Value);
 		}
-		public int GetId<T>(string name) where T : class, IHasID, IHasName
+		public int GetId<T>(string name) where T : class, IHasId, IHasName
 		{
 			var res = GetTable<T>().FirstOrDefault(o => o.Name == name);
 			return res?.ID ?? -1;
 		}
-		public int GetId<T>(Func<T, bool> cond) where T : class, IHasID
+		public int GetId<T>(Func<T, bool> cond) where T : class, IHasId
 		{
 			var res = GetTable<T>().FirstOrDefault(cond);
 			return res?.ID ?? -1;
@@ -77,9 +76,9 @@ namespace Furmanov.Data
 				.OrderBy(o => o)
 				.ToArray();
 		}
-		public T GetOrCreate<T>(string name) where T : class, IHasID, IHasName, new()
+		public T GetOrCreate<T>(string name) where T : class, IHasId, IHasName, new()
 		{
-			if (name.IsEmpty()) return null;
+			if (string.IsNullOrEmpty(name)) return null;
 			using (var db = new DbContext())
 			{
 				var res = FirstOrDefault<T>(a => a.Name == name);
@@ -107,11 +106,11 @@ namespace Furmanov.Data
 		{
 			return GetTable<T>().FirstOrDefault(cond);
 		}
-		public void DeleteById<T>(int id) where T : class, IHasID
+		public void DeleteById<T>(int id) where T : class, IHasId
 		{
 			GetTable<T>().Where(o => o.ID == id).Delete();
 		}
-		public void Delete<T>(T obj) where T : class, IHasID
+		public void Delete<T>(T obj) where T : class, IHasId
 		{
 			GetTable<T>().Where(o => o.ID == obj.ID).Delete();
 		}
@@ -126,7 +125,7 @@ namespace Furmanov.Data
 		public FeedbackDbContext() : base(GetConnectionString()) { }
 		public new static string GetConnectionString()
 		{
-			if (_connectionString.IsEmpty())
+			if (string.IsNullOrEmpty(_connectionString))
 			{
 				var connectionString = new ConnectionStringRepository().Load();
 				_connectionString = connectionString.Feedback;
@@ -146,7 +145,7 @@ namespace Furmanov.Data
 		}
 		public new static string GetConnectionString()
 		{
-			if (_connectionString.IsEmpty())
+			if (string.IsNullOrEmpty(_connectionString))
 			{
 				var connectionString = new ConnectionStringRepository().Load();
 				_connectionString = connectionString.Test;
@@ -160,7 +159,7 @@ namespace Furmanov.Data
 		public HistoryDbContext() : base(GetConnectionString()) { }
 		public new static string GetConnectionString()
 		{
-			if (_connectionString.IsEmpty())
+			if (string.IsNullOrEmpty(_connectionString))
 			{
 #if DEBUG
 				_connectionString = $"Data Source = {DataSource}; Initial Catalog = SC_History; User ID = scuser; Password = !QAZ1qaz;";

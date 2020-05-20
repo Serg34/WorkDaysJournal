@@ -2,7 +2,6 @@
 using System.IO;
 using System.Linq;
 using System.Xml.Serialization;
-using SC.Common.Services;
 
 namespace Furmanov.Services.Repositories
 {

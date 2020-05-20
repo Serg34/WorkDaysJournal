@@ -1,4 +1,4 @@
-﻿using Furmanov.Dal.Data;
+﻿using Furmanov.Data.Data;
 using System;
 using System.Collections.Generic;
 

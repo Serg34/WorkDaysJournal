@@ -2,7 +2,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace Furmanov.Dal.Data
+namespace Furmanov.Data.Data
 {
 	[Table(Name = "WorkedDay")]
 	public class WorkedDayDto

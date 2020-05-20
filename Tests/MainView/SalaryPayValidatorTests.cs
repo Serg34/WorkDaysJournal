@@ -1,5 +1,5 @@
 ﻿using FluentValidation.TestHelper;
-using Furmanov.Dal.Data;
+using Furmanov.Data.Data;
 using Furmanov.MVP.MainView;
 using NUnit.Framework;
 using System;

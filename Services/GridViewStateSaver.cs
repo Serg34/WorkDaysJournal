@@ -1,6 +1,6 @@
 ﻿using DevExpress.XtraGrid.Columns;
 using DevExpress.XtraGrid.Views.Grid;
-using Furmanov.Data;
+using Furmanov.Data.Data;
 using System;
 
 namespace Furmanov.Services
@@ -15,7 +15,7 @@ namespace Furmanov.Services
 		public GridViewStateSaver(GridView gridView)
 		{
 			_gridView = gridView;
-			if (gridView.GetFocusedRow() is IHasID vm)
+			if (gridView.GetFocusedRow() is IHasId vm)
 			{
 				_focusedId = vm.ID;
 			}
@@ -29,7 +29,7 @@ namespace Furmanov.Services
 			{
 				for (int r = 0; r < _gridView.RowCount; r++)
 				{
-					if (_gridView.GetRow(r) is IHasID vm && vm.ID == _focusedId)
+					if (_gridView.GetRow(r) is IHasId vm && vm.ID == _focusedId)
 					{
 						_gridView.FocusedRowHandle = r;
 						break;

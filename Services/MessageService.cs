@@ -4,7 +4,7 @@ namespace Furmanov.Services
 {
 	public static class MessageService
 	{
-		public static void ShowMessage(string message)
+		public static void Message(string message)
 		{
 			MessageBox.Show(message,
 				Application.ProductName,
@@ -13,7 +13,7 @@ namespace Furmanov.Services
 				MessageBoxDefaultButton.Button1);
 		}
 
-		public static void ShowExclamation(string message)
+		public static void Exclamation(string message)
 		{
 			MessageBox.Show(message,
 				Application.ProductName,
@@ -22,7 +22,7 @@ namespace Furmanov.Services
 				MessageBoxDefaultButton.Button1);
 		}
 
-		public static void ShowError(string message)
+		public static void Error(string message)
 		{
 			MessageBox.Show(message,
 				Application.ProductName,
@@ -31,7 +31,7 @@ namespace Furmanov.Services
 				MessageBoxDefaultButton.Button1);
 		}
 
-		public static DialogResult ShowQuestion(string message, MessageBoxButtons buttons = MessageBoxButtons.YesNo)
+		public static DialogResult Question(string message, MessageBoxButtons buttons = MessageBoxButtons.YesNo)
 		{
 			return MessageBox.Show(message,
 				Application.ProductName,
