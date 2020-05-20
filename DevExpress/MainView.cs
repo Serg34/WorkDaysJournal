@@ -3,6 +3,12 @@ using DevExpress.XtraEditors;
 using DevExpress.XtraGrid.Views.Grid;
 using DevExpress.XtraGrid.Views.Grid.ViewInfo;
 using DevExpress.XtraTreeList;
+using Furmanov.Data;
+using Furmanov.Data.Data;
+using Furmanov.MVP.Login;
+using Furmanov.MVP.MainView;
+using Furmanov.Services;
+using Furmanov.Services.UndoRedo;
 using Furmanov.UI.Properties;
 using System;
 using System.Collections.Generic;
@@ -213,7 +219,7 @@ namespace Furmanov.UI
 		#region TreeSalary
 		private void TreeSalary_CellValueChanging(object sender, CellValueChangedEventArgs e)
 		{
-			_prevPay = Cloner.DeepCopy(_currentPay);
+			_prevPay = _currentPay.Clone();
 		}
 		private void TreeSalary_CellValueChanged(object sender, CellValueChangedEventArgs e)
 		{
@@ -225,7 +231,7 @@ namespace Furmanov.UI
 			try
 			{
 				var fieldName = treeSalary.FocusedColumn.FieldName;
-				ValidateService.Validate(e, new SalaryPayValidator(_currentPay.Month), _currentPay, fieldName);
+				ValidateService.Validate(e, new SalaryPayValidator(_currentPay.Month), _prevPay, _currentPay, fieldName);
 			}
 			catch (Exception ex)
 			{
@@ -430,7 +436,7 @@ namespace Furmanov.UI
 
 			menuMain.SaveLayoutToXml(Path.Combine(_appUserDataFolder, "Ribbon.xml"));
 
-			var user = ApplicationUser.Instance.User;
+			var user = ApplicationUser.User;
 			if (user != null)
 			{
 				var treeFile = Path.Combine(_appUserDataFolder, $"treeSalaryPay_user({user.Id})");

@@ -1,4 +1,4 @@
-﻿using Furmanov.Dal.Data;
+﻿using Furmanov.Data.Data;
 
 namespace Furmanov.UI
 {

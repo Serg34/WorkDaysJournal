@@ -4,7 +4,7 @@ using System;
 namespace Furmanov.Data.Data
 {
 	[Table("BugIncident")]
-	public class CBugIncidentDto
+	public class BugIncidentDto
 	{
 		[PrimaryKey, Identity] public int ID { get; set; }
 		[Column] public int Bug_ID { get; set; }

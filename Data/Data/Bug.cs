@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations;
 namespace Furmanov.Data.Data
 {
 	[Table("Bug")]
-	public class CBugDto
+	public class BugDto
 	{
 		[PrimaryKey, Identity] public int ID { get; set; }
 

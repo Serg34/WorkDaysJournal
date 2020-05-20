@@ -1,4 +1,8 @@
 ﻿using Autofac;
+using Furmanov.Data;
+using Furmanov.MVP.Login;
+using Furmanov.MVP.MainView;
+using Furmanov.Services.UndoRedo;
 
 namespace Furmanov.UI.IoC
 {

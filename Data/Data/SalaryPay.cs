@@ -87,5 +87,7 @@ namespace Furmanov.Data.Data
 		[Display(Name = "Оклад")]
 		[Editable(false)]
 		public decimal Salary { get; set; }
+
+		public SalaryPay Clone() => (SalaryPay)MemberwiseClone();
 	}
 }

@@ -1,17 +1,19 @@
-﻿using Furmanov.Data.Data;
+﻿using Furmanov.Data;
+using Furmanov.Data.Data;
+using LinqToDB;
 using System;
-using System.Reflection;
+using System.Data.SqlClient;
 using System.Windows.Forms;
 
 namespace Furmanov.Services
 {
 	public static class BugReporter
 	{
-		public static void Report(Exception ex, IWin32Window owner, string infoToDeveloper = null)
+		public static BugDto Report(Exception ex, string infoToDeveloper = null)
 		{
 #if DEBUG
 			MessageService.Error(ex.ToString());
-			return;
+			return null;
 #endif
 			var message = ex.ToString();
 			if (message.Contains("Время ожидания выполнения истекло") ||
@@ -21,52 +23,45 @@ namespace Furmanov.Services
 				MessageService.Error("Произошла ошибка подключения к серверу SQL.\n" +
 									 "Обратитесь к системному администратору.\n\n" +
 									 $"{ex.Message}");
-				return;
+				return null;
+			}
+			if (ex is SqlException && message.Contains("The DELETE statement conflicted with the REFERENCE constraint"))
+			{
+				MessageService.Error("Ошибка удаления.\nВозможно, запись используется и не может быть удалена");
+				return null;
 			}
 
-			using (var form = new FrmReportBug(ex, infoToDeveloper))
+			using (var db = new FeedbackDbContext())
 			{
-				if (owner != null) form.ShowDialog(owner);
-				else form.ShowDialog();
-			}
-		}
-
-		public static void Report(Exception ex)
-		{
-			using (var db = new FeedbackDbDataContext())
-			{
-				var message = ex.ToString();
-				var bug = db.FirstOrDefault<CBugDto>(b => b.Message == message);
+				var bug = db.FirstOrDefault<BugDto>(b => b.Message == message);
 				if (bug == null)
 				{
-					var assambly = Assembly.GetEntryAssembly();
-					var printScreen = ScreenPrinter.Print();
-					bug = new CBugDto
+					bug = new BugDto
 					{
-						Solution = assambly.GetName().Name,
+						Solution = "Furmanov",
 						Project = Application.ProductName,
 						Message = message,
+						InfoToDeveloper = infoToDeveloper,
 						User = Environment.UserName,
-						PrintScreen = printScreen.ToByteArray()
+						PrintScreen = ScreenPrinter.Print().ToByteArray()
 					};
 					bug.ID = db.InsertWithInt32Identity(bug);
-					MessageService.Error($"Новая ошибка: {ex.Message}\n\n" +
-											 "Все необходимые сведения уже отправлены разработчикам");
 				}
-				else
+				else if (bug.PrintScreen == null) //если разработчик удалил снимок экрана
 				{
-					MessageService.Error($"Известная ошибка: {ex.Message}\n\n" +
-											 "Все необходимые сведения уже отправлены разработчикам\n\n" +
-											 (bug.DateSolved != null ? $"Планируемая дата решения: {bug.DateSolved:d}\n\n" : "") +
-											 bug.InfoToUser);
+					bug.PrintScreen = ScreenPrinter.Print().ToByteArray();
+					db.Update(bug);
 				}
-				var incident = new CBugIncidentDto
+
+				var incident = new BugIncidentDto
 				{
 					Bug_ID = bug.ID,
 					DateTime = DateTime.Now,
 					User = Environment.UserName
 				};
 				db.Insert(incident);
+
+				return bug;
 			}
 		}
 	}

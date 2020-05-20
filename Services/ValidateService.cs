@@ -1,23 +1,21 @@
 ﻿using FluentValidation;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 
 namespace Furmanov.Services
 {
 	public static class ValidateService
 	{
-		public static (bool IsError, string Error) Validate(object viewModel)
-		{
-			var results = new List<ValidationResult>();
-			var context = new System.ComponentModel.DataAnnotations.ValidationContext(viewModel);
-			if (!Validator.TryValidateObject(viewModel, context, results, true))
-			{
-				return (true, string.Join("\n", results));
-			}
+		//public static (bool IsError, string Error) Validate(object viewModel)
+		//{
+		//	var results = new List<ValidationResult>();
+		//	var context = new System.ComponentModel.DataAnnotations.ValidationContext(viewModel);
+		//	if (!Validator.TryValidateObject(viewModel, context, results, true))
+		//	{
+		//		return (true, string.Join("\n", results));
+		//	}
 
-			return (false, "");
-		}
+		//	return (false, "");
+		//}
 		public static void Validate<TViewModel>(
 			DevExpress.XtraEditors.Controls.BaseContainerValidateEditorEventArgs e,
 			AbstractValidator<TViewModel> validator,

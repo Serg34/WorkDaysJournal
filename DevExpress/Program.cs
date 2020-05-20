@@ -1,4 +1,6 @@
-﻿using Furmanov.UI.IoC;
+﻿using Furmanov.MVP.MainView;
+using Furmanov.Services.UndoRedo;
+using Furmanov.UI.IoC;
 using System;
 using System.Threading.Tasks;
 using System.Windows.Forms;

@@ -69,6 +69,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FrmReportBug.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmReportBug.Designer.cs">
+      <DependentUpon>FrmReportBug.cs</DependentUpon>
+    </Compile>
     <Compile Include="IoC\IoCBuilder.cs" />
     <Compile Include="IoC\Resolver.cs" />
     <Compile Include="LoginView.cs">
@@ -85,6 +91,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="FrmReportBug.resx">
+      <DependentUpon>FrmReportBug.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="LoginView.resx">
       <DependentUpon>LoginView.cs</DependentUpon>
     </EmbeddedResource>
@@ -176,6 +185,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="icon.ico" />
+    <None Include="Resources\Fsi.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
