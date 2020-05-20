@@ -3,10 +3,12 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 
-namespace Furmanov.Dal.Dto
+namespace Furmanov.Dal.Data
 {
+	public enum ObjType { Project, Object, Salary }
+	
 	[Table(Name = "SalaryPay")]
-	public class SalaryPayDb
+	public class SalaryPayDto
 	{
 		[PrimaryKey, Identity]
 		public int Id { get; set; }
@@ -48,21 +50,20 @@ namespace Furmanov.Dal.Dto
 		[Editable(false)]
 		public int? FactDays { get; set; }
 
-		[Column(Name = "Pay")]
+		[Column(Name = "SalaryPay")]
 		[Display(Name = "Зарплата")]
 		[Editable(false)]
-		public decimal? Pay { get; set; }
+		public decimal? SalaryPay { get; set; }
 	}
-	public enum ObjType { Project, Object, Salary }
 
 	[DebuggerDisplay("{ViewModelId}")]
-	public class SalaryPayViewModel : SalaryPayDb, IViewModel
+	public class SalaryPay : SalaryPayDto, IViewModel
 	{
-		[Column(Name = "Type")]
-		public ObjType Type { get; set; }
-
 		[Column(Name = "ViewModelId")]
 		public string ViewModelId { get; set; }
+
+		[Column(Name = "Type")]
+		public ObjType Type { get; set; }
 
 		[Column(Name = "ParentId")]
 		public string ParentId { get; set; }

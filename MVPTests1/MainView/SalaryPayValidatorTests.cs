@@ -1,5 +1,5 @@
 ﻿using FluentValidation.TestHelper;
-using Furmanov.Dal.Dto;
+using Furmanov.Dal.Data;
 using Furmanov.MVP.MainView;
 using NUnit.Framework;
 using System;
@@ -57,11 +57,11 @@ namespace Furmanov.Tests.MainView
 			IsError(s => s.Salary, -500);
 		}
 
-		private void IsError<T>(Expression<Func<SalaryPayViewModel, T>> func, T val)
+		private void IsError<T>(Expression<Func<SalaryPay, T>> func, T val)
 		{
 			_validator.ShouldHaveValidationErrorFor(func, val);
 		}
-		private void NoError<T>(Expression<Func<SalaryPayViewModel, T>> func, T val)
+		private void NoError<T>(Expression<Func<SalaryPay, T>> func, T val)
 		{
 			_validator.ShouldNotHaveValidationErrorFor(func, val);
 		}

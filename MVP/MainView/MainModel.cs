@@ -1,5 +1,5 @@
 ﻿using Furmanov.Dal;
-using Furmanov.Dal.Dto;
+using Furmanov.Dal.Data;
 using Furmanov.MVP.Login;
 using Furmanov.Services;
 using System;
@@ -11,9 +11,9 @@ namespace Furmanov.MVP.MainView
 	#region IMainModel
 	public interface IMainModel
 	{
-		event EventHandler<UserViewModel> LoginChanged;
+		event EventHandler<User> LoginChanged;
 		event EventHandler<MainViewModel> SalaryPayUpdated;
-		event EventHandler<List<WorkedDayViewModel>> SelectedSalaryPay;
+		event EventHandler<List<WorkedDay>> SelectedSalaryPay;
 		event EventHandler<string> Error;
 
 		ILoginModel LoginModel { get; }
@@ -21,17 +21,17 @@ namespace Furmanov.MVP.MainView
 
 		DateTime Month { get; }
 		string CurrentEmployeeName { get; }
-		SalaryPayViewModel CurrentPay { get; set; }
-		List<WorkedDayViewModel> CurrentDaysInMonth { get; }
+		SalaryPay CurrentPay { get; set; }
+		List<WorkedDay> CurrentDaysInMonth { get; }
 
 		void Update();
 		void ChangeMonth(DateTime month);
-		void SaveSalaryPay(SalaryPayViewModel viewModel);
-		void SelectSalaryPay(SalaryPayViewModel vm);
+		void SaveSalaryPay(SalaryPay viewModel);
+		void SelectSalaryPay(SalaryPay vm);
 
-		List<WorkedDayViewModel> GenWorkedDays(bool allDays, bool isExist);
-		void SaveWorkDay(WorkedDayViewModel day);
-		void SaveWorkedDays(List<WorkedDayViewModel> days);
+		List<WorkedDay> GenWorkedDays(bool allDays, bool isExist);
+		void SaveWorkDay(WorkedDay day);
+		void SaveWorkedDays(List<WorkedDay> days);
 	}
 	#endregion
 
@@ -39,9 +39,9 @@ namespace Furmanov.MVP.MainView
 	{
 		#region Fields
 		private readonly IDataAccessService _db;
-		private UserViewModel _user;
+		private User _user;
 
-		private List<SalaryPayViewModel> _allPays;
+		private List<SalaryPay> _allPays;
 		#endregion
 
 		public MainModel(IDataAccessService dataAccessService, ILoginModel loginModel)
@@ -52,9 +52,9 @@ namespace Furmanov.MVP.MainView
 		}
 
 		#region Events
-		public event EventHandler<UserViewModel> LoginChanged;
+		public event EventHandler<User> LoginChanged;
 		public event EventHandler<MainViewModel> SalaryPayUpdated;
-		public event EventHandler<List<WorkedDayViewModel>> SelectedSalaryPay;
+		public event EventHandler<List<WorkedDay>> SelectedSalaryPay;
 		public event EventHandler<string> Error;
 		#endregion
 
@@ -76,8 +76,8 @@ namespace Furmanov.MVP.MainView
 		#region Properties
 		public DateTime Month { get; private set; } = DateTime.Now;
 		public string CurrentEmployeeName { get; private set; }
-		public SalaryPayViewModel CurrentPay { get; set; }
-		public List<WorkedDayViewModel> CurrentDaysInMonth { get; private set; }
+		public SalaryPay CurrentPay { get; set; }
+		public List<WorkedDay> CurrentDaysInMonth { get; private set; }
 		#endregion
 
 		#region TopMenu
@@ -107,13 +107,13 @@ namespace Furmanov.MVP.MainView
 		#endregion
 
 		#region SalaryPays
-		public void SaveSalaryPay(SalaryPayViewModel pay)
+		public void SaveSalaryPay(SalaryPay pay)
 		{
 			CurrentPay = pay;
 			CalculateAndSaveSalaryPay(CurrentPay);
 			Update();
 		}
-		public void SelectSalaryPay(SalaryPayViewModel pay)
+		public void SelectSalaryPay(SalaryPay pay)
 		{
 			try
 			{
@@ -124,7 +124,7 @@ namespace Furmanov.MVP.MainView
 
 				var days = _db.GetWorkedDays(pay.Id, Month);
 				CurrentDaysInMonth = Month.AllDaysInMonth()
-					.Select(date => new WorkedDayViewModel
+					.Select(date => new WorkedDay
 					{
 						SalaryPayId = CurrentPay?.Id ?? -1,
 						Date = date,
@@ -132,7 +132,7 @@ namespace Furmanov.MVP.MainView
 					}).ToList();
 
 				SelectedSalaryPay?.Invoke(this,
-					pay.Type == ObjType.Salary ? CurrentDaysInMonth : new List<WorkedDayViewModel>());
+					pay.Type == ObjType.Salary ? CurrentDaysInMonth : new List<WorkedDay>());
 			}
 			catch (Exception ex)
 			{
@@ -142,7 +142,7 @@ namespace Furmanov.MVP.MainView
 		#endregion
 
 		#region WorkedDays
-		public void SaveWorkDay(WorkedDayViewModel day)
+		public void SaveWorkDay(WorkedDay day)
 		{
 			day.IsWorked = !day.IsWorked; // данные приходят до изменений, поэтому обратное значение
 
@@ -157,9 +157,9 @@ namespace Furmanov.MVP.MainView
 			CalculateAndSaveSalaryPay(CurrentPay);
 			Update();
 		}
-		private void CreateSalaryPayBeforeCreatingWorkedDay(WorkedDayViewModel day = null)
+		private void CreateSalaryPayBeforeCreatingWorkedDay(WorkedDay day = null)
 		{
-			if (day != null) CurrentPay = new SalaryPayViewModel
+			if (day != null) CurrentPay = new SalaryPay
 			{
 				Month = Month,
 				ObjectId = day.ObjectId,
@@ -170,7 +170,7 @@ namespace Furmanov.MVP.MainView
 			Update();
 		}
 
-		public List<WorkedDayViewModel> GenWorkedDays(bool allDays, bool isExist)
+		public List<WorkedDay> GenWorkedDays(bool allDays, bool isExist)
 		{
 			if (!_allPays.Any(res => res.EmployeeId == CurrentPay.EmployeeId))
 			{
@@ -178,7 +178,7 @@ namespace Furmanov.MVP.MainView
 			}
 
 			var days = Month.AllDaysInMonth()
-				.Select(date => new WorkedDayViewModel
+				.Select(date => new WorkedDay
 				{
 					SalaryPayId = CurrentPay.Id,
 					Date = date,
@@ -188,7 +188,7 @@ namespace Furmanov.MVP.MainView
 				}).ToList();
 			return days;
 		}
-		public void SaveWorkedDays(List<WorkedDayViewModel> days)
+		public void SaveWorkedDays(List<WorkedDay> days)
 		{
 			_db.SaveWorkedDays(days.ToArray());
 			CalculateAndSaveSalaryPay(CurrentPay);
@@ -197,11 +197,11 @@ namespace Furmanov.MVP.MainView
 		#endregion
 
 		#region CalculateAndSaveSalaryPay
-		private void CalculateAndSaveSalaryPay(SalaryPayViewModel salaryPay)
+		private void CalculateAndSaveSalaryPay(SalaryPay salaryPay)
 		{
 			var workDays = _db.GetWorkedDays(salaryPay.Id, Month);
 			CurrentDaysInMonth = Month.AllDaysInMonth()
-				.Select(date => new WorkedDayViewModel
+				.Select(date => new WorkedDay
 				{
 					SalaryPayId = CurrentPay.Id,
 					Date = date,
@@ -218,13 +218,13 @@ namespace Furmanov.MVP.MainView
 			{
 				//ЗП = Оклад / Норма * Факт - Аванс - Штрафы + Премии;
 
-				salaryPay.Pay =
+				salaryPay.SalaryPay =
 					salaryPay.Salary / salaryPay.RateDays * salaryPay.FactDays
 					- (salaryPay.Advance ?? 0)
 					- (salaryPay.Penalty ?? 0)
 					+ (salaryPay.Premium ?? 0);
 			}
-			else salaryPay.Pay = null;
+			else salaryPay.SalaryPay = null;
 
 			_db.SaveSalaryPay(salaryPay);
 		}

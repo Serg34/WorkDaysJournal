@@ -2,7 +2,7 @@
 using DevExpress.XtraTreeList;
 using DevExpress.XtraTreeList.Nodes;
 using Furmanov.Dal;
-using Furmanov.Dal.Dto;
+using Furmanov.Dal.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;

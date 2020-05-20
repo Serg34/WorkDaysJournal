@@ -1,4 +1,4 @@
-﻿namespace Furmanov.Dal.Dto
+﻿namespace Furmanov.Dal.Data
 {
 	public interface IViewModel
 	{

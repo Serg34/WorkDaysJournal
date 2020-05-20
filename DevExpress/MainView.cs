@@ -4,7 +4,7 @@ using DevExpress.XtraGrid.Views.Grid;
 using DevExpress.XtraGrid.Views.Grid.ViewInfo;
 using DevExpress.XtraTreeList;
 using Furmanov.Dal;
-using Furmanov.Dal.Dto;
+using Furmanov.Dal.Data;
 using Furmanov.MVP.Login;
 using Furmanov.MVP.MainView;
 using Furmanov.Services;
@@ -26,8 +26,8 @@ namespace Furmanov.UI
 	public partial class MainView : XtraForm, IMainView
 	{
 		#region Fields
-		private SalaryPayViewModel _currentPay;
-		private SalaryPayViewModel _prevPay;
+		private SalaryPay _currentPay;
+		private SalaryPay _prevPay;
 
 		private readonly string _appUserDataFolder =
 			Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "WorkDaysJournal");
@@ -65,10 +65,10 @@ namespace Furmanov.UI
 		public event EventHandler WorkDaysOnlyClick;
 		public event EventHandler AllDaysClick;
 
-		public event EventHandler<UndoRedoEventArgs<SalaryPayViewModel>> ChangedSalaryPay;
-		public event EventHandler<SalaryPayViewModel> SelectionChangingSalaryPay;
+		public event EventHandler<UndoRedoEventArgs<SalaryPay>> ChangedSalaryPay;
+		public event EventHandler<SalaryPay> SelectionChangingSalaryPay;
 
-		public event EventHandler<WorkedDayViewModel> ChangedWorkedDay;
+		public event EventHandler<WorkedDay> ChangedWorkedDay;
 
 		public event EventHandler DeletingAllDays;
 
@@ -77,7 +77,7 @@ namespace Furmanov.UI
 		#endregion
 
 		#region Login
-		public void UpdateLogin(UserViewModel user)
+		public void UpdateLogin(User user)
 		{
 			pnMain.BeginInit();
 
@@ -183,7 +183,7 @@ namespace Furmanov.UI
 				_updating = false;
 			}
 		}
-		public void UpdateDays(List<WorkedDayViewModel> days)
+		public void UpdateDays(List<WorkedDay> days)
 		{
 			using (new GridViewStateSaver(gvWorkedDays))
 			{
@@ -226,7 +226,7 @@ namespace Furmanov.UI
 		private void TreeSalary_CellValueChanged(object sender, CellValueChangedEventArgs e)
 		{
 			ChangedSalaryPay?.Invoke(this,
-				new UndoRedoEventArgs<SalaryPayViewModel>(_currentPay, _prevPay));
+				new UndoRedoEventArgs<SalaryPay>(_currentPay, _prevPay));
 		}
 		private void TreeSalary_ValidatingEditor(object sender, DevExpress.XtraEditors.Controls.BaseContainerValidateEditorEventArgs e)
 		{
@@ -246,7 +246,7 @@ namespace Furmanov.UI
 		private void TreeSalary_ShowingEditor(object sender, CancelEventArgs e)
 		{
 			if (sender is TreeList view &&
-				view.GetFocusedRow() is SalaryPayViewModel vm)
+				view.GetFocusedRow() is SalaryPay vm)
 			{
 				e.Cancel = vm.Type != ObjType.Salary;
 			}
@@ -286,7 +286,7 @@ namespace Furmanov.UI
 		}
 		private void TreeSalary_SelectionChange()
 		{
-			if (treeSalary.GetFocusedRow() is SalaryPayViewModel vm)
+			if (treeSalary.GetFocusedRow() is SalaryPay vm)
 			{
 				_currentPay = vm;
 
@@ -313,7 +313,7 @@ namespace Furmanov.UI
 		private void TreeSalary_NodeCellStyle(object sender, GetCustomNodeCellStyleEventArgs e)
 		{
 			if (sender is TreeList view &&
-				view.GetRow(e.Node.Id) is SalaryPayViewModel vm)
+				view.GetRow(e.Node.Id) is SalaryPay vm)
 			{
 				if (vm.Type == ObjType.Project)
 				{
@@ -340,7 +340,7 @@ namespace Furmanov.UI
 		private void TreeSalary_CustomDrawNodeCell(object sender, CustomDrawNodeCellEventArgs e)
 		{
 			if (sender is TreeList view &&
-				view.GetRow(e.Node.Id) is SalaryPayViewModel vm &&
+				view.GetRow(e.Node.Id) is SalaryPay vm &&
 				vm.Type != ObjType.Salary)
 			{
 				if (e.Info.Appearance.Options.UseBorderColor)
@@ -361,7 +361,7 @@ namespace Furmanov.UI
 		private void GvWorkedDays_CellValueChanging(object sender,
 			DevExpress.XtraGrid.Views.Base.CellValueChangedEventArgs e)
 		{
-			if (sender is GridView view && view.GetRow(e.RowHandle) is WorkedDayViewModel vm)
+			if (sender is GridView view && view.GetRow(e.RowHandle) is WorkedDay vm)
 			{
 				ChangedWorkedDay?.Invoke(this, vm);
 			}
@@ -371,7 +371,7 @@ namespace Furmanov.UI
 		private void GvWorkedDays_RowStyle(object sender, RowStyleEventArgs e)
 		{
 			if (sender is GridView view &&
-				view.GetRow(e.RowHandle) is WorkedDayViewModel vm &&
+				view.GetRow(e.RowHandle) is WorkedDay vm &&
 				(vm.Date.DayOfWeek == DayOfWeek.Saturday ||
 				 vm.Date.DayOfWeek == DayOfWeek.Sunday))
 			{

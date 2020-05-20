@@ -1,4 +1,4 @@
-﻿using Furmanov.Dal.Dto;
+﻿using Furmanov.Dal.Data;
 using Furmanov.Services;
 using Furmanov.Services.UndoRedo;
 
@@ -6,7 +6,7 @@ namespace Furmanov.MVP.MainView.UndoRedoCommands
 {
 	public class WorkedDayCmd : ICommand
 	{
-		public WorkedDayCmd(IMainModel model, WorkedDayViewModel value)
+		public WorkedDayCmd(IMainModel model, WorkedDay value)
 		{
 			_model = model;
 			_pay = _model.CurrentPay;
@@ -17,9 +17,9 @@ namespace Furmanov.MVP.MainView.UndoRedoCommands
 		}
 
 		private readonly IMainModel _model;
-		private readonly SalaryPayViewModel _pay;
-		private readonly WorkedDayViewModel _value;
-		private readonly WorkedDayViewModel _prevValue;
+		private readonly SalaryPay _pay;
+		private readonly WorkedDay _value;
+		private readonly WorkedDay _prevValue;
 
 		public string Name { get; }
 

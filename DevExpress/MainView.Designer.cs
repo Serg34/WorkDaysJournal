@@ -1,4 +1,4 @@
-﻿using Furmanov.Dal.Dto;
+﻿using Furmanov.Dal.Data;
 
 namespace Furmanov.UI
 {
@@ -634,7 +634,7 @@ namespace Furmanov.UI
 			// 
 			// colSalaryPay
 			// 
-			this.colSalaryPay.FieldName = "Pay";
+			this.colSalaryPay.FieldName = "SalaryPay";
 			this.colSalaryPay.Name = "colSalaryPay";
 			this.colSalaryPay.OptionsColumn.AllowEdit = false;
 			this.colSalaryPay.Visible = true;
@@ -642,7 +642,7 @@ namespace Furmanov.UI
 			// 
 			// salaryPayBindingSource
 			// 
-			this.salaryPayBindingSource.DataSource = typeof(Furmanov.Dal.Dto.SalaryPayViewModel);
+			this.salaryPayBindingSource.DataSource = typeof(SalaryPay);
 			// 
 			// riPositions
 			// 
@@ -695,7 +695,7 @@ namespace Furmanov.UI
 			// 
 			// workedDayBindingSource
 			// 
-			this.workedDayBindingSource.DataSource = typeof(Furmanov.Dal.Dto.WorkedDayViewModel);
+			this.workedDayBindingSource.DataSource = typeof(WorkedDay);
 			// 
 			// gvWorkedDays
 			// 

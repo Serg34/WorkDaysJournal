@@ -1,5 +1,5 @@
 ﻿using Furmanov.Dal;
-using Furmanov.Dal.Dto;
+using Furmanov.Dal.Data;
 using System;
 
 namespace Furmanov.MVP.Login

@@ -1,4 +1,4 @@
-﻿using Furmanov.Dal.Dto;
+﻿using Furmanov.Dal.Data;
 using Furmanov.MVP.Login;
 using Furmanov.Services.UndoRedo;
 using System;
@@ -17,17 +17,17 @@ namespace Furmanov.MVP.MainView
 		event EventHandler AllDaysClick;
 		event EventHandler DeletingAllDays;
 
-		event EventHandler<UndoRedoEventArgs<SalaryPayViewModel>> ChangedSalaryPay;
-		event EventHandler<SalaryPayViewModel> SelectionChangingSalaryPay;
+		event EventHandler<UndoRedoEventArgs<SalaryPay>> ChangedSalaryPay;
+		event EventHandler<SalaryPay> SelectionChangingSalaryPay;
 
-		event EventHandler<WorkedDayViewModel> ChangedWorkedDay;
+		event EventHandler<WorkedDay> ChangedWorkedDay;
 
 		event EventHandler<int> Undo;
 		event EventHandler<int> Redo;
 
-		void UpdateLogin(UserViewModel user);
+		void UpdateLogin(User user);
 		void UpdateSalaries(object sender, MainViewModel viewModel);
-		void UpdateDays(List<WorkedDayViewModel> viewModel);
+		void UpdateDays(List<WorkedDay> viewModel);
 		void UpdateUndoRedo(IEnumerable<string> undoItems, IEnumerable<string> redoItems);
 	}
 }

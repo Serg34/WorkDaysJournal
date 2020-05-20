@@ -1,12 +1,12 @@
 ﻿using LinqToDB.Mapping;
 using System.ComponentModel.DataAnnotations;
 
-namespace Furmanov.Dal.Dto
+namespace Furmanov.Dal.Data
 {
 	public enum Role { ProjectManager = 4, Manager = 5 }
 
 	[Table(Name = "User")]
-	public class UserDb
+	public class UserDto
 	{
 		[PrimaryKey, Identity]
 		public int Id { get; set; }
@@ -25,7 +25,7 @@ namespace Furmanov.Dal.Dto
 		public int RoleId { get; set; }
 	}
 
-	public class UserViewModel : UserDb
+	public class User : UserDto
 	{
 		public Role Role => (Role)RoleId;
 

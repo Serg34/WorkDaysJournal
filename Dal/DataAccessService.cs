@@ -1,4 +1,5 @@
-﻿using Furmanov.Dal.Dto;
+﻿using Furmanov.Dal.Data;
+using Furmanov.Dal.Properties;
 using LinqToDB;
 using LinqToDB.Data;
 using System;
@@ -14,15 +15,13 @@ namespace Furmanov.Dal
 	{
 		LoginPassword GetAutoLoginPassword();
 		void SaveAutoLoginPassword(LoginPassword loginPassword);
-		UserViewModel GetUser(string login, string password);
+		User GetUser(string login, string password);
 
-		List<SalaryPayViewModel> GetSalaryPays(UserViewModel user, DateTime month);
-		void SaveSalaryPay(SalaryPayDb salaryPayDb);
-		void DeleteSalaryPay(SalaryPayDb salaryPayDb);
+		List<SalaryPay> GetSalaryPays(User user, DateTime month);
+		void SaveSalaryPay(SalaryPayDto salaryPayDto);
 
-		List<WorkedDayDb> GetWorkedDays(int resOpId, DateTime month);
-		void SaveWorkedDays(params WorkedDayViewModel[] workedDayDb);
-		DataTable Report(UserViewModel user, int objectId = 0);
+		List<WorkedDayDto> GetWorkedDays(int resOpId, DateTime month);
+		void SaveWorkedDays(params WorkedDay[] workedDayDb);
 	}
 	#endregion
 
@@ -35,12 +34,11 @@ namespace Furmanov.Dal
 			_connectionString = connectionString;
 		}
 
-		public UserViewModel GetUser(string login, string password)
+		public User GetUser(string login, string password)
 		{
 			using (var db = new DbDataContext(_connectionString))
 			{
-				var sql = SqlFiles.SqlFiles.Get("User.sql");
-				var res = db.Query<UserViewModel>(sql,
+				var res = db.Query<User>(Resources.User,
 					new DataParameter("@login", login),
 					new DataParameter("@password", password))
 					.FirstOrDefault();
@@ -64,43 +62,35 @@ namespace Furmanov.Dal
 			new XmlRepository<LoginPassword>(file).Save(loginPassword);
 		}
 
-		public List<SalaryPayViewModel> GetSalaryPays(UserViewModel user, DateTime month)
+		public List<SalaryPay> GetSalaryPays(User user, DateTime month)
 		{
-			if (user == null) return new List<SalaryPayViewModel>();
+			if (user == null) return new List<SalaryPay>();
 
 			using (var db = new DbDataContext(_connectionString))
 			{
-				var fileName = user.Role == Role.Manager ? "SalaryPayViewForManager.sql"
-					: "SalaryPayViewForProjectManager.sql";
-				var sql = SqlFiles.SqlFiles.Get(fileName);
+				var sql = user.Role == Role.Manager ? Resources.SalaryPayViewForManager
+					: Resources.SalaryPayViewForProjectManager;
 
-				var res = db.Query<SalaryPayViewModel>(sql,
+				var res = db.Query<SalaryPay>(sql,
 					new DataParameter("@userId", user.Id),
-					new DataParameter("@month", month.ToString("yyyyMMdd")))
+					new DataParameter("@month", $"{month:yyyyMMdd}"))
 					.ToList();
 				return res;
 			}
 		}
-		public void SaveSalaryPay(SalaryPayDb salaryPayDb)
+		public void SaveSalaryPay(SalaryPayDto salaryPayDto)
 		{
 			using (var db = new DbDataContext(_connectionString))
 			{
-				db.Update(salaryPayDb);
-			}
-		}
-		public void DeleteSalaryPay(SalaryPayDb salaryPayDb)
-		{
-			using (var db = new DbDataContext(_connectionString))
-			{
-				db.Delete(salaryPayDb);
+				db.Update(salaryPayDto);
 			}
 		}
 
-		public List<WorkedDayDb> GetWorkedDays(int salaryPayId, DateTime month)
+		public List<WorkedDayDto> GetWorkedDays(int salaryPayId, DateTime month)
 		{
 			using (var db = new DbDataContext(_connectionString))
 			{
-				var res = db.GetTable<WorkedDayDb>()
+				var res = db.GetTable<WorkedDayDto>()
 						.Where(t => t.SalaryPayId == salaryPayId)
 						.Where(t => t.Date.Year == month.Year)
 						.Where(t => t.Date.Month == month.Month)
@@ -109,33 +99,26 @@ namespace Furmanov.Dal
 				return res;
 			}
 		}
-		public void SaveWorkedDays(params WorkedDayViewModel[] workedDay)
+		public void SaveWorkedDays(params WorkedDay[] workedDay)
 		{
 			using (var db = new DbDataContext(_connectionString))
 			{
-				var sqlNoWork = SqlFiles.SqlFiles.Get("DeleteWorkDay.sql");
 				var noWork = workedDay.Where(t => !t.IsWorked).ToArray();
 				foreach (var day in noWork)
 				{
-					db.Execute(sqlNoWork,
+					db.Execute(Resources.DeleteWorkDay,
 						new DataParameter("@payId", day.SalaryPayId),
-						new DataParameter("@day", day.Date.ToString("yyyyMMdd")));
+						new DataParameter("@day", $"{day.Date:yyyyMMdd}"));
 				}
 
-				var sqlWork = SqlFiles.SqlFiles.Get("InsertWorkDay.sql");
 				var work = workedDay.Where(t => t.IsWorked).ToArray();
 				foreach (var day in work)
 				{
-					db.Execute(sqlWork,
+					db.Execute(Resources.InsertWorkDay,
 						new DataParameter("@payId", day.SalaryPayId),
-						new DataParameter("@day", day.Date.ToString("yyyyMMdd")));
+						new DataParameter("@day", $"{day.Date:yyyyMMdd}"));
 				}
 			}
-		}
-
-		public DataTable Report(UserViewModel user, int objectId = 0)
-		{
-			throw new NotImplementedException();
 		}
 	}
 }

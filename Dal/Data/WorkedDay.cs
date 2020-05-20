@@ -2,10 +2,10 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace Furmanov.Dal.Dto
+namespace Furmanov.Dal.Data
 {
 	[Table(Name = "WorkedDay")]
-	public class WorkedDayDb
+	public class WorkedDayDto
 	{
 		[PrimaryKey, Identity]
 		public int Id { get; set; }
@@ -19,7 +19,7 @@ namespace Furmanov.Dal.Dto
 		public DateTime Date { get; set; }
 	}
 
-	public class WorkedDayViewModel : WorkedDayDb
+	public class WorkedDay : WorkedDayDto
 	{
 		[Display(Name = "Выход")]
 		public bool IsWorked { get; set; }

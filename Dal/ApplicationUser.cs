@@ -1,4 +1,4 @@
-﻿using Furmanov.Dal.Dto;
+﻿using Furmanov.Dal.Data;
 
 namespace Furmanov.Dal
 {
@@ -24,6 +24,6 @@ namespace Furmanov.Dal
 			}
 		}
 
-		public UserViewModel User { get; set; }
+		public User User { get; set; }
 	}
 }

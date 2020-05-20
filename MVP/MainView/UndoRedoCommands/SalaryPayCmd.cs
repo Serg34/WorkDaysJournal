@@ -1,11 +1,11 @@
-﻿using Furmanov.Dal.Dto;
+﻿using Furmanov.Dal.Data;
 using Furmanov.Services.UndoRedo;
 
 namespace Furmanov.MVP.MainView.UndoRedoCommands
 {
 	public class SalaryPayCmd : ICommand
 	{
-		public SalaryPayCmd(IMainModel model, UndoRedoEventArgs<SalaryPayViewModel> e)
+		public SalaryPayCmd(IMainModel model, UndoRedoEventArgs<SalaryPay> e)
 		{
 			_model = model;
 			_value = e.Value;
@@ -14,8 +14,8 @@ namespace Furmanov.MVP.MainView.UndoRedoCommands
 		}
 
 		private readonly IMainModel _model;
-		private readonly SalaryPayViewModel _value;
-		private readonly SalaryPayViewModel _prevValue;
+		private readonly SalaryPay _value;
+		private readonly SalaryPay _prevValue;
 
 		public string Name { get; }
 

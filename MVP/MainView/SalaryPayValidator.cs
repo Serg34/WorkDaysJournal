@@ -1,10 +1,10 @@
 ﻿using FluentValidation;
-using Furmanov.Dal.Dto;
+using Furmanov.Dal.Data;
 using System;
 
 namespace Furmanov.MVP.MainView
 {
-	public class SalaryPayValidator : AbstractValidator<SalaryPayViewModel>
+	public class SalaryPayValidator : AbstractValidator<SalaryPay>
 	{
 		public SalaryPayValidator(DateTime month)
 		{
