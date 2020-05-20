@@ -2,11 +2,13 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
+using Furmanov.Data;
+using Furmanov.Data.Data;
 
 namespace Furmanov.Dal.Data
 {
 	public enum ObjType { Project, Object, Salary }
-	
+
 	[Table(Name = "SalaryPay")]
 	public class SalaryPayDto
 	{

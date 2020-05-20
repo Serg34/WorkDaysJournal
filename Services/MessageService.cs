@@ -1,6 +1,6 @@
 ﻿using System.Windows.Forms;
 
-namespace SC.Common.Services
+namespace Furmanov.Services
 {
 	public static class MessageService
 	{

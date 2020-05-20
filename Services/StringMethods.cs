@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 
-namespace SC.Common.Services
+namespace Furmanov.Services
 {
 	public static class StringMethods
 	{

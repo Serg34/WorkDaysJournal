@@ -1,18 +1,14 @@
-﻿using DevExpress.Utils.Extensions;
-using DevExpress.XtraTreeList;
+﻿using DevExpress.XtraTreeList;
 using DevExpress.XtraTreeList.Nodes;
+using Furmanov.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
 using Furmanov.Services.Repositories;
 
-namespace SC.Common.Services
+namespace Furmanov.Services
 {
-	public interface IViewModel
-	{
-		string ViewModelID { get; }
-	}
 	public sealed class TreeListStateSaver : IDisposable
 	{
 		private readonly TreeList _treeList;
@@ -25,7 +21,7 @@ namespace SC.Common.Services
 		{
 			_treeList = treeList;
 			_treeList.Nodes.ForEach(GetExpanded);
-			_selectedId = (_treeList.GetRow(_treeList.FocusedNode?.Id ?? -1) as IViewModel)?.ViewModelID;
+			_selectedId = (_treeList.GetRow(_treeList.FocusedNode?.Id ?? -1) as IViewModel)?.ViewModelId;
 			_selectedColumnName = _treeList.FocusedColumn?.Name;
 			_topVisibleNodeIndex = _treeList.TopVisibleNodeIndex;
 			_treeList.Tag = Updating;
@@ -36,15 +32,15 @@ namespace SC.Common.Services
 		{
 			if (node.Expanded && _treeList.GetRow(node.Id) is IViewModel vm)
 			{
-				_expandedIds.Add(vm.ViewModelID);
+				_expandedIds.Add(vm.ViewModelId);
 			}
 			node.Nodes?.ForEach(GetExpanded);
 		}
 		private void SetState(TreeListNode node)
 		{
 			if (!(_treeList.GetRow(node.Id) is IViewModel vm)) return;
-			if (_expandedIds?.Any(id => vm.ViewModelID == id) ?? false) node.Expanded = true;
-			if (vm.ViewModelID == _selectedId && _selectedId.NoEmpty())
+			if (_expandedIds?.Any(id => vm.ViewModelId == id) ?? false) node.Expanded = true;
+			if (vm.ViewModelId == _selectedId && _selectedId.NoEmpty())
 			{
 				_treeList.SetFocusedNode(node);
 			}

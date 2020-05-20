@@ -3,9 +3,8 @@ using SC.Common.Model;
 using System;
 using System.Reflection;
 using System.Windows.Forms;
-using UltraZoom.Services;
 
-namespace SC.Common.Services
+namespace Furmanov.Services
 {
 	public static class BugReporter
 	{

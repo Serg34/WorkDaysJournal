@@ -1,6 +1,6 @@
 ﻿using System.Globalization;
 
-namespace SC.Common.Services
+namespace Furmanov.Services
 {
 	public static class NumberService
 	{

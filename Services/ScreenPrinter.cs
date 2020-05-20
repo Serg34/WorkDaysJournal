@@ -2,7 +2,7 @@
 using System.Drawing;
 using System.Runtime.InteropServices;
 
-namespace UltraZoom.Services
+namespace Furmanov.Services
 {
 	public static class ScreenPrinter
 	{

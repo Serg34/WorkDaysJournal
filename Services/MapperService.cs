@@ -1,7 +1,4 @@
-﻿using AutoMapper;
-using SC.Common.Model;
-
-namespace SC.Common.Services
+﻿namespace Furmanov.Services
 {
 	public class MapperService
 	{
@@ -56,7 +53,7 @@ namespace SC.Common.Services
 							o => o.MapFrom(s => s.dtc));
 
 					cfg.CreateMap<COplata, COplataDto>();
-					
+
 					cfg.CreateMap<CNoteDto, CNote>();
 					cfg.CreateMap<CNote, CNoteDto>();
 

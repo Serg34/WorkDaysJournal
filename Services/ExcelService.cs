@@ -4,7 +4,7 @@ using System.IO;
 using System.Windows.Forms;
 using Xls = Microsoft.Office.Interop.Excel;
 
-namespace SC.Common.Services
+namespace Furmanov.Services
 {
 	public class ExcelService : IDisposable
 	{

@@ -1,9 +1,8 @@
-﻿using SC.Common.Model;
-using System.Net;
+﻿using System.Net;
 using System.Net.Mail;
 using System.Threading.Tasks;
 
-namespace SC.Common.Services
+namespace Furmanov.Services
 {
 	public static class Email
 	{
@@ -18,7 +17,7 @@ namespace SC.Common.Services
 			<p>Служба технической поддержки SCAS</p>
 			</div>";
 
-		public static async Task SendRequestOp(string toLogin, CUserDto fromUser, CRequestOpDto requestOp)
+		public static async Task SendRequestOp(string toLogin, UserDto fromUser, CRequestOpDto requestOp)
 		{
 			var from = new MailAddress(Login, "Служба поддержки SCAS");
 			var to = new MailAddress(toLogin);
@@ -43,7 +42,7 @@ namespace SC.Common.Services
 			}
 		}
 
-		public static async Task SendPass(CUser toUser)
+		public static async Task SendPass(User toUser)
 		{
 			var from = new MailAddress(Login, "Служба поддержки SCAS");
 			var to = new MailAddress(toUser.Email);
@@ -52,11 +51,11 @@ namespace SC.Common.Services
 				Subject = "Авторизация",
 				IsBodyHtml = true,
 				Body = Head + "<p>Добрый день.</p>" +
-				       $"<p>Данные для входа в систему SCAS:</p>" +
-				       $"<p>Логин: {toUser.Login}</p>" +
-				       $"<p>Пароль: {toUser.Pass}</p>" +
-				       $"<p>Роль: {toUser.RoleName}</p>" +
-				       Signature
+					   $"<p>Данные для входа в систему SCAS:</p>" +
+					   $"<p>Логин: {toUser.Login}</p>" +
+					   $"<p>Пароль: {toUser.Pass}</p>" +
+					   $"<p>Роль: {toUser.RoleName}</p>" +
+					   Signature
 			};
 
 			using (var smtp = new SmtpClient("smtp.yandex.ru", 25))

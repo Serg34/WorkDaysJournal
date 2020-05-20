@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SC.Common.Services
+namespace Furmanov.Services
 {
 	public static class Logger
 	{
