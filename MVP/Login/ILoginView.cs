@@ -6,5 +6,6 @@ namespace Furmanov.MVP.Login
 	{
 		event EventHandler<LoginViewModel> Logging;
 		void Update(LoginViewModel viewModel = null);
+		void ShowError(string error);
 	}
 }

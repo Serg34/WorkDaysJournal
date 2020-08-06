@@ -30,14 +30,14 @@ namespace Furmanov.UI
 		{
 			try
 			{
-				if (bug.ID > 0)
+				if (bug.Id > 0)
 				{
 					lbTitle.Text = "Возникла неизвестная проблема в работе программы";
 					lbTitle.ForeColor = Color.FromArgb(255, 100, 100);
 					lbDescr.Text = $"{bug.Message}\n\n" +
 						"Все необходимые сведения уже отправлены разработчикам\n" +
 						$"Сборка: {bug.Project}\n" +
-						$"Номер ошибки: {bug.ID}";
+						$"Номер ошибки: {bug.Id}";
 				}
 				else
 				{
@@ -45,7 +45,7 @@ namespace Furmanov.UI
 					lbTitle.ForeColor = Color.FromArgb(100, 200, 100);
 					lbDescr.Text = $"{bug.Message}\n\n" +
 					   $"Сборка: {bug.Project}\n" +
-					   $"Номер ошибки: {bug.ID}\n" +
+					   $"Номер ошибки: {bug.Id}\n" +
 					   "Решение проблемы уже в работе.\n" +
 					   (bug.DateSolved != null ? $"Планируемая дата решения: {bug.DateSolved:d}\n\n" : "") +
 					   bug.InfoToUser;

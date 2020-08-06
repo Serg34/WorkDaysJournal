@@ -7,18 +7,46 @@ namespace Furmanov.Services
 {
 	public static class StringMethods
 	{
+		#region Fields
 		private static readonly string DefaultSeparator = CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator;
-		public static string ToString<T>(this IEnumerable<T> enumerable, string splitter)
+		private static readonly string[,] RusToEn =
 		{
-			var bld = new StringBuilder();
-			var array = enumerable as T[] ?? enumerable.ToArray();
-			for (int i = 0; i < array.Length; i++)
-			{
-				bld.Append(array.ElementAt(i));
-				if (i < array.Length - 1) bld.Append(splitter);
-			}
-			return bld.ToString();
-		}
+			{"а","a"},
+			{"б","b"},
+			{"в","v"},
+			{"г","g"},
+			{"д","d"},
+			{"е","e"},
+			{"ё","yo"},
+			{"ж","zh"},
+			{"з","z"},
+			{"и","i"},
+			{"й","y"},
+			{"к","k"},
+			{"л","l"},
+			{"м","m"},
+			{"н","n"},
+			{"о","o"},
+			{"п","p"},
+			{"р","r"},
+			{"с","s"},
+			{"т","t"},
+			{"у","u"},
+			{"ф","f"},
+			{"х","h"},
+			{"ц","ts"},
+			{"ч","ch"},
+			{"ш","sh"},
+			{"щ","sch"},
+			{"ъ","'"},
+			{"ы","yi"},
+			{"ь",""},
+			{"э","e"},
+			{"ю","u"},
+			{"я","ya"}
+		};
+		#endregion
+
 		public static double ToDouble(this string str)
 		{
 			if (string.IsNullOrEmpty(str)) return 0;
@@ -50,5 +78,15 @@ namespace Furmanov.Services
 		/// Указывает, не имеет ли указанная строка значение <see langword="null" />, не является ли она пустой строкой или строкой, состоящей только из символов-разделителей
 		/// </summary>
 		public static bool NoEmpty(this string txt) => !string.IsNullOrWhiteSpace(txt);
+
+		public static string ToEn(this string rus)
+		{
+			rus = rus.ToLower();
+			for (int i = 0; i < 33; i++)
+			{
+				rus = rus.Replace(RusToEn[i, 0], RusToEn[i, 1]);
+			}
+			return rus;
+		}
 	}
 }

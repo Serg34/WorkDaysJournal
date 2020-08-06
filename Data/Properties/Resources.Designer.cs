@@ -62,9 +62,8 @@ namespace Furmanov.Data.Properties {
         
         /// <summary>
         ///   Ищет локализованную строку, похожую на --DEBUG
-        ///--declare
-        ///--@payId int = 69,
-        ///--@day DateTime = Cast(&apos;20191015&apos; as DateTime)
+        ///--declare @payId int = 69;
+        ///--declare @day DateTime = Cast(&apos;20191015&apos; as DateTime);
         ///
         ///delete WorkedDay 
         ///where SalaryPayId = @payId
@@ -79,9 +78,8 @@ namespace Furmanov.Data.Properties {
         
         /// <summary>
         ///   Ищет локализованную строку, похожую на --DEBUG
-        ///--declare
-        ///--@payId int = 69,
-        ///--@day DateTime = Cast(&apos;20191015&apos; as DateTime)
+        ///--declare @payId int = 69;
+        ///--declare @day DateTime = Cast(&apos;20191015&apos; as DateTime);
         ///
         ///if not exists (select * from WorkedDay 
         ///				where SalaryPayId = @payId
@@ -99,26 +97,17 @@ namespace Furmanov.Data.Properties {
         
         /// <summary>
         ///   Ищет локализованную строку, похожую на --DEBUG
-        ///declare
-        ///--@userId int = 66
-        ///@userId int = 9
+        ///--declare @userId int = 66;
+        ///--declare @userId int = 9;
         ///
         ///if (select Role_Id from [User] where Id = @userId) = 4
-        ///	select 
-        ///		o.Id, 
-        ///		o.Manager_Id, 
-        ///		o.Project_Id, 
-        ///		o.Address
+        ///	select o.*
         ///	from Object o
         ///		left Join Project p
         ///			on o.Project_Id = p.Id
         ///	where p.Rukovod_Id = @userId
         ///
-        ///else select	
-        ///		o.Id,
-        ///		o.Manager_Id,
-        ///		o.Project_Id,
-        ///		o.Address
+        ///else select	o.*
         ///	from Object o
         ///	where o.Manager_Id = @userId
         ///.
@@ -131,9 +120,9 @@ namespace Furmanov.Data.Properties {
         
         /// <summary>
         ///   Ищет локализованную строку, похожую на --DEBUG
-        ///--declare
-        ///--@userId int = 9,
-        ///--@month datetime = getdate();
+        ///--declare @userId int = 9;
+        ///--declare @year int = 2020;
+        ///--declare @month int = 4;
         ///
         ///with objs as (
         ///	select -1 Id,
@@ -150,8 +139,7 @@ namespace Furmanov.Data.Properties {
         ///		null PositionName,
         ///		SUM(norm.Salary) Salary,
         ///		SUM(sal.RateDays) RateDays,
-        ///		SUM(sal.FactDays) FactDays,
-        ///		SUM(sal [остаток строки не уместился]&quot;;.
+        ///		SUM(sal.FactDays) [остаток строки не уместился]&quot;;.
         /// </summary>
         internal static string SalaryPayForManager {
             get {
@@ -161,9 +149,9 @@ namespace Furmanov.Data.Properties {
         
         /// <summary>
         ///   Ищет локализованную строку, похожую на --DEBUG
-        ///--declare
-        ///--@userId int = 63,
-        ///--@month datetime = getdate();
+        ///--declare @userId int = 63;
+        ///--declare @year int = 2020;
+        ///--declare @month int = 4;
         ///
         ///with projects as(
         ///	 select -2 Id,
@@ -179,8 +167,7 @@ namespace Furmanov.Data.Properties {
         ///		 &apos;Объектов: &apos; + CAST((select Count(*) 
         ///							  from Object 
         ///							  where ProjectId = pr.ID and IsDeleted = 0) 
-        ///							  AS nvarchar) PositionName,
-        ///		 SU [остаток строки не уместился]&quot;;.
+        ///							  AS nvarchar) [остаток строки не уместился]&quot;;.
         /// </summary>
         internal static string SalaryPayForProjectManager {
             get {
@@ -190,9 +177,8 @@ namespace Furmanov.Data.Properties {
         
         /// <summary>
         ///   Ищет локализованную строку, похожую на --DEBUG
-        ///--declare
-        ///--@login nvarchar(50) = &apos;User1&apos;,
-        ///--@password nvarchar(50) = &apos;123&apos;
+        ///--declare @login nvarchar(50) = &apos;User1&apos;;
+        ///--declare @password nvarchar(50) = &apos;123&apos;;
         ///
         ///select 
         ///	u.Id,
@@ -208,9 +194,9 @@ namespace Furmanov.Data.Properties {
         ///	and Password = @password
         ///.
         /// </summary>
-        internal static string UserDb {
+        internal static string User {
             get {
-                return ResourceManager.GetString("UserDb", resourceCulture);
+                return ResourceManager.GetString("User", resourceCulture);
             }
         }
     }

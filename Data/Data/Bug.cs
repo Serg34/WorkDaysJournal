@@ -8,7 +8,7 @@ namespace Furmanov.Data.Data
 	[Table("Bug")]
 	public class BugDto
 	{
-		[PrimaryKey, Identity] public int ID { get; set; }
+		[PrimaryKey, Identity] public int Id { get; set; }
 
 		[DisplayName("Решение")]
 		[Column] public string Solution { get; set; }

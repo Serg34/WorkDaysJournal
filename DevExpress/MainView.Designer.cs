@@ -714,6 +714,7 @@ namespace Furmanov.UI
 			this.pnWorkedDays.Size = new System.Drawing.Size(274, 780);
 			this.pnWorkedDays.TabIndex = 1;
 			this.pnWorkedDays.Text = "groupRPInnerRight";
+			this.gcWorkedDays.Paint += GcWorkedDays_Paint;
 			// 
 			// gcWorkedDays
 			// 

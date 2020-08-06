@@ -13,7 +13,6 @@ namespace Furmanov.Data.Data
 		[Column] public int Month { get; set; }
 		[Column] public int EmployeeId { get; set; }
 		[Column] public int ObjectId { get; set; }
-		[Column] public int PositionId { get; set; }
 
 		[Display(Name = "Аванс")]
 		[Column] public decimal? Advance { get; set; }
@@ -36,7 +35,7 @@ namespace Furmanov.Data.Data
 
 		[Display(Name = "Зарплата")]
 		[Editable(false)]
-		[Column] public decimal? SalaryPay { get; set; }
+		[Column] public decimal? SalaryToPay { get; set; }
 	}
 
 	[DebuggerDisplay("{ViewModelId}")]
@@ -56,7 +55,7 @@ namespace Furmanov.Data.Data
 
 		[Display(Name = "Должность")]
 		[Editable(false)]
-		[Column] public string PositionName { get; set; }
+		[Column] public string Position { get; set; }
 
 		[Display(Name = "Оклад")]
 		[Editable(false)]

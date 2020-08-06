@@ -3,14 +3,16 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Furmanov.Data.Data
 {
-	public enum Role { ProjectManager = 4, Manager = 5 }
-
 	[Table(Name = "User")]
 	public class UserDto : Dto
 	{
 		[Display(Name = "Логин")]
 		[Required(ErrorMessage = "Логин не может быть пустым")]
 		[Column] public string Login { get; set; }
+
+		[Display(Name = "ФИО")]
+		[Required(ErrorMessage = "ФИО не может быть пустым")]
+		[Column] public string Name { get; set; }
 
 		[Display(Name = "Пароль")]
 		[Required(ErrorMessage = "Пароль не может быть пустым")]

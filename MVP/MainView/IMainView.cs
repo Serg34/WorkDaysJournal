@@ -26,9 +26,9 @@ namespace Furmanov.MVP.MainView
 		event EventHandler<int> Redo;
 
 		void UpdateLogin(User user);
+		void UpdateMonth(object sender, MonthEventArgs monthEventArgs);
 		void UpdateSalaries(object sender, MainViewModel viewModel);
 		void UpdateDays(List<WorkedDay> viewModel);
 		void UpdateUndoRedo(IEnumerable<string> undoItems, IEnumerable<string> redoItems);
-		void UpdateMonth(object sender, MonthEventArgs monthEventArgs);
 	}
 }

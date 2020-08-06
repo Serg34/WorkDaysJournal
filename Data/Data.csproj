@@ -56,6 +56,10 @@
     <Compile Include="Data\Dto.cs" />
     <Compile Include="Data\Interfaces.cs" />
     <Compile Include="Data\LoginPassword.cs" />
+    <Compile Include="Data\Object.cs" />
+    <Compile Include="Data\Project.cs" />
+    <Compile Include="Data\Employee.cs" />
+    <Compile Include="Data\Role.cs" />
     <Compile Include="Data\SalaryPay.cs" />
     <Compile Include="Data\User.cs" />
     <Compile Include="Data\WorkedDay.cs" />
@@ -76,7 +80,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Sql\UserDb.sql" />
+    <EmbeddedResource Include="Sql\User.sql" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Sql\SalaryPayForProjectManager.sql" />

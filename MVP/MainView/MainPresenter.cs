@@ -30,7 +30,7 @@ namespace Furmanov.MVP.MainView
 				_view.UpdateUndoRedo(_undoService.UndoItems, _undoService.RedoItems);
 			};
 			_model.SelectedSalaryPay += (sender, modelView) => _view.UpdateDays(modelView);
-			_model.Error += (sender, error) => _view.ShowError(error);
+			_model.Error += (sender, ex) => _view.ShowError(ex);
 
 			_view.Logging += (sender, args) => ShowLoginView(false);
 			_view.Logout += (sender, args) =>

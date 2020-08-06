@@ -24,6 +24,7 @@ namespace Furmanov.Data
 
 		List<WorkedDayDto> GetWorkedDays(int salaryPayId, int year, int month);
 		void SaveWorkedDays(params WorkedDay[] workedDayDb);
+		void Insert<T>(T obj);
 	}
 	#endregion
 
@@ -41,37 +42,50 @@ namespace Furmanov.Data
 		{
 			using (var db = new DbContext(_connectionString))
 			{
-				db.CreateTable<UserDto>();
-				db.CreateTable<SalaryPayDto>();
-				db.CreateTable<WorkedDayDto>();
+				//var baseDir = AppDomain.CurrentDomain.BaseDirectory;
+				//db.Execute("CREATE DATABASE [Furmanov] ON PRIMARY " +
+				//		  "(NAME = [Furmanov], " +
+				//		  $"FILENAME = '{Path.Combine(baseDir, "Furmanov.mdf")}', " +
+				//		  "SIZE = 2MB, MAXSIZE = 10MB, FILEGROWTH = 10%) " +
+				//		  "LOG ON (NAME = Furmanov_Log, " +
+				//		  $"FILENAME = '{Path.Combine(baseDir, "Furmanov.ldf")}', " +
+				//		  "SIZE = 1MB, " +
+				//		  "MAXSIZE = 5MB, " +
+				//		  "FILEGROWTH = 10%)");
 
-				var tables = new[]
-				{
-					nameof(UserDto),
-					nameof(SalaryPayDto),
-					nameof(WorkedDayDto)
-				};
-				foreach (var table in tables)
-				{
-					var tableName = table.Replace("Dto", "");
-					db.Execute($"ALTER TABLE [dbo].[{tableName}] " +
-							   $"ADD CONSTRAINT [DF_{tableName}_{nameof(Dto.CreatedDate)}] " +
-							   $"DEFAULT (getdate()) FOR [{nameof(Dto.CreatedDate)}] " +
-							   "GO");
-				}
+				//db.CreateTable<EmployeeDto>();
+				//db.CreateTable<RoleDto>();
+				//db.CreateTable<ObjectDto>();
+				//db.CreateTable<ProjectDto>();
+				//db.CreateTable<SalaryPayDto>();
+				//db.CreateTable<WorkedDayDto>();
+
+				//var tables = new[]
+				//{
+				//	nameof(UserDto),
+				//	nameof(SalaryPayDto),
+				//	nameof(WorkedDayDto)
+				//};
+				//foreach (var table in tables)
+				//{
+				//	try
+				//	{
+				//		var tableName = table.Replace("Dto", "");
+				//		db.Execute($"ALTER TABLE [dbo].[{tableName}] " +
+				//				   $"ADD CONSTRAINT [DF_{tableName}_{nameof(Dto.CreatedDate)}] " +
+				//				   $"DEFAULT (getdate()) FOR [{nameof(Dto.CreatedDate)}]\n" +
+				//				   "GO");
+				//	}
+				//	catch { }
+				//}
 			}
-		}
-
-		public void GenerateDataInTables()
-		{
-
 		}
 
 		public User GetUser(string login, string password)
 		{
 			using (var db = new DbContext(_connectionString))
 			{
-				var res = db.Query<User>(Resources.UserDb,
+				var res = db.Query<User>(Resources.User,
 					new DataParameter("@login", login),
 					new DataParameter("@password", password))
 					.FirstOrDefault();
@@ -127,9 +141,9 @@ namespace Furmanov.Data
 			using (var db = new DbContext(_connectionString))
 			{
 				var res = db.GetTable<WorkedDayDto>()
-						.Where(t => t.SalaryPayId == salaryPayId)
-						.Where(t => t.Date.Year == year)
-						.Where(t => t.Date.Month == month)
+						.Where(p => p.SalaryPayId == salaryPayId)
+						.Where(p => p.Date.Year == year)
+						.Where(p => p.Date.Month == month)
 						.ToList();
 
 				return res;
@@ -144,7 +158,7 @@ namespace Furmanov.Data
 				{
 					db.Execute(Resources.DeleteWorkDay,
 						new DataParameter("@payId", day.SalaryPayId),
-						new DataParameter("@day", $"{day.Date:yyyyMMdd}"));
+						new DataParameter("@day", day.Date));
 				}
 
 				var work = workedDay.Where(t => t.IsWorked).ToArray();
@@ -152,8 +166,16 @@ namespace Furmanov.Data
 				{
 					db.Execute(Resources.InsertWorkDay,
 						new DataParameter("@payId", day.SalaryPayId),
-						new DataParameter("@day", $"{day.Date:yyyyMMdd}"));
+						new DataParameter("@day", day.Date));
 				}
+			}
+		}
+
+		public void Insert<T>(T obj)
+		{
+			using (var db = new DbContext(_connectionString))
+			{
+				db.Insert(obj);
 			}
 		}
 	}

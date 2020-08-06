@@ -71,6 +71,10 @@ namespace Furmanov.UI
 		{
 			Close();
 		}
+		public void ShowError(Exception ex)
+		{
+			MessageService.Error(ex.ToString());
+		}
 		public void ShowError(string error)
 		{
 			MessageService.Error(error);

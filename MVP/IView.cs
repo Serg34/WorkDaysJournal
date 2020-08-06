@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿using System;
+using System.Windows.Forms;
 
 namespace Furmanov.MVP
 {
@@ -9,6 +10,6 @@ namespace Furmanov.MVP
 		void Hide();
 		void Close();
 
-		void ShowError(string error);
+		void ShowError(Exception ex);
 	}
 }

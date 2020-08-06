@@ -45,7 +45,7 @@ namespace Furmanov.Services
 						User = Environment.UserName,
 						PrintScreen = ScreenPrinter.Print().ToByteArray()
 					};
-					bug.ID = db.InsertWithInt32Identity(bug);
+					bug.Id = db.InsertWithInt32Identity(bug);
 				}
 				else if (bug.PrintScreen == null) //если разработчик удалил снимок экрана
 				{
@@ -55,7 +55,7 @@ namespace Furmanov.Services
 
 				var incident = new BugIncidentDto
 				{
-					Bug_ID = bug.ID,
+					Bug_Id = bug.Id,
 					DateTime = DateTime.Now,
 					User = Environment.UserName
 				};

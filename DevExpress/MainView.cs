@@ -26,10 +26,6 @@ namespace Furmanov.UI
 		#region Fields
 		private SalaryPay _currentPay;
 		private SalaryPay _prevPay;
-
-		private readonly string _appUserDataFolder =
-			Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "WorkDaysJournal");
-
 		private bool _updating;
 		#endregion
 
@@ -38,14 +34,11 @@ namespace Furmanov.UI
 			try
 			{
 				InitializeComponent();
-
 				lblVersion.Caption = "Версия: " + Application.ProductVersion;
-
-				gcWorkedDays.Paint += GcWorkedDays_Paint;
 			}
 			catch (Exception ex)
 			{
-				ShowError(ex.ToString());
+				ShowError(ex);
 			}
 		}
 
@@ -71,34 +64,41 @@ namespace Furmanov.UI
 		#region Login
 		public void UpdateLogin(User user)
 		{
-			pnMain.BeginInit();
-
-			//Контролы должны быть видимыми до заполнения
-			pnMain.Visible =
-			btnVedomostTotal.Enabled =
-			btnCreateResource.Enabled =
-			btnEditResource.Enabled =
-			btnDeleteResource.Enabled =
-			deMonth.Enabled =
-			btnWorkDaysOnly.Enabled =
-			btnAllDays.Enabled =
-			btnDeleteAllDays.Enabled = user != null;
-
-			pnMain.EndInit();
-
-			btnLogin.Visibility = user != null ? BarItemVisibility.Never : BarItemVisibility.Always;
-			btnLogOut.Visibility = user == null ? BarItemVisibility.Never : BarItemVisibility.Always;
-
-			UpdateUndoRedo(Array.Empty<string>(), Array.Empty<string>());
-
-			if (user != null)
+			try
 			{
-				lblUser.Caption = $"Пользователь: {user.Login} / {user.RoleName}";
-				TreeSalary_SelectionChange();
+				pnMain.BeginInit();
+
+				//Контролы должны быть видимыми до заполнения
+				pnMain.Visible =
+				btnVedomostTotal.Enabled =
+				btnCreateResource.Enabled =
+				btnEditResource.Enabled =
+				btnDeleteResource.Enabled =
+				deMonth.Enabled =
+				btnWorkDaysOnly.Enabled =
+				btnAllDays.Enabled =
+				btnDeleteAllDays.Enabled = user != null;
+
+				pnMain.EndInit();
+
+				btnLogin.Visibility = user != null ? BarItemVisibility.Never : BarItemVisibility.Always;
+				btnLogOut.Visibility = user == null ? BarItemVisibility.Never : BarItemVisibility.Always;
+
+				UpdateUndoRedo(Array.Empty<string>(), Array.Empty<string>());
+
+				if (user != null)
+				{
+					lblUser.Caption = $"Пользователь: {user.Login} / {user.Name} / {user.RoleName}";
+					TreeSalary_SelectionChange();
+				}
+				else
+				{
+					lblUser.Caption = "Вход не выполнен";
+				}
 			}
-			else
+			catch (Exception ex)
 			{
-				lblUser.Caption = "Вход не выполнен";
+				ShowError(ex);
 			}
 		}
 
@@ -106,15 +106,28 @@ namespace Furmanov.UI
 
 		private void BtnLogin_ItemClick(object sender, ItemClickEventArgs e)
 		{
-			Logging?.Invoke(this, EventArgs.Empty);
+			try
+			{
+				Logging?.Invoke(this, EventArgs.Empty);
+			}
+			catch (Exception ex)
+			{
+				ShowError(ex);
+			}
 		}
 
 		private void BtnLogOut_ItemClick(object sender, ItemClickEventArgs e)
 		{
-			if (MessageService.Question("Вы уверены, что хотите выйти?") == DialogResult.Yes)
+			try
 			{
-				SaveControlsLatoutToXml();
-				Logout?.Invoke(this, EventArgs.Empty);
+				if (MessageService.Question("Вы уверены, что хотите выйти?") == DialogResult.Yes)
+				{
+					Logout?.Invoke(this, EventArgs.Empty);
+				}
+			}
+			catch (Exception ex)
+			{
+				ShowError(ex);
 			}
 		}
 		#endregion
@@ -122,9 +135,16 @@ namespace Furmanov.UI
 		#region TopMenu
 		private void DeMonth_EditValueChanged(object sender, EventArgs e)
 		{
-			if (_updating) return;
-			if (!(deMonth.EditValue is DateTime date)) return;
-			ChangedMonth?.Invoke(this, new MonthEventArgs(date.Year, date.Month));
+			try
+			{
+				if (_updating) return;
+				if (!(deMonth.EditValue is DateTime date)) return;
+				ChangedMonth?.Invoke(this, new MonthEventArgs(date.Year, date.Month));
+			}
+			catch (Exception ex)
+			{
+				ShowError(ex);
+			}
 		}
 		private void BtnWorkDaysOnly_ItemClick(object sender, ItemClickEventArgs e)
 		{
@@ -132,7 +152,14 @@ namespace Furmanov.UI
 		}
 		private void BtnAllDays_ItemClick(object sender, ItemClickEventArgs e)
 		{
-			AllDaysClick?.Invoke(this, EventArgs.Empty);
+			try
+			{
+				AllDaysClick?.Invoke(this, EventArgs.Empty);
+			}
+			catch (Exception ex)
+			{
+				ShowError(ex);
+			}
 		}
 		private void BtnDeleteAllDays_ItemClick(object sender, ItemClickEventArgs e)
 		{
@@ -150,7 +177,7 @@ namespace Furmanov.UI
 			}
 			catch (Exception ex)
 			{
-				ShowError(ex.ToString());
+				ShowError(ex);
 			}
 			finally
 			{
@@ -172,7 +199,7 @@ namespace Furmanov.UI
 			}
 			catch (Exception ex)
 			{
-				ShowError(ex.ToString());
+				ShowError(ex);
 			}
 			finally
 			{
@@ -181,48 +208,76 @@ namespace Furmanov.UI
 		}
 		public void UpdateDays(List<WorkedDay> days)
 		{
-			using (new GridViewStateSaver(gvWorkedDays))
+			try
 			{
-				gcWorkedDays.DataSource = days;
+				using (new GridViewStateSaver(gvWorkedDays))
+				{
+					gcWorkedDays.DataSource = days;
+				}
+			}
+			catch (Exception ex)
+			{
+				ShowError(ex);
 			}
 		}
 		public void UpdateUndoRedo(IEnumerable<string> undoItems, IEnumerable<string> redoItems)
 		{
-			btnUndo.Enabled = undoItems.Any();
-			btnUndo.ImageOptions.Image = btnUndo.Enabled ? Resources.undo : Resources.UndoNoEnabled;
-			menuUndo.ItemLinks.Clear();
-			menuUndo.ItemLinks.AddRange(undoItems.Select(i =>
+			try
 			{
-				var item = new BarButtonItem { Caption = i, Alignment = BarItemLinkAlignment.Left };
-				item.ItemClick += (sender, args) =>
-					Undo?.Invoke(item, menuUndo.ItemLinks.IndexOf(
-						menuUndo.ItemLinks.First(l => l.Item == item)) + 1);
-				return item;
-			}));
+				btnUndo.Enabled = undoItems.Any();
+				btnUndo.ImageOptions.Image = btnUndo.Enabled ? Resources.undo : Resources.UndoNoEnabled;
+				menuUndo.ItemLinks.Clear();
+				menuUndo.ItemLinks.AddRange(undoItems.Select(i =>
+				{
+					var item = new BarButtonItem { Caption = i, Alignment = BarItemLinkAlignment.Left };
+					item.ItemClick += (sender, args) =>
+						Undo?.Invoke(item, menuUndo.ItemLinks.IndexOf(
+							menuUndo.ItemLinks.First(l => l.Item == item)) + 1);
+					return item;
+				}));
 
-			btnRedo.Enabled = redoItems.Any();
-			btnRedo.ImageOptions.Image = btnRedo.Enabled ? Resources.redo : Resources.RedoNoEnabled;
-			menuRedo.ItemLinks.Clear();
-			menuRedo.ItemLinks.AddRange(redoItems.Select(i =>
+				btnRedo.Enabled = redoItems.Any();
+				btnRedo.ImageOptions.Image = btnRedo.Enabled ? Resources.redo : Resources.RedoNoEnabled;
+				menuRedo.ItemLinks.Clear();
+				menuRedo.ItemLinks.AddRange(redoItems.Select(i =>
+				{
+					var item = new BarButtonItem { Caption = i, Alignment = BarItemLinkAlignment.Left };
+					item.ItemClick += (sender, args) =>
+						Redo?.Invoke(item, menuRedo.ItemLinks.IndexOf(
+							menuRedo.ItemLinks.First(l => l.Item == item)) + 1);
+					return item;
+				}));
+			}
+			catch (Exception ex)
 			{
-				var item = new BarButtonItem { Caption = i, Alignment = BarItemLinkAlignment.Left };
-				item.ItemClick += (sender, args) =>
-					Redo?.Invoke(item, menuRedo.ItemLinks.IndexOf(
-						menuRedo.ItemLinks.First(l => l.Item == item)) + 1);
-				return item;
-			}));
+				ShowError(ex);
+			}
 		}
 		#endregion
 
 		#region TreeSalary
 		private void TreeSalary_CellValueChanging(object sender, CellValueChangedEventArgs e)
 		{
-			_prevPay = _currentPay.Clone();
+			try
+			{
+				_prevPay = _currentPay.Clone();
+			}
+			catch (Exception ex)
+			{
+				ShowError(ex);
+			}
 		}
 		private void TreeSalary_CellValueChanged(object sender, CellValueChangedEventArgs e)
 		{
-			ChangedSalaryPay?.Invoke(this,
+			try
+			{
+				ChangedSalaryPay?.Invoke(this,
 				new UndoRedoEventArgs<SalaryPay>(_currentPay, _prevPay));
+			}
+			catch (Exception ex)
+			{
+				ShowError(ex);
+			}
 		}
 		private void TreeSalary_ValidatingEditor(object sender, DevExpress.XtraEditors.Controls.BaseContainerValidateEditorEventArgs e)
 		{
@@ -243,34 +298,55 @@ namespace Furmanov.UI
 		[DebuggerStepThrough]
 		private void TreeSalary_ShowingEditor(object sender, CancelEventArgs e)
 		{
-			if (sender is TreeList view &&
-				view.GetFocusedRow() is SalaryPay vm)
+			try
 			{
-				e.Cancel = vm.Type != ObjType.Salary;
+				if (sender is TreeList view &&
+				view.GetFocusedRow() is SalaryPay vm)
+				{
+					e.Cancel = vm.Type != ObjType.Salary;
+				}
+			}
+			catch (Exception ex)
+			{
+				ShowError(ex);
 			}
 		}
 
 		private void TreeSalary_DoubleClick(object sender, EventArgs e)
 		{
-			if (_currentPay.Type == ObjType.Salary)
+			try
 			{
-				ShowNoImplementedCode(this, null);
+				if (_currentPay.Type == ObjType.Salary)
+				{
+					ShowNoImplementedCode(this, null);
+				}
+			}
+			catch (Exception ex)
+			{
+				ShowError(ex);
 			}
 		}
 		private void DeleteSalaryPay()
 		{
-			if (_currentPay.Type != ObjType.Salary) return;
-			var resName = _currentPay.Name;
-			if (_currentPay.FactDays > 0)
+			try
 			{
-				MessageService.Message($"Удаление сотрудника '{resName}' невозможно, так как у него есть отработанные дни.\n" +
-										   "Удалите отработанные дни сотрудника и повторите попытку.");
-				return;
-			}
+				if (_currentPay.Type != ObjType.Salary) return;
+				var resName = _currentPay.Name;
+				if (_currentPay.FactDays > 0)
+				{
+					MessageService.Message($"Удаление сотрудника '{resName}' невозможно, так как у него есть отработанные дни.\n" +
+											   "Удалите отработанные дни сотрудника и повторите попытку.");
+					return;
+				}
 
-			if (MessageService.Question($"Будет удален сотрудник '{resName}'.\nПродолжить?") == DialogResult.Yes)
+				if (MessageService.Question($"Будет удален сотрудник '{resName}'.\nПродолжить?") == DialogResult.Yes)
+				{
+					ShowNoImplementedCode(this, null);
+				}
+			}
+			catch (Exception ex)
 			{
-				ShowNoImplementedCode(this, null);
+				ShowError(ex);
 			}
 		}
 
@@ -284,73 +360,94 @@ namespace Furmanov.UI
 		}
 		private void TreeSalary_SelectionChange()
 		{
-			if (treeSalary.GetFocusedRow() is SalaryPay vm)
+			try
 			{
-				_currentPay = vm;
-
-				btnCreateResource.Enabled
-					= btnEditResource.Enabled
-					= btnVedomostForObject.Enabled
-					= vm.Type == ObjType.Object ||
-					  vm.Type == ObjType.Salary;
-
-				btnDeleteResource.Enabled
-					= btnAllDays.Enabled
-					= btnWorkDaysOnly.Enabled
-					= btnDeleteAllDays.Enabled
-					= vm.Type == ObjType.Salary;
-
-				if (!_updating)
+				if (treeSalary.GetFocusedRow() is SalaryPay vm)
 				{
-					SelectionChangingSalaryPay?.Invoke(this, vm);
+					_currentPay = vm;
+
+					btnCreateResource.Enabled
+						= btnEditResource.Enabled
+						= btnVedomostForObject.Enabled
+						= vm.Type == ObjType.Object ||
+						  vm.Type == ObjType.Salary;
+
+					btnDeleteResource.Enabled
+						= btnAllDays.Enabled
+						= btnWorkDaysOnly.Enabled
+						= btnDeleteAllDays.Enabled
+						= vm.Type == ObjType.Salary;
+
+					if (!_updating)
+					{
+						SelectionChangingSalaryPay?.Invoke(this, vm);
+					}
 				}
+			}
+			catch (Exception ex)
+			{
+				ShowError(ex);
 			}
 		}
 
 		[DebuggerStepThrough]
 		private void TreeSalary_NodeCellStyle(object sender, GetCustomNodeCellStyleEventArgs e)
 		{
-			if (sender is TreeList view &&
-				view.GetRow(e.Node.Id) is SalaryPay vm)
+			try
 			{
-				if (vm.Type == ObjType.Project)
+				if (sender is TreeList view &&
+				view.GetRow(e.Node.Id) is SalaryPay vm)
 				{
-					e.Appearance.BackColor = Color.FromArgb(150, 255, 190, 64);
-					e.Appearance.BorderColor = Color.FromArgb(255, 121, 124, 145);
-					e.Appearance.Font = new Font(e.Appearance.Font, FontStyle.Bold);
-				}
-				else if (vm.Type == ObjType.Object)
-				{
-					if (e.Column != colName && e.Column != colPhone)
+					if (vm.Type == ObjType.Project)
 					{
-						e.Appearance.Font = new Font(e.Appearance.Font, FontStyle.Underline);
+						e.Appearance.BackColor = Color.FromArgb(150, 255, 190, 64);
+						e.Appearance.BorderColor = Color.FromArgb(255, 121, 124, 145);
+						e.Appearance.Font = new Font(e.Appearance.Font, FontStyle.Bold);
 					}
+					else if (vm.Type == ObjType.Object)
+					{
+						if (e.Column != colName && e.Column != colPhone)
+						{
+							e.Appearance.Font = new Font(e.Appearance.Font, FontStyle.Underline);
+						}
 
-					e.Appearance.BackColor = Color.FromArgb(150, 213, 238, 255);
-					e.Appearance.BorderColor = Color.FromArgb(255, 150, 153, 169);
+						e.Appearance.BackColor = Color.FromArgb(150, 213, 238, 255);
+						e.Appearance.BorderColor = Color.FromArgb(255, 150, 153, 169);
+					}
+					else if (vm.Type == ObjType.Salary)
+					{
+					}
 				}
-				else if (vm.Type == ObjType.Salary)
-				{
-				}
+			}
+			catch (Exception ex)
+			{
+				ShowError(ex);
 			}
 		}
 		[DebuggerStepThrough]
 		private void TreeSalary_CustomDrawNodeCell(object sender, CustomDrawNodeCellEventArgs e)
 		{
-			if (sender is TreeList view &&
+			try
+			{
+				if (sender is TreeList view &&
 				view.GetRow(e.Node.Id) is SalaryPay vm &&
 				vm.Type != ObjType.Salary)
-			{
-				if (e.Info.Appearance.Options.UseBorderColor)
 				{
-					var b = e.Bounds;
-					b.Inflate(1, 1);
-					e.Cache.DrawRectangle(e.Cache.GetPen(Color.FromArgb(25, e.Info.Appearance.BorderColor)), b);
-					e.Cache.DrawLine(e.Cache.GetPen(e.Info.Appearance.BorderColor),
-						new Point(b.Left, b.Top), new Point(b.Right, b.Top));
-					e.Cache.DrawLine(e.Cache.GetPen(e.Info.Appearance.BorderColor),
-						new Point(b.Left, b.Bottom - 1), new Point(b.Right, b.Bottom - 1));
+					if (e.Info.Appearance.Options.UseBorderColor)
+					{
+						var b = e.Bounds;
+						b.Inflate(1, 1);
+						e.Cache.DrawRectangle(e.Cache.GetPen(Color.FromArgb(25, e.Info.Appearance.BorderColor)), b);
+						e.Cache.DrawLine(e.Cache.GetPen(e.Info.Appearance.BorderColor),
+							new Point(b.Left, b.Top), new Point(b.Right, b.Top));
+						e.Cache.DrawLine(e.Cache.GetPen(e.Info.Appearance.BorderColor),
+							new Point(b.Left, b.Bottom - 1), new Point(b.Right, b.Bottom - 1));
+					}
 				}
+			}
+			catch (Exception ex)
+			{
+				ShowError(ex);
 			}
 		}
 		#endregion
@@ -359,41 +456,62 @@ namespace Furmanov.UI
 		private void GvWorkedDays_CellValueChanging(object sender,
 			DevExpress.XtraGrid.Views.Base.CellValueChangedEventArgs e)
 		{
-			if (sender is GridView view && view.GetRow(e.RowHandle) is WorkedDay vm)
+			try
 			{
-				ChangedWorkedDay?.Invoke(this, vm);
+				if (sender is GridView view && view.GetRow(e.RowHandle) is WorkedDay vm)
+				{
+					ChangedWorkedDay?.Invoke(this, vm);
+				}
+			}
+			catch (Exception ex)
+			{
+				ShowError(ex);
 			}
 		}
 
 		[DebuggerStepThrough]
 		private void GvWorkedDays_RowStyle(object sender, RowStyleEventArgs e)
 		{
-			if (sender is GridView view &&
+			try
+			{
+				if (sender is GridView view &&
 				view.GetRow(e.RowHandle) is WorkedDay vm &&
 				(vm.Date.DayOfWeek == DayOfWeek.Saturday ||
 				 vm.Date.DayOfWeek == DayOfWeek.Sunday))
+				{
+					e.Appearance.BackColor = Color.FromArgb(255, 103, 103);
+					e.Appearance.BorderColor = Color.FromArgb(200, 121, 124, 145);
+					e.HighPriority = true;
+				}
+			}
+			catch (Exception ex)
 			{
-				e.Appearance.BackColor = Color.FromArgb(255, 103, 103);
-				e.Appearance.BorderColor = Color.FromArgb(200, 121, 124, 145);
-				e.HighPriority = true;
+				ShowError(ex);
 			}
 		}
 		private void GcWorkedDays_Paint(object sender, PaintEventArgs e)
 		{
-			if (gvWorkedDays.GetViewInfo() is GridViewInfo viewInfo)
+			try
 			{
-				foreach (var rowInfo in viewInfo.RowsInfo)
+				if (gvWorkedDays.GetViewInfo() is GridViewInfo viewInfo)
 				{
-					if (rowInfo.Appearance.Options.UseBorderColor)
+					foreach (var rowInfo in viewInfo.RowsInfo)
 					{
-						using (var pen = new Pen(rowInfo.Appearance.BorderColor))
+						if (rowInfo.Appearance.Options.UseBorderColor)
 						{
-							var bounds = rowInfo.TotalBounds;
-							bounds.Offset(0, -1);
-							e.Graphics.DrawRectangle(pen, bounds);
+							using (var pen = new Pen(rowInfo.Appearance.BorderColor))
+							{
+								var bounds = rowInfo.TotalBounds;
+								bounds.Offset(0, -1);
+								e.Graphics.DrawRectangle(pen, bounds);
+							}
 						}
 					}
 				}
+			}
+			catch (Exception ex)
+			{
+				ShowError(ex);
 			}
 		}
 		#endregion
@@ -401,67 +519,72 @@ namespace Furmanov.UI
 		#region Form service
 		private void TreeSalary_KeyDown(object sender, KeyEventArgs e)
 		{
-			if (e.KeyCode == Keys.Delete ||
+			try
+			{
+				if (e.KeyCode == Keys.Delete ||
 				e.KeyCode == Keys.OemMinus ||
 				e.KeyCode == Keys.Subtract)
-			{
-				DeleteSalaryPay();
+				{
+					DeleteSalaryPay();
+				}
+				else if (e.KeyCode == Keys.Insert || e.KeyCode == Keys.Add)
+				{
+					ShowNoImplementedCode(this, null);
+				}
+				else if (e.Control && e.Shift && e.KeyCode == Keys.Z) Redo?.Invoke(this, 1);
+				else if (e.Control && e.KeyCode == Keys.Z) Undo?.Invoke(this, 1);
 			}
-			else if (e.KeyCode == Keys.Insert || e.KeyCode == Keys.Add)
+			catch (Exception ex)
 			{
-				ShowNoImplementedCode(this, null);
+				ShowError(ex);
 			}
-			else if (e.Control && e.Shift && e.KeyCode == Keys.Z) Redo?.Invoke(this, 1);
-			else if (e.Control && e.KeyCode == Keys.Z) Undo?.Invoke(this, 1);
 		}
-		public void ShowError(string error)
+		public void ShowError(Exception ex)
 		{
-			MessageService.Error(error);
+			MessageService.Error(ex.ToString());
 		}
 
 		private void ShowNoImplementedCode(object sender, ItemClickEventArgs e)
 		{
-			MessageService.Message("Раньше здесь был не очень интересный код");
+			MessageService.Message("В реальном приложении здесь не очень интересный код");
 		}
 		private void MainView_FormClosed(object sender, FormClosedEventArgs e)
 		{
-			SaveControlsLatoutToXml();
-		}
-		private void SaveControlsLatoutToXml()
-		{
-			if (!Directory.Exists(_appUserDataFolder))
+			try
 			{
-				Directory.CreateDirectory(_appUserDataFolder);
 			}
-
-			menuMain.SaveLayoutToXml(Path.Combine(_appUserDataFolder, "Ribbon.xml"));
-
-			var user = ApplicationUser.User;
-			if (user != null)
+			catch (Exception ex)
 			{
-				var treeFile = Path.Combine(_appUserDataFolder, $"treeSalaryPay_user({user.Id})");
-				treeSalary.SaveLayoutToXml($"{treeFile} DevState.xml");
-				new TreeListStateSaver(treeSalary).SaveLayoutToXml($"{treeFile} NodeState.xml");
+				ShowError(ex);
 			}
 		}
+
+
 		private void MenuUndo_PaintMenuBar(object sender, BarCustomDrawEventArgs e)
 		{
-			if (sender is PopupMenu menu)
+			try
 			{
-				var focused = menu.ItemLinks.FirstOrDefault(i => i.ScreenBounds.Contains(MousePosition));
-				if (focused == null) return;
-
-				var index = menu.ItemLinks.IndexOf(focused);
-				for (int i = 0; i < menu.ItemLinks.Count; i++)
+				if (sender is PopupMenu menu)
 				{
-					if (i < index)
+					var focused = menu.ItemLinks.FirstOrDefault(i => i.ScreenBounds.Contains(MousePosition));
+					if (focused == null) return;
+
+					var index = menu.ItemLinks.IndexOf(focused);
+					for (int i = 0; i < menu.ItemLinks.Count; i++)
 					{
-						using (var brush = new SolidBrush(Color.FromArgb(50, 90, 173, 228)))
+						if (i < index)
 						{
-							e.Graphics.FillRectangle(brush, menu.ItemLinks[i].Bounds);
+							using (var brush = new SolidBrush(Color.FromArgb(50, 90, 173, 228)))
+							{
+								e.Graphics.FillRectangle(brush, menu.ItemLinks[i].Bounds);
+							}
 						}
 					}
 				}
+			}
+			catch (Exception ex)
+			{
+				ShowError(ex);
 			}
 		}
 		#endregion

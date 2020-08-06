@@ -14,7 +14,7 @@ namespace Furmanov.MVP.MainView
 		event EventHandler<User> LoginChanged;
 		event EventHandler<MainViewModel> Updated;
 		event EventHandler<List<WorkedDay>> SelectedSalaryPay;
-		event EventHandler<string> Error;
+		event EventHandler<Exception> Error;
 
 		ILoginModel LoginModel { get; }
 		void Logout();
@@ -50,13 +50,20 @@ namespace Furmanov.MVP.MainView
 			_db = dataAccessService;
 			LoginModel = loginModel;
 			LoginModel.Logged += (sender, args) => UpdateLogin();
+
+			var gen = new DataGenerator();
+			for (int i = 0; i < 500; i++)
+			{
+				var o = gen.GenEmployee();
+				_db.Insert(o);
+			}
 		}
 
 		#region Events
 		public event EventHandler<User> LoginChanged;
 		public event EventHandler<MainViewModel> Updated;
 		public event EventHandler<List<WorkedDay>> SelectedSalaryPay;
-		public event EventHandler<string> Error;
+		public event EventHandler<Exception> Error;
 		#endregion
 
 		#region Login
@@ -104,7 +111,7 @@ namespace Furmanov.MVP.MainView
 			}
 			catch (Exception ex)
 			{
-				Error?.Invoke(this, ex.ToString());
+				Error?.Invoke(this, ex);
 			}
 		}
 		#endregion
@@ -139,7 +146,7 @@ namespace Furmanov.MVP.MainView
 			}
 			catch (Exception ex)
 			{
-				Error?.Invoke(this, ex.ToString());
+				Error?.Invoke(this, ex);
 			}
 		}
 		#endregion
@@ -221,13 +228,13 @@ namespace Furmanov.MVP.MainView
 			{
 				//ЗП = Оклад / Норма * Факт - Аванс - Штрафы + Премии;
 
-				salaryPay.SalaryPay =
+				salaryPay.SalaryToPay =
 					salaryPay.Salary / salaryPay.RateDays * salaryPay.FactDays
 					- (salaryPay.Advance ?? 0)
 					- (salaryPay.Penalty ?? 0)
 					+ (salaryPay.Premium ?? 0);
 			}
-			else salaryPay.SalaryPay = null;
+			else salaryPay.SalaryToPay = null;
 
 			_db.SaveSalaryPay(salaryPay);
 		}
