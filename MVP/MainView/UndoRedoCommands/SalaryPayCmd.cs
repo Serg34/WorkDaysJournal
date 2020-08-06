@@ -9,7 +9,7 @@ namespace Furmanov.MVP.MainView.UndoRedoCommands
 		{
 			_model = model;
 			_value = e.Value;
-			_prevValue = e.PevValue;
+			_prevValue = e.PrevValue;
 			Name = $"Изменение оплаты сотруднику '{_value.Name}'";
 		}
 

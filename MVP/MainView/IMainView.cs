@@ -12,7 +12,7 @@ namespace Furmanov.MVP.MainView
 		event EventHandler Logging;
 		event EventHandler Logout;
 
-		event EventHandler<DateTime> ChangedMonth;
+		event EventHandler<MonthEventArgs> ChangedMonth;
 		event EventHandler WorkDaysOnlyClick;
 		event EventHandler AllDaysClick;
 		event EventHandler DeletingAllDays;
@@ -29,5 +29,6 @@ namespace Furmanov.MVP.MainView
 		void UpdateSalaries(object sender, MainViewModel viewModel);
 		void UpdateDays(List<WorkedDay> viewModel);
 		void UpdateUndoRedo(IEnumerable<string> undoItems, IEnumerable<string> redoItems);
+		void UpdateMonth(object sender, MonthEventArgs monthEventArgs);
 	}
 }

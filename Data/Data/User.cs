@@ -6,28 +6,20 @@ namespace Furmanov.Data.Data
 	public enum Role { ProjectManager = 4, Manager = 5 }
 
 	[Table(Name = "User")]
-	public class UserDto
+	public class UserDto : Dto
 	{
-		[PrimaryKey, Identity]
-		public int Id { get; set; }
-
-		[Column(Name = "Login")]
 		[Display(Name = "Логин")]
 		[Required(ErrorMessage = "Логин не может быть пустым")]
-		public string Login { get; set; }
+		[Column] public string Login { get; set; }
 
-		[Column(Name = "Password")]
 		[Display(Name = "Пароль")]
 		[Required(ErrorMessage = "Пароль не может быть пустым")]
-		public string Password { get; set; }
+		[Column] public string Password { get; set; }
 
-		[Column(Name = "Email")]
 		[Display(Name = "Почта")]
 		[Required(ErrorMessage = "Почта не может быть пустой")]
-		public string Email { get; set; }
-
-		[Column(Name = "RoleId")]
-		public int RoleId { get; set; }
+		[Column] public string Email { get; set; }
+		[Column] public int RoleId { get; set; }
 	}
 
 	public class User : UserDto

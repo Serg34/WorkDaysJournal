@@ -1,7 +1,6 @@
 ﻿--DEBUG
---declare
---@login nvarchar(50) = 'User1',
---@password nvarchar(50) = '123'
+--declare @login nvarchar(50) = 'User1';
+--declare @password nvarchar(50) = '123';
 
 select 
 	u.Id,

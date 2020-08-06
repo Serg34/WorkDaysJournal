@@ -15,9 +15,9 @@ namespace Furmanov.Services
 		public GridViewStateSaver(GridView gridView)
 		{
 			_gridView = gridView;
-			if (gridView.GetFocusedRow() is IHasId vm)
+			if (gridView.GetFocusedRow() is Dto vm)
 			{
-				_focusedId = vm.ID;
+				_focusedId = vm.Id;
 			}
 			_col = _gridView.FocusedColumn;
 			_top = _gridView.TopRowIndex;
@@ -29,7 +29,7 @@ namespace Furmanov.Services
 			{
 				for (int r = 0; r < _gridView.RowCount; r++)
 				{
-					if (_gridView.GetRow(r) is IHasId vm && vm.ID == _focusedId)
+					if (_gridView.GetRow(r) is Dto vm && vm.Id == _focusedId)
 					{
 						_gridView.FocusedRowHandle = r;
 						break;

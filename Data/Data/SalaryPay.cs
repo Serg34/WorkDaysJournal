@@ -1,5 +1,4 @@
 ﻿using LinqToDB.Mapping;
-using System;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 
@@ -8,85 +7,60 @@ namespace Furmanov.Data.Data
 	public enum ObjType { Project, Object, Salary }
 
 	[Table(Name = "SalaryPay")]
-	public class SalaryPayDto
+	public class SalaryPayDto : Dto
 	{
-		[PrimaryKey, Identity]
-		public int Id { get; set; }
+		[Column] public int Year { get; set; }
+		[Column] public int Month { get; set; }
+		[Column] public int EmployeeId { get; set; }
+		[Column] public int ObjectId { get; set; }
+		[Column] public int PositionId { get; set; }
 
-		[Column(Name = "Month")]
-		public DateTime Month { get; set; }
-
-		[Column(Name = "EmployeeId")]
-		public int EmployeeId { get; set; }
-
-		[Column(Name = "ObjectId")]
-		public int ObjectId { get; set; }
-
-		[Column(Name = "PositionId")]
-		public int PositionId { get; set; }
-
-		[Column(Name = "Advance")]
 		[Display(Name = "Аванс")]
-		public decimal? Advance { get; set; }
+		[Column] public decimal? Advance { get; set; }
 
-		[Column(Name = "Penalty")]
 		[Display(Name = "Штрафы")]
-		public decimal? Penalty { get; set; }
+		[Column] public decimal? Penalty { get; set; }
 
-		[Column(Name = "Premium")]
 		[Display(Name = "Премии")]
-		public decimal? Premium { get; set; }
+		[Column] public decimal? Premium { get; set; }
 
-		[Column(Name = "Comment")]
 		[Display(Name = "Комментарий")]
-		public string Comment { get; set; }
+		[Column] public string Comment { get; set; }
 
-		[Column(Name = "RateDays")]
 		[Display(Name = "Норма")]
-		public int RateDays { get; set; }
+		[Column] public int RateDays { get; set; }
 
-		[Column(Name = "FactDays")]
 		[Display(Name = "Факт")]
 		[Editable(false)]
-		public int? FactDays { get; set; }
+		[Column] public int? FactDays { get; set; }
 
-		[Column(Name = "SalaryPay")]
 		[Display(Name = "Зарплата")]
 		[Editable(false)]
-		public decimal? SalaryPay { get; set; }
+		[Column] public decimal? SalaryPay { get; set; }
 	}
 
 	[DebuggerDisplay("{ViewModelId}")]
 	public class SalaryPay : SalaryPayDto, IViewModel
 	{
-		[Column(Name = "ViewModelId")]
-		public string ViewModelId { get; set; }
+		[Column] public string ViewModelId { get; set; }
+		[Column] public ObjType Type { get; set; }
+		[Column] public string ParentId { get; set; }
 
-		[Column(Name = "Type")]
-		public ObjType Type { get; set; }
-
-		[Column(Name = "ParentId")]
-		public string ParentId { get; set; }
-
-		[Column(Name = "Name")]
 		[Display(Name = "ФИО")]
 		[Editable(false)]
-		public string Name { get; set; }
+		[Column] public string Name { get; set; }
 
-		[Column(Name = "Phone")]
 		[Display(Name = "Телефон")]
 		[Editable(false)]
-		public string Phone { get; set; }
+		[Column] public string Phone { get; set; }
 
-		[Column(Name = "PositionName")]
 		[Display(Name = "Должность")]
 		[Editable(false)]
-		public string PositionName { get; set; }
+		[Column] public string PositionName { get; set; }
 
-		[Column(Name = "Salary")]
 		[Display(Name = "Оклад")]
 		[Editable(false)]
-		public decimal Salary { get; set; }
+		[Column] public decimal Salary { get; set; }
 
 		public SalaryPay Clone() => (SalaryPay)MemberwiseClone();
 	}

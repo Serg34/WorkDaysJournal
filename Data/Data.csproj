@@ -34,6 +34,7 @@
     <Reference Include="AutoMapper, Version=9.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
       <HintPath>..\packages\AutoMapper.9.0.0\lib\net461\AutoMapper.dll</HintPath>
     </Reference>
+    <Reference Include="DevExpress.Utils.v19.1, Version=19.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="linq2db, Version=2.9.1.0, Culture=neutral, PublicKeyToken=e41013125f9e410a, processorArchitecture=MSIL">
       <HintPath>..\packages\linq2db.2.9.1\lib\net46\linq2db.dll</HintPath>
     </Reference>
@@ -52,6 +53,7 @@
     <Compile Include="DataAccessService.cs" />
     <Compile Include="Data\Bug.cs" />
     <Compile Include="Data\BugIncident.cs" />
+    <Compile Include="Data\Dto.cs" />
     <Compile Include="Data\Interfaces.cs" />
     <Compile Include="Data\LoginPassword.cs" />
     <Compile Include="Data\SalaryPay.cs" />

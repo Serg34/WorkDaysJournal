@@ -6,7 +6,7 @@ namespace Furmanov.MVP.MainView
 {
 	public class SalaryPayValidator : AbstractValidator<SalaryPay>
 	{
-		public SalaryPayValidator(DateTime month)
+		public SalaryPayValidator(int year, int month)
 		{
 			RuleFor(s => s.Advance)
 				.GreaterThanOrEqualTo(0)
@@ -23,7 +23,7 @@ namespace Furmanov.MVP.MainView
 				.When(s => s.Premium != null)
 				.WithMessage("Премия не может быть отрицательной");
 
-			var daysMaxCount = DateTime.DaysInMonth(month.Year, month.Month);
+			var daysMaxCount = DateTime.DaysInMonth(year, month);
 			RuleFor(s => s.RateDays)
 				.GreaterThanOrEqualTo(0)
 				.WithMessage("Норма не может быть отрицательной")

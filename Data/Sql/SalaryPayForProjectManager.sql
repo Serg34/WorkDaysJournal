@@ -1,7 +1,7 @@
 ﻿--DEBUG
---declare
---@userId int = 63,
---@month datetime = getdate();
+--declare @userId int = 63;
+--declare @year int = 2020;
+--declare @month int = 4;
 
 with projects as(
 	 select -2 Id,
@@ -32,7 +32,7 @@ with projects as(
 		 left join (
 			select *
 			from SalaryPay s
-			where Month(s.Month) = Month(@month) and YEAR(s.Month) = YEAR(@month)
+			where Month(s.Month) = @month and YEAR(s.Month) = @year
 			) sal on sal.ObjectId = obj.Id
 		 left join Employee emp on emp.Id = sal.EmployeeId
 		 left join Position pos on pos.Id = sal.PositionId
@@ -68,7 +68,7 @@ objs as (
 		 left join (
 				select *
 				from SalaryPay s
-				where Month(s.Month) = Month(@month) and YEAR(s.Month) = YEAR(@month)
+				where Month(s.Month) = @month and YEAR(s.Month) = @year
 			) sal on sal.ObjectId = obj.Id
 		 left join Employee emp on emp.Id = sal.EmployeeId
 		 left join Position pos on pos.Id = sal.PositionId
@@ -99,7 +99,7 @@ pay as (
 		sal.Premium Premium,
 		sal.Comment Comment,
 		sal.Month Month
-	 from (select * from SalaryPay s where Month(s.Month) = Month(@month) and YEAR(s.Month) = YEAR(@month)) sal
+	 from (select * from SalaryPay s where Month(s.Month) = @month and YEAR(s.Month) = @year) sal
 		 left join [Object] obj on sal.ObjectId = obj.Id
 		 left join Project pr on obj.ProjectId = pr.Id
 		 left join Position pos on pos.Id = sal.PositionId

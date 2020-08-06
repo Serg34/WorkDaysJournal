@@ -39,13 +39,7 @@ namespace Furmanov.UI
 			{
 				InitializeComponent();
 
-#if DEBUG
-				WindowState = FormWindowState.Maximized;
-#endif
 				lblVersion.Caption = "Версия: " + Application.ProductVersion;
-
-				var file = Path.Combine(_appUserDataFolder, "Ribbon.xml");
-				if (File.Exists(file)) menuMain.RestoreLayoutFromXml(file);
 
 				gcWorkedDays.Paint += GcWorkedDays_Paint;
 			}
@@ -59,7 +53,7 @@ namespace Furmanov.UI
 		public event EventHandler Logging;
 		public event EventHandler Logout;
 
-		public event EventHandler<DateTime> ChangedMonth;
+		public event EventHandler<MonthEventArgs> ChangedMonth;
 		public event EventHandler WorkDaysOnlyClick;
 		public event EventHandler AllDaysClick;
 
@@ -79,16 +73,16 @@ namespace Furmanov.UI
 		{
 			pnMain.BeginInit();
 
-			pnMain.Visible //Контролы должны быть видимыми до заполнения
-				= btnVedomostTotal.Enabled
-				= btnCreateResource.Enabled
-				= btnEditResource.Enabled
-				= btnDeleteResource.Enabled
-				= cbMonth.Enabled
-				= btnWorkDaysOnly.Enabled
-				= btnAllDays.Enabled
-				= btnDeleteAllDays.Enabled
-				= user != null;
+			//Контролы должны быть видимыми до заполнения
+			pnMain.Visible =
+			btnVedomostTotal.Enabled =
+			btnCreateResource.Enabled =
+			btnEditResource.Enabled =
+			btnDeleteResource.Enabled =
+			deMonth.Enabled =
+			btnWorkDaysOnly.Enabled =
+			btnAllDays.Enabled =
+			btnDeleteAllDays.Enabled = user != null;
 
 			pnMain.EndInit();
 
@@ -99,17 +93,7 @@ namespace Furmanov.UI
 
 			if (user != null)
 			{
-				lblUser.Caption = $"Пользователь: {user.Login} / {user.Login} / {user.RoleName}";
-
-				var treeFile = Path.Combine(_appUserDataFolder, $"treeSalaryPay_user({user.Id})");
-				if (File.Exists($"{treeFile} DevState.xml"))
-				{
-					treeSalary.RestoreLayoutFromXml($"{treeFile} DevState.xml");
-					using (var saver = new TreeListStateSaver(treeSalary))
-					{
-						saver.RestoreLayoutFromXml($"{treeFile} NodeState.xml");
-					}
-				}
+				lblUser.Caption = $"Пользователь: {user.Login} / {user.RoleName}";
 				TreeSalary_SelectionChange();
 			}
 			else
@@ -136,13 +120,11 @@ namespace Furmanov.UI
 		#endregion
 
 		#region TopMenu
-		private void CbMonth_EditValueChanged(object sender, EventArgs e)
+		private void DeMonth_EditValueChanged(object sender, EventArgs e)
 		{
 			if (_updating) return;
-			ChangedMonth?.Invoke(this,
-				cbMonth.EditValue.Equals("Текущий")
-					? DateTime.Now
-					: DateTime.Now.AddMonths(-1));
+			if (!(deMonth.EditValue is DateTime date)) return;
+			ChangedMonth?.Invoke(this, new MonthEventArgs(date.Year, date.Month));
 		}
 		private void BtnWorkDaysOnly_ItemClick(object sender, ItemClickEventArgs e)
 		{
@@ -159,6 +141,22 @@ namespace Furmanov.UI
 		#endregion
 
 		#region Update
+		public void UpdateMonth(object sender, MonthEventArgs e)
+		{
+			try
+			{
+				_updating = true;
+				deMonth.EditValue = new DateTime(e.Year, e.Month, 1);
+			}
+			catch (Exception ex)
+			{
+				ShowError(ex.ToString());
+			}
+			finally
+			{
+				_updating = false;
+			}
+		}
 		public void UpdateSalaries(object sender, MainViewModel viewModel)
 		{
 			try
@@ -231,7 +229,9 @@ namespace Furmanov.UI
 			try
 			{
 				var fieldName = treeSalary.FocusedColumn.FieldName;
-				ValidateService.Validate(e, new SalaryPayValidator(_currentPay.Month), _prevPay, _currentPay, fieldName);
+				var year = _currentPay.Year;
+				var month = _currentPay.Month;
+				ValidateService.Validate(e, new SalaryPayValidator(year, month), _prevPay, _currentPay, fieldName);
 			}
 			catch (Exception ex)
 			{

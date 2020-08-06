@@ -12,20 +12,21 @@ namespace Furmanov.MVP.MainView
 	public interface IMainModel
 	{
 		event EventHandler<User> LoginChanged;
-		event EventHandler<MainViewModel> SalaryPayUpdated;
+		event EventHandler<MainViewModel> Updated;
 		event EventHandler<List<WorkedDay>> SelectedSalaryPay;
 		event EventHandler<string> Error;
 
 		ILoginModel LoginModel { get; }
 		void Logout();
 
-		DateTime Month { get; }
+		int Year { get; }
+		int Month { get; }
 		string CurrentEmployeeName { get; }
 		SalaryPay CurrentPay { get; set; }
 		List<WorkedDay> CurrentDaysInMonth { get; }
 
 		void Update();
-		void ChangeMonth(DateTime month);
+		void ChangeMonth(int year, int month);
 		void SaveSalaryPay(SalaryPay viewModel);
 		void SelectSalaryPay(SalaryPay vm);
 
@@ -53,7 +54,7 @@ namespace Furmanov.MVP.MainView
 
 		#region Events
 		public event EventHandler<User> LoginChanged;
-		public event EventHandler<MainViewModel> SalaryPayUpdated;
+		public event EventHandler<MainViewModel> Updated;
 		public event EventHandler<List<WorkedDay>> SelectedSalaryPay;
 		public event EventHandler<string> Error;
 		#endregion
@@ -74,15 +75,17 @@ namespace Furmanov.MVP.MainView
 		#endregion
 
 		#region Properties
-		public DateTime Month { get; private set; } = DateTime.Now;
+		public int Year { get; private set; } = DateTime.Now.Year;
+		public int Month { get; private set; } = DateTime.Now.Month;
 		public string CurrentEmployeeName { get; private set; }
 		public SalaryPay CurrentPay { get; set; }
 		public List<WorkedDay> CurrentDaysInMonth { get; private set; }
 		#endregion
 
 		#region TopMenu
-		public void ChangeMonth(DateTime month)
+		public void ChangeMonth(int year, int month)
 		{
+			Year = year;
 			Month = month;
 			Update();
 		}
@@ -95,9 +98,9 @@ namespace Furmanov.MVP.MainView
 			{
 				_user = ApplicationUser.User;
 
-				_allPays = _db.GetSalaryPays(_user, Month);
+				_allPays = _db.GetSalaryPays(_user, Year, Month);
 
-				SalaryPayUpdated?.Invoke(this, GetMainVieModels());
+				Updated?.Invoke(this, GetMainVieModels());
 			}
 			catch (Exception ex)
 			{
@@ -122,8 +125,8 @@ namespace Furmanov.MVP.MainView
 
 				CurrentEmployeeName = CurrentPay?.Name;
 
-				var days = _db.GetWorkedDays(pay.Id, Month);
-				CurrentDaysInMonth = Month.AllDaysInMonth()
+				var days = _db.GetWorkedDays(pay.Id, Year, Month);
+				CurrentDaysInMonth = DateService.AllDaysInMonth(Year, Month)
 					.Select(date => new WorkedDay
 					{
 						SalaryPayId = CurrentPay?.Id ?? -1,
@@ -177,7 +180,7 @@ namespace Furmanov.MVP.MainView
 				CreateSalaryPayBeforeCreatingWorkedDay();
 			}
 
-			var days = Month.AllDaysInMonth()
+			var days = DateService.AllDaysInMonth(Year, Month)
 				.Select(date => new WorkedDay
 				{
 					SalaryPayId = CurrentPay.Id,
@@ -199,8 +202,8 @@ namespace Furmanov.MVP.MainView
 		#region CalculateAndSaveSalaryPay
 		private void CalculateAndSaveSalaryPay(SalaryPay salaryPay)
 		{
-			var workDays = _db.GetWorkedDays(salaryPay.Id, Month);
-			CurrentDaysInMonth = Month.AllDaysInMonth()
+			var workDays = _db.GetWorkedDays(salaryPay.Id, Year, Month);
+			CurrentDaysInMonth = DateService.AllDaysInMonth(Year, Month)
 				.Select(date => new WorkedDay
 				{
 					SalaryPayId = CurrentPay.Id,
@@ -208,7 +211,7 @@ namespace Furmanov.MVP.MainView
 					IsWorked = workDays.Any(t => t.Date.Date == date.Date)
 				}).ToList();
 
-			salaryPay.FactDays = Month.AllDaysInMonth()
+			salaryPay.FactDays = DateService.AllDaysInMonth(Year, Month)
 				.Count(date => CurrentDaysInMonth
 					.Any(t => t.SalaryPayId == salaryPay.Id &&
 							  t.Date.Date == date.Date &&
@@ -236,9 +239,10 @@ namespace Furmanov.MVP.MainView
 			var vm = new MainViewModel
 			{
 				User = _user,
+				Year = Year,
 				Month = Month,
 
-				SalaryPays = _db.GetSalaryPays(_user, Month),
+				SalaryPays = _db.GetSalaryPays(_user, Year, Month),
 				WorkedDays = CurrentDaysInMonth,
 			};
 			return vm;

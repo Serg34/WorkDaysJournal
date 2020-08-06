@@ -23,8 +23,9 @@ namespace Furmanov.MVP.MainView
 				_undoService.Reset();
 				_view.UpdateLogin(user);
 			};
-			_model.SalaryPayUpdated += (sender, modelView) =>
+			_model.Updated += (sender, modelView) =>
 			{
+				_view.UpdateMonth(sender, new MonthEventArgs(_model.Year, _model.Month));
 				_view.UpdateSalaries(sender, modelView);
 				_view.UpdateUndoRedo(_undoService.UndoItems, _undoService.RedoItems);
 			};
@@ -39,9 +40,9 @@ namespace Furmanov.MVP.MainView
 				ShowLoginView(false);
 			};
 
-			_view.ChangedMonth += (sender, month) =>
+			_view.ChangedMonth += (sender, e) =>
 			{
-				var cmd = new MonthCmd(_model, month);
+				var cmd = new MonthCmd(_model, e);
 				_undoService.Execute(cmd);
 			};
 

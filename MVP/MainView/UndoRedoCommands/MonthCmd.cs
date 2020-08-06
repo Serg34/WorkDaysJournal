@@ -1,30 +1,33 @@
 ﻿using Furmanov.Services.UndoRedo;
-using System;
 
 namespace Furmanov.MVP.MainView.UndoRedoCommands
 {
 	public class MonthCmd : ICommand
 	{
-		public MonthCmd(IMainModel model, DateTime value)
+		public MonthCmd(IMainModel model, MonthEventArgs e)
 		{
 			_model = model;
-			_value = value;
-			_prevValue = _model.Month;
+			_year = e.Year;
+			_month = e.Month;
+			_prevYear = _model.Year;
+			_prevMonth = _model.Month;
 		}
 
 		private readonly IMainModel _model;
-		private readonly DateTime _value;
-		private readonly DateTime _prevValue;
+		private readonly int _year;
+		private readonly int _month;
+		private readonly int _prevYear;
+		private readonly int _prevMonth;
 
 		public string Name => "Изменение месяца";
 
 		public void Execute()
 		{
-			_model.ChangeMonth(_value);
+			_model.ChangeMonth(_year, _month);
 		}
 		public void UnExecute()
 		{
-			_model.ChangeMonth(_prevValue);
+			_model.ChangeMonth(_prevYear, _prevMonth);
 		}
 	}
 }

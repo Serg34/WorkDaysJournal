@@ -51,17 +51,15 @@ namespace Furmanov.UI
 			DevExpress.Utils.ToolTipItem toolTipItem6 = new DevExpress.Utils.ToolTipItem();
 			DevExpress.Utils.SuperToolTip superToolTip7 = new DevExpress.Utils.SuperToolTip();
 			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem7 = new DevExpress.Utils.ToolTipTitleItem();
+			DevExpress.Utils.ToolTipItem toolTipItem7 = new DevExpress.Utils.ToolTipItem();
 			DevExpress.Utils.SuperToolTip superToolTip8 = new DevExpress.Utils.SuperToolTip();
 			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem8 = new DevExpress.Utils.ToolTipTitleItem();
-			DevExpress.Utils.ToolTipItem toolTipItem7 = new DevExpress.Utils.ToolTipItem();
+			DevExpress.Utils.ToolTipItem toolTipItem8 = new DevExpress.Utils.ToolTipItem();
 			DevExpress.Utils.SuperToolTip superToolTip9 = new DevExpress.Utils.SuperToolTip();
 			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem9 = new DevExpress.Utils.ToolTipTitleItem();
-			DevExpress.Utils.ToolTipItem toolTipItem8 = new DevExpress.Utils.ToolTipItem();
+			DevExpress.Utils.ToolTipItem toolTipItem9 = new DevExpress.Utils.ToolTipItem();
 			DevExpress.Utils.SuperToolTip superToolTip10 = new DevExpress.Utils.SuperToolTip();
 			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem10 = new DevExpress.Utils.ToolTipTitleItem();
-			DevExpress.Utils.ToolTipItem toolTipItem9 = new DevExpress.Utils.ToolTipItem();
-			DevExpress.Utils.SuperToolTip superToolTip11 = new DevExpress.Utils.SuperToolTip();
-			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem11 = new DevExpress.Utils.ToolTipTitleItem();
 			DevExpress.Utils.ToolTipItem toolTipItem10 = new DevExpress.Utils.ToolTipItem();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainView));
 			this.menuMain = new DevExpress.XtraBars.Ribbon.RibbonControl();
@@ -75,19 +73,20 @@ namespace Furmanov.UI
 			this.btnLogOut = new DevExpress.XtraBars.BarButtonItem();
 			this.btnDeleteResource = new DevExpress.XtraBars.BarButtonItem();
 			this.btnLogin = new DevExpress.XtraBars.BarButtonItem();
-			this.cbMonth = new DevExpress.XtraBars.BarEditItem();
-			this.riMonths = new DevExpress.XtraEditors.Repository.RepositoryItemComboBox();
 			this.btnVedomostForObject = new DevExpress.XtraBars.BarButtonItem();
 			this.btnDeleteAllDays = new DevExpress.XtraBars.BarButtonItem();
 			this.btnUndo = new DevExpress.XtraBars.BarButtonItem();
 			this.menuUndo = new DevExpress.XtraBars.PopupMenu(this.components);
 			this.btnRedo = new DevExpress.XtraBars.BarButtonItem();
 			this.menuRedo = new DevExpress.XtraBars.PopupMenu(this.components);
+			this.deMonth = new DevExpress.XtraBars.BarEditItem();
+			this.riMonth = new DevExpress.XtraEditors.Repository.RepositoryItemDateEdit();
 			this.pageMain = new DevExpress.XtraBars.Ribbon.RibbonPage();
 			this.pageResourses = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
 			this.pageMonth = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
 			this.pageVedomost = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
 			this.pageDaysMode = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+			this.riMonths = new DevExpress.XtraEditors.Repository.RepositoryItemComboBox();
 			this.statusBar = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
 			this.pnMain = new DevExpress.XtraEditors.GroupControl();
 			this.sccMain = new DevExpress.XtraEditors.SplitContainerControl();
@@ -115,9 +114,11 @@ namespace Furmanov.UI
 			this.colIsWorked = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colDate = new DevExpress.XtraGrid.Columns.GridColumn();
 			((System.ComponentModel.ISupportInitialize)(this.menuMain)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.riMonths)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.menuUndo)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.menuRedo)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.riMonth)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.riMonth.CalendarTimeProperties)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.riMonths)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pnMain)).BeginInit();
 			this.pnMain.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.sccMain)).BeginInit();
@@ -152,22 +153,23 @@ namespace Furmanov.UI
             this.btnLogOut,
             this.btnDeleteResource,
             this.btnLogin,
-            this.cbMonth,
             this.btnVedomostForObject,
             this.btnDeleteAllDays,
             this.btnUndo,
-            this.btnRedo});
+            this.btnRedo,
+            this.deMonth});
 			this.menuMain.Location = new System.Drawing.Point(0, 0);
-			this.menuMain.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
-			this.menuMain.MaxItemId = 6;
+			this.menuMain.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
+			this.menuMain.MaxItemId = 7;
 			this.menuMain.Name = "menuMain";
 			this.menuMain.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
             this.pageMain});
 			this.menuMain.QuickToolbarItemLinks.Add(this.btnUndo);
 			this.menuMain.QuickToolbarItemLinks.Add(this.btnRedo);
 			this.menuMain.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
-            this.riMonths});
-			this.menuMain.Size = new System.Drawing.Size(1261, 158);
+            this.riMonths,
+            this.riMonth});
+			this.menuMain.Size = new System.Drawing.Size(1455, 179);
 			this.menuMain.StatusBar = this.statusBar;
 			// 
 			// btnEditResource
@@ -304,31 +306,6 @@ namespace Furmanov.UI
 			this.btnLogin.Name = "btnLogin";
 			this.btnLogin.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.BtnLogin_ItemClick);
 			// 
-			// cbMonth
-			// 
-			this.cbMonth.Caption = "Месяц";
-			this.cbMonth.Edit = this.riMonths;
-			this.cbMonth.EditValue = "Текущий";
-			this.cbMonth.EditWidth = 120;
-			this.cbMonth.Enabled = false;
-			this.cbMonth.Id = 22;
-			this.cbMonth.Name = "cbMonth";
-			toolTipTitleItem7.Text = "Месяц";
-			superToolTip7.Items.Add(toolTipTitleItem7);
-			this.cbMonth.SuperTip = superToolTip7;
-			this.cbMonth.EditValueChanged += new System.EventHandler(this.CbMonth_EditValueChanged);
-			// 
-			// riMonths
-			// 
-			this.riMonths.AutoHeight = false;
-			this.riMonths.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-			this.riMonths.Items.AddRange(new object[] {
-            "Предыдущий",
-            "Текущий"});
-			this.riMonths.Name = "riMonths";
-			this.riMonths.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
-			// 
 			// btnVedomostForObject
 			// 
 			this.btnVedomostForObject.Caption = "Ведомость по объекту";
@@ -337,13 +314,13 @@ namespace Furmanov.UI
 			this.btnVedomostForObject.ImageOptions.Image = global::Furmanov.UI.Properties.Resources.Report;
 			this.btnVedomostForObject.Name = "btnVedomostForObject";
 			this.btnVedomostForObject.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large;
-			toolTipTitleItem8.Text = "Ведомость по объекту";
+			toolTipTitleItem7.Text = "Ведомость по объекту";
 			toolTipItem7.ImageOptions.Image = global::Furmanov.UI.Properties.Resources.Report;
 			toolTipItem7.LeftIndent = 6;
 			toolTipItem7.Text = "Создать в Excel ведомость по выбранному объекту";
-			superToolTip8.Items.Add(toolTipTitleItem8);
-			superToolTip8.Items.Add(toolTipItem7);
-			this.btnVedomostForObject.SuperTip = superToolTip8;
+			superToolTip7.Items.Add(toolTipTitleItem7);
+			superToolTip7.Items.Add(toolTipItem7);
+			this.btnVedomostForObject.SuperTip = superToolTip7;
 			this.btnVedomostForObject.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.ShowNoImplementedCode);
 			// 
 			// btnDeleteAllDays
@@ -354,13 +331,13 @@ namespace Furmanov.UI
 			this.btnDeleteAllDays.ImageOptions.Image = global::Furmanov.UI.Properties.Resources.NoDays;
 			this.btnDeleteAllDays.Name = "btnDeleteAllDays";
 			this.btnDeleteAllDays.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large;
-			toolTipTitleItem9.Text = "Удалить дни";
+			toolTipTitleItem8.Text = "Удалить дни";
 			toolTipItem8.ImageOptions.Image = global::Furmanov.UI.Properties.Resources.NoDays;
 			toolTipItem8.LeftIndent = 6;
 			toolTipItem8.Text = "Удалить все отработанные дни в текущем месяце для выбранного сторудника";
-			superToolTip9.Items.Add(toolTipTitleItem9);
-			superToolTip9.Items.Add(toolTipItem8);
-			this.btnDeleteAllDays.SuperTip = superToolTip9;
+			superToolTip8.Items.Add(toolTipTitleItem8);
+			superToolTip8.Items.Add(toolTipItem8);
+			this.btnDeleteAllDays.SuperTip = superToolTip8;
 			this.btnDeleteAllDays.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.BtnDeleteAllDays_ItemClick);
 			// 
 			// btnUndo
@@ -372,13 +349,13 @@ namespace Furmanov.UI
 			this.btnUndo.Id = 26;
 			this.btnUndo.ImageOptions.Image = global::Furmanov.UI.Properties.Resources.undo;
 			this.btnUndo.Name = "btnUndo";
-			toolTipTitleItem10.Text = "Отменить действие";
+			toolTipTitleItem9.Text = "Отменить действие";
 			toolTipItem9.ImageOptions.Image = global::Furmanov.UI.Properties.Resources.undo;
 			toolTipItem9.LeftIndent = 6;
 			toolTipItem9.Text = "Отменяет последнее действие\r\n\r\nГорячие клавиши: ctrl+z";
-			superToolTip10.Items.Add(toolTipTitleItem10);
-			superToolTip10.Items.Add(toolTipItem9);
-			this.btnUndo.SuperTip = superToolTip10;
+			superToolTip9.Items.Add(toolTipTitleItem9);
+			superToolTip9.Items.Add(toolTipItem9);
+			this.btnUndo.SuperTip = superToolTip9;
 			// 
 			// menuUndo
 			// 
@@ -395,19 +372,45 @@ namespace Furmanov.UI
 			this.btnRedo.Id = 27;
 			this.btnRedo.ImageOptions.Image = global::Furmanov.UI.Properties.Resources.redo;
 			this.btnRedo.Name = "btnRedo";
-			toolTipTitleItem11.Text = "Повторить действие";
+			toolTipTitleItem10.Text = "Повторить действие";
 			toolTipItem10.ImageOptions.Image = global::Furmanov.UI.Properties.Resources.redo;
 			toolTipItem10.LeftIndent = 6;
 			toolTipItem10.Text = "Повторяет отменённое действие\r\n\r\nГорячие клавиши: ctrl + shift + z";
-			superToolTip11.Items.Add(toolTipTitleItem11);
-			superToolTip11.Items.Add(toolTipItem10);
-			this.btnRedo.SuperTip = superToolTip11;
+			superToolTip10.Items.Add(toolTipTitleItem10);
+			superToolTip10.Items.Add(toolTipItem10);
+			this.btnRedo.SuperTip = superToolTip10;
 			// 
 			// menuRedo
 			// 
 			this.menuRedo.Name = "menuRedo";
 			this.menuRedo.Ribbon = this.menuMain;
 			this.menuRedo.PaintMenuBar += new DevExpress.XtraBars.BarCustomDrawEventHandler(this.MenuUndo_PaintMenuBar);
+			// 
+			// deMonth
+			// 
+			this.deMonth.Caption = "Месяц ";
+			this.deMonth.Edit = this.riMonth;
+			this.deMonth.EditWidth = 150;
+			this.deMonth.Id = 6;
+			this.deMonth.Name = "deMonth";
+			this.deMonth.EditValueChanged += new System.EventHandler(this.DeMonth_EditValueChanged);
+			// 
+			// riMonth
+			// 
+			this.riMonth.AllowNullInput = DevExpress.Utils.DefaultBoolean.False;
+			this.riMonth.Appearance.Options.UseTextOptions = true;
+			this.riMonth.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+			this.riMonth.AutoHeight = false;
+			this.riMonth.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+			this.riMonth.CalendarTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+			this.riMonth.DisplayFormat.FormatString = "MMMM yyyy";
+			this.riMonth.DisplayFormat.FormatType = DevExpress.Utils.FormatType.DateTime;
+			this.riMonth.Mask.EditMask = "MMMM yyyy";
+			this.riMonth.Name = "riMonth";
+			this.riMonth.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
+			this.riMonth.VistaCalendarViewStyle = ((DevExpress.XtraEditors.VistaCalendarViewStyle)((DevExpress.XtraEditors.VistaCalendarViewStyle.YearView | DevExpress.XtraEditors.VistaCalendarViewStyle.YearsGroupView)));
 			// 
 			// pageMain
 			// 
@@ -431,7 +434,7 @@ namespace Furmanov.UI
 			// 
 			// pageMonth
 			// 
-			this.pageMonth.ItemLinks.Add(this.cbMonth);
+			this.pageMonth.ItemLinks.Add(this.deMonth);
 			this.pageMonth.Name = "pageMonth";
 			this.pageMonth.ShowCaptionButton = false;
 			this.pageMonth.Text = "Фильтры";
@@ -453,27 +456,38 @@ namespace Furmanov.UI
 			this.pageDaysMode.ShowCaptionButton = false;
 			this.pageDaysMode.Text = "Табель";
 			// 
+			// riMonths
+			// 
+			this.riMonths.AutoHeight = false;
+			this.riMonths.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+			this.riMonths.Items.AddRange(new object[] {
+            "Предыдущий",
+            "Текущий"});
+			this.riMonths.Name = "riMonths";
+			this.riMonths.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
+			// 
 			// statusBar
 			// 
 			this.statusBar.ItemLinks.Add(this.lblVersion);
 			this.statusBar.ItemLinks.Add(this.lblUser);
 			this.statusBar.ItemLinks.Add(this.btnLogin);
 			this.statusBar.ItemLinks.Add(this.btnLogOut);
-			this.statusBar.Location = new System.Drawing.Point(0, 801);
-			this.statusBar.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
+			this.statusBar.Location = new System.Drawing.Point(0, 963);
+			this.statusBar.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.statusBar.Name = "statusBar";
 			this.statusBar.Ribbon = this.menuMain;
-			this.statusBar.Size = new System.Drawing.Size(1261, 30);
+			this.statusBar.Size = new System.Drawing.Size(1455, 26);
 			// 
 			// pnMain
 			// 
 			this.pnMain.Controls.Add(this.sccMain);
 			this.pnMain.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.pnMain.Location = new System.Drawing.Point(0, 158);
-			this.pnMain.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
+			this.pnMain.Location = new System.Drawing.Point(0, 179);
+			this.pnMain.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.pnMain.Name = "pnMain";
 			this.pnMain.ShowCaption = false;
-			this.pnMain.Size = new System.Drawing.Size(1261, 643);
+			this.pnMain.Size = new System.Drawing.Size(1455, 784);
 			this.pnMain.TabIndex = 2;
 			this.pnMain.Text = "groupRp";
 			this.pnMain.Visible = false;
@@ -483,14 +497,14 @@ namespace Furmanov.UI
 			this.sccMain.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.sccMain.FixedPanel = DevExpress.XtraEditors.SplitFixedPanel.Panel2;
 			this.sccMain.Location = new System.Drawing.Point(2, 2);
-			this.sccMain.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
+			this.sccMain.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.sccMain.Name = "sccMain";
 			this.sccMain.Panel1.Controls.Add(this.pnPays);
 			this.sccMain.Panel1.Text = "Panel1";
 			this.sccMain.Panel2.Controls.Add(this.pnWorkedDays);
 			this.sccMain.Panel2.Text = "Panel2";
-			this.sccMain.Size = new System.Drawing.Size(1257, 639);
-			this.sccMain.SplitterPosition = 240;
+			this.sccMain.Size = new System.Drawing.Size(1451, 780);
+			this.sccMain.SplitterPosition = 274;
 			this.sccMain.TabIndex = 2;
 			// 
 			// pnPays
@@ -498,10 +512,10 @@ namespace Furmanov.UI
 			this.pnPays.Controls.Add(this.treeSalary);
 			this.pnPays.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.pnPays.Location = new System.Drawing.Point(0, 0);
-			this.pnPays.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
+			this.pnPays.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.pnPays.Name = "pnPays";
 			this.pnPays.ShowCaption = false;
-			this.pnPays.Size = new System.Drawing.Size(1005, 639);
+			this.pnPays.Size = new System.Drawing.Size(1167, 780);
 			this.pnPays.TabIndex = 1;
 			this.pnPays.Text = "groupRPInnerleft";
 			// 
@@ -533,17 +547,17 @@ namespace Furmanov.UI
 			this.treeSalary.ImageIndexFieldName = "Type";
 			this.treeSalary.KeyFieldName = "ViewModelId";
 			this.treeSalary.Location = new System.Drawing.Point(2, 2);
-			this.treeSalary.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
-			this.treeSalary.MinWidth = 23;
+			this.treeSalary.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
+			this.treeSalary.MinWidth = 26;
 			this.treeSalary.Name = "treeSalary";
 			this.treeSalary.ParentFieldName = "ParentId";
 			this.treeSalary.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
             this.riPositions,
             this.riResourceNames});
 			this.treeSalary.SelectImageList = this.imageCollection;
-			this.treeSalary.Size = new System.Drawing.Size(1001, 635);
+			this.treeSalary.Size = new System.Drawing.Size(1163, 776);
 			this.treeSalary.TabIndex = 7;
-			this.treeSalary.TreeLevelWidth = 21;
+			this.treeSalary.TreeLevelWidth = 24;
 			this.treeSalary.NodeCellStyle += new DevExpress.XtraTreeList.GetCustomNodeCellStyleEventHandler(this.TreeSalary_NodeCellStyle);
 			this.treeSalary.FocusedNodeChanged += new DevExpress.XtraTreeList.FocusedNodeChangedEventHandler(this.TreeSalary_FocusedNodeChanged);
 			this.treeSalary.ValidatingEditor += new DevExpress.XtraEditors.Controls.BaseContainerValidateEditorEventHandler(this.TreeSalary_ValidatingEditor);
@@ -558,91 +572,113 @@ namespace Furmanov.UI
 			// colName
 			// 
 			this.colName.FieldName = "Name";
+			this.colName.MinWidth = 23;
 			this.colName.Name = "colName";
 			this.colName.OptionsColumn.AllowEdit = false;
 			this.colName.Visible = true;
 			this.colName.VisibleIndex = 0;
+			this.colName.Width = 86;
 			// 
 			// colPhone
 			// 
 			this.colPhone.FieldName = "Phone";
+			this.colPhone.MinWidth = 23;
 			this.colPhone.Name = "colPhone";
 			this.colPhone.OptionsColumn.AllowEdit = false;
 			this.colPhone.Visible = true;
 			this.colPhone.VisibleIndex = 1;
+			this.colPhone.Width = 86;
 			// 
 			// colPositionName
 			// 
 			this.colPositionName.FieldName = "PositionName";
+			this.colPositionName.MinWidth = 23;
 			this.colPositionName.Name = "colPositionName";
 			this.colPositionName.OptionsColumn.AllowEdit = false;
 			this.colPositionName.Visible = true;
 			this.colPositionName.VisibleIndex = 2;
+			this.colPositionName.Width = 86;
 			// 
 			// colSalary
 			// 
 			this.colSalary.FieldName = "Salary";
 			this.colSalary.Format.FormatString = "{0:N0}";
 			this.colSalary.Format.FormatType = DevExpress.Utils.FormatType.Numeric;
+			this.colSalary.MinWidth = 23;
 			this.colSalary.Name = "colSalary";
 			this.colSalary.OptionsColumn.AllowEdit = false;
 			this.colSalary.Visible = true;
 			this.colSalary.VisibleIndex = 3;
+			this.colSalary.Width = 86;
 			// 
 			// colAdvance
 			// 
 			this.colAdvance.FieldName = "Advance";
+			this.colAdvance.MinWidth = 23;
 			this.colAdvance.Name = "colAdvance";
 			this.colAdvance.Visible = true;
 			this.colAdvance.VisibleIndex = 7;
+			this.colAdvance.Width = 86;
 			// 
 			// colPenalty
 			// 
 			this.colPenalty.FieldName = "Penalty";
+			this.colPenalty.MinWidth = 23;
 			this.colPenalty.Name = "colPenalty";
 			this.colPenalty.Visible = true;
 			this.colPenalty.VisibleIndex = 8;
+			this.colPenalty.Width = 86;
 			// 
 			// colPremium
 			// 
 			this.colPremium.FieldName = "Premium";
+			this.colPremium.MinWidth = 23;
 			this.colPremium.Name = "colPremium";
 			this.colPremium.Visible = true;
 			this.colPremium.VisibleIndex = 9;
+			this.colPremium.Width = 86;
 			// 
 			// colComment
 			// 
 			this.colComment.FieldName = "Comment";
+			this.colComment.MinWidth = 23;
 			this.colComment.Name = "colComment";
 			this.colComment.Visible = true;
 			this.colComment.VisibleIndex = 10;
+			this.colComment.Width = 86;
 			// 
 			// colRateDays
 			// 
 			this.colRateDays.FieldName = "RateDays";
+			this.colRateDays.MinWidth = 23;
 			this.colRateDays.Name = "colRateDays";
 			this.colRateDays.Visible = true;
 			this.colRateDays.VisibleIndex = 5;
+			this.colRateDays.Width = 86;
 			// 
 			// colFactDays
 			// 
 			this.colFactDays.FieldName = "FactDays";
+			this.colFactDays.MinWidth = 23;
 			this.colFactDays.Name = "colFactDays";
 			this.colFactDays.OptionsColumn.AllowEdit = false;
 			this.colFactDays.Visible = true;
 			this.colFactDays.VisibleIndex = 6;
+			this.colFactDays.Width = 86;
 			// 
 			// colSalaryPay
 			// 
 			this.colSalaryPay.FieldName = "SalaryPay";
+			this.colSalaryPay.MinWidth = 23;
 			this.colSalaryPay.Name = "colSalaryPay";
 			this.colSalaryPay.OptionsColumn.AllowEdit = false;
 			this.colSalaryPay.Visible = true;
 			this.colSalaryPay.VisibleIndex = 4;
+			this.colSalaryPay.Width = 86;
 			// 
 			// salaryPayBindingSource
 			// 
-			this.salaryPayBindingSource.DataSource = typeof(SalaryPay);
+			this.salaryPayBindingSource.DataSource = typeof(Furmanov.Data.Data.SalaryPay);
 			// 
 			// riPositions
 			// 
@@ -672,10 +708,10 @@ namespace Furmanov.UI
 			this.pnWorkedDays.Controls.Add(this.gcWorkedDays);
 			this.pnWorkedDays.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.pnWorkedDays.Location = new System.Drawing.Point(0, 0);
-			this.pnWorkedDays.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
+			this.pnWorkedDays.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.pnWorkedDays.Name = "pnWorkedDays";
 			this.pnWorkedDays.ShowCaption = false;
-			this.pnWorkedDays.Size = new System.Drawing.Size(240, 639);
+			this.pnWorkedDays.Size = new System.Drawing.Size(274, 780);
 			this.pnWorkedDays.TabIndex = 1;
 			this.pnWorkedDays.Text = "groupRPInnerRight";
 			// 
@@ -683,27 +719,27 @@ namespace Furmanov.UI
 			// 
 			this.gcWorkedDays.DataSource = this.workedDayBindingSource;
 			this.gcWorkedDays.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.gcWorkedDays.EmbeddedNavigator.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
+			this.gcWorkedDays.EmbeddedNavigator.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.gcWorkedDays.Location = new System.Drawing.Point(2, 2);
 			this.gcWorkedDays.MainView = this.gvWorkedDays;
-			this.gcWorkedDays.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
+			this.gcWorkedDays.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.gcWorkedDays.Name = "gcWorkedDays";
-			this.gcWorkedDays.Size = new System.Drawing.Size(236, 635);
+			this.gcWorkedDays.Size = new System.Drawing.Size(270, 776);
 			this.gcWorkedDays.TabIndex = 0;
 			this.gcWorkedDays.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gvWorkedDays});
 			// 
 			// workedDayBindingSource
 			// 
-			this.workedDayBindingSource.DataSource = typeof(WorkedDay);
+			this.workedDayBindingSource.DataSource = typeof(Furmanov.Data.Data.WorkedDay);
 			// 
 			// gvWorkedDays
 			// 
 			this.gvWorkedDays.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
             this.colIsWorked,
             this.colDate});
-			this.gvWorkedDays.DetailHeight = 458;
-			this.gvWorkedDays.FixedLineWidth = 3;
+			this.gvWorkedDays.DetailHeight = 539;
+			this.gvWorkedDays.FixedLineWidth = 4;
 			this.gvWorkedDays.GridControl = this.gcWorkedDays;
 			this.gvWorkedDays.Name = "gvWorkedDays";
 			this.gvWorkedDays.OptionsBehavior.AllowAddRows = DevExpress.Utils.DefaultBoolean.False;
@@ -720,35 +756,41 @@ namespace Furmanov.UI
 			// colIsWorked
 			// 
 			this.colIsWorked.FieldName = "IsWorked";
+			this.colIsWorked.MinWidth = 23;
 			this.colIsWorked.Name = "colIsWorked";
 			this.colIsWorked.Visible = true;
 			this.colIsWorked.VisibleIndex = 1;
+			this.colIsWorked.Width = 86;
 			// 
 			// colDate
 			// 
 			this.colDate.FieldName = "Date";
+			this.colDate.MinWidth = 23;
 			this.colDate.Name = "colDate";
 			this.colDate.OptionsColumn.AllowEdit = false;
 			this.colDate.Visible = true;
 			this.colDate.VisibleIndex = 0;
+			this.colDate.Width = 86;
 			// 
 			// MainView
 			// 
-			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
+			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(1261, 831);
+			this.ClientSize = new System.Drawing.Size(1455, 989);
 			this.Controls.Add(this.pnMain);
 			this.Controls.Add(this.statusBar);
 			this.Controls.Add(this.menuMain);
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-			this.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
+			this.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.Name = "MainView";
 			this.Text = "Табель учёта рабочего времени";
 			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainView_FormClosed);
 			((System.ComponentModel.ISupportInitialize)(this.menuMain)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.riMonths)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.menuUndo)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.menuRedo)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.riMonth.CalendarTimeProperties)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.riMonth)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.riMonths)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.pnMain)).EndInit();
 			this.pnMain.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.sccMain)).EndInit();
@@ -799,7 +841,6 @@ namespace Furmanov.UI
 		private DevExpress.XtraBars.BarButtonItem btnLogin;
 		private DevExpress.XtraEditors.Repository.RepositoryItemComboBox riPositions;
 		private DevExpress.XtraEditors.Repository.RepositoryItemComboBox riResourceNames;
-		private DevExpress.XtraBars.BarEditItem cbMonth;
 		private DevExpress.XtraEditors.Repository.RepositoryItemComboBox riMonths;
 		private DevExpress.XtraBars.BarButtonItem btnVedomostForObject;
 		private DevExpress.XtraBars.BarButtonItem btnDeleteAllDays;
@@ -822,5 +863,7 @@ namespace Furmanov.UI
 		private DevExpress.XtraTreeList.Columns.TreeListColumn colFactDays;
 		private DevExpress.XtraTreeList.Columns.TreeListColumn colSalaryPay;
 		private System.Windows.Forms.BindingSource salaryPayBindingSource;
+		private DevExpress.XtraBars.BarEditItem deMonth;
+		private DevExpress.XtraEditors.Repository.RepositoryItemDateEdit riMonth;
 	}
 }

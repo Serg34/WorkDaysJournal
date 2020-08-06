@@ -52,20 +52,20 @@ namespace Furmanov.Data
 			return new SqlServerDataProvider("", SqlServerVersion.v2017);
 		}
 
-		public T GetById<T>(int? id) where T : class, IHasId
+		public T GetById<T>(int? id) where T : Dto
 		{
 			if (id == null) return null;
-			return GetTable<T>().FirstOrDefault(o => o.ID == id.Value);
+			return GetTable<T>().FirstOrDefault(o => o.Id == id.Value);
 		}
-		public int GetId<T>(string name) where T : class, IHasId, IHasName
+		public int GetId<T>(string name) where T : Dto, IHasName
 		{
 			var res = GetTable<T>().FirstOrDefault(o => o.Name == name);
-			return res?.ID ?? -1;
+			return res?.Id ?? -1;
 		}
-		public int GetId<T>(Func<T, bool> cond) where T : class, IHasId
+		public int GetId<T>(Func<T, bool> cond) where T : Dto
 		{
 			var res = GetTable<T>().FirstOrDefault(cond);
-			return res?.ID ?? -1;
+			return res?.Id ?? -1;
 		}
 		public T[] GetWhere<T>(Func<T, bool> cond) where T : class => GetTable<T>().Where(cond).ToArray();
 		public string[] AllNames<T>() where T : class, IHasName
@@ -76,7 +76,7 @@ namespace Furmanov.Data
 				.OrderBy(o => o)
 				.ToArray();
 		}
-		public T GetOrCreate<T>(string name) where T : class, IHasId, IHasName, new()
+		public T GetOrCreate<T>(string name) where T : Dto, IHasName, new()
 		{
 			if (string.IsNullOrEmpty(name)) return null;
 			using (var db = new DbContext())
@@ -85,7 +85,7 @@ namespace Furmanov.Data
 				if (res != null) return res;
 
 				res = new T { Name = name };
-				res.ID = db.InsertWithInt32Identity(res);
+				res.Id = db.InsertWithInt32Identity(res);
 				return res;
 			}
 		}
@@ -106,13 +106,13 @@ namespace Furmanov.Data
 		{
 			return GetTable<T>().FirstOrDefault(cond);
 		}
-		public void DeleteById<T>(int id) where T : class, IHasId
+		public void DeleteById<T>(int id) where T : Dto
 		{
-			GetTable<T>().Where(o => o.ID == id).Delete();
+			GetTable<T>().Where(o => o.Id == id).Delete();
 		}
-		public void Delete<T>(T obj) where T : class, IHasId
+		public void Delete<T>(T obj) where T : Dto
 		{
-			GetTable<T>().Where(o => o.ID == obj.ID).Delete();
+			GetTable<T>().Where(o => o.Id == obj.Id).Delete();
 		}
 		public void Delete<T>(Expression<Func<T, bool>> cond) where T : class
 		{

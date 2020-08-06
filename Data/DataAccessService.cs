@@ -14,14 +14,15 @@ namespace Furmanov.Data
 	#region IDataAccessService
 	public interface IDataAccessService
 	{
+		void CreateDataBase();
 		LoginPassword GetAutoLoginPassword();
 		void SaveAutoLoginPassword(LoginPassword loginPassword);
 		User GetUser(string login, string password);
 
-		List<SalaryPay> GetSalaryPays(User user, DateTime month);
+		List<SalaryPay> GetSalaryPays(User user, int year, int month);
 		void SaveSalaryPay(SalaryPayDto salaryPayDto);
 
-		List<WorkedDayDto> GetWorkedDays(int resOpId, DateTime month);
+		List<WorkedDayDto> GetWorkedDays(int salaryPayId, int year, int month);
 		void SaveWorkedDays(params WorkedDay[] workedDayDb);
 	}
 	#endregion
@@ -33,6 +34,37 @@ namespace Furmanov.Data
 		public DataAccessService(string connectionString)
 		{
 			_connectionString = connectionString;
+			CreateDataBase();
+		}
+
+		public void CreateDataBase()
+		{
+			using (var db = new DbContext(_connectionString))
+			{
+				db.CreateTable<UserDto>();
+				db.CreateTable<SalaryPayDto>();
+				db.CreateTable<WorkedDayDto>();
+
+				var tables = new[]
+				{
+					nameof(UserDto),
+					nameof(SalaryPayDto),
+					nameof(WorkedDayDto)
+				};
+				foreach (var table in tables)
+				{
+					var tableName = table.Replace("Dto", "");
+					db.Execute($"ALTER TABLE [dbo].[{tableName}] " +
+							   $"ADD CONSTRAINT [DF_{tableName}_{nameof(Dto.CreatedDate)}] " +
+							   $"DEFAULT (getdate()) FOR [{nameof(Dto.CreatedDate)}] " +
+							   "GO");
+				}
+			}
+		}
+
+		public void GenerateDataInTables()
+		{
+
 		}
 
 		public User GetUser(string login, string password)
@@ -65,7 +97,7 @@ namespace Furmanov.Data
 			new XmlRepository<LoginPassword>(file).Save(loginPassword);
 		}
 
-		public List<SalaryPay> GetSalaryPays(User user, DateTime month)
+		public List<SalaryPay> GetSalaryPays(User user, int year, int month)
 		{
 			if (user == null) return new List<SalaryPay>();
 
@@ -76,7 +108,8 @@ namespace Furmanov.Data
 
 				var res = db.Query<SalaryPay>(sql,
 					new DataParameter("@userId", user.Id),
-					new DataParameter("@month", $"{month:yyyyMMdd}"))
+					new DataParameter("@year", year),
+					new DataParameter("@month", month))
 					.ToList();
 				return res;
 			}
@@ -89,14 +122,14 @@ namespace Furmanov.Data
 			}
 		}
 
-		public List<WorkedDayDto> GetWorkedDays(int salaryPayId, DateTime month)
+		public List<WorkedDayDto> GetWorkedDays(int salaryPayId, int year, int month)
 		{
 			using (var db = new DbContext(_connectionString))
 			{
 				var res = db.GetTable<WorkedDayDto>()
 						.Where(t => t.SalaryPayId == salaryPayId)
-						.Where(t => t.Date.Year == month.Year)
-						.Where(t => t.Date.Month == month.Month)
+						.Where(t => t.Date.Year == year)
+						.Where(t => t.Date.Month == month)
 						.ToList();
 
 				return res;

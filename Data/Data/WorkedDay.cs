@@ -5,18 +5,13 @@ using System.ComponentModel.DataAnnotations;
 namespace Furmanov.Data.Data
 {
 	[Table(Name = "WorkedDay")]
-	public class WorkedDayDto
+	public class WorkedDayDto : Dto
 	{
-		[PrimaryKey, Identity]
-		public int Id { get; set; }
+		[Column] public int SalaryPayId { get; set; }
 
-		[Column(Name = "SalaryPayId")]
-		public int SalaryPayId { get; set; }
-
-		[Column(Name = "Date")]
 		[Display(Name = "Дата")]
 		[Editable(false)]
-		public DateTime Date { get; set; }
+		[Column] public DateTime Date { get; set; }
 	}
 
 	public class WorkedDay : WorkedDayDto

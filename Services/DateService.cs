@@ -13,6 +13,13 @@ namespace Furmanov.Services
 
 			return Enumerable.Range(0, count).Select(i => start.AddDays(i));
 		}
+		public static IEnumerable<DateTime> AllDaysInMonth(int year, int month)
+		{
+			var start = new DateTime(year, month, 1);
+			var count = DateTime.DaysInMonth(year, month);
+
+			return Enumerable.Range(0, count).Select(i => start.AddDays(i));
+		}
 
 		public static DateTime FirstMonday(this DateTime day)
 		{

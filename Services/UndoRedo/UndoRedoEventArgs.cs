@@ -4,13 +4,13 @@ namespace Furmanov.Services.UndoRedo
 {
 	public class UndoRedoEventArgs<T> : EventArgs
 	{
-		public UndoRedoEventArgs(T value, T pevValue)
+		public UndoRedoEventArgs(T value, T prevValue)
 		{
 			Value = value;
-			PevValue = pevValue;
+			PrevValue = prevValue;
 		}
 
 		public T Value { get; }
-		public T PevValue { get; }
+		public T PrevValue { get; }
 	}
 }

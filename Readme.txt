@@ -6,9 +6,10 @@
 -MS SQL
 -DevExpress
 -Linq2db (http://linq2db.com/)
--Сохранение sql запросов в отдельные файлы (внедрённые ресурсы в папке "Dal.SqlFiles"), собираемые во время выполнения в Dictionary (класс SqlFiles).
+-Сохранение sql запросов в отдельные файлы (внедрённые ресурсы в папке "Data.Sql").
 Данный подход помимо возможности изоляции запросов в файлы и папки даёт возможность отладки запросов из Visual Studio.
 -FluentValidation (https://fluentvalidation.net/)
+-AutoMapper (https://automapper.org/)
 -Autofac (https://autofac.org/)
 -MVP
 -Паттерн Command в UndoRedoService
