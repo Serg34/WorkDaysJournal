@@ -25,7 +25,7 @@ namespace Furmanov.MVP.MainView
 		event EventHandler<int> Undo;
 		event EventHandler<int> Redo;
 
-		void UpdateLogin(User user);
+		void UpdateLogin();
 		void UpdateMonth(object sender, MonthEventArgs monthEventArgs);
 		void UpdateSalaries(object sender, MainViewModel viewModel);
 		void UpdateDays(List<WorkedDay> viewModel);

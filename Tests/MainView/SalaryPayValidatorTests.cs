@@ -15,7 +15,7 @@ namespace Furmanov.Tests.MainView
 		[SetUp]
 		public void Setup()
 		{
-			_validator = new SalaryPayValidator(DateTime.Now);
+			_validator = new SalaryPayValidator(2019, 04);
 		}
 		[Test]
 		public void SalaryPayValidator_AdvanceTest()

@@ -6,9 +6,9 @@ namespace Furmanov.Data.Data
 	public enum Role
 	{
 		[Display(Name = "Администратор")] Admin = 1,
-		[Display(Name = "Руководитель проекта")] ProjectManager = 4,
-		[Display(Name = "Менеджер")] Manager = 5,
-		[Display(Name = "Директор")] Director = 6,
+		[Display(Name = "Директор")] Director = 2,
+		[Display(Name = "Руководитель проекта")] ProjectManager = 3,
+		[Display(Name = "Менеджер")] Manager = 4,
 	}
 
 	[Table(Name = "Role")]

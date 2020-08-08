@@ -7,7 +7,7 @@ namespace Furmanov.Data.Data
 	[Table(Name = "WorkedDay")]
 	public class WorkedDayDto : Dto
 	{
-		[Column] public int SalaryPayId { get; set; }
+		[Column] public int SalaryPay_Id { get; set; }
 
 		[Display(Name = "Дата")]
 		[Editable(false)]
@@ -18,7 +18,7 @@ namespace Furmanov.Data.Data
 	{
 		[Display(Name = "Выход")]
 		public bool IsWorked { get; set; }
-		public int EmployeeId { get; set; }
-		public int ObjectId { get; set; }
+		public int Employee_Id { get; set; }
+		public int Object_Id { get; set; }
 	}
 }

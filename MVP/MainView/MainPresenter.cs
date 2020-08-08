@@ -21,7 +21,7 @@ namespace Furmanov.MVP.MainView
 			_model.LoginChanged += (sender, user) =>
 			{
 				_undoService.Reset();
-				_view.UpdateLogin(user);
+				_view.UpdateLogin();
 			};
 			_model.Updated += (sender, modelView) =>
 			{

@@ -94,15 +94,15 @@ namespace Furmanov.UI
 			this.treeSalary = new DevExpress.XtraTreeList.TreeList();
 			this.colName = new DevExpress.XtraTreeList.Columns.TreeListColumn();
 			this.colPhone = new DevExpress.XtraTreeList.Columns.TreeListColumn();
-			this.colPositionName = new DevExpress.XtraTreeList.Columns.TreeListColumn();
+			this.colPosition = new DevExpress.XtraTreeList.Columns.TreeListColumn();
 			this.colSalary = new DevExpress.XtraTreeList.Columns.TreeListColumn();
 			this.colAdvance = new DevExpress.XtraTreeList.Columns.TreeListColumn();
 			this.colPenalty = new DevExpress.XtraTreeList.Columns.TreeListColumn();
 			this.colPremium = new DevExpress.XtraTreeList.Columns.TreeListColumn();
-			this.colComment = new DevExpress.XtraTreeList.Columns.TreeListColumn();
 			this.colRateDays = new DevExpress.XtraTreeList.Columns.TreeListColumn();
 			this.colFactDays = new DevExpress.XtraTreeList.Columns.TreeListColumn();
-			this.colSalaryPay = new DevExpress.XtraTreeList.Columns.TreeListColumn();
+			this.colSalaryToPay = new DevExpress.XtraTreeList.Columns.TreeListColumn();
+			this.colComment = new DevExpress.XtraTreeList.Columns.TreeListColumn();
 			this.salaryPayBindingSource = new System.Windows.Forms.BindingSource(this.components);
 			this.riPositions = new DevExpress.XtraEditors.Repository.RepositoryItemComboBox();
 			this.riResourceNames = new DevExpress.XtraEditors.Repository.RepositoryItemComboBox();
@@ -169,7 +169,7 @@ namespace Furmanov.UI
 			this.menuMain.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
             this.riMonths,
             this.riMonth});
-			this.menuMain.Size = new System.Drawing.Size(1455, 179);
+			this.menuMain.Size = new System.Drawing.Size(1441, 172);
 			this.menuMain.StatusBar = this.statusBar;
 			// 
 			// btnEditResource
@@ -408,6 +408,8 @@ namespace Furmanov.UI
 			this.riMonth.DisplayFormat.FormatString = "MMMM yyyy";
 			this.riMonth.DisplayFormat.FormatType = DevExpress.Utils.FormatType.DateTime;
 			this.riMonth.Mask.EditMask = "MMMM yyyy";
+			this.riMonth.MaxValue = new System.DateTime(2019, 12, 31, 0, 0, 0, 0);
+			this.riMonth.MinValue = new System.DateTime(2019, 1, 1, 0, 0, 0, 0);
 			this.riMonth.Name = "riMonth";
 			this.riMonth.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
 			this.riMonth.VistaCalendarViewStyle = ((DevExpress.XtraEditors.VistaCalendarViewStyle)((DevExpress.XtraEditors.VistaCalendarViewStyle.YearView | DevExpress.XtraEditors.VistaCalendarViewStyle.YearsGroupView)));
@@ -473,21 +475,21 @@ namespace Furmanov.UI
 			this.statusBar.ItemLinks.Add(this.lblUser);
 			this.statusBar.ItemLinks.Add(this.btnLogin);
 			this.statusBar.ItemLinks.Add(this.btnLogOut);
-			this.statusBar.Location = new System.Drawing.Point(0, 963);
+			this.statusBar.Location = new System.Drawing.Point(0, 942);
 			this.statusBar.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.statusBar.Name = "statusBar";
 			this.statusBar.Ribbon = this.menuMain;
-			this.statusBar.Size = new System.Drawing.Size(1455, 26);
+			this.statusBar.Size = new System.Drawing.Size(1441, 32);
 			// 
 			// pnMain
 			// 
 			this.pnMain.Controls.Add(this.sccMain);
 			this.pnMain.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.pnMain.Location = new System.Drawing.Point(0, 179);
+			this.pnMain.Location = new System.Drawing.Point(0, 172);
 			this.pnMain.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.pnMain.Name = "pnMain";
 			this.pnMain.ShowCaption = false;
-			this.pnMain.Size = new System.Drawing.Size(1455, 784);
+			this.pnMain.Size = new System.Drawing.Size(1441, 770);
 			this.pnMain.TabIndex = 2;
 			this.pnMain.Text = "groupRp";
 			this.pnMain.Visible = false;
@@ -503,7 +505,7 @@ namespace Furmanov.UI
 			this.sccMain.Panel1.Text = "Panel1";
 			this.sccMain.Panel2.Controls.Add(this.pnWorkedDays);
 			this.sccMain.Panel2.Text = "Panel2";
-			this.sccMain.Size = new System.Drawing.Size(1451, 780);
+			this.sccMain.Size = new System.Drawing.Size(1437, 766);
 			this.sccMain.SplitterPosition = 274;
 			this.sccMain.TabIndex = 2;
 			// 
@@ -515,7 +517,7 @@ namespace Furmanov.UI
 			this.pnPays.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.pnPays.Name = "pnPays";
 			this.pnPays.ShowCaption = false;
-			this.pnPays.Size = new System.Drawing.Size(1167, 780);
+			this.pnPays.Size = new System.Drawing.Size(1151, 766);
 			this.pnPays.TabIndex = 1;
 			this.pnPays.Text = "groupRPInnerleft";
 			// 
@@ -529,18 +531,19 @@ namespace Furmanov.UI
 			this.treeSalary.Appearance.HideSelectionRow.Options.UseBackColor = true;
 			this.treeSalary.Appearance.SelectedRow.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
 			this.treeSalary.Appearance.SelectedRow.Options.UseBackColor = true;
+			this.treeSalary.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder;
 			this.treeSalary.Columns.AddRange(new DevExpress.XtraTreeList.Columns.TreeListColumn[] {
             this.colName,
             this.colPhone,
-            this.colPositionName,
+            this.colPosition,
             this.colSalary,
             this.colAdvance,
             this.colPenalty,
             this.colPremium,
-            this.colComment,
             this.colRateDays,
             this.colFactDays,
-            this.colSalaryPay});
+            this.colSalaryToPay,
+            this.colComment});
 			this.treeSalary.CustomizationFormBounds = new System.Drawing.Rectangle(1629, 793, 266, 252);
 			this.treeSalary.DataSource = this.salaryPayBindingSource;
 			this.treeSalary.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -550,12 +553,13 @@ namespace Furmanov.UI
 			this.treeSalary.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.treeSalary.MinWidth = 26;
 			this.treeSalary.Name = "treeSalary";
+			this.treeSalary.OptionsBehavior.PopulateServiceColumns = true;
 			this.treeSalary.ParentFieldName = "ParentId";
 			this.treeSalary.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
             this.riPositions,
             this.riResourceNames});
 			this.treeSalary.SelectImageList = this.imageCollection;
-			this.treeSalary.Size = new System.Drawing.Size(1163, 776);
+			this.treeSalary.Size = new System.Drawing.Size(1147, 762);
 			this.treeSalary.TabIndex = 7;
 			this.treeSalary.TreeLevelWidth = 24;
 			this.treeSalary.NodeCellStyle += new DevExpress.XtraTreeList.GetCustomNodeCellStyleEventHandler(this.TreeSalary_NodeCellStyle);
@@ -586,18 +590,16 @@ namespace Furmanov.UI
 			this.colPhone.Name = "colPhone";
 			this.colPhone.OptionsColumn.AllowEdit = false;
 			this.colPhone.Visible = true;
-			this.colPhone.VisibleIndex = 1;
+			this.colPhone.VisibleIndex = 2;
 			this.colPhone.Width = 86;
 			// 
-			// colPositionName
+			// colPosition
 			// 
-			this.colPositionName.FieldName = "PositionName";
-			this.colPositionName.MinWidth = 23;
-			this.colPositionName.Name = "colPositionName";
-			this.colPositionName.OptionsColumn.AllowEdit = false;
-			this.colPositionName.Visible = true;
-			this.colPositionName.VisibleIndex = 2;
-			this.colPositionName.Width = 86;
+			this.colPosition.FieldName = "Position";
+			this.colPosition.Name = "colPosition";
+			this.colPosition.OptionsColumn.AllowEdit = false;
+			this.colPosition.Visible = true;
+			this.colPosition.VisibleIndex = 1;
 			// 
 			// colSalary
 			// 
@@ -617,7 +619,7 @@ namespace Furmanov.UI
 			this.colAdvance.MinWidth = 23;
 			this.colAdvance.Name = "colAdvance";
 			this.colAdvance.Visible = true;
-			this.colAdvance.VisibleIndex = 7;
+			this.colAdvance.VisibleIndex = 6;
 			this.colAdvance.Width = 86;
 			// 
 			// colPenalty
@@ -626,7 +628,7 @@ namespace Furmanov.UI
 			this.colPenalty.MinWidth = 23;
 			this.colPenalty.Name = "colPenalty";
 			this.colPenalty.Visible = true;
-			this.colPenalty.VisibleIndex = 8;
+			this.colPenalty.VisibleIndex = 7;
 			this.colPenalty.Width = 86;
 			// 
 			// colPremium
@@ -635,17 +637,8 @@ namespace Furmanov.UI
 			this.colPremium.MinWidth = 23;
 			this.colPremium.Name = "colPremium";
 			this.colPremium.Visible = true;
-			this.colPremium.VisibleIndex = 9;
+			this.colPremium.VisibleIndex = 8;
 			this.colPremium.Width = 86;
-			// 
-			// colComment
-			// 
-			this.colComment.FieldName = "Comment";
-			this.colComment.MinWidth = 23;
-			this.colComment.Name = "colComment";
-			this.colComment.Visible = true;
-			this.colComment.VisibleIndex = 10;
-			this.colComment.Width = 86;
 			// 
 			// colRateDays
 			// 
@@ -653,7 +646,7 @@ namespace Furmanov.UI
 			this.colRateDays.MinWidth = 23;
 			this.colRateDays.Name = "colRateDays";
 			this.colRateDays.Visible = true;
-			this.colRateDays.VisibleIndex = 5;
+			this.colRateDays.VisibleIndex = 4;
 			this.colRateDays.Width = 86;
 			// 
 			// colFactDays
@@ -663,18 +656,25 @@ namespace Furmanov.UI
 			this.colFactDays.Name = "colFactDays";
 			this.colFactDays.OptionsColumn.AllowEdit = false;
 			this.colFactDays.Visible = true;
-			this.colFactDays.VisibleIndex = 6;
+			this.colFactDays.VisibleIndex = 5;
 			this.colFactDays.Width = 86;
 			// 
-			// colSalaryPay
+			// colSalaryToPay
 			// 
-			this.colSalaryPay.FieldName = "SalaryPay";
-			this.colSalaryPay.MinWidth = 23;
-			this.colSalaryPay.Name = "colSalaryPay";
-			this.colSalaryPay.OptionsColumn.AllowEdit = false;
-			this.colSalaryPay.Visible = true;
-			this.colSalaryPay.VisibleIndex = 4;
-			this.colSalaryPay.Width = 86;
+			this.colSalaryToPay.FieldName = "SalaryToPay";
+			this.colSalaryToPay.Name = "colSalaryToPay";
+			this.colSalaryToPay.OptionsColumn.AllowEdit = false;
+			this.colSalaryToPay.Visible = true;
+			this.colSalaryToPay.VisibleIndex = 9;
+			// 
+			// colComment
+			// 
+			this.colComment.FieldName = "Comment";
+			this.colComment.MinWidth = 23;
+			this.colComment.Name = "colComment";
+			this.colComment.Visible = true;
+			this.colComment.VisibleIndex = 10;
+			this.colComment.Width = 86;
 			// 
 			// salaryPayBindingSource
 			// 
@@ -702,6 +702,7 @@ namespace Furmanov.UI
 			this.imageCollection.Images.SetKeyName(0, "case.png");
 			this.imageCollection.Images.SetKeyName(1, "Object16.png");
 			this.imageCollection.Images.SetKeyName(2, "Resource.png");
+			this.imageCollection.Images.SetKeyName(3, "sum.png");
 			// 
 			// pnWorkedDays
 			// 
@@ -711,10 +712,9 @@ namespace Furmanov.UI
 			this.pnWorkedDays.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.pnWorkedDays.Name = "pnWorkedDays";
 			this.pnWorkedDays.ShowCaption = false;
-			this.pnWorkedDays.Size = new System.Drawing.Size(274, 780);
+			this.pnWorkedDays.Size = new System.Drawing.Size(274, 766);
 			this.pnWorkedDays.TabIndex = 1;
 			this.pnWorkedDays.Text = "groupRPInnerRight";
-			this.gcWorkedDays.Paint += GcWorkedDays_Paint;
 			// 
 			// gcWorkedDays
 			// 
@@ -725,7 +725,7 @@ namespace Furmanov.UI
 			this.gcWorkedDays.MainView = this.gvWorkedDays;
 			this.gcWorkedDays.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.gcWorkedDays.Name = "gcWorkedDays";
-			this.gcWorkedDays.Size = new System.Drawing.Size(270, 776);
+			this.gcWorkedDays.Size = new System.Drawing.Size(270, 762);
 			this.gcWorkedDays.TabIndex = 0;
 			this.gcWorkedDays.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gvWorkedDays});
@@ -777,7 +777,7 @@ namespace Furmanov.UI
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(1455, 989);
+			this.ClientSize = new System.Drawing.Size(1441, 974);
 			this.Controls.Add(this.pnMain);
 			this.Controls.Add(this.statusBar);
 			this.Controls.Add(this.menuMain);
@@ -854,7 +854,6 @@ namespace Furmanov.UI
 		private DevExpress.XtraGrid.Columns.GridColumn colDate;
 		private DevExpress.XtraTreeList.Columns.TreeListColumn colName;
 		private DevExpress.XtraTreeList.Columns.TreeListColumn colPhone;
-		private DevExpress.XtraTreeList.Columns.TreeListColumn colPositionName;
 		private DevExpress.XtraTreeList.Columns.TreeListColumn colSalary;
 		private DevExpress.XtraTreeList.Columns.TreeListColumn colAdvance;
 		private DevExpress.XtraTreeList.Columns.TreeListColumn colPenalty;
@@ -862,9 +861,10 @@ namespace Furmanov.UI
 		private DevExpress.XtraTreeList.Columns.TreeListColumn colComment;
 		private DevExpress.XtraTreeList.Columns.TreeListColumn colRateDays;
 		private DevExpress.XtraTreeList.Columns.TreeListColumn colFactDays;
-		private DevExpress.XtraTreeList.Columns.TreeListColumn colSalaryPay;
 		private System.Windows.Forms.BindingSource salaryPayBindingSource;
 		private DevExpress.XtraBars.BarEditItem deMonth;
 		private DevExpress.XtraEditors.Repository.RepositoryItemDateEdit riMonth;
+		private DevExpress.XtraTreeList.Columns.TreeListColumn colPosition;
+		private DevExpress.XtraTreeList.Columns.TreeListColumn colSalaryToPay;
 	}
 }

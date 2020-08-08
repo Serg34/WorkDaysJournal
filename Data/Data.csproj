@@ -94,8 +94,5 @@
   <ItemGroup>
     <EmbeddedResource Include="Sql\InsertWorkDay.sql" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="Sql\ObjectsForManager.sql" />
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

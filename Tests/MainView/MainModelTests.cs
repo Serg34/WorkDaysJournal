@@ -3,7 +3,6 @@ using Furmanov.MVP.Login;
 using Furmanov.MVP.MainView;
 using Moq;
 using NUnit.Framework;
-using System;
 
 namespace Furmanov.Tests.MainView
 {
@@ -22,8 +21,8 @@ namespace Furmanov.Tests.MainView
 		[Test]
 		public void ChangeMonthTest()
 		{
-			var month = DateTime.Now.AddMonths(-1);
-			_model.ChangeMonth(month);
+			var month = _model.Month - 1;
+			_model.ChangeMonth(2019, month);
 			Assert.AreEqual(month, _model.Month);
 		}
 	}

@@ -106,9 +106,9 @@ namespace Furmanov.Data
 		{
 			return GetTable<T>().FirstOrDefault(cond);
 		}
-		public void DeleteById<T>(int id) where T : Dto
+		public void Delete<T>() where T : Dto
 		{
-			GetTable<T>().Where(o => o.Id == id).Delete();
+			GetTable<T>().Delete();
 		}
 		public void Delete<T>(T obj) where T : Dto
 		{

@@ -15,7 +15,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
-using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -35,6 +34,7 @@ namespace Furmanov.UI
 			{
 				InitializeComponent();
 				lblVersion.Caption = "Версия: " + Application.ProductVersion;
+				LayoutSaver.Restore(this);
 			}
 			catch (Exception ex)
 			{
@@ -62,11 +62,13 @@ namespace Furmanov.UI
 		#endregion
 
 		#region Login
-		public void UpdateLogin(User user)
+		public void UpdateLogin()
 		{
 			try
 			{
 				pnMain.BeginInit();
+
+				var user = ApplicationUser.User;
 
 				//Контролы должны быть видимыми до заполнения
 				pnMain.Visible =
@@ -335,7 +337,7 @@ namespace Furmanov.UI
 				if (_currentPay.FactDays > 0)
 				{
 					MessageService.Message($"Удаление сотрудника '{resName}' невозможно, так как у него есть отработанные дни.\n" +
-											   "Удалите отработанные дни сотрудника и повторите попытку.");
+											"Удалите отработанные дни сотрудника и повторите попытку.");
 					return;
 				}
 
@@ -378,10 +380,7 @@ namespace Furmanov.UI
 						= btnDeleteAllDays.Enabled
 						= vm.Type == ObjType.Salary;
 
-					if (!_updating)
-					{
-						SelectionChangingSalaryPay?.Invoke(this, vm);
-					}
+					SelectionChangingSalaryPay?.Invoke(this, vm);
 				}
 			}
 			catch (Exception ex)
@@ -413,6 +412,11 @@ namespace Furmanov.UI
 
 						e.Appearance.BackColor = Color.FromArgb(150, 213, 238, 255);
 						e.Appearance.BorderColor = Color.FromArgb(255, 150, 153, 169);
+					}
+					else if (vm.Type == ObjType.Summary)
+					{
+						e.Appearance.Font = new Font(e.Appearance.Font, FontStyle.Bold);
+						e.Appearance.BackColor = Color.FromArgb(75, 128, 128, 128);
 					}
 					else if (vm.Type == ObjType.Salary)
 					{
@@ -527,7 +531,7 @@ namespace Furmanov.UI
 				{
 					DeleteSalaryPay();
 				}
-				else if (e.KeyCode == Keys.Insert || e.KeyCode == Keys.Add)
+				else if (e.KeyCode == Keys.Add)
 				{
 					ShowNoImplementedCode(this, null);
 				}
@@ -552,13 +556,13 @@ namespace Furmanov.UI
 		{
 			try
 			{
+				LayoutSaver.Save(this);
 			}
 			catch (Exception ex)
 			{
 				ShowError(ex);
 			}
 		}
-
 
 		private void MenuUndo_PaintMenuBar(object sender, BarCustomDrawEventArgs e)
 		{

@@ -1,16 +1,11 @@
-﻿--DEBUG
---declare @login nvarchar(50) = 'User1';
+﻿--declare @login nvarchar(50) = 'User1';
 --declare @password nvarchar(50) = '123';
 
 select 
-	u.Id,
-	u.Login,
-	u.Password,
-	u.Name,
-	u.RoleId,
+	u.*,
 	Role.Name RoleName
 from [User] u
 	left join Role
-		on u.RoleId = Role.Id
+		on u.Role_Id = Role.Id
 where Login = @login
 	and Password = @password

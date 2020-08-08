@@ -1,115 +1,131 @@
-﻿--DEBUG
---declare @userId int = 63;
---declare @year int = 2020;
+﻿--declare @userId int = 1027;
+--declare @year int = 2019;
 --declare @month int = 4;
 
-with projects as(
-	 select -2 Id,
-		 0 Type,
-		 'Project ' + CAST(pr.Id AS nvarchar) ViewModelId,
-		 null ParentId,
-		 null ObjectId,
-		 null ManagerId,
-		 null PositionId,
-		 null EmployeeId,
-		 pr.Name Name,
-		 'Выплат: ' + CAST(Count(sal.Id) AS nvarchar) Phone,
-		 'Объектов: ' + CAST((select Count(*) 
-							  from Object 
-							  where ProjectId = pr.ID and IsDeleted = 0) 
-							  AS nvarchar) PositionName,
-		 SUM(okl.Salary) Salary,
-		 SUM(sal.RateDays) RateDays,
-		 SUM(sal.FactDays) FactDays,
-		 SUM(sal.SalaryPay) SalaryPay,
-		 SUM(sal.Advance) Advance,
-		 SUM(sal.Penalty) Penalty,
-		 SUM(sal.Premium) Premium,
-		 null Comment,
-		 null Month
-	 from Project pr
-		 left join [Object] obj on obj.ProjectId = pr.Id
-		 left join (
-			select *
-			from SalaryPay s
-			where Month(s.Month) = @month and YEAR(s.Month) = @year
-			) sal on sal.ObjectId = obj.Id
-		 left join Employee emp on emp.Id = sal.EmployeeId
-		 left join Position pos on pos.Id = sal.PositionId
-		 left join Salary okl on okl.ObjectId = obj.Id and okl.PositionId = pos.Id
-	 where pr.ProjectManagerId = @userId
-		and pr.IsDeleted = 0
-		and obj.IsDeleted = 0
-	 group by pr.Id, pr.Name
+with pays as (
+	 select pay.Id,
+		2 Type, 
+		'Salary ' + CAST(pay.Id as nvarchar) ViewModelId,
+		'Object ' + CAST(obj.Id as nvarchar) ParentId,
+		pr.Id Project_Id,
+		obj.Id Object_Id,
+		obj.Manager_Id Manager_Id,
+		emp.Id Employee_Id,
+		@year Year,
+		@month Month,
+		0 ObjectCount,
+		1 EmployeeCount,
+		emp.Name Name,
+		emp.Position Position,
+		emp.Phone Phone,
+		emp.Salary Salary,
+		pay.RateDays RateDays,
+		pay.FactDays FactDays,
+		pay.Advance Advance,
+		pay.Penalty Penalty,
+		pay.Premium Premium,
+		pay.SalaryToPay SalaryToPay,
+		pay.Comment Comment		
+	 from (select * from SalaryPay p where p.Month = @month and p.Year = @year) pay
+		 left join [Object] obj on pay.Object_Id = obj.Id
+		 left join Project pr on obj.Project_Id = pr.Id
+		 left join Employee emp on emp.Id = pay.Employee_Id
+	 where (@userId = 0 or pr.ProjectManager_Id = @userId)
+		 and pr.IsDeleted = 0
+		 and obj.IsDeleted = 0
 ),
 objs as (
 	select -1 Id,
 		1 Type,
-		'Object ' + CAST(obj.Id AS nvarchar) ViewModelId,
-		'Project ' + CAST(pr.Id AS nvarchar) ParentId,
-		obj.Id ObjectId,
-		obj.ManagerId ManagerId,
-		null PositionId,
-		null EmployeeId,
-		obj.Address Name,
-		'Выплат: ' + CAST(Count(sal.Id) AS nvarchar) Phone,
-		null PositionName,
-		SUM(okl.Salary) Salary,
-		SUM(sal.RateDays) RateDays,
-		SUM(sal.FactDays) FactDays,
-		SUM(sal.SalaryPay) SalaryPay,
-		SUM(sal.Advance) Advance,
-		SUM(sal.Penalty) Penalty,
-		SUM(sal.Premium) Premium,
-		null Comment,
-		null Month
+		'Object ' + CAST(obj.Id as nvarchar) ViewModelId,
+		'Project ' + CAST(pr.Id as nvarchar) ParentId,
+		pr.Id Project_Id,
+		obj.Id Object_Id,
+		obj.Manager_Id Manager_Id,
+		-1 Employee_Id,
+		@year Year,
+		@month Month,
+		1 ObjectCount,
+		Count(pay.Id) EmployeeCount,
+		obj.Name Name,
+		obj.Address Position,
+		'Сотрудников: ' + CAST(Count(pay.Id) as nvarchar) Phone,
+		SUM(emp.Salary) Salary,
+		SUM(pay.RateDays) RateDays,
+		SUM(pay.FactDays) FactDays,
+		SUM(pay.Advance) Advance,
+		SUM(pay.Penalty) Penalty,
+		SUM(pay.Premium) Premium,
+		SUM(pay.SalaryToPay) SalaryToPay,
+		null Comment
 	 from [Object] obj
-		 left join Project pr on obj.ProjectId = pr.Id
-		 left join (
-				select *
-				from SalaryPay s
-				where Month(s.Month) = @month and YEAR(s.Month) = @year
-			) sal on sal.ObjectId = obj.Id
-		 left join Employee emp on emp.Id = sal.EmployeeId
-		 left join Position pos on pos.Id = sal.PositionId
-		 left join Salary okl on okl.ObjectId = obj.Id and okl.PositionId = pos.Id
-	 where pr.ProjectManagerId = @userId
+		 left join Project pr on obj.Project_Id = pr.Id
+		 left join pays pay on pay.Object_Id = obj.Id
+		 left join Employee emp on emp.Id = pay.Employee_Id
+	 where (@userId = 0 or pr.ProjectManager_Id = @userId)
 		 and pr.IsDeleted = 0
 		 and obj.IsDeleted = 0
-	 group by pr.Id, obj.Id, obj.Address, obj.ManagerId
+	 group by pr.Id, obj.Id, obj.Name, obj.Address, obj.Manager_Id
 ),
-pay as (
-	 select sal.Id,
-		2 Type, 
-		'Salary ' + CAST(sal.Id AS nvarchar) ViewModelId,
-		'Object ' + CAST(obj.Id AS nvarchar) ParentId,
-		obj.Id ObjectId,
-		obj.ManagerId ManagerId,
-		pos.Id PositionId,
-		emp.Id EmployeeId,
-		emp.Name Name,
-		emp.Phone Phone,
-		pos.Name PositionName,
-		okl.Salary Salary,
-		sal.RateDays RateDays,
-		sal.FactDays FactDays,
-		sal.SalaryPay SalaryPay,
-		sal.Advance Advance,
-		sal.Penalty Penalty,
-		sal.Premium Premium,
-		sal.Comment Comment,
-		sal.Month Month
-	 from (select * from SalaryPay s where Month(s.Month) = @month and YEAR(s.Month) = @year) sal
-		 left join [Object] obj on sal.ObjectId = obj.Id
-		 left join Project pr on obj.ProjectId = pr.Id
-		 left join Position pos on pos.Id = sal.PositionId
-		 left join Salary okl on okl.ObjectId = obj.Id and okl.PositionId = pos.Id
-		 left join Employee emp on emp.Id = sal.EmployeeId
-	 where pr.ProjectManagerId = @userId
-		 and pr.IsDeleted = 0
-		 and obj.IsDeleted = 0
+projects as(
+	 select -1 Id,
+		 0 Type,
+		 'Project ' + CAST(pr.Id AS nvarchar) ViewModelId,
+		 null ParentId,
+		 pr.Id Project_Id,
+		 -1 Object_Id,
+		 -1 Manager_Id,
+		 -1 Employee_Id,
+		 @year Year,
+		 @month Month,
+		 Sum(obj.ObjectCount) ObjectCount,
+		 Sum(obj.EmployeeCount) EmployeeCount,
+		 pr.Name Name,
+		 'Объектов: ' + CAST(Sum(obj.ObjectCount) as nvarchar) Position,
+		 'Сотрудников: ' + CAST(Sum(obj.EmployeeCount) as nvarchar) Phone,
+		 SUM(obj.Salary) Salary,
+		 SUM(obj.RateDays) RateDays,
+		 SUM(obj.FactDays) FactDays,
+		 SUM(obj.Advance) Advance,
+		 SUM(obj.Penalty) Penalty,
+		 SUM(obj.Premium) Premium,
+		 SUM(obj.SalaryToPay) SalaryToPay,
+		 null Comment
+	 from Project pr
+		 left join objs obj on obj.Project_Id = pr.Id
+	 where (@userId = 0 or pr.ProjectManager_Id = @userId)
+		and pr.IsDeleted = 0
+	 group by pr.Id, pr.Name
+),
+allPays as(
+	select * from projects
+	union all select * from objs
+	union all select * from pays
 )
-select * from projects
-union all select * from objs
-union all select * from pay
-order by Name
+select * from allPays
+union all select -1 Id,
+		 3 Type,
+		 'Summary' ViewModelId,
+		 null ParentId,
+		 -1 Project_Id,
+		 -1 Object_Id,
+		 -1 Manager_Id,
+		 -1 Employee_Id,
+		 @year Year,
+		 @month Month,
+		 Sum(ObjectCount) ObjectCount,
+		 Sum(EmployeeCount) EmployeeCount,
+		 'Итого: проектов ' + Cast(Count(Id) as nvarchar) Name,
+		 'Объектов: ' + CAST(Sum(ObjectCount) as nvarchar) Position,
+		 'Сотрудников: ' + CAST(Sum(EmployeeCount) as nvarchar) Phone,
+		 SUM(Salary) Salary,
+		 SUM(RateDays) RateDays,
+		 SUM(FactDays) FactDays,
+		 SUM(Advance) Advance,
+		 SUM(Penalty) Penalty,
+		 SUM(Premium) Premium,
+		 SUM(SalaryToPay) SalaryToPay,
+		 null Comment
+from projects 
+group by Type
+order by Type, Name

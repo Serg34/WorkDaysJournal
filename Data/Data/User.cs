@@ -21,14 +21,14 @@ namespace Furmanov.Data.Data
 		[Display(Name = "Почта")]
 		[Required(ErrorMessage = "Почта не может быть пустой")]
 		[Column] public string Email { get; set; }
-		[Column] public int RoleId { get; set; }
+
+		[Column(Name = "Role_Id")]
+		public Role Role { get; set; }
 	}
 
 	public class User : UserDto
 	{
-		public Role Role => (Role)RoleId;
-
 		[Display(Name = "Роль")]
-		public string RoleName { get; set; }
+		[Column] public string RoleName { get; set; }
 	}
 }

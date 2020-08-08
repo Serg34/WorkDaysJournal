@@ -66,7 +66,7 @@ namespace Furmanov.Data.Properties {
         ///--declare @day DateTime = Cast(&apos;20191015&apos; as DateTime);
         ///
         ///delete WorkedDay 
-        ///where SalaryPayId = @payId
+        ///where SalaryPay_Id = @payId
         ///	and Cast(Date as Date) = Cast(@day as Date)
         ///.
         /// </summary>
@@ -82,39 +82,16 @@ namespace Furmanov.Data.Properties {
         ///--declare @day DateTime = Cast(&apos;20191015&apos; as DateTime);
         ///
         ///if not exists (select * from WorkedDay 
-        ///				where SalaryPayId = @payId
+        ///				where SalaryPay_Id = @payId
         ///					and Cast(Date as Date) = Cast(@day as Date))
         ///
-        ///insert WorkedDay (SalaryPayId, Date)
+        ///insert WorkedDay (SalaryPay_Id, Date)
         ///values (@payId, @day)
         ///.
         /// </summary>
         internal static string InsertWorkDay {
             get {
                 return ResourceManager.GetString("InsertWorkDay", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на --DEBUG
-        ///--declare @userId int = 66;
-        ///--declare @userId int = 9;
-        ///
-        ///if (select Role_Id from [User] where Id = @userId) = 4
-        ///	select o.*
-        ///	from Object o
-        ///		left Join Project p
-        ///			on o.Project_Id = p.Id
-        ///	where p.Rukovod_Id = @userId
-        ///
-        ///else select	o.*
-        ///	from Object o
-        ///	where o.Manager_Id = @userId
-        ///.
-        /// </summary>
-        internal static string ObjectsForManager {
-            get {
-                return ResourceManager.GetString("ObjectsForManager", resourceCulture);
             }
         }
         
@@ -129,9 +106,9 @@ namespace Furmanov.Data.Properties {
         ///		1 Type,
         ///		&apos;Object &apos; + CAST(obj.Id AS nvarchar) ViewModelId,
         ///		null ParentId,
-        ///		obj.Id ObjectId,
+        ///		obj.Id Object_Id,
         ///		obj.Address ObjectNameForSalaryPay,
-        ///		obj.ManagerId ManagerId,
+        ///		obj.Manager_Id Manager_Id,
         ///		null PositionId,
         ///		null EmployeeId,
         ///		obj.Address Name,
@@ -139,7 +116,7 @@ namespace Furmanov.Data.Properties {
         ///		null PositionName,
         ///		SUM(norm.Salary) Salary,
         ///		SUM(sal.RateDays) RateDays,
-        ///		SUM(sal.FactDays) [остаток строки не уместился]&quot;;.
+        ///		SUM(sal.FactDa [остаток строки не уместился]&quot;;.
         /// </summary>
         internal static string SalaryPayForManager {
             get {
@@ -185,11 +162,11 @@ namespace Furmanov.Data.Properties {
         ///	u.Login,
         ///	u.Password,
         ///	u.Name,
-        ///	u.RoleId,
+        ///	u.Role_Id,
         ///	Role.Name RoleName
         ///from [User] u
         ///	left join Role
-        ///		on u.RoleId = Role.Id
+        ///		on u.Role_Id = Role.Id
         ///where Login = @login
         ///	and Password = @password
         ///.

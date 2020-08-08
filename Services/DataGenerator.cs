@@ -1,5 +1,11 @@
-﻿using System;
-using Furmanov.Data.Data;
+﻿using Furmanov.Data.Data;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using Furmanov.Data;
+using LinqToDB;
+using LinqToDB.Data;
 
 namespace Furmanov.Services
 {
@@ -7,6 +13,7 @@ namespace Furmanov.Services
 	{
 		#region Fields
 		private readonly Random _rnd = new Random();
+
 		private static readonly string[] Names =
 		{
 			"Абрам",
@@ -791,24 +798,455 @@ namespace Furmanov.Services
 			"Младший редактор",
 			"Корректор",
 		};
+
+		private static readonly string[] Companies =
+		{
+			"Сабона Плюс",
+			"Арт-Комплект",
+			"Металлиндустрия",
+			"Ресурс-Капитал",
+			"Торговый дом \"Вектор\"",
+			"Торговый дом \"Уралкварц\"",
+			"Оникс",
+			"Ремстройсервис",
+			"МедиаСервис",
+			"Аргумент",
+			"Прайм-Информ",
+			"О Г М",
+			"НПП Модус-М",
+			"Стройтехносфера",
+			"Промснаб",
+			"Элегия",
+			"Интра-Трейд",
+			"Производственная компания \"УралВагонМеханика\"",
+			"Торговый Дом \"Шина\"",
+			"Строй-Астер",
+			"Автодиск",
+			"Торгово-производственное предприятие \"Черметопторг\"",
+			"Омега",
+			"ЭКСИМ",
+			"Троица",
+			"МЕТПРОМСЕРВИС",
+			"Уральская Ассоциация Клининга",
+			"Рекламное обеспечение бизнеса",
+			"Вектор",
+			"Ривьера",
+			"Рекламное агентство \"Радуга\"",
+			"Промышленная безопасность",
+			"СтройТрансАвто",
+			"ЕвроТорг",
+			"ТрансСервисВосток",
+			"МонтажСтройИнвест",
+			"Промторгснаб",
+			"Уралсервис - опт",
+			"Бетстрой",
+			"Лига",
+			"АВ-Маркет",
+			"Торговый Дом \"Альянс\"",
+			"Снабкомплект",
+			"Золотой скорпион",
+			"Приам",
+			"Строительная Компания \"Альянс\"",
+			"Строительная Компания \"ЭраСтрой\"",
+			"Торгово-развлекательный центр \"Урал\"",
+			"Веста",
+			"ТеплоЭнергоСтрой",
+			"Трубметком",
+			"Профи",
+			"Урал-Альянс",
+			"Универсал-Снаб",
+			"Крокус",
+			"Андромеда",
+			"Салма",
+			"Маяк",
+			"Гамма-Урал",
+			"Вегус",
+			"МИТМ",
+			"Альянс",
+			"ВЭЛТКОМ",
+			"Домком",
+			"Лига-Кэпитал",
+			"Спецпром",
+			"ТИСС",
+			"Механизированная колонна-12",
+			"РЕАЛКОМ",
+			"РЕАЛКОМ-ЕК",
+			"Уралметторг",
+			"Аква-Трейд",
+			"Торг Сервис",
+			"Орикс",
+			"Лэтос",
+			"МВК",
+			"Торговый двор \"ПАТРИОТ\"",
+			"Торговый двор \"Строитель\"",
+			"Среднерусский центр спортивного ориентирования",
+			"РУСИЧЬ",
+			"Монтажник-2",
+			"Платановая аллея",
+			"Усольский Художник",
+			"ПАТРИОТ",
+			"Луч - 7",
+			"Исток",
+			"ДАНИЛЫЧ",
+			"Игл",
+			"Нэвис+",
+			"фирма Стройсервис",
+			"ЭМО",
+			"ЛенСтройТоргСервис",
+			"КЛИНЛЭНД",
+			"МЕЦЕНАТ",
+			"АЛЕТЕКС \"ALETEX\"",
+			"Научно-производственное коммерческое предприятие \"КВАДРО\"",
+			"Гигабит",
+			"Торгово-Промышленная Компания \"Кубань Ксилолит\"",
+			"АВТЕКС-ГРУПП",
+			"Рыбокомбинат \"Волгоградский\"",
+			"Регион Бизнес Альянс",
+			"СТРОЙРЕАЛПРЕСТИЖ",
+			"КОМПАНИЯ АРВЕСТ",
+			"ЖБИ Сервис",
+			"Реал - НН",
+			"Бар-С",
+			"Проспект-В",
+			"Драйзэн",
+			"ВОК - 72",
+			"Торговый дом \"Лагуна\"",
+			"Уралторг",
+			"ГрафГаз",
+			"Альянс",
+			"Регионсерия",
+			"Центр",
+			"Срочная Американская Экспресс чистка",
+			"АйСиком мастер ",
+			"МАШТЕХПРОДУКТ",
+			"Клин Ленд",
+			"Астроник",
+			"Уралнефтьсервис",
+			"Механическая производственная компания \"МЕХАНИК\"",
+			"Стелла",
+			"Новые Решения",
+			"Торговый Дом \"Волжский Капитал\"",
+			"ВИТНА ",
+			"Ореол С",
+			"Фирма \"НВЛ\"",
+			"Орлов и Компания",
+			"Министерство",
+			"ГрандАвто",
+			"ВариантСтрой",
+			"Урал-Торг",
+			"Металлинвест",
+			"АБСТехно",
+			"Декарт",
+			"Орион",
+			"ДОГОДА",
+			"Горизонт",
+			"Забота",
+			"ТРАНСМЕХ",
+			"Элана",
+			"Водоканал",
+			"Барс",
+			"Спецторг",
+			"Рыбацкая деревня",
+			"НАУЧНО-ПРОИЗВОДСТВЕННОЕ ОБЪЕДИНЕНИЕ \"ЭЛЕКТРОМАШ\"",
+			"ГАРАЖНЫЙ КООПЕРАТИВ \"ТОМЬ\"",
+			"Палкинский",
+			"Управдом",
+			"Тёплый Дом",
+			"Чаплыгинский",
+			"Опытно-Механический завод",
+			"ТЕЗА-ВН",
+			"Теза-Н",
+			"ЛУЧ-3",
+			"Автотехсервис",
+			"Дельта-С",
+			"Мединфос",
+			"Кентавр",
+			"Техцентр",
+			"Петровские дачи",
+			"ЭнергоАктив",
+			"Унимерьская слобода",
+			"Гольдберг-Софт",
+			"ВИКТОРИЯ-Л",
+			"Энергетик",
+			" ВЫМПЕЛ ",
+			"Призма",
+			"А-Я",
+			"Загородный 45",
+			"БСУ",
+			"Академия Бильярда",
+			"ТОВАРИЩЕСТВО СОБСТВЕННИКОВ ЖИЛЬЯ \"14-Б\"",
+			"Эскорт-медиа",
+			"Паритет",
+			"Продвижение",
+			"Дельта",
+			"Строй-Альянс",
+			"Интерком",
+			"АКСЕЛЬ",
+			"Финпромснаб",
+			"Кит",
+			"Холдинговая Компания \"Финпромснаб\"",
+			"Холдинговая Компания \"Паритет\"",
+			"Холдинговая Компания \"Строй-Альянс\"",
+			"Холдинговая Компания \"ПЕРЕСВЕТ\"",
+			"Рекаунт",
+			"Адамант",
+			"Лаксар",
+			"Эдельвейс",
+			"Еврокласс-Урал",
+			"Инстрэл",
+			"Лес-Пром",
+			"СтройМатериалы",
+			"Нивад",
+			"Альянс 2002",
+			"Вспомогательное производство \"Тритон\"",
+			"Вспомогательное производство \"Лес-Пром\"",
+			"Вспомогательное производство \"Фарфора Сысерти\"",
+			"Авианта",
+			"Астон Консалтинг",
+			"Тритон",
+			"БЕСТ",
+		};
+		private static readonly string[] ProjectCompanies = Companies
+			.Where(c => c.Contains("\"")).ToArray();//с ковычками более "громкие" названия
+		private static readonly string[] ObjectCompanies = Companies
+			.Where(c => !c.Contains("\"")).ToArray();
+		private static readonly string[] Addresses =
+		{
+			"Авангардная ул.",
+			"Большая Воскресенская ул.",
+			"Большая Комсомольская ул.",
+			"б-р Космонавтов",
+			"Видная ул.",
+			"Вокзальная ул.",
+			"Волоколамское шоссе",
+			"Дачная ул.",
+			"Железнодорожная ул.",
+			"Железнодорожный пер.",
+			"Железнодорожный пр-д",
+			"Живописная набережная",
+			"Заводская ул.",
+			"Зеленая ул.",
+			"Зеленый 1-й пер.",
+			"Знаменская ул.",
+			"Ильинский б-р",
+			"Ильинское шоссе",
+			"Калининская ул.",
+			"Комсомольская ул.",
+			"Комсомольский 1-й пер.",
+			"Комсомольский 2-й пер.",
+			"Крайняя ул.",
+			"Красногорский б-р",
+			"Лесная ул.",
+			"Малая Северная ул.",
+			"Международная ул.",
+			"Микрорайон Опалиха",
+			"Молодежная ул.",
+			"Москворецкий б-р",
+			"Московская ул.",
+			"Новая ул.",
+			"Новоархангельская ул.",
+			"Октябрьская ул.",
+			"Оптический пер.",
+			"Оптический пр-д",
+			"Оранжерейная ул.",
+			"ул. 50 лет Октября",
+			"ул. Братьев Горожанкиных",
+			"ул. Вилора Трифонова",
+			"ул. Георгия Димитрова",
+			"ул. Губайлово",
+			"ул. Жуковского",
+			"ул. Игната Титова",
+			"ул. Игоря Мерлушкина",
+			"ул. им Головкина",
+			"ул. им Егорова",
+			"ул. им Зверева",
+			"ул. Карбышева",
+			"ул. Кирова",
+			"ул. Королева",
+			"ул. Красная Горка",
+			"ул. Ленина",
+			"ул. Маяковского",
+			"ул. Мичурина",
+			"ул. Народного Ополчения",
+			"ул. Новая Слободка",
+			"ул. Оптиков",
+			"ул. Осипенко",
+			"ул. Островского",
+			"ул. Павшино в/г",
+		};
 		#endregion
-		public UserDto GenUser()
+
+		public void CreateDataBase(DbContext db)
+		{
+			var baseDir = AppDomain.CurrentDomain.BaseDirectory;
+			db.Execute("CREATE DATABASE [Furmanov] ON PRIMARY " +
+					   "(NAME = [Furmanov], " +
+					   $"FILENAME = '{Path.Combine(baseDir, "Furmanov.mdf")}', " +
+					   "SIZE = 2MB, MAXSIZE = 10MB, FILEGROWTH = 10%) " +
+					   "LOG ON (NAME = Furmanov_Log, " +
+					   $"FILENAME = '{Path.Combine(baseDir, "Furmanov.ldf")}', " +
+					   "SIZE = 1MB, " +
+					   "MAXSIZE = 5MB, " +
+					   "FILEGROWTH = 10%)");
+
+			db.CreateTable<RoleDto>();
+			db.CreateTable<UserDto>();
+			db.CreateTable<ObjectDto>();
+			db.CreateTable<ProjectDto>();
+			db.CreateTable<EmployeeDto>();
+			db.CreateTable<SalaryPayDto>();
+			db.CreateTable<WorkedDayDto>();
+
+			var tables = new[]
+			{
+				nameof(RoleDto),
+				nameof(UserDto),
+				nameof(ObjectDto),
+				nameof(ProjectDto),
+				nameof(EmployeeDto),
+				nameof(SalaryPayDto),
+				nameof(WorkedDayDto)
+			};
+			foreach (var table in tables)
+			{
+				try
+				{
+					var tableName = table.Replace("Dto", "");
+					db.Execute($"ALTER TABLE [dbo].[{tableName}] " +
+							   $"ADD CONSTRAINT [DF_{tableName}_{nameof(Dto.CreatedDate)}] " +
+							   $"DEFAULT (getdate()) FOR [{nameof(Dto.CreatedDate)}]\n" +
+							   "GO");
+				}
+				catch { }
+			}
+		}
+		public void RefillDataBase(DbContext db)
+		{
+			#region Clear DataBase
+			db.Delete<WorkedDayDto>();
+			db.Delete<SalaryPayDto>();
+			db.Delete<EmployeeDto>();
+			db.Delete<ObjectDto>();
+			db.Delete<ProjectDto>();
+			db.Delete<UserDto>();
+			//db.Delete<RoleDto>(); 
+			#endregion
+
+			var year = 2019;
+			var users = new List<UserDto>();
+			List<UserDto> Add(Role role, int count)
+			{
+				var res = new List<UserDto>();
+				var needDebugUser = !users.Any(u => u.Login == role.ToString());
+				if (needDebugUser)
+				{
+					var debugUser = new UserDto
+					{
+						Login = role.ToString(),
+						Name = role.ToString(),
+						Role = role,
+						Password = "1"
+					};
+					debugUser.Id = db.InsertWithInt32Identity(debugUser);
+					res.Add(debugUser);
+				}
+				for (int i = 0; i < (needDebugUser ? count - 1 : count); i++)
+				{
+					var user = GenUser(role);
+					user.Id = db.InsertWithInt32Identity(user);
+					res.Add(user);
+				}
+				users.AddRange(res);
+				return res;
+			}
+
+			Add(Role.Admin, 2);
+			Add(Role.Director, 3);
+			Add(Role.ProjectManager, 5);
+
+			var projectsNames = new List<string>();
+			users.Where(u => u.Role == Role.ProjectManager).ForEach(projManager =>
+			{
+				var projectCount = _rnd.Next(3, 4);
+				for (int i = 0; i < projectCount; i++)
+				{
+					var objectsNames = new List<string>();
+					var proj = GenProject(projManager.Id);
+					while (projectsNames.Any(name => name == proj.Name))
+					{
+						if (projectsNames.Count >= ProjectCompanies.Length) return;
+						proj = GenProject(projManager.Id);
+					}
+					projectsNames.Add(proj.Name);
+					proj.Id = db.InsertWithInt32Identity(proj);
+					Add(Role.Manager, _rnd.Next(2, 5)).ForEach(manager =>
+					{
+						var objCount = _rnd.Next(2, 4);
+						for (int j = 0; j < objCount; j++)
+						{
+							var obj = GenObject(proj.Id, manager.Id);
+							while (objectsNames.Any(name => name == obj.Name))
+							{
+								if (objectsNames.Count >= ObjectCompanies.Length) return;
+								obj = GenObject(proj.Id, manager.Id);
+							}
+							objectsNames.Add(obj.Name);
+							obj.Id = db.InsertWithInt32Identity(obj);
+							var empCount = _rnd.Next(5, 15);
+							for (int k = 0; k < empCount; k++)
+							{
+								var emp = GenEmployee();
+								emp.Id = db.InsertWithInt32Identity(emp);
+								for (int month = 1; month <= 12; month++)
+								{
+									var pay = GenSalaryPay(year, month, obj.Id, emp);
+									pay.Id = db.InsertWithInt32Identity(pay);
+									var workedDays = GenWorkedDays(year, month, pay);
+									pay.RateDays = workedDays.Length;
+									workedDays = workedDays.Where(d => _rnd.Next(1000) < 950).ToArray();
+									pay.FactDays = workedDays.Length;
+									db.BulkCopy(workedDays);
+									CalcSalary(pay, emp.Salary);
+									db.Update(pay);
+								}
+							}
+						}
+					});
+				}
+			});
+		}
+
+		private static WorkedDayDto[] GenWorkedDays(int year, int month, SalaryPayDto pay)
+		{
+			var days = DateService.AllDaysInMonth(year, month)
+					.Where(date => date.DayOfWeek != DayOfWeek.Saturday &&
+								   date.DayOfWeek != DayOfWeek.Sunday)
+					.Select(day => new WorkedDayDto
+					{
+						SalaryPay_Id = pay.Id,
+						Date = day,
+					}).ToArray();
+			return days;
+		}
+
+		private UserDto GenUser(Role role)
 		{
 			var user = new UserDto
 			{
 				Name = GenName(),
-				RoleId = (int)GenRole(),
+				Role = role,
 				Password = "1"
 			};
 
-			user.Login = $"{user.Name.Replace(" ", "_")}".ToEn();
-			
-			var random = _rnd.Next(1000);
-			var mail = random < 300 ? "@mail.ru"
-				: random < 700 ? "@gmail.com"
-				: "@yandex.ru";
+			var names = user.Name.Split(' ');
+			user.Login = $"{names[0][0]}.{names[1]}".ToEn();
 
-			user.Email = user.Login + mail;
+			var random = _rnd.Next(1000);
+			var mail = random < 300 ? "mail.ru"
+				: random < 700 ? "gmail.com"
+				: "yandex.ru";
+
+			user.Email = $"{user.Login}@{mail}";
 
 			return user;
 		}
@@ -818,24 +1256,16 @@ namespace Furmanov.Services
 			var surname = Surnames[_rnd.Next(Surnames.Length)];
 			return $"{name} {surname}";
 		}
-		private Role GenRole()
-		{
-			var random = _rnd.Next(1000);
-			if (random < 100) return Role.Admin;
-			if (random < 200) return Role.Director;
-			if (random < 300) return Role.ProjectManager;
-			return Role.Manager;
-		}
 
-		public EmployeeDto GenEmployee()
+		private EmployeeDto GenEmployee()
 		{
 			var employee = new EmployeeDto
 			{
 				Name = GenName(),
 				Position = Positions[_rnd.Next(Positions.Length)],
 				Card = $"{Num4} {Num4} {Num4} {Num4}",
-				Phone = $"8 (9{Num2})-{Num3}-{Num2}-{Num2}",
-				Salary = _rnd.Next(10, 40) * 5000,
+				Phone = $"8(9{Num2})-{Num3}-{Num2}-{Num2}",
+				Salary = _rnd.Next(3, 40) * 5000,
 			};
 
 			return employee;
@@ -843,5 +1273,58 @@ namespace Furmanov.Services
 		private string Num2 => $"{_rnd.Next(99):00}";
 		private string Num3 => $"{_rnd.Next(999):000}";
 		private string Num4 => $"{_rnd.Next(9999):0000}";
+
+		private ProjectDto GenProject(int projectManagerId)
+		{
+			var project = new ProjectDto
+			{
+				Name = ProjectCompanies[_rnd.Next(ProjectCompanies.Length)],
+				ProjectManager_Id = projectManagerId,
+			};
+			return project;
+		}
+		private ObjectDto GenObject(int projectId, int managerId)
+		{
+			var obj = new ObjectDto
+			{
+				Name = ObjectCompanies[_rnd.Next(ObjectCompanies.Length)],
+				Address = Addresses[_rnd.Next(Addresses.Length)] + $", {_rnd.Next(100)}",
+				Project_Id = projectId,
+				Manager_Id = managerId,
+			};
+			return obj;
+		}
+
+		private SalaryPayDto GenSalaryPay(int year, int month, int objId, EmployeeDto emp)
+		{
+			var pay = new SalaryPayDto
+			{
+				Object_Id = objId,
+				Employee_Id = emp.Id,
+				Year = year,
+				Month = month,
+				Advance = emp.Salary * 0.4m,
+			};
+
+			if (_rnd.Next(1000) < 100)
+			{
+				pay.Penalty = _rnd.Next(1, 4) * 500;
+				pay.Comment = "Опоздание";
+			}
+			if (_rnd.Next(1000) < 100)
+			{
+				pay.Premium = emp.Salary * 0.1m;
+			}
+
+			return pay;
+		}
+
+		private void CalcSalary(SalaryPayDto pay, decimal salary)
+		{
+			pay.SalaryToPay = salary / pay.RateDays * (pay.FactDays ?? 0)
+							  - (pay.Advance ?? 0)
+							  - (pay.Penalty ?? 0)
+							  + (pay.Premium ?? 0);
+		}
 	}
 }

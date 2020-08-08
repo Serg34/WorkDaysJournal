@@ -1,7 +1,6 @@
-﻿--DEBUG
---declare @payId int = 69;
+﻿--declare @payId int = 69;
 --declare @day DateTime = Cast('20191015' as DateTime);
 
 delete WorkedDay 
-where SalaryPayId = @payId
+where SalaryPay_Id = @payId
 	and Cast(Date as Date) = Cast(@day as Date)
