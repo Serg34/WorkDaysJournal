@@ -20,7 +20,7 @@ using System.Windows.Forms;
 
 namespace Furmanov.UI
 {
-	public partial class MainView : XtraForm, IMainView
+	public partial class MainView : DevExpress.XtraBars.Ribbon.RibbonForm, IMainView
 	{
 		#region Fields
 		private SalaryPay _currentPay;
@@ -46,6 +46,7 @@ namespace Furmanov.UI
 		public event EventHandler Logging;
 		public event EventHandler Logout;
 
+		public event EventHandler RefillingDataBase;
 		public event EventHandler<MonthEventArgs> ChangedMonth;
 		public event EventHandler WorkDaysOnlyClick;
 		public event EventHandler AllDaysClick;
@@ -135,6 +136,30 @@ namespace Furmanov.UI
 		#endregion
 
 		#region TopMenu
+		private void btRefillDataBase_ItemClick(object sender, ItemClickEventArgs e)
+		{
+			try
+			{
+				var q = "Сгенерировать новые данные в базе данных?\n\n" +
+						"Все текущие записи будут удалены.\n" +
+						"Для отладки будут доступны три учётки: 'Admin', 'ProjectManager' и 'Manager' " +
+						"с соответствующими ролями.\n" +
+						"Пароль для любой учётки '1'";
+
+				if (MessageService.Question(q) != DialogResult.Yes) return;
+
+				TaskbarProgress.Start(this);
+				RefillingDataBase?.Invoke(this, EventArgs.Empty);
+			}
+			catch (Exception ex)
+			{
+				ShowError(ex);
+			}
+			finally
+			{
+				TaskbarProgress.Finish(this);
+			}
+		}
 		private void DeMonth_EditValueChanged(object sender, EventArgs e)
 		{
 			try
@@ -318,6 +343,11 @@ namespace Furmanov.UI
 		{
 			try
 			{
+				if (!(sender is TreeList treeList)) return;
+				var pt = treeList.PointToClient(MousePosition);
+				var hitInfo = treeList.CalcHitInfo(pt);
+				if (!hitInfo.InRow) return;
+
 				if (_currentPay.Type == ObjType.Salary)
 				{
 					ShowNoImplementedCode(this, null);
@@ -543,6 +573,18 @@ namespace Furmanov.UI
 				ShowError(ex);
 			}
 		}
+
+		public void Progress(object sender, ProgressEventArgs e)
+		{
+			try
+			{
+				TaskbarProgress.SetValue(e.Value, e.Max, this);
+			}
+			catch (Exception ex)
+			{
+				ShowError(ex);
+			}
+		}
 		public void ShowError(Exception ex)
 		{
 			MessageService.Error(ex.ToString());
@@ -563,7 +605,22 @@ namespace Furmanov.UI
 				ShowError(ex);
 			}
 		}
-
+		private void btResetSettings_ItemClick(object sender, ItemClickEventArgs e)
+		{
+			try
+			{
+				var question = "Настройки экрана будут сброшены.\nПродолжить?";
+				if (MessageService.Question(question) == DialogResult.Yes)
+				{
+					LayoutSaver.Reset();
+					MessageService.Message("Настройки экрана сброшены.\nИзменения вступят после перезапуска приложения.");
+				}
+			}
+			catch (Exception ex)
+			{
+				ShowError(ex);
+			}
+		}
 		private void MenuUndo_PaintMenuBar(object sender, BarCustomDrawEventArgs e)
 		{
 			try

@@ -61,8 +61,15 @@ namespace Furmanov.UI
 			DevExpress.Utils.SuperToolTip superToolTip10 = new DevExpress.Utils.SuperToolTip();
 			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem10 = new DevExpress.Utils.ToolTipTitleItem();
 			DevExpress.Utils.ToolTipItem toolTipItem10 = new DevExpress.Utils.ToolTipItem();
+			DevExpress.Utils.SuperToolTip superToolTip11 = new DevExpress.Utils.SuperToolTip();
+			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem11 = new DevExpress.Utils.ToolTipTitleItem();
+			DevExpress.Utils.ToolTipItem toolTipItem11 = new DevExpress.Utils.ToolTipItem();
+			DevExpress.Utils.SuperToolTip superToolTip12 = new DevExpress.Utils.SuperToolTip();
+			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem12 = new DevExpress.Utils.ToolTipTitleItem();
+			DevExpress.Utils.ToolTipItem toolTipItem12 = new DevExpress.Utils.ToolTipItem();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainView));
 			this.menuMain = new DevExpress.XtraBars.Ribbon.RibbonControl();
+			this.btResetSettings = new DevExpress.XtraBars.BarButtonItem();
 			this.btnEditResource = new DevExpress.XtraBars.BarButtonItem();
 			this.btnCreateResource = new DevExpress.XtraBars.BarButtonItem();
 			this.btnVedomostTotal = new DevExpress.XtraBars.BarButtonItem();
@@ -81,11 +88,13 @@ namespace Furmanov.UI
 			this.menuRedo = new DevExpress.XtraBars.PopupMenu(this.components);
 			this.deMonth = new DevExpress.XtraBars.BarEditItem();
 			this.riMonth = new DevExpress.XtraEditors.Repository.RepositoryItemDateEdit();
+			this.btRefillDataBase = new DevExpress.XtraBars.BarButtonItem();
 			this.pageMain = new DevExpress.XtraBars.Ribbon.RibbonPage();
-			this.pageResourses = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
-			this.pageMonth = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
-			this.pageVedomost = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
-			this.pageDaysMode = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+			this.ribgrDeveloper = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+			this.ribgrEmployees = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+			this.ribgrFilter = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+			this.ribgrDaysMode = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+			this.ribgrReport = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
 			this.riMonths = new DevExpress.XtraEditors.Repository.RepositoryItemComboBox();
 			this.statusBar = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
 			this.pnMain = new DevExpress.XtraEditors.GroupControl();
@@ -139,8 +148,10 @@ namespace Furmanov.UI
 			// 
 			// menuMain
 			// 
+			this.menuMain.CaptionBarItemLinks.Add(this.btResetSettings);
 			this.menuMain.ExpandCollapseItem.Id = 0;
 			this.menuMain.Items.AddRange(new DevExpress.XtraBars.BarItem[] {
+            this.btResetSettings,
             this.menuMain.ExpandCollapseItem,
             this.menuMain.SearchEditItem,
             this.btnEditResource,
@@ -157,10 +168,11 @@ namespace Furmanov.UI
             this.btnDeleteAllDays,
             this.btnUndo,
             this.btnRedo,
-            this.deMonth});
+            this.deMonth,
+            this.btRefillDataBase});
 			this.menuMain.Location = new System.Drawing.Point(0, 0);
 			this.menuMain.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
-			this.menuMain.MaxItemId = 7;
+			this.menuMain.MaxItemId = 9;
 			this.menuMain.Name = "menuMain";
 			this.menuMain.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
             this.pageMain});
@@ -169,8 +181,24 @@ namespace Furmanov.UI
 			this.menuMain.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
             this.riMonths,
             this.riMonth});
-			this.menuMain.Size = new System.Drawing.Size(1441, 172);
+			this.menuMain.Size = new System.Drawing.Size(1441, 175);
 			this.menuMain.StatusBar = this.statusBar;
+			// 
+			// btResetSettings
+			// 
+			this.btResetSettings.Caption = "Сбросить настройки экрана";
+			this.btResetSettings.Id = 7;
+			this.btResetSettings.ImageOptions.Image = global::Furmanov.UI.Properties.Resources.ResetSettings;
+			this.btResetSettings.Name = "btResetSettings";
+			toolTipTitleItem1.Text = "Сбросить настройки экрана";
+			toolTipItem1.ImageOptions.Image = global::Furmanov.UI.Properties.Resources.ResetSettings;
+			toolTipItem1.LeftIndent = 6;
+			toolTipItem1.Text = "Сбросить настройки экрана \r\n(ширину столбцов, видимость столбцов, группировки, по" +
+    "ложение разделителей экранов и прочее)";
+			superToolTip1.Items.Add(toolTipTitleItem1);
+			superToolTip1.Items.Add(toolTipItem1);
+			this.btResetSettings.SuperTip = superToolTip1;
+			this.btResetSettings.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btResetSettings_ItemClick);
 			// 
 			// btnEditResource
 			// 
@@ -180,14 +208,14 @@ namespace Furmanov.UI
 			this.btnEditResource.ImageOptions.Image = global::Furmanov.UI.Properties.Resources.EditUser;
 			this.btnEditResource.Name = "btnEditResource";
 			this.btnEditResource.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large;
-			toolTipTitleItem1.Text = "Назначить сотрудника";
-			toolTipItem1.ImageOptions.Image = global::Furmanov.UI.Properties.Resources.EditUser;
-			toolTipItem1.LeftIndent = 6;
-			toolTipItem1.Text = "Назначить позицию для одного из доступных сотрудников на выбранном объекте.\r\n\r\nГо" +
+			toolTipTitleItem2.Text = "Назначить сотрудника";
+			toolTipItem2.ImageOptions.Image = global::Furmanov.UI.Properties.Resources.EditUser;
+			toolTipItem2.LeftIndent = 6;
+			toolTipItem2.Text = "Назначить позицию для одного из доступных сотрудников на выбранном объекте.\r\n\r\nГо" +
     "рячие клавиши: двойной клик на любом сотруднике внутри объекта";
-			superToolTip1.Items.Add(toolTipTitleItem1);
-			superToolTip1.Items.Add(toolTipItem1);
-			this.btnEditResource.SuperTip = superToolTip1;
+			superToolTip2.Items.Add(toolTipTitleItem2);
+			superToolTip2.Items.Add(toolTipItem2);
+			this.btnEditResource.SuperTip = superToolTip2;
 			this.btnEditResource.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.ShowNoImplementedCode);
 			// 
 			// btnCreateResource
@@ -198,14 +226,14 @@ namespace Furmanov.UI
 			this.btnCreateResource.ImageOptions.Image = global::Furmanov.UI.Properties.Resources.AddUser;
 			this.btnCreateResource.Name = "btnCreateResource";
 			this.btnCreateResource.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large;
-			toolTipTitleItem2.Text = "Создать сотрудника";
-			toolTipItem2.ImageOptions.Image = global::Furmanov.UI.Properties.Resources.AddUser;
-			toolTipItem2.LeftIndent = 6;
-			toolTipItem2.Text = "Создает сотрудника в базе данных.\r\nПосле создания сотружник будет доступен для на" +
+			toolTipTitleItem3.Text = "Создать сотрудника";
+			toolTipItem3.ImageOptions.Image = global::Furmanov.UI.Properties.Resources.AddUser;
+			toolTipItem3.LeftIndent = 6;
+			toolTipItem3.Text = "Создает сотрудника в базе данных.\r\nПосле создания сотружник будет доступен для на" +
     "значения.\r\n\r\nГорячие клавиши:  \"+\" или \"Insert\"";
-			superToolTip2.Items.Add(toolTipTitleItem2);
-			superToolTip2.Items.Add(toolTipItem2);
-			this.btnCreateResource.SuperTip = superToolTip2;
+			superToolTip3.Items.Add(toolTipTitleItem3);
+			superToolTip3.Items.Add(toolTipItem3);
+			this.btnCreateResource.SuperTip = superToolTip3;
 			this.btnCreateResource.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.ShowNoImplementedCode);
 			// 
 			// btnVedomostTotal
@@ -216,13 +244,13 @@ namespace Furmanov.UI
 			this.btnVedomostTotal.ImageOptions.Image = global::Furmanov.UI.Properties.Resources.ReportAll;
 			this.btnVedomostTotal.Name = "btnVedomostTotal";
 			this.btnVedomostTotal.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large;
-			toolTipTitleItem3.Text = "Сводная ведомость";
-			toolTipItem3.ImageOptions.Image = global::Furmanov.UI.Properties.Resources.ReportAll;
-			toolTipItem3.LeftIndent = 6;
-			toolTipItem3.Text = "Создать в Excel сводную ведомость по всем объектам";
-			superToolTip3.Items.Add(toolTipTitleItem3);
-			superToolTip3.Items.Add(toolTipItem3);
-			this.btnVedomostTotal.SuperTip = superToolTip3;
+			toolTipTitleItem4.Text = "Сводная ведомость";
+			toolTipItem4.ImageOptions.Image = global::Furmanov.UI.Properties.Resources.ReportAll;
+			toolTipItem4.LeftIndent = 6;
+			toolTipItem4.Text = "Создать в Excel сводную ведомость по всем объектам";
+			superToolTip4.Items.Add(toolTipTitleItem4);
+			superToolTip4.Items.Add(toolTipItem4);
+			this.btnVedomostTotal.SuperTip = superToolTip4;
 			this.btnVedomostTotal.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.ShowNoImplementedCode);
 			// 
 			// btnWorkDaysOnly
@@ -233,14 +261,14 @@ namespace Furmanov.UI
 			this.btnWorkDaysOnly.ImageOptions.Image = global::Furmanov.UI.Properties.Resources.OnlyWorkDays;
 			this.btnWorkDaysOnly.Name = "btnWorkDaysOnly";
 			this.btnWorkDaysOnly.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large;
-			toolTipTitleItem4.Text = "5-2";
-			toolTipItem4.ImageOptions.Image = global::Furmanov.UI.Properties.Resources.OnlyWorkDays;
-			toolTipItem4.LeftIndent = 6;
-			toolTipItem4.Text = "Заполнить отработанные дни в текущем месяце для выбранного сторудника по графику " +
+			toolTipTitleItem5.Text = "5-2";
+			toolTipItem5.ImageOptions.Image = global::Furmanov.UI.Properties.Resources.OnlyWorkDays;
+			toolTipItem5.LeftIndent = 6;
+			toolTipItem5.Text = "Заполнить отработанные дни в текущем месяце для выбранного сторудника по графику " +
     "5/2";
-			superToolTip4.Items.Add(toolTipTitleItem4);
-			superToolTip4.Items.Add(toolTipItem4);
-			this.btnWorkDaysOnly.SuperTip = superToolTip4;
+			superToolTip5.Items.Add(toolTipTitleItem5);
+			superToolTip5.Items.Add(toolTipItem5);
+			this.btnWorkDaysOnly.SuperTip = superToolTip5;
 			this.btnWorkDaysOnly.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.BtnWorkDaysOnly_ItemClick);
 			// 
 			// btnAllDays
@@ -252,13 +280,13 @@ namespace Furmanov.UI
 			this.btnAllDays.ImageOptions.SvgImageSize = new System.Drawing.Size(34, 32);
 			this.btnAllDays.Name = "btnAllDays";
 			this.btnAllDays.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large;
-			toolTipTitleItem5.Text = "Все дни";
-			toolTipItem5.ImageOptions.Image = global::Furmanov.UI.Properties.Resources.AllDays;
-			toolTipItem5.LeftIndent = 6;
-			toolTipItem5.Text = "Заполнить все дни в текущем месяце как отработанные для выбранного сотрудника";
-			superToolTip5.Items.Add(toolTipTitleItem5);
-			superToolTip5.Items.Add(toolTipItem5);
-			this.btnAllDays.SuperTip = superToolTip5;
+			toolTipTitleItem6.Text = "Все дни";
+			toolTipItem6.ImageOptions.Image = global::Furmanov.UI.Properties.Resources.AllDays;
+			toolTipItem6.LeftIndent = 6;
+			toolTipItem6.Text = "Заполнить все дни в текущем месяце как отработанные для выбранного сотрудника";
+			superToolTip6.Items.Add(toolTipTitleItem6);
+			superToolTip6.Items.Add(toolTipItem6);
+			this.btnAllDays.SuperTip = superToolTip6;
 			this.btnAllDays.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.BtnAllDays_ItemClick);
 			// 
 			// lblVersion
@@ -290,13 +318,13 @@ namespace Furmanov.UI
 			this.btnDeleteResource.ImageOptions.Image = global::Furmanov.UI.Properties.Resources.DeleteUser;
 			this.btnDeleteResource.Name = "btnDeleteResource";
 			this.btnDeleteResource.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large;
-			toolTipTitleItem6.Text = "Удалить сотрудника";
-			toolTipItem6.ImageOptions.Image = global::Furmanov.UI.Properties.Resources.DeleteUser;
-			toolTipItem6.LeftIndent = 6;
-			toolTipItem6.Text = "Удалить выбранного сотрудника.\r\n\r\nГорячие клавиши: \"-\" или \"Delete\"";
-			superToolTip6.Items.Add(toolTipTitleItem6);
-			superToolTip6.Items.Add(toolTipItem6);
-			this.btnDeleteResource.SuperTip = superToolTip6;
+			toolTipTitleItem7.Text = "Удалить сотрудника";
+			toolTipItem7.ImageOptions.Image = global::Furmanov.UI.Properties.Resources.DeleteUser;
+			toolTipItem7.LeftIndent = 6;
+			toolTipItem7.Text = "Удалить выбранного сотрудника.\r\n\r\nГорячие клавиши: \"-\" или \"Delete\"";
+			superToolTip7.Items.Add(toolTipTitleItem7);
+			superToolTip7.Items.Add(toolTipItem7);
+			this.btnDeleteResource.SuperTip = superToolTip7;
 			this.btnDeleteResource.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.ShowNoImplementedCode);
 			// 
 			// btnLogin
@@ -314,13 +342,13 @@ namespace Furmanov.UI
 			this.btnVedomostForObject.ImageOptions.Image = global::Furmanov.UI.Properties.Resources.Report;
 			this.btnVedomostForObject.Name = "btnVedomostForObject";
 			this.btnVedomostForObject.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large;
-			toolTipTitleItem7.Text = "Ведомость по объекту";
-			toolTipItem7.ImageOptions.Image = global::Furmanov.UI.Properties.Resources.Report;
-			toolTipItem7.LeftIndent = 6;
-			toolTipItem7.Text = "Создать в Excel ведомость по выбранному объекту";
-			superToolTip7.Items.Add(toolTipTitleItem7);
-			superToolTip7.Items.Add(toolTipItem7);
-			this.btnVedomostForObject.SuperTip = superToolTip7;
+			toolTipTitleItem8.Text = "Ведомость по объекту";
+			toolTipItem8.ImageOptions.Image = global::Furmanov.UI.Properties.Resources.Report;
+			toolTipItem8.LeftIndent = 6;
+			toolTipItem8.Text = "Создать в Excel ведомость по выбранному объекту";
+			superToolTip8.Items.Add(toolTipTitleItem8);
+			superToolTip8.Items.Add(toolTipItem8);
+			this.btnVedomostForObject.SuperTip = superToolTip8;
 			this.btnVedomostForObject.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.ShowNoImplementedCode);
 			// 
 			// btnDeleteAllDays
@@ -331,13 +359,13 @@ namespace Furmanov.UI
 			this.btnDeleteAllDays.ImageOptions.Image = global::Furmanov.UI.Properties.Resources.NoDays;
 			this.btnDeleteAllDays.Name = "btnDeleteAllDays";
 			this.btnDeleteAllDays.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large;
-			toolTipTitleItem8.Text = "Удалить дни";
-			toolTipItem8.ImageOptions.Image = global::Furmanov.UI.Properties.Resources.NoDays;
-			toolTipItem8.LeftIndent = 6;
-			toolTipItem8.Text = "Удалить все отработанные дни в текущем месяце для выбранного сторудника";
-			superToolTip8.Items.Add(toolTipTitleItem8);
-			superToolTip8.Items.Add(toolTipItem8);
-			this.btnDeleteAllDays.SuperTip = superToolTip8;
+			toolTipTitleItem9.Text = "Удалить дни";
+			toolTipItem9.ImageOptions.Image = global::Furmanov.UI.Properties.Resources.NoDays;
+			toolTipItem9.LeftIndent = 6;
+			toolTipItem9.Text = "Удалить все отработанные дни в текущем месяце для выбранного сторудника";
+			superToolTip9.Items.Add(toolTipTitleItem9);
+			superToolTip9.Items.Add(toolTipItem9);
+			this.btnDeleteAllDays.SuperTip = superToolTip9;
 			this.btnDeleteAllDays.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.BtnDeleteAllDays_ItemClick);
 			// 
 			// btnUndo
@@ -349,13 +377,13 @@ namespace Furmanov.UI
 			this.btnUndo.Id = 26;
 			this.btnUndo.ImageOptions.Image = global::Furmanov.UI.Properties.Resources.undo;
 			this.btnUndo.Name = "btnUndo";
-			toolTipTitleItem9.Text = "Отменить действие";
-			toolTipItem9.ImageOptions.Image = global::Furmanov.UI.Properties.Resources.undo;
-			toolTipItem9.LeftIndent = 6;
-			toolTipItem9.Text = "Отменяет последнее действие\r\n\r\nГорячие клавиши: ctrl+z";
-			superToolTip9.Items.Add(toolTipTitleItem9);
-			superToolTip9.Items.Add(toolTipItem9);
-			this.btnUndo.SuperTip = superToolTip9;
+			toolTipTitleItem10.Text = "Отменить действие";
+			toolTipItem10.ImageOptions.Image = global::Furmanov.UI.Properties.Resources.undo;
+			toolTipItem10.LeftIndent = 6;
+			toolTipItem10.Text = "Отменяет последнее действие\r\n\r\nГорячие клавиши: ctrl+z";
+			superToolTip10.Items.Add(toolTipTitleItem10);
+			superToolTip10.Items.Add(toolTipItem10);
+			this.btnUndo.SuperTip = superToolTip10;
 			// 
 			// menuUndo
 			// 
@@ -372,13 +400,13 @@ namespace Furmanov.UI
 			this.btnRedo.Id = 27;
 			this.btnRedo.ImageOptions.Image = global::Furmanov.UI.Properties.Resources.redo;
 			this.btnRedo.Name = "btnRedo";
-			toolTipTitleItem10.Text = "Повторить действие";
-			toolTipItem10.ImageOptions.Image = global::Furmanov.UI.Properties.Resources.redo;
-			toolTipItem10.LeftIndent = 6;
-			toolTipItem10.Text = "Повторяет отменённое действие\r\n\r\nГорячие клавиши: ctrl + shift + z";
-			superToolTip10.Items.Add(toolTipTitleItem10);
-			superToolTip10.Items.Add(toolTipItem10);
-			this.btnRedo.SuperTip = superToolTip10;
+			toolTipTitleItem11.Text = "Повторить действие";
+			toolTipItem11.ImageOptions.Image = global::Furmanov.UI.Properties.Resources.redo;
+			toolTipItem11.LeftIndent = 6;
+			toolTipItem11.Text = "Повторяет отменённое действие\r\n\r\nГорячие клавиши: ctrl + shift + z";
+			superToolTip11.Items.Add(toolTipTitleItem11);
+			superToolTip11.Items.Add(toolTipItem11);
+			this.btnRedo.SuperTip = superToolTip11;
 			// 
 			// menuRedo
 			// 
@@ -414,49 +442,73 @@ namespace Furmanov.UI
 			this.riMonth.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
 			this.riMonth.VistaCalendarViewStyle = ((DevExpress.XtraEditors.VistaCalendarViewStyle)((DevExpress.XtraEditors.VistaCalendarViewStyle.YearView | DevExpress.XtraEditors.VistaCalendarViewStyle.YearsGroupView)));
 			// 
+			// btRefillDataBase
+			// 
+			this.btRefillDataBase.Caption = "Сгенерировать новые данные";
+			this.btRefillDataBase.Id = 8;
+			this.btRefillDataBase.ImageOptions.SvgImage = global::Furmanov.UI.Properties.Resources.updatedataextract;
+			this.btRefillDataBase.Name = "btRefillDataBase";
+			this.btRefillDataBase.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large;
+			toolTipTitleItem12.Text = "Сгенерировать новые данные";
+			toolTipItem12.ImageOptions.SvgImage = global::Furmanov.UI.Properties.Resources.updatedataextract;
+			toolTipItem12.LeftIndent = 6;
+			toolTipItem12.Text = "Сгенерировать новые случайные данные в базе данных";
+			superToolTip12.Items.Add(toolTipTitleItem12);
+			superToolTip12.Items.Add(toolTipItem12);
+			this.btRefillDataBase.SuperTip = superToolTip12;
+			this.btRefillDataBase.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btRefillDataBase_ItemClick);
+			// 
 			// pageMain
 			// 
 			this.pageMain.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
-            this.pageResourses,
-            this.pageMonth,
-            this.pageVedomost,
-            this.pageDaysMode});
+            this.ribgrDeveloper,
+            this.ribgrEmployees,
+            this.ribgrFilter,
+            this.ribgrDaysMode,
+            this.ribgrReport});
 			this.pageMain.Name = "pageMain";
 			this.pageMain.Text = "Главная";
 			// 
-			// pageResourses
+			// ribgrDeveloper
 			// 
-			this.pageResourses.AllowTextClipping = false;
-			this.pageResourses.ItemLinks.Add(this.btnCreateResource);
-			this.pageResourses.ItemLinks.Add(this.btnEditResource);
-			this.pageResourses.ItemLinks.Add(this.btnDeleteResource);
-			this.pageResourses.Name = "pageResourses";
-			this.pageResourses.ShowCaptionButton = false;
-			this.pageResourses.Text = "Сотрудники";
+			this.ribgrDeveloper.ItemLinks.Add(this.btRefillDataBase);
+			this.ribgrDeveloper.Name = "ribgrDeveloper";
+			this.ribgrDeveloper.ShowCaptionButton = false;
+			this.ribgrDeveloper.Text = "Разработчик";
 			// 
-			// pageMonth
+			// ribgrEmployees
 			// 
-			this.pageMonth.ItemLinks.Add(this.deMonth);
-			this.pageMonth.Name = "pageMonth";
-			this.pageMonth.ShowCaptionButton = false;
-			this.pageMonth.Text = "Фильтры";
+			this.ribgrEmployees.AllowTextClipping = false;
+			this.ribgrEmployees.ItemLinks.Add(this.btnCreateResource);
+			this.ribgrEmployees.ItemLinks.Add(this.btnEditResource);
+			this.ribgrEmployees.ItemLinks.Add(this.btnDeleteResource);
+			this.ribgrEmployees.Name = "ribgrEmployees";
+			this.ribgrEmployees.ShowCaptionButton = false;
+			this.ribgrEmployees.Text = "Сотрудники";
 			// 
-			// pageVedomost
+			// ribgrFilter
 			// 
-			this.pageVedomost.ItemLinks.Add(this.btnVedomostTotal);
-			this.pageVedomost.ItemLinks.Add(this.btnVedomostForObject);
-			this.pageVedomost.Name = "pageVedomost";
-			this.pageVedomost.ShowCaptionButton = false;
-			this.pageVedomost.Text = "Отчеты";
+			this.ribgrFilter.ItemLinks.Add(this.deMonth);
+			this.ribgrFilter.Name = "ribgrFilter";
+			this.ribgrFilter.ShowCaptionButton = false;
+			this.ribgrFilter.Text = "Фильтры";
 			// 
-			// pageDaysMode
+			// ribgrDaysMode
 			// 
-			this.pageDaysMode.ItemLinks.Add(this.btnWorkDaysOnly);
-			this.pageDaysMode.ItemLinks.Add(this.btnAllDays);
-			this.pageDaysMode.ItemLinks.Add(this.btnDeleteAllDays);
-			this.pageDaysMode.Name = "pageDaysMode";
-			this.pageDaysMode.ShowCaptionButton = false;
-			this.pageDaysMode.Text = "Табель";
+			this.ribgrDaysMode.ItemLinks.Add(this.btnWorkDaysOnly);
+			this.ribgrDaysMode.ItemLinks.Add(this.btnAllDays);
+			this.ribgrDaysMode.ItemLinks.Add(this.btnDeleteAllDays);
+			this.ribgrDaysMode.Name = "ribgrDaysMode";
+			this.ribgrDaysMode.ShowCaptionButton = false;
+			this.ribgrDaysMode.Text = "Табель";
+			// 
+			// ribgrReport
+			// 
+			this.ribgrReport.ItemLinks.Add(this.btnVedomostTotal);
+			this.ribgrReport.ItemLinks.Add(this.btnVedomostForObject);
+			this.ribgrReport.Name = "ribgrReport";
+			this.ribgrReport.ShowCaptionButton = false;
+			this.ribgrReport.Text = "Отчеты";
 			// 
 			// riMonths
 			// 
@@ -475,21 +527,21 @@ namespace Furmanov.UI
 			this.statusBar.ItemLinks.Add(this.lblUser);
 			this.statusBar.ItemLinks.Add(this.btnLogin);
 			this.statusBar.ItemLinks.Add(this.btnLogOut);
-			this.statusBar.Location = new System.Drawing.Point(0, 942);
+			this.statusBar.Location = new System.Drawing.Point(0, 947);
 			this.statusBar.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.statusBar.Name = "statusBar";
 			this.statusBar.Ribbon = this.menuMain;
-			this.statusBar.Size = new System.Drawing.Size(1441, 32);
+			this.statusBar.Size = new System.Drawing.Size(1441, 27);
 			// 
 			// pnMain
 			// 
 			this.pnMain.Controls.Add(this.sccMain);
 			this.pnMain.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.pnMain.Location = new System.Drawing.Point(0, 172);
+			this.pnMain.Location = new System.Drawing.Point(0, 175);
 			this.pnMain.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.pnMain.Name = "pnMain";
 			this.pnMain.ShowCaption = false;
-			this.pnMain.Size = new System.Drawing.Size(1441, 770);
+			this.pnMain.Size = new System.Drawing.Size(1441, 772);
 			this.pnMain.TabIndex = 2;
 			this.pnMain.Text = "groupRp";
 			this.pnMain.Visible = false;
@@ -505,7 +557,7 @@ namespace Furmanov.UI
 			this.sccMain.Panel1.Text = "Panel1";
 			this.sccMain.Panel2.Controls.Add(this.pnWorkedDays);
 			this.sccMain.Panel2.Text = "Panel2";
-			this.sccMain.Size = new System.Drawing.Size(1437, 766);
+			this.sccMain.Size = new System.Drawing.Size(1437, 768);
 			this.sccMain.SplitterPosition = 274;
 			this.sccMain.TabIndex = 2;
 			// 
@@ -517,7 +569,7 @@ namespace Furmanov.UI
 			this.pnPays.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.pnPays.Name = "pnPays";
 			this.pnPays.ShowCaption = false;
-			this.pnPays.Size = new System.Drawing.Size(1151, 766);
+			this.pnPays.Size = new System.Drawing.Size(1151, 768);
 			this.pnPays.TabIndex = 1;
 			this.pnPays.Text = "groupRPInnerleft";
 			// 
@@ -559,7 +611,7 @@ namespace Furmanov.UI
             this.riPositions,
             this.riResourceNames});
 			this.treeSalary.SelectImageList = this.imageCollection;
-			this.treeSalary.Size = new System.Drawing.Size(1147, 762);
+			this.treeSalary.Size = new System.Drawing.Size(1147, 764);
 			this.treeSalary.TabIndex = 7;
 			this.treeSalary.TreeLevelWidth = 24;
 			this.treeSalary.NodeCellStyle += new DevExpress.XtraTreeList.GetCustomNodeCellStyleEventHandler(this.TreeSalary_NodeCellStyle);
@@ -604,8 +656,6 @@ namespace Furmanov.UI
 			// colSalary
 			// 
 			this.colSalary.FieldName = "Salary";
-			this.colSalary.Format.FormatString = "{0:N0}";
-			this.colSalary.Format.FormatType = DevExpress.Utils.FormatType.Numeric;
 			this.colSalary.MinWidth = 23;
 			this.colSalary.Name = "colSalary";
 			this.colSalary.OptionsColumn.AllowEdit = false;
@@ -712,7 +762,7 @@ namespace Furmanov.UI
 			this.pnWorkedDays.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.pnWorkedDays.Name = "pnWorkedDays";
 			this.pnWorkedDays.ShowCaption = false;
-			this.pnWorkedDays.Size = new System.Drawing.Size(274, 766);
+			this.pnWorkedDays.Size = new System.Drawing.Size(274, 768);
 			this.pnWorkedDays.TabIndex = 1;
 			this.pnWorkedDays.Text = "groupRPInnerRight";
 			// 
@@ -725,7 +775,7 @@ namespace Furmanov.UI
 			this.gcWorkedDays.MainView = this.gvWorkedDays;
 			this.gcWorkedDays.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.gcWorkedDays.Name = "gcWorkedDays";
-			this.gcWorkedDays.Size = new System.Drawing.Size(270, 762);
+			this.gcWorkedDays.Size = new System.Drawing.Size(270, 764);
 			this.gcWorkedDays.TabIndex = 0;
 			this.gcWorkedDays.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gvWorkedDays});
@@ -784,6 +834,8 @@ namespace Furmanov.UI
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
 			this.Name = "MainView";
+			this.Ribbon = this.menuMain;
+			this.StatusBar = this.statusBar;
 			this.Text = "Табель учёта рабочего времени";
 			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainView_FormClosed);
 			((System.ComponentModel.ISupportInitialize)(this.menuMain)).EndInit();
@@ -817,7 +869,7 @@ namespace Furmanov.UI
 
 		private DevExpress.XtraBars.Ribbon.RibbonControl menuMain;
 		private DevExpress.XtraBars.Ribbon.RibbonPage pageMain;
-		private DevExpress.XtraBars.Ribbon.RibbonPageGroup pageResourses;
+		private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribgrEmployees;
 		private DevExpress.XtraBars.Ribbon.RibbonStatusBar statusBar;
 		private DevExpress.XtraEditors.GroupControl pnPays;
 		private DevExpress.XtraEditors.GroupControl pnMain;
@@ -827,11 +879,11 @@ namespace Furmanov.UI
 		private DevExpress.XtraBars.BarButtonItem btnEditResource;
 		private DevExpress.XtraBars.BarButtonItem btnCreateResource;
 		private DevExpress.XtraBars.BarButtonItem btnVedomostTotal;
-		private DevExpress.XtraBars.Ribbon.RibbonPageGroup pageMonth;
-		private DevExpress.XtraBars.Ribbon.RibbonPageGroup pageVedomost;
+		private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribgrFilter;
+		private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribgrReport;
 		private DevExpress.XtraEditors.GroupControl pnWorkedDays;
 		private DevExpress.XtraBars.BarButtonItem btnWorkDaysOnly;
-		private DevExpress.XtraBars.Ribbon.RibbonPageGroup pageDaysMode;
+		private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribgrDaysMode;
 		private DevExpress.XtraBars.BarButtonItem btnAllDays;
 		private DevExpress.XtraBars.BarStaticItem lblVersion;
 		private DevExpress.XtraBars.BarStaticItem lblUser;
@@ -866,5 +918,8 @@ namespace Furmanov.UI
 		private DevExpress.XtraEditors.Repository.RepositoryItemDateEdit riMonth;
 		private DevExpress.XtraTreeList.Columns.TreeListColumn colPosition;
 		private DevExpress.XtraTreeList.Columns.TreeListColumn colSalaryToPay;
+		private DevExpress.XtraBars.BarButtonItem btResetSettings;
+		private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribgrDeveloper;
+		private DevExpress.XtraBars.BarButtonItem btRefillDataBase;
 	}
 }

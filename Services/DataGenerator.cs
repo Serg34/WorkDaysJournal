@@ -1076,6 +1076,8 @@ namespace Furmanov.Services
 		};
 		#endregion
 
+		public event EventHandler<ProgressEventArgs> Progress;
+
 		public void CreateDataBase(DbContext db)
 		{
 			var baseDir = AppDomain.CurrentDomain.BaseDirectory;
@@ -1164,9 +1166,13 @@ namespace Furmanov.Services
 			Add(Role.Director, 3);
 			Add(Role.ProjectManager, 5);
 
+			var projectManagers = users.Where(u => u.Role == Role.ProjectManager).ToArray();
+			Progress?.Invoke(this, new ProgressEventArgs(1, projectManagers.Length + 1));
+
 			var projectsNames = new List<string>();
-			users.Where(u => u.Role == Role.ProjectManager).ForEach(projManager =>
+			for (var prManNum = 0; prManNum < projectManagers.Length; prManNum++)
 			{
+				var projManager = projectManagers[prManNum];
 				var projectCount = _rnd.Next(3, 4);
 				for (int i = 0; i < projectCount; i++)
 				{
@@ -1177,6 +1183,7 @@ namespace Furmanov.Services
 						if (projectsNames.Count >= ProjectCompanies.Length) return;
 						proj = GenProject(projManager.Id);
 					}
+
 					projectsNames.Add(proj.Name);
 					proj.Id = db.InsertWithInt32Identity(proj);
 					Add(Role.Manager, _rnd.Next(2, 5)).ForEach(manager =>
@@ -1190,6 +1197,7 @@ namespace Furmanov.Services
 								if (objectsNames.Count >= ObjectCompanies.Length) return;
 								obj = GenObject(proj.Id, manager.Id);
 							}
+
 							objectsNames.Add(obj.Name);
 							obj.Id = db.InsertWithInt32Identity(obj);
 							var empCount = _rnd.Next(5, 15);
@@ -1212,8 +1220,9 @@ namespace Furmanov.Services
 							}
 						}
 					});
+					Progress?.Invoke(this, new ProgressEventArgs(prManNum + 1, projectManagers.Length + 1));
 				}
-			});
+			}
 		}
 
 		private static WorkedDayDto[] GenWorkedDays(int year, int month, SalaryPayDto pay)

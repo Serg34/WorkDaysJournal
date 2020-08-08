@@ -7,6 +7,13 @@ namespace Furmanov.Data.Data
 	[Serializable]
 	public class LoginPassword
 	{
+		public LoginPassword() { }
+
+		public LoginPassword(string login, string password)
+		{
+			Login = login;
+			Password = password;
+		}
 		[DataMember]
 		public string Login { get; set; }
 

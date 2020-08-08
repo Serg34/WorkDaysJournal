@@ -185,6 +185,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="icon.ico" />
+    <None Include="Resources\delete.svg" />
+    <None Include="Resources\cancel_32x32.png" />
+    <None Include="Resources\security_key.svg" />
+    <None Include="Resources\updatedataextract.svg" />
+    <None Include="Resources\ResetSettings.png" />
     <None Include="Resources\Fsi.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

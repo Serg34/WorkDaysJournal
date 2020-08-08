@@ -1,6 +1,10 @@
 ﻿using Furmanov.Data;
 using Furmanov.Data.Data;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using Furmanov.Dal;
+using Furmanov.Services;
 
 namespace Furmanov.MVP.Login
 {
@@ -13,6 +17,7 @@ namespace Furmanov.MVP.Login
 
 		void Update(bool isStartApp);
 		void Login(object sender, LoginViewModel viewModel);
+		void DeleteAutoLogin(object sender, string login);
 	}
 	public class LoginModel : ILoginModel
 	{
@@ -33,14 +38,16 @@ namespace Furmanov.MVP.Login
 		public void Update(bool isStartApp)
 		{
 			_viewModel = new LoginViewModel { CanLogin = isStartApp };
-			var loginPass = _db.GetAutoLoginPassword();
+			var loginsPass = _db.GetAutoLoginPassword();
+			var loginPass = loginsPass.FirstOrDefault();
 			if (loginPass != null)
 			{
+				_viewModel.AutoLogins = loginsPass;
 				_viewModel.Login = loginPass.Login;
 				_viewModel.Password = loginPass.Password;
-				_viewModel.IsRemember = !string.IsNullOrEmpty(loginPass.Login);
-				_viewModel.IsAutoLoginOnStart = !string.IsNullOrEmpty(loginPass.Password);
-				if (_viewModel.IsRemember && _viewModel.IsAutoLoginOnStart)
+				_viewModel.IsRememberLogin = loginPass.Login.NoEmpty();
+				_viewModel.IsRememberPassword = loginPass.Password.NoEmpty();
+				if (_viewModel.IsRememberLogin && _viewModel.IsRememberPassword)
 				{
 					Login(this, _viewModel);
 				}
@@ -63,10 +70,10 @@ namespace Furmanov.MVP.Login
 			{
 				ApplicationUser.User = user;
 				var loginPass = new LoginPassword();
-				if (_viewModel.IsRemember)
+				if (_viewModel.IsRememberLogin)
 				{
 					loginPass.Login = _viewModel.Login;
-					if (_viewModel.IsAutoLoginOnStart) loginPass.Password = _viewModel.Password;
+					if (_viewModel.IsRememberPassword) loginPass.Password = _viewModel.Password;
 				}
 
 				_db.SaveAutoLoginPassword(loginPass);
@@ -84,6 +91,12 @@ namespace Furmanov.MVP.Login
 
 				Error?.Invoke(this, "Неверный логин или пароль");
 			}
+		}
+
+		public void DeleteAutoLogin(object sender, string login)
+		{
+			_db.DeleteAutoLogin(login);
+			Update(false);
 		}
 	}
 }

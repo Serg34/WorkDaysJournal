@@ -20,7 +20,7 @@ namespace Furmanov.Services
 	public static class LayoutSaver
 	{
 		private static readonly string AppFolder
-			= Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "SCAS");
+			= Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), Application.ProductName);
 
 		private static bool _isReset;
 

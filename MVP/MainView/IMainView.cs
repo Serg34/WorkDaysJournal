@@ -3,6 +3,7 @@ using Furmanov.MVP.Login;
 using Furmanov.Services.UndoRedo;
 using System;
 using System.Collections.Generic;
+using Furmanov.Services;
 
 namespace Furmanov.MVP.MainView
 {
@@ -12,6 +13,7 @@ namespace Furmanov.MVP.MainView
 		event EventHandler Logging;
 		event EventHandler Logout;
 
+		event EventHandler RefillingDataBase; 
 		event EventHandler<MonthEventArgs> ChangedMonth;
 		event EventHandler WorkDaysOnlyClick;
 		event EventHandler AllDaysClick;
@@ -30,5 +32,6 @@ namespace Furmanov.MVP.MainView
 		void UpdateSalaries(object sender, MainViewModel viewModel);
 		void UpdateDays(List<WorkedDay> viewModel);
 		void UpdateUndoRedo(IEnumerable<string> undoItems, IEnumerable<string> redoItems);
+		void Progress(object sender, ProgressEventArgs e);
 	}
 }

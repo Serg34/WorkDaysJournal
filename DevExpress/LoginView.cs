@@ -2,82 +2,102 @@
 using Furmanov.MVP.Login;
 using Furmanov.Services;
 using System;
+using System.Linq;
+using System.Windows.Forms;
+using Furmanov.Data.Data;
 
 namespace Furmanov.UI
 {
 	public partial class LoginView : XtraForm, ILoginView
 	{
-		private bool _updating;
 		private LoginViewModel _vm;
 		public LoginView()
 		{
 			InitializeComponent();
 		}
 		public event EventHandler<LoginViewModel> Logging;
+		public event EventHandler<string> DeletingAutoLogin;
 
 		public void Update(LoginViewModel viewModel = null)
 		{
 			try
 			{
-				_updating = true;
-				if (viewModel != null) _vm = viewModel;
-				tbLogin.Text = _vm.Login;
-				tbPass.Text = _vm.Password;
-				checkRemember.Checked = checkAutoLoginOnStart.Enabled = _vm.IsRemember;
-				checkAutoLoginOnStart.Checked = _vm.IsAutoLoginOnStart;
+				if (viewModel == null) return;
+				_vm = viewModel;
+				cbLogins.Properties.Items.Clear();
+				if (_vm.AutoLogins.NoEmpty())
+				{
+					cbLogins.Properties.Items.AddRange(_vm.AutoLogins.Select(l => l.Login).ToArray());
+				}
+				var currentLoginPass = _vm.AutoLogins?.FirstOrDefault();
+				cbLogins.Text = currentLoginPass?.Login;
+				SelectedLoginPasswordChange(currentLoginPass);
+				btDeleteLogin.Enabled = _vm.AutoLogins.NoEmpty();
 			}
 			catch (Exception ex)
 			{
-				ShowError(ex.ToString());
-			}
-			finally
-			{
-				_updating = false;
+				ShowError(ex);
 			}
 		}
 		private void btnOk_Click(object sender, EventArgs e)
 		{
-			_vm.CanLogin = true;
-			Logging?.Invoke(this, _vm);
+			try
+			{
+				_vm.Login = cbLogins.Text?.Trim();
+				_vm.Password = tbPass.Text?.Trim();
+				_vm.CanLogin = true;
+				_vm.IsRememberLogin = chbIsRememberLogin.Checked;
+				_vm.IsRememberPassword = chbIsRememberPassword.Checked;
+				Logging?.Invoke(this, _vm);
+			}
+			catch (Exception ex)
+			{
+				ShowError(ex);
+			}
 		}
 
-		private void checkRemember_CheckedChanged(object sender, EventArgs e)
+		private void SelectedLoginPasswordChange(LoginPassword loginPass)
 		{
-			if (_updating) return;
-			_vm.IsRemember = checkRemember.Checked;
-			Update();
+			tbPass.Text = loginPass?.Password;
+			chbIsRememberLogin.Checked =
+			chbIsRememberPassword.Enabled = loginPass?.Login.NoEmpty() ?? false;
+			chbIsRememberPassword.Checked = loginPass?.Password.NoEmpty() ?? false;
 		}
-		private void CheckAutoLoginOnStart_CheckedChanged(object sender, EventArgs e)
+		private void cbLogins_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			if (_updating) return;
-			_vm.IsAutoLoginOnStart = checkAutoLoginOnStart.Checked;
-			Update();
+			try
+			{
+				var index = cbLogins.SelectedIndex;
+				var loginPass = index >= 0 ? _vm.AutoLogins[index] : null;
+				SelectedLoginPasswordChange(loginPass);
+			}
+			catch (Exception ex)
+			{
+				ShowError(ex);
+			}
 		}
+		private void btDeleteLogin_Click(object sender, EventArgs e)
+		{
+			try
+			{
+				var index = cbLogins.SelectedIndex;
+				var login = index >= 0 ? _vm.AutoLogins[index].Login : null;
+				var q = $"Удалить логин '{login}' из выпадающего списка?";
+				if(MessageService.Question(q) != DialogResult.Yes) return;
 
-		private void TbLogin_EditValueChanged(object sender, EventArgs e)
-		{
-			if (_updating) return;
-			_vm.Login = tbLogin.Text?.Trim();
-			Update();
+				DeletingAutoLogin?.Invoke(this, login);
+			}
+			catch (Exception ex)
+			{
+				ShowError(ex);
+			}
 		}
-
-		private void TbPass_EditValueChanged(object sender, EventArgs e)
+		private void chbIsRememberLogin_CheckedChanged(object sender, EventArgs e)
 		{
-			if (_updating) return;
-			_vm.Password = tbPass.Text?.Trim();
-			Update();
+			chbIsRememberPassword.Enabled = chbIsRememberLogin.Checked;
+			if (!chbIsRememberLogin.Checked) chbIsRememberPassword.Checked = false;
 		}
-		private void btnCancel_Click(object sender, EventArgs e)
-		{
-			Close();
-		}
-		public void ShowError(Exception ex)
-		{
-			MessageService.Error(ex.ToString());
-		}
-		public void ShowError(string error)
-		{
-			MessageService.Error(error);
-		}
+		public void ShowError(Exception ex) => MessageService.Error(ex.ToString());
+		public void ShowError(string error) => MessageService.Error(error);
 	}
 }

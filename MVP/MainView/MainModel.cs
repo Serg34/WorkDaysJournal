@@ -14,6 +14,7 @@ namespace Furmanov.MVP.MainView
 		event EventHandler<User> LoginChanged;
 		event EventHandler<MainViewModel> Updated;
 		event EventHandler<List<WorkedDay>> SelectedSalaryPay;
+		event EventHandler<ProgressEventArgs> Progress;
 		event EventHandler<Exception> Error;
 
 		ILoginModel LoginModel { get; }
@@ -26,6 +27,7 @@ namespace Furmanov.MVP.MainView
 		List<WorkedDay> CurrentDaysInMonth { get; }
 
 		void Update();
+		void RefillDataBase();
 		void ChangeMonth(int year, int month);
 		void SaveSalaryPay(SalaryPay viewModel);
 		void SelectSalaryPay(SalaryPay vm);
@@ -50,18 +52,13 @@ namespace Furmanov.MVP.MainView
 			_db = dataAccessService;
 			LoginModel = loginModel;
 			LoginModel.Logged += (sender, args) => UpdateLogin();
-
-			using (var dc = _db.GetDataContext())
-			{
-				//new DataGenerator().CreateDataBase(dc);
-				new DataGenerator().RefillDataBase(dc);
-			}
 		}
 
 		#region Events
 		public event EventHandler<User> LoginChanged;
 		public event EventHandler<MainViewModel> Updated;
 		public event EventHandler<List<WorkedDay>> SelectedSalaryPay;
+		public event EventHandler<ProgressEventArgs> Progress;
 		public event EventHandler<Exception> Error;
 		#endregion
 
@@ -89,6 +86,18 @@ namespace Furmanov.MVP.MainView
 		#endregion
 
 		#region TopMenu
+
+		public void RefillDataBase()
+		{
+			using (var dc = _db.GetDataContext())
+			{
+				var generator = new DataGenerator();
+				generator.Progress += Progress;
+				generator.RefillDataBase(dc);
+			}
+			Update();
+		}
+
 		public void ChangeMonth(int year, int month)
 		{
 			Year = year;

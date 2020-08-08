@@ -1,5 +1,11 @@
-﻿using Autofac;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Windows.Forms;
+using Autofac;
+using Furmanov.Dal;
 using Furmanov.Data;
+using Furmanov.Data.Data;
 using Furmanov.MVP.Login;
 using Furmanov.MVP.MainView;
 using Furmanov.Services.UndoRedo;
@@ -19,7 +25,11 @@ namespace Furmanov.UI.IoC
 				.As<IResolver>()
 				.SingleInstance();
 
-			builder.Register(a => new DataAccessService(connectionString))
+			var loginPasswordRepository = new XmlRepository<List<LoginPassword>>(
+				Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+				Application.ProductName,
+				"LoginPasswords.xml"));
+			builder.Register(a => new DataAccessService(connectionString, loginPasswordRepository))
 				.As<IDataAccessService>()
 				.SingleInstance();
 

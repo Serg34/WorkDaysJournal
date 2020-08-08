@@ -6,7 +6,6 @@ using LinqToDB.Data;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.IO;
 using System.Linq;
 
 namespace Furmanov.Data
@@ -15,8 +14,9 @@ namespace Furmanov.Data
 	public interface IDataAccessService
 	{
 		DbContext GetDataContext();
-		LoginPassword GetAutoLoginPassword();
+		List<LoginPassword> GetAutoLoginPassword();
 		void SaveAutoLoginPassword(LoginPassword loginPassword);
+		void DeleteAutoLogin(string login);
 		User GetUser(string login, string password);
 
 		List<SalaryPay> GetSalaryPays(User user, int year, int month);
@@ -32,10 +32,13 @@ namespace Furmanov.Data
 	public class DataAccessService : IDataAccessService
 	{
 		private readonly string _connectionString;
+		private readonly IRepository<List<LoginPassword>> _loginPasswordRepository;
 
-		public DataAccessService(string connectionString)
+		public DataAccessService(string connectionString,
+			IRepository<List<LoginPassword>> loginPasswordRepository)
 		{
 			_connectionString = connectionString;
+			_loginPasswordRepository = loginPasswordRepository;
 		}
 		public DbContext GetDataContext() => new DbContext(_connectionString);
 		public User GetUser(string login, string password)
@@ -49,23 +52,35 @@ namespace Furmanov.Data
 				return res;
 			}
 		}
-		public LoginPassword GetAutoLoginPassword()
+		public List<LoginPassword> GetAutoLoginPassword()
 		{
-			var file = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-				"Furmanov",
-				"WorkedDaysJournal",
-				"LoginPassword.xml");
-
-			var res = new XmlRepository<LoginPassword>(file).Load();
+			var res = _loginPasswordRepository.Load();
+#if DEBUG
+			if (res == null) res = new List<LoginPassword>();
+			void Add(string login)
+			{
+				if (res.Any(l => l.Login == login)) return;
+				res.Add(new LoginPassword(login, "1"));
+			}
+			Add("Admin");
+			Add("ProjectManager");
+			Add("Manager");
+#endif
 			return res;
 		}
 		public void SaveAutoLoginPassword(LoginPassword loginPassword)
 		{
-			var file = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-				"Furmanov",
-				"WorkedDaysJournal",
-				"LoginPassword.xml");
-			new XmlRepository<LoginPassword>(file).Save(loginPassword);
+			var loginPasswords = new List<LoginPassword> { loginPassword }; //Текущий логин должен быть первым
+			loginPasswords.AddRange(_loginPasswordRepository.Load()
+					.Where(u => u.Login != loginPassword.Login));
+			_loginPasswordRepository.Save(loginPasswords);
+		}
+		public void DeleteAutoLogin(string login)
+		{
+			var users = _loginPasswordRepository.Load()
+				.Where(u => !u.Login.Equals(login, StringComparison.CurrentCultureIgnoreCase))
+				.ToList();
+			_loginPasswordRepository.Save(users);
 		}
 
 		public List<SalaryPay> GetSalaryPays(User user, int year, int month)
@@ -113,12 +128,21 @@ namespace Furmanov.Data
 		{
 			using (var db = new DbContext(_connectionString))
 			{
-				var noWork = workedDay.Where(t => !t.IsWorked).ToArray();
-				foreach (var day in noWork)
+				var noWorkDays = workedDay.Where(d => !d.IsWorked)
+					.Select(d => d.Date.Day)
+					.ToArray();
+				if (noWorkDays.Any())
 				{
-					db.Execute(Resources.DeleteWorkDay,
-						new DataParameter("@payId", day.SalaryPay_Id),
-						new DataParameter("@day", day.Date));
+					var payId = workedDay[0].SalaryPay_Id;
+					var year = workedDay[0].Date.Year;
+					var month = workedDay[0].Date.Month;
+
+					var deleteSql = Resources.DeleteWorkDay;
+					deleteSql = deleteSql.Replace("@day", string.Join(",", noWorkDays));
+					db.Execute(deleteSql,
+						new DataParameter("@payId", payId),
+						new DataParameter("@year", year),
+						new DataParameter("@month", month));
 				}
 
 				var work = workedDay.Where(d => d.IsWorked).ToArray();

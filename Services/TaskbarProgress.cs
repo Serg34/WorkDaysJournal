@@ -5,6 +5,17 @@ using System.Windows.Forms;
 
 namespace Furmanov.Services
 {
+	public class ProgressEventArgs : EventArgs
+	{
+		public ProgressEventArgs(int value, int max)
+		{
+			Value = value;
+			Max = max;
+		}
+		public int Value { get; }
+		public int Max { get; }
+	}
+
 	public static class TaskbarProgress
 	{
 		public enum TaskbarStates
@@ -62,7 +73,7 @@ namespace Furmanov.Services
 			taskbarInstance.SetProgressState(handle, taskbarState);
 		}
 
-		public static void Start() => SetValue(0, 1);
+		public static void Start(Control form = null) => SetValue(0, 1, form);
 		public static void Error(Control form = null)
 		{
 			SetValue(1, 1, form);

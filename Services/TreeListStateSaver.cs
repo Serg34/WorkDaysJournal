@@ -1,11 +1,12 @@
-﻿using DevExpress.XtraTreeList;
-using DevExpress.XtraTreeList.Nodes;
-using Furmanov.Data.Data;
-using Furmanov.Services.Repositories;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
+using DevExpress.Utils.Extensions;
+using DevExpress.XtraTreeList;
+using DevExpress.XtraTreeList.Nodes;
+using Furmanov.Dal;
+using Furmanov.Data.Data;
 
 namespace Furmanov.Services
 {
@@ -16,14 +17,16 @@ namespace Furmanov.Services
 		private string _selectedId;
 		private string _selectedColumnName;
 		private int _topVisibleNodeIndex;
+		private object _tag;
 
 		public TreeListStateSaver(TreeList treeList)
 		{
 			_treeList = treeList;
-			_treeList.Nodes.ForEach(GetExpanded);
+			EnumerableExtensions.ForEach(_treeList.Nodes, GetExpanded);
 			_selectedId = (_treeList.GetRow(_treeList.FocusedNode?.Id ?? -1) as IViewModel)?.ViewModelId;
 			_selectedColumnName = _treeList.FocusedColumn?.Name;
 			_topVisibleNodeIndex = _treeList.TopVisibleNodeIndex;
+			_tag = _treeList.Tag;
 			_treeList.Tag = Updating;
 		}
 		public static object Updating { get; } = new object();
@@ -68,17 +71,21 @@ namespace Furmanov.Services
 
 		public void Dispose()
 		{
-			_treeList.BeginInit();
+			try
+			{
+				_treeList.BeginInit();
 
-			_treeList.Nodes.ForEach(SetState);
-			_treeList.TopVisibleNodeIndex = _topVisibleNodeIndex;
-			_treeList.Tag = null;
+				EnumerableExtensions.ForEach(_treeList.Nodes, SetState);
+				_treeList.TopVisibleNodeIndex = _topVisibleNodeIndex;
+				_treeList.Tag = _tag;
 
-			_treeList.EndInit();
+				_treeList.EndInit();
 
-			var focusedColumn = _treeList.Columns
-				.FirstOrDefault(c => c.Name == _selectedColumnName);
-			if (focusedColumn != null) _treeList.FocusedColumn = focusedColumn;
+				var focusedColumn = _treeList.Columns
+					.FirstOrDefault(c => c.Name == _selectedColumnName);
+				if (focusedColumn != null) _treeList.FocusedColumn = focusedColumn;
+			}
+			catch { }
 		}
 
 		[DataContract]

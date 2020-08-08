@@ -14,5 +14,7 @@ namespace Furmanov.Services
 				action?.Invoke(item);
 			}
 		}
+		public static bool IsEmpty<T>(this IEnumerable<T> enumerable) => enumerable == null || !enumerable.Any();
+		public static bool NoEmpty<T>(this IEnumerable<T> enumerable) => enumerable != null && enumerable.Any();
 	}
 }

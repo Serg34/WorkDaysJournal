@@ -30,6 +30,7 @@ namespace Furmanov.MVP.MainView
 				_view.UpdateUndoRedo(_undoService.UndoItems, _undoService.RedoItems);
 			};
 			_model.SelectedSalaryPay += (sender, modelView) => _view.UpdateDays(modelView);
+			_model.Progress += _view.Progress;
 			_model.Error += (sender, ex) => _view.ShowError(ex);
 
 			_view.Logging += (sender, args) => ShowLoginView(false);
@@ -40,6 +41,7 @@ namespace Furmanov.MVP.MainView
 				ShowLoginView(false);
 			};
 
+			_view.RefillingDataBase += (sender, e) => _model.RefillDataBase();
 			_view.ChangedMonth += (sender, e) =>
 			{
 				var cmd = new MonthCmd(_model, e);
