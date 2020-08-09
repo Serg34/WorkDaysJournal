@@ -185,6 +185,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="icon.ico" />
+    <None Include="Resources\security_bug.svg" />
     <None Include="Resources\open.svg" />
     <None Include="Resources\delete.svg" />
     <None Include="Resources\cancel_32x32.png" />

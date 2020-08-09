@@ -15,7 +15,7 @@ namespace Furmanov.MVP.MainView
 		event EventHandler<MainViewModel> Updated;
 		event EventHandler<List<WorkedDay>> SelectedSalaryPay;
 		event EventHandler<ProgressEventArgs> Progress;
-		event EventHandler<Exception> Error;
+		event EventHandler<BugEventArgs> ReportingBug;
 
 		ILoginModel LoginModel { get; }
 		void Logout();
@@ -35,6 +35,9 @@ namespace Furmanov.MVP.MainView
 		List<WorkedDay> GenWorkedDays(bool allDays, bool isExist);
 		void SaveWorkDay(WorkedDay day);
 		void SaveWorkedDays(List<WorkedDay> days);
+
+		void ReportBug(object sender, BugEventArgs e);
+
 	}
 	#endregion
 
@@ -59,7 +62,7 @@ namespace Furmanov.MVP.MainView
 		public event EventHandler<MainViewModel> Updated;
 		public event EventHandler<List<WorkedDay>> SelectedSalaryPay;
 		public event EventHandler<ProgressEventArgs> Progress;
-		public event EventHandler<Exception> Error;
+		public event EventHandler<BugEventArgs> ReportingBug;
 		#endregion
 
 		#region Login
@@ -89,11 +92,11 @@ namespace Furmanov.MVP.MainView
 
 		public void RefillDataBase()
 		{
-			using (var dc = _db.GetDataContext())
+			using (var dbContext = _db.GetDbContext())
 			{
 				var generator = new DataGenerator();
 				generator.Progress += Progress;
-				generator.RefillDataBase(dc);
+				generator.RefillDataBase(dbContext);
 			}
 			Update();
 		}
@@ -119,7 +122,7 @@ namespace Furmanov.MVP.MainView
 			}
 			catch (Exception ex)
 			{
-				Error?.Invoke(this, ex);
+				ReportBug(this, new BugEventArgs(ex));
 			}
 		}
 		#endregion
@@ -154,7 +157,7 @@ namespace Furmanov.MVP.MainView
 			}
 			catch (Exception ex)
 			{
-				Error?.Invoke(this, ex);
+				ReportBug(this, new BugEventArgs(ex));
 			}
 		}
 		#endregion
@@ -215,9 +218,9 @@ namespace Furmanov.MVP.MainView
 		#endregion
 
 		#region CalculateAndSaveSalaryPay
-		private void CalculateAndSaveSalaryPay(SalaryPay salaryPay)
+		private void CalculateAndSaveSalaryPay(SalaryPay pay)
 		{
-			var workDays = _db.GetWorkedDays(salaryPay.Id, Year, Month);
+			var workDays = _db.GetWorkedDays(pay.Id, Year, Month);
 			CurrentDaysInMonth = DateService.AllDaysInMonth(Year, Month)
 				.Select(date => new WorkedDay
 				{
@@ -226,25 +229,22 @@ namespace Furmanov.MVP.MainView
 					IsWorked = workDays.Any(t => t.Date.Date == date.Date)
 				}).ToList();
 
-			salaryPay.FactDays = DateService.AllDaysInMonth(Year, Month)
+			pay.FactDays = DateService.AllDaysInMonth(Year, Month)
 				.Count(date => CurrentDaysInMonth
-					.Any(t => t.SalaryPay_Id == salaryPay.Id &&
+					.Any(t => t.SalaryPay_Id == pay.Id &&
 							  t.Date.Date == date.Date &&
 							  t.IsWorked));
 
-			if (salaryPay.FactDays != null && salaryPay.RateDays > 0)
-			{
-				//ЗП = Оклад / Норма * Факт - Аванс - Штрафы + Премии;
+			var baseSalary = pay.FactDays == null || pay.RateDays == 0 ? 0
+				: pay.Salary / pay.RateDays * pay.FactDays;
 
-				salaryPay.SalaryToPay =
-					salaryPay.Salary / salaryPay.RateDays * salaryPay.FactDays
-					- (salaryPay.Advance ?? 0)
-					- (salaryPay.Penalty ?? 0)
-					+ (salaryPay.Premium ?? 0);
-			}
-			else salaryPay.SalaryToPay = null;
+			//ЗП = Оклад / Норма * Факт - Аванс - Штрафы + Премии;
+			pay.SalaryToPay = baseSalary
+				- (pay.Advance ?? 0)
+				- (pay.Penalty ?? 0)
+				+ (pay.Premium ?? 0);
 
-			_db.SaveSalaryPay(salaryPay);
+			_db.SaveSalaryPay(pay);
 		}
 		#endregion
 
@@ -263,5 +263,18 @@ namespace Furmanov.MVP.MainView
 			return vm;
 		}
 		#endregion
+
+		public void ReportBug(object sender, BugEventArgs e)
+		{
+			using (var dbContext = _db.GetDbContext())
+			{
+				var bug = BugReporter.Report(dbContext, e.Exception, e.InfoForDeveloper);
+				if (bug != null)
+				{
+					e.Bug = bug;
+					ReportingBug?.Invoke(this, e);
+				}
+			}
+		}
 	}
 }

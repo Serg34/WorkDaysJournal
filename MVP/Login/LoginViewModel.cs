@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using Furmanov.Data.Data;
+﻿using Furmanov.Data.Data;
+using System.Collections.Generic;
 
 namespace Furmanov.MVP.Login
 {

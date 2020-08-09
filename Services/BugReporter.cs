@@ -9,12 +9,12 @@ namespace Furmanov.Services
 {
 	public static class BugReporter
 	{
-		public static BugDto Report(DbContext db, Exception ex, string infoForDeveloper = null)
+		public static Bug Report(DbContext db, Exception ex, string infoForDeveloper)
 		{
-#if DEBUG
-			MessageService.Error(ex.ToString());
-			return null;
-#endif
+//#if DEBUG
+//			MessageService.Error(ex.ToString());
+//			return null;
+//#endif
 			var message = ex.ToString();
 			if (message.Contains("Время ожидания выполнения истекло") ||
 				message.Contains("Сервер не найден или недоступен") ||
@@ -31,10 +31,11 @@ namespace Furmanov.Services
 				return null;
 			}
 
-			var bug = db.FirstOrDefault<BugDto>(b => b.Message == message);
-			if (bug == null)
+			var bugDto = db.FirstOrDefault<BugDto>(b => b.Message == message);
+			var isExist = bugDto != null;
+			if (!isExist)
 			{
-				bug = new BugDto
+				bugDto = new BugDto
 				{
 					Project = Application.ProductName,
 					Message = message,
@@ -42,22 +43,23 @@ namespace Furmanov.Services
 					User = Environment.UserName,
 					PrintScreen = ScreenPrinter.Print().ToByteArray()
 				};
-				bug.Id = db.InsertWithInt32Identity(bug);
+				bugDto.Id = db.InsertWithInt32Identity(bugDto);
 			}
-			else if (bug.PrintScreen == null) //если разработчик удалил снимок экрана
+			else if (bugDto.PrintScreen == null) //если разработчик удалил снимок экрана
 			{
-				bug.PrintScreen = ScreenPrinter.Print().ToByteArray();
-				db.Update(bug);
+				bugDto.PrintScreen = ScreenPrinter.Print().ToByteArray();
+				db.Update(bugDto);
 			}
 
 			var incident = new BugIncidentDto
 			{
-				Bug_Id = bug.Id,
-				DateTime = DateTime.Now,
+				Bug_Id = bugDto.Id,
 				User = Environment.UserName
 			};
 			db.Insert(incident);
 
+			var bug = MapperService.Map<Bug>(bugDto);
+			bug.IsExist = isExist;
 			return bug;
 		}
 	}

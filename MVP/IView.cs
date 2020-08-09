@@ -1,5 +1,4 @@
-﻿using System;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 
 namespace Furmanov.MVP
 {
@@ -9,7 +8,5 @@ namespace Furmanov.MVP
 		DialogResult ShowDialog();
 		void Hide();
 		void Close();
-
-		void ShowError(Exception ex);
 	}
 }

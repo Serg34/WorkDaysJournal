@@ -1,6 +1,8 @@
 ﻿using FluentValidation;
 using Furmanov.Data.Data;
+using Furmanov.Services;
 using System;
+using System.Linq.Expressions;
 
 namespace Furmanov.MVP.MainView
 {
@@ -8,31 +10,39 @@ namespace Furmanov.MVP.MainView
 	{
 		public SalaryPayValidator(int year, int month)
 		{
-			RuleFor(s => s.Advance)
-				.GreaterThanOrEqualTo(0)
-				.When(s => s.Advance != null)
-				.WithMessage("Аванс не может быть отрицательным");
+			new Expression<Func<SalaryPay, decimal?>>[]
+			{
+				pay => pay.Advance,
+				pay => pay.Penalty,
+				pay => pay.Premium,
+			}.ForEach(expression =>
+			{
+				RuleFor(expression)
+					.GreaterThanOrEqualTo(0)
+					.When(pay =>
+					{
+						var func = expression.Compile();
+						var value = func.Invoke(pay);
+						return value != null;
+					})
+					.WithMessage("Это число не может быть отрицательным");
+			});
 
-			RuleFor(s => s.Penalty)
-				.GreaterThanOrEqualTo(0)
-				.When(s => s.Penalty != null)
-				.WithMessage("Штраф не может быть отрицательным");
-
-			RuleFor(s => s.Premium)
-				.GreaterThanOrEqualTo(0)
-				.When(s => s.Premium != null)
-				.WithMessage("Премия не может быть отрицательной");
+			new Expression<Func<SalaryPay, decimal>>[]
+			{
+				pay => pay.RateDays,
+				pay => pay.Salary,
+			}.ForEach(expression =>
+			{
+				RuleFor(expression)
+					.GreaterThanOrEqualTo(0)
+					.WithMessage("Это число не может быть отрицательным");
+			});
 
 			var daysMaxCount = DateTime.DaysInMonth(year, month);
 			RuleFor(s => s.RateDays)
-				.GreaterThanOrEqualTo(0)
-				.WithMessage("Норма не может быть отрицательной")
 				.LessThanOrEqualTo(daysMaxCount)
-				.WithMessage($"Норма не может быть больше {daysMaxCount}");
-
-			RuleFor(s => s.Salary)
-				.GreaterThanOrEqualTo(0)
-				.WithMessage("Зарплата не может быть отрицательной");
+				.WithMessage($"Норма не может быть больше количества дней в месяце ({daysMaxCount})");
 		}
 	}
 }

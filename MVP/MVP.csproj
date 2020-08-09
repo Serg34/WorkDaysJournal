@@ -55,7 +55,7 @@
     <Compile Include="Login\ILoginView.cs" />
     <Compile Include="Login\LoginValidator.cs" />
     <Compile Include="Login\LoginViewModel.cs" />
-    <Compile Include="MainView\EventArgs.cs" />
+    <Compile Include="EventArgs.cs" />
     <Compile Include="MainView\MainModel.cs" />
     <Compile Include="MainView\MainPresenter.cs" />
     <Compile Include="MainView\IMainView.cs" />

@@ -13,7 +13,7 @@ namespace Furmanov.Data
 	#region IDataAccessService
 	public interface IDataAccessService
 	{
-		DbContext GetDataContext();
+		DbContext GetDbContext();
 		List<LoginPassword> GetAutoLoginPassword();
 		void SaveAutoLoginPassword(LoginPassword loginPassword);
 		void DeleteAutoLogin(string login);
@@ -40,7 +40,7 @@ namespace Furmanov.Data
 			_connectionString = connectionString;
 			_loginPasswordRepository = loginPasswordRepository;
 		}
-		public DbContext GetDataContext() => new DbContext(_connectionString);
+		public DbContext GetDbContext() => new DbContext(_connectionString);
 		public User GetUser(string login, string password)
 		{
 			using (var db = new DbContext(_connectionString))

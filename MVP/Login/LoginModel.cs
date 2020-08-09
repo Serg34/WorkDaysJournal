@@ -1,21 +1,17 @@
 ﻿using Furmanov.Data;
 using Furmanov.Data.Data;
-using System;
-using System.Collections.Generic;
-using System.Data.SqlClient;
-using System.Linq;
-using System.Linq.Expressions;
-using Furmanov.Dal;
 using Furmanov.Services;
+using System;
+using System.Linq;
 
 namespace Furmanov.MVP.Login
 {
 	public interface ILoginModel
 	{
-		event EventHandler<Exception> Exception;
-		event EventHandler<string> Error;
 		event EventHandler<LoginViewModel> Updated;
 		event EventHandler Logged;
+		event EventHandler SqlConnectingError;
+		event EventHandler<string> Error;
 		bool LoginChecked { get; }
 
 		void Update(bool isStartApp);
@@ -36,7 +32,7 @@ namespace Furmanov.MVP.Login
 
 		public event EventHandler<LoginViewModel> Updated;
 		public event EventHandler Logged;
-		public event EventHandler<Exception> Exception;
+		public event EventHandler SqlConnectingError;
 		public event EventHandler<string> Error;
 
 		public void Update(bool isStartApp)
@@ -98,9 +94,13 @@ namespace Furmanov.MVP.Login
 					Error?.Invoke(this, "Неверный логин или пароль");
 				}
 			}
+			catch (System.Data.SqlClient.SqlException)
+			{
+				SqlConnectingError?.Invoke(this, EventArgs.Empty);
+			}
 			catch (Exception ex)
 			{
-				Exception?.Invoke(this, ex);
+				Error?.Invoke(this, ex.ToString());
 			}
 		}
 

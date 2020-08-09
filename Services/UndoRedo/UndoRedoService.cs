@@ -5,8 +5,8 @@ namespace Furmanov.Services.UndoRedo
 {
 	public interface IUndoRedoService
 	{
-		IEnumerable<string> UndoItems { get; }
-		IEnumerable<string> RedoItems { get; }
+		string[] UndoItems { get; }
+		string[] RedoItems { get; }
 		void Execute(ICommand command);
 		void Undo(int count = 1);
 		void Redo(int count = 1);
@@ -19,8 +19,8 @@ namespace Furmanov.Services.UndoRedo
 		private readonly Stack<ICommand> _undoStack = new Stack<ICommand>();
 		private readonly Stack<ICommand> _redoStack = new Stack<ICommand>();
 
-		public IEnumerable<string> UndoItems => _undoStack.Select(c => c.Name);
-		public IEnumerable<string> RedoItems => _redoStack.Select(c => c.Name);
+		public string[] UndoItems => _undoStack.Select(c => c.Name).ToArray();
+		public string[] RedoItems => _redoStack.Select(c => c.Name).ToArray();
 
 		public void Execute(ICommand command)
 		{

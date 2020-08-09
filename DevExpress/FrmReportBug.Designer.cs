@@ -87,9 +87,10 @@
 			this.lbDescr.Location = new System.Drawing.Point(0, 186);
 			this.lbDescr.Margin = new System.Windows.Forms.Padding(0);
 			this.lbDescr.MaximumSize = new System.Drawing.Size(700, 0);
+			this.lbDescr.MinimumSize = new System.Drawing.Size(700, 0);
 			this.lbDescr.Name = "lbDescr";
 			this.lbDescr.Padding = new System.Windows.Forms.Padding(25, 0, 25, 25);
-			this.lbDescr.Size = new System.Drawing.Size(646, 65);
+			this.lbDescr.Size = new System.Drawing.Size(700, 65);
 			this.lbDescr.TabIndex = 17;
 			this.lbDescr.Text = "К сожалению, не удалось отправить данные об ошибке разработчикам. Передайте, пожа" +
     "луйста, данные вручную";
@@ -125,6 +126,7 @@
 			this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
+			this.MinimumSize = new System.Drawing.Size(700, 0);
 			this.Name = "FrmReportBug";
 			this.Padding = new System.Windows.Forms.Padding(0, 30, 0, 15);
 			this.ShowInTaskbar = false;

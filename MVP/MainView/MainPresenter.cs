@@ -1,8 +1,6 @@
-﻿using System.Runtime.Remoting.Channels;
-using Furmanov.MVP.Login;
+﻿using Furmanov.MVP.Login;
 using Furmanov.MVP.MainView.UndoRedoCommands;
 using Furmanov.Services.UndoRedo;
-using LinqToDB.SqlQuery;
 using SwissClean.Services.UndoRedo.Commands;
 
 namespace Furmanov.MVP.MainView
@@ -27,13 +25,13 @@ namespace Furmanov.MVP.MainView
 			};
 			_model.Updated += (sender, modelView) =>
 			{
-				_view.UpdateMonth(sender, new MonthEventArgs(_model.Year, _model.Month));
+				_view.UpdateMonth(sender, modelView);
 				_view.UpdateSalaries(sender, modelView);
 				_view.UpdateUndoRedo(_undoService.UndoItems, _undoService.RedoItems);
 			};
-			_model.SelectedSalaryPay += (sender, modelView) => _view.UpdateDays(modelView);
+			_model.SelectedSalaryPay += _view.UpdateDays;
 			_model.Progress += _view.Progress;
-			_model.Error += (sender, ex) => _view.ShowError(ex);
+			_model.ReportingBug += _view.ReportBug;
 
 			_view.Logging += (sender, args) => ShowLoginView(false);
 			_view.Logout += (sender, args) =>
@@ -83,6 +81,7 @@ namespace Furmanov.MVP.MainView
 
 			_view.Undo += (sender, count) => _undoService.Undo(count);
 			_view.Redo += (sender, count) => _undoService.Redo(count);
+			_view.ReportingBug += _model.ReportBug;
 
 			_model.Update();
 
@@ -94,11 +93,7 @@ namespace Furmanov.MVP.MainView
 		{
 			var model = _model.LoginModel;
 			var view = _view.LoginView;
-			model.Exception += (sender, ex) =>
-			{
-				if (ex is System.Data.SqlClient.SqlException) _view.ShowSqlError();
-				else { _view.ShowError(ex);}
-			};
+			model.SqlConnectingError += (sender, ex) => _view.ShowSqlError();
 
 			if (_loginPresenter == null)
 			{

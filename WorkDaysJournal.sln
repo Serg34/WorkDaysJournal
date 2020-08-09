@@ -25,6 +25,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Readme", "Readme", "{EB4FA5
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{65B43ECC-D057-4736-91B6-82714DACC1A1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bugs", "Bugs\Bugs.csproj", "{98914283-086E-44F6-9B12-762A4B1F0224}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{65B43ECC-D057-4736-91B6-82714DACC1A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{65B43ECC-D057-4736-91B6-82714DACC1A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{65B43ECC-D057-4736-91B6-82714DACC1A1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{98914283-086E-44F6-9B12-762A4B1F0224}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{98914283-086E-44F6-9B12-762A4B1F0224}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{98914283-086E-44F6-9B12-762A4B1F0224}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{98914283-086E-44F6-9B12-762A4B1F0224}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

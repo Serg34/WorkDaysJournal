@@ -4,12 +4,13 @@ using System;
 using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
+using Furmanov.MVP;
 
 namespace Furmanov.UI
 {
 	public partial class FrmReportBug : Form
 	{
-		public FrmReportBug(BugDto bug)
+		public FrmReportBug(BugEventArgs e)
 		{
 			try
 			{
@@ -18,7 +19,7 @@ namespace Furmanov.UI
 				Padding = new Padding(2, HeaderHeight, 2, 2);
 
 				SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw | ControlStyles.UserPaint, true);
-				LoadBug(bug);
+				LoadBug(e);
 			}
 			catch (Exception ex)
 			{
@@ -26,29 +27,32 @@ namespace Furmanov.UI
 			}
 		}
 
-		private void LoadBug(BugDto bug)
+		private void LoadBug(BugEventArgs e)
 		{
 			try
 			{
-				if (bug.Id > 0)
-				{
-					lbTitle.Text = "Возникла неизвестная проблема в работе программы";
-					lbTitle.ForeColor = Color.FromArgb(255, 100, 100);
-					lbDescr.Text = $"{bug.Message}\n\n" +
-						"Все необходимые сведения уже отправлены разработчикам\n" +
-						$"Сборка: {bug.Project}\n" +
-						$"Номер ошибки: {bug.Id}";
-				}
-				else
+				var bug = e.Bug;
+				if (bug.IsExist)
 				{
 					lbTitle.Text = "Возникла известная проблема в работе программы";
 					lbTitle.ForeColor = Color.FromArgb(100, 200, 100);
-					lbDescr.Text = $"{bug.Message}\n\n" +
-					   $"Сборка: {bug.Project}\n" +
-					   $"Номер ошибки: {bug.Id}\n" +
-					   "Решение проблемы уже в работе.\n" +
-					   (bug.DateSolved != null ? $"Планируемая дата решения: {bug.DateSolved:d}\n\n" : "") +
-					   bug.InfoToUser;
+					lbDescr.Text = $"Тип: {e.Exception.GetType()}\n" +
+		               $"{e.Exception.Message}\n\n" +
+		               $"Сборка: {bug.Project}\n" +
+		               $"Номер ошибки: {bug.Id}\n" +
+		               "Решение проблемы уже в работе.\n" +
+		               (bug.SolvedDate != null ? $"Планируемая дата решения: {bug.SolvedDate:d}\n\n" : "") +
+		               bug.InfoToUser;
+				}
+				else
+				{
+					lbTitle.Text = "Возникла неизвестная проблема в работе программы";
+					lbTitle.ForeColor = Color.FromArgb(255, 100, 100);
+					lbDescr.Text = $"Тип: {e.Exception.GetType()}\n" +
+		               $"{e.Exception.Message}\n\n" +
+		               "Все необходимые сведения уже отправлены разработчикам\n" +
+		               $"Сборка: {bug.Project}\n" +
+		               $"Номер ошибки: {bug.Id}";
 				}
 			}
 			catch (Exception ex)

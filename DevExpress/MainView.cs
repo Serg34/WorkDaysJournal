@@ -12,10 +12,14 @@ using Furmanov.UI.Properties;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
+using DevExpress.XtraEditors.Controls;
+using Furmanov.MVP;
 
 namespace Furmanov.UI
 {
@@ -38,7 +42,7 @@ namespace Furmanov.UI
 			}
 			catch (Exception ex)
 			{
-				ShowError(ex);
+				ReportingBug?.Invoke(this, new BugEventArgs(ex));
 			}
 		}
 
@@ -60,6 +64,8 @@ namespace Furmanov.UI
 
 		public event EventHandler<int> Undo;
 		public event EventHandler<int> Redo;
+
+		public event EventHandler<BugEventArgs> ReportingBug;
 		#endregion
 
 		#region Login
@@ -87,11 +93,11 @@ namespace Furmanov.UI
 				btLogin.Visibility = user != null ? BarItemVisibility.Never : BarItemVisibility.Always;
 				btLogOut.Visibility = user == null ? BarItemVisibility.Never : BarItemVisibility.Always;
 
-				UpdateUndoRedo(Array.Empty<string>(), Array.Empty<string>());
+				UpdateUndoRedo(new string[0], new string[0]);
 
 				if (user != null)
 				{
-					lblUser.Caption = $"Пользователь: {user.Login} / {user.Name} / {user.RoleName}";
+					lblUser.Caption = $"Пользователь: {user.Login} | {user.Name} | {user.RoleName}";
 					TreeSalary_SelectionChange();
 				}
 				else
@@ -101,7 +107,7 @@ namespace Furmanov.UI
 			}
 			catch (Exception ex)
 			{
-				ShowError(ex);
+				ReportingBug?.Invoke(this, new BugEventArgs(ex));
 			}
 		}
 
@@ -115,7 +121,7 @@ namespace Furmanov.UI
 			}
 			catch (Exception ex)
 			{
-				ShowError(ex);
+				ReportingBug?.Invoke(this, new BugEventArgs(ex));
 			}
 		}
 
@@ -130,7 +136,7 @@ namespace Furmanov.UI
 			}
 			catch (Exception ex)
 			{
-				ShowError(ex);
+				ReportingBug?.Invoke(this, new BugEventArgs(ex));
 			}
 		}
 		#endregion
@@ -153,11 +159,34 @@ namespace Furmanov.UI
 			}
 			catch (Exception ex)
 			{
-				ShowError(ex);
+				ReportingBug?.Invoke(this, new BugEventArgs(ex));
 			}
 			finally
 			{
 				TaskbarProgress.Finish(this);
+			}
+		}
+
+		private void btBugDebug_ItemClick(object sender, ItemClickEventArgs e)
+		{
+			try
+			{
+				var rnd = new Random();
+				var r = rnd.Next(1000);
+				if (r < 100) throw new ArgumentException("Test");
+				if (r < 200) throw new AggregateException("Test");
+				if (r < 300) throw new ApplicationException("Test");
+				if (r < 400) throw new ArgumentOutOfRangeException("Test");
+				if (r < 500) throw new COMException("Test");
+				if (r < 600) throw new BadImageFormatException("Test");
+				if (r < 700) throw new DataException("Test");
+				if (r < 800) throw new DuplicateWaitObjectException("Test");
+				if (r < 900) throw new DivideByZeroException("Test");
+				 throw new Exception("Test");
+			}
+			catch (Exception ex)
+			{
+				ReportingBug?.Invoke(this, new BugEventArgs(ex));
 			}
 		}
 		private void DeMonth_EditValueChanged(object sender, EventArgs e)
@@ -170,7 +199,7 @@ namespace Furmanov.UI
 			}
 			catch (Exception ex)
 			{
-				ShowError(ex);
+				ReportingBug?.Invoke(this, new BugEventArgs(ex));
 			}
 		}
 		private void BtWorkDaysOnly_ItemClick(object sender, ItemClickEventArgs e)
@@ -185,7 +214,7 @@ namespace Furmanov.UI
 			}
 			catch (Exception ex)
 			{
-				ShowError(ex);
+				ReportingBug?.Invoke(this, new BugEventArgs(ex));
 			}
 		}
 		private void BtDeleteAllDays_ItemClick(object sender, ItemClickEventArgs e)
@@ -195,16 +224,16 @@ namespace Furmanov.UI
 		#endregion
 
 		#region Update
-		public void UpdateMonth(object sender, MonthEventArgs e)
+		public void UpdateMonth(object sender, MainViewModel vm)
 		{
 			try
 			{
 				_updating = true;
-				deMonth.EditValue = new DateTime(e.Year, e.Month, 1);
+				deMonth.EditValue = new DateTime(vm.Year, vm.Month, 1);
 			}
 			catch (Exception ex)
 			{
-				ShowError(ex);
+				ReportingBug?.Invoke(this, new BugEventArgs(ex));
 			}
 			finally
 			{
@@ -226,14 +255,14 @@ namespace Furmanov.UI
 			}
 			catch (Exception ex)
 			{
-				ShowError(ex);
+				ReportingBug?.Invoke(this, new BugEventArgs(ex));
 			}
 			finally
 			{
 				_updating = false;
 			}
 		}
-		public void UpdateDays(List<WorkedDay> days)
+		public void UpdateDays(object sender, List<WorkedDay> days)
 		{
 			try
 			{
@@ -244,10 +273,10 @@ namespace Furmanov.UI
 			}
 			catch (Exception ex)
 			{
-				ShowError(ex);
+				ReportingBug?.Invoke(this, new BugEventArgs(ex));
 			}
 		}
-		public void UpdateUndoRedo(IEnumerable<string> undoItems, IEnumerable<string> redoItems)
+		public void UpdateUndoRedo(string[] undoItems, string[] redoItems)
 		{
 			try
 			{
@@ -277,7 +306,7 @@ namespace Furmanov.UI
 			}
 			catch (Exception ex)
 			{
-				ShowError(ex);
+				ReportingBug?.Invoke(this, new BugEventArgs(ex));
 			}
 		}
 		#endregion
@@ -291,7 +320,7 @@ namespace Furmanov.UI
 			}
 			catch (Exception ex)
 			{
-				ShowError(ex);
+				ReportingBug?.Invoke(this, new BugEventArgs(ex));
 			}
 		}
 		private void TreeSalary_CellValueChanged(object sender, CellValueChangedEventArgs e)
@@ -303,7 +332,7 @@ namespace Furmanov.UI
 			}
 			catch (Exception ex)
 			{
-				ShowError(ex);
+				ReportingBug?.Invoke(this, new BugEventArgs(ex));
 			}
 		}
 		private void TreeSalary_ValidatingEditor(object sender, DevExpress.XtraEditors.Controls.BaseContainerValidateEditorEventArgs e)
@@ -335,7 +364,7 @@ namespace Furmanov.UI
 			}
 			catch (Exception ex)
 			{
-				ShowError(ex);
+				ReportingBug?.Invoke(this, new BugEventArgs(ex));
 			}
 		}
 
@@ -355,7 +384,7 @@ namespace Furmanov.UI
 			}
 			catch (Exception ex)
 			{
-				ShowError(ex);
+				ReportingBug?.Invoke(this, new BugEventArgs(ex));
 			}
 		}
 		private void DeleteSalaryPay()
@@ -378,7 +407,7 @@ namespace Furmanov.UI
 			}
 			catch (Exception ex)
 			{
-				ShowError(ex);
+				ReportingBug?.Invoke(this, new BugEventArgs(ex));
 			}
 		}
 
@@ -415,7 +444,7 @@ namespace Furmanov.UI
 			}
 			catch (Exception ex)
 			{
-				ShowError(ex);
+				ReportingBug?.Invoke(this, new BugEventArgs(ex));
 			}
 		}
 
@@ -455,7 +484,7 @@ namespace Furmanov.UI
 			}
 			catch (Exception ex)
 			{
-				ShowError(ex);
+				ReportingBug?.Invoke(this, new BugEventArgs(ex));
 			}
 		}
 		[DebuggerStepThrough]
@@ -481,7 +510,7 @@ namespace Furmanov.UI
 			}
 			catch (Exception ex)
 			{
-				ShowError(ex);
+				ReportingBug?.Invoke(this, new BugEventArgs(ex));
 			}
 		}
 		#endregion
@@ -499,7 +528,7 @@ namespace Furmanov.UI
 			}
 			catch (Exception ex)
 			{
-				ShowError(ex);
+				ReportingBug?.Invoke(this, new BugEventArgs(ex));
 			}
 		}
 
@@ -520,7 +549,7 @@ namespace Furmanov.UI
 			}
 			catch (Exception ex)
 			{
-				ShowError(ex);
+				ReportingBug?.Invoke(this, new BugEventArgs(ex));
 			}
 		}
 		private void GcWorkedDays_Paint(object sender, PaintEventArgs e)
@@ -545,7 +574,7 @@ namespace Furmanov.UI
 			}
 			catch (Exception ex)
 			{
-				ShowError(ex);
+				ReportingBug?.Invoke(this, new BugEventArgs(ex));
 			}
 		}
 		#endregion
@@ -570,7 +599,7 @@ namespace Furmanov.UI
 			}
 			catch (Exception ex)
 			{
-				ShowError(ex);
+				ReportingBug?.Invoke(this, new BugEventArgs(ex));
 			}
 		}
 
@@ -582,7 +611,7 @@ namespace Furmanov.UI
 			}
 			catch (Exception ex)
 			{
-				ShowError(ex);
+				ReportingBug?.Invoke(this, new BugEventArgs(ex));
 			}
 		}
 
@@ -598,7 +627,7 @@ namespace Furmanov.UI
 			}
 			catch (Exception ex)
 			{
-				ShowError(ex);
+				ReportingBug?.Invoke(this, new BugEventArgs(ex));
 			}
 		}
 		private void btResetSettings_ItemClick(object sender, ItemClickEventArgs e)
@@ -614,7 +643,7 @@ namespace Furmanov.UI
 			}
 			catch (Exception ex)
 			{
-				ShowError(ex);
+				ReportingBug?.Invoke(this, new BugEventArgs(ex));
 			}
 		}
 		private void MenuUndo_PaintMenuBar(object sender, BarCustomDrawEventArgs e)
@@ -641,7 +670,7 @@ namespace Furmanov.UI
 			}
 			catch (Exception ex)
 			{
-				ShowError(ex);
+				ReportingBug?.Invoke(this, new BugEventArgs(ex));
 			}
 		}
 
@@ -663,7 +692,7 @@ namespace Furmanov.UI
 			}
 			catch (Exception ex)
 			{
-				ShowError(ex);
+				ReportingBug?.Invoke(this, new BugEventArgs(ex));
 			}
 		}
 		private void btOpenConfigFile_Click(object sender, EventArgs e)
@@ -684,7 +713,7 @@ namespace Furmanov.UI
 			}
 			catch (Exception ex)
 			{
-				ShowError(ex);
+				ReportingBug?.Invoke(this, new BugEventArgs(ex));
 			}
 		}
 
@@ -693,19 +722,30 @@ namespace Furmanov.UI
 			try
 			{
 				var connectionString = Settings.Default.ConnectionString;
-			lbNoConnectSqlConnectionStringValue.Text = $"- текущее значение 'ConnectionString': {connectionString}";
-			btRefillDataBase.Enabled = false;
-			pnNoConnectSql.Visible = true;
-			pnNoConnectSql.BringToFront();
+				lbNoConnectSqlConnectionStringValue.Text = $"- текущее значение 'ConnectionString': {connectionString}";
+				btRefillDataBase.Enabled = false;
+				pnNoConnectSql.Visible = true;
+				pnNoConnectSql.BringToFront();
 			}
 			catch (Exception ex)
 			{
-				ShowError(ex);
+				ReportingBug?.Invoke(this, new BugEventArgs(ex));
 			}
 		}
-		public void ShowError(Exception ex)
+
+		public void ReportBug(object sender, BugEventArgs e)
 		{
-			MessageService.Error(ex.ToString());
+			try
+			{
+				using (var form = new FrmReportBug(e))
+				{
+					form.ShowDialog(this);
+				}
+			}
+			catch (Exception ex)
+			{
+				MessageService.Error(ex.ToString());
+			}
 		}
 		#endregion
 	}
