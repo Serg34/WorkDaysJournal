@@ -1,5 +1,4 @@
 ﻿using DevExpress.XtraBars;
-using DevExpress.XtraEditors;
 using DevExpress.XtraGrid.Views.Grid;
 using DevExpress.XtraGrid.Views.Grid.ViewInfo;
 using DevExpress.XtraTreeList;
@@ -33,7 +32,8 @@ namespace Furmanov.UI
 			try
 			{
 				InitializeComponent();
-				lblVersion.Caption = "Версия: " + Application.ProductVersion;
+				lblVersion.Caption = $"Версия: {Application.ProductVersion}";
+
 				LayoutSaver.Restore(this);
 			}
 			catch (Exception ex)
@@ -73,19 +73,19 @@ namespace Furmanov.UI
 
 				//Контролы должны быть видимыми до заполнения
 				pnMain.Visible =
-				btnVedomostTotal.Enabled =
-				btnCreateResource.Enabled =
-				btnEditResource.Enabled =
-				btnDeleteResource.Enabled =
+				btReportTotal.Enabled =
+				btCreateResource.Enabled =
+				btEditResource.Enabled =
+				btDeleteResource.Enabled =
 				deMonth.Enabled =
-				btnWorkDaysOnly.Enabled =
-				btnAllDays.Enabled =
-				btnDeleteAllDays.Enabled = user != null;
+				btWorkDaysOnly.Enabled =
+				btAllDays.Enabled =
+				btDeleteAllDays.Enabled = user != null;
 
 				pnMain.EndInit();
 
-				btnLogin.Visibility = user != null ? BarItemVisibility.Never : BarItemVisibility.Always;
-				btnLogOut.Visibility = user == null ? BarItemVisibility.Never : BarItemVisibility.Always;
+				btLogin.Visibility = user != null ? BarItemVisibility.Never : BarItemVisibility.Always;
+				btLogOut.Visibility = user == null ? BarItemVisibility.Never : BarItemVisibility.Always;
 
 				UpdateUndoRedo(Array.Empty<string>(), Array.Empty<string>());
 
@@ -107,7 +107,7 @@ namespace Furmanov.UI
 
 		public ILoginView LoginView => new LoginView { Owner = this };
 
-		private void BtnLogin_ItemClick(object sender, ItemClickEventArgs e)
+		private void BtLogin_ItemClick(object sender, ItemClickEventArgs e)
 		{
 			try
 			{
@@ -119,7 +119,7 @@ namespace Furmanov.UI
 			}
 		}
 
-		private void BtnLogOut_ItemClick(object sender, ItemClickEventArgs e)
+		private void BtLogOut_ItemClick(object sender, ItemClickEventArgs e)
 		{
 			try
 			{
@@ -141,9 +141,9 @@ namespace Furmanov.UI
 			try
 			{
 				var q = "Сгенерировать новые данные в базе данных?\n\n" +
-						"Все текущие записи будут удалены.\n" +
-						"Для отладки будут доступны три учётки: 'Admin', 'ProjectManager' и 'Manager' " +
-						"с соответствующими ролями.\n" +
+						"Все текущие записи будут удалены.\n\n" +
+						"Для отладки будут доступны три учётки:\n-'Admin';\n-'ProjectManager';\n-'Manager'\n" +
+						"с соответствующими ролями.\n\n" +
 						"Пароль для любой учётки '1'";
 
 				if (MessageService.Question(q) != DialogResult.Yes) return;
@@ -173,11 +173,11 @@ namespace Furmanov.UI
 				ShowError(ex);
 			}
 		}
-		private void BtnWorkDaysOnly_ItemClick(object sender, ItemClickEventArgs e)
+		private void BtWorkDaysOnly_ItemClick(object sender, ItemClickEventArgs e)
 		{
 			WorkDaysOnlyClick?.Invoke(this, EventArgs.Empty);
 		}
-		private void BtnAllDays_ItemClick(object sender, ItemClickEventArgs e)
+		private void BtAllDays_ItemClick(object sender, ItemClickEventArgs e)
 		{
 			try
 			{
@@ -188,7 +188,7 @@ namespace Furmanov.UI
 				ShowError(ex);
 			}
 		}
-		private void BtnDeleteAllDays_ItemClick(object sender, ItemClickEventArgs e)
+		private void BtDeleteAllDays_ItemClick(object sender, ItemClickEventArgs e)
 		{
 			DeletingAllDays?.Invoke(this, EventArgs.Empty);
 		}
@@ -251,8 +251,8 @@ namespace Furmanov.UI
 		{
 			try
 			{
-				btnUndo.Enabled = undoItems.Any();
-				btnUndo.ImageOptions.Image = btnUndo.Enabled ? Resources.undo : Resources.UndoNoEnabled;
+				btUndo.Enabled = undoItems.Any();
+				btUndo.ImageOptions.Image = btUndo.Enabled ? Resources.undo : Resources.UndoNoEnabled;
 				menuUndo.ItemLinks.Clear();
 				menuUndo.ItemLinks.AddRange(undoItems.Select(i =>
 				{
@@ -263,8 +263,8 @@ namespace Furmanov.UI
 					return item;
 				}));
 
-				btnRedo.Enabled = redoItems.Any();
-				btnRedo.ImageOptions.Image = btnRedo.Enabled ? Resources.redo : Resources.RedoNoEnabled;
+				btRedo.Enabled = redoItems.Any();
+				btRedo.ImageOptions.Image = btRedo.Enabled ? Resources.redo : Resources.RedoNoEnabled;
 				menuRedo.ItemLinks.Clear();
 				menuRedo.ItemLinks.AddRange(redoItems.Select(i =>
 				{
@@ -398,16 +398,16 @@ namespace Furmanov.UI
 				{
 					_currentPay = vm;
 
-					btnCreateResource.Enabled
-						= btnEditResource.Enabled
-						= btnVedomostForObject.Enabled
+					btCreateResource.Enabled
+						= btEditResource.Enabled
+						= btReportForObject.Enabled
 						= vm.Type == ObjType.Object ||
 						  vm.Type == ObjType.Salary;
 
-					btnDeleteResource.Enabled
-						= btnAllDays.Enabled
-						= btnWorkDaysOnly.Enabled
-						= btnDeleteAllDays.Enabled
+					btDeleteResource.Enabled
+						= btAllDays.Enabled
+						= btWorkDaysOnly.Enabled
+						= btDeleteAllDays.Enabled
 						= vm.Type == ObjType.Salary;
 
 					SelectionChangingSalaryPay?.Invoke(this, vm);
@@ -585,10 +585,6 @@ namespace Furmanov.UI
 				ShowError(ex);
 			}
 		}
-		public void ShowError(Exception ex)
-		{
-			MessageService.Error(ex.ToString());
-		}
 
 		private void ShowNoImplementedCode(object sender, ItemClickEventArgs e)
 		{
@@ -647,6 +643,69 @@ namespace Furmanov.UI
 			{
 				ShowError(ex);
 			}
+		}
+
+		private void btOpenDbStartup_Click(object sender, EventArgs e)
+		{
+			try
+			{
+				var psi = new ProcessStartInfo
+				{
+					CreateNoWindow = true,
+					WindowStyle = ProcessWindowStyle.Normal,
+					FileName = "explorer",
+					Arguments = @"/n, /select, Database startup.bak"
+				};
+				using (var prFolder = new Process { StartInfo = psi })
+				{
+					prFolder.Start();
+				}
+			}
+			catch (Exception ex)
+			{
+				ShowError(ex);
+			}
+		}
+		private void btOpenConfigFile_Click(object sender, EventArgs e)
+		{
+			try
+			{
+				var psi = new ProcessStartInfo
+				{
+					CreateNoWindow = true,
+					WindowStyle = ProcessWindowStyle.Normal,
+					FileName = "explorer",
+					Arguments = @"/n, /select, WorkDaysJournal.exe.config"
+				};
+				using (var prFolder = new Process { StartInfo = psi })
+				{
+					prFolder.Start();
+				}
+			}
+			catch (Exception ex)
+			{
+				ShowError(ex);
+			}
+		}
+
+		public void ShowSqlError()
+		{
+			try
+			{
+				var connectionString = Settings.Default.ConnectionString;
+			lbNoConnectSqlConnectionStringValue.Text = $"- текущее значение 'ConnectionString': {connectionString}";
+			btRefillDataBase.Enabled = false;
+			pnNoConnectSql.Visible = true;
+			pnNoConnectSql.BringToFront();
+			}
+			catch (Exception ex)
+			{
+				ShowError(ex);
+			}
+		}
+		public void ShowError(Exception ex)
+		{
+			MessageService.Error(ex.ToString());
 		}
 		#endregion
 	}

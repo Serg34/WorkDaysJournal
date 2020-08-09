@@ -20,7 +20,7 @@ namespace Furmanov.UI
 
 			new Task(KillAboutDevExpressForm).Start();
 
-			var connectionString = "Server =.\\SQLExpress; Database = Furmanov; Trusted_Connection = True;";
+			var connectionString = Properties.Settings.Default.ConnectionString;
 			var resolver = IoCBuilder.Build(connectionString);
 
 			var model = resolver.Resolve<IMainModel>();

@@ -5,7 +5,7 @@ using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraGrid.Views.Grid;
 using DevExpress.XtraPivotGrid;
 using DevExpress.XtraTreeList;
-using Furmanov.Services.Repositories;
+using Furmanov.Dal;
 using System;
 using System.Collections;
 using System.Collections.Generic;

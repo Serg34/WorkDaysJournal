@@ -1,6 +1,8 @@
-﻿using Furmanov.MVP.Login;
+﻿using System.Runtime.Remoting.Channels;
+using Furmanov.MVP.Login;
 using Furmanov.MVP.MainView.UndoRedoCommands;
 using Furmanov.Services.UndoRedo;
+using LinqToDB.SqlQuery;
 using SwissClean.Services.UndoRedo.Commands;
 
 namespace Furmanov.MVP.MainView
@@ -92,6 +94,12 @@ namespace Furmanov.MVP.MainView
 		{
 			var model = _model.LoginModel;
 			var view = _view.LoginView;
+			model.Exception += (sender, ex) =>
+			{
+				if (ex is System.Data.SqlClient.SqlException) _view.ShowSqlError();
+				else { _view.ShowError(ex);}
+			};
+
 			if (_loginPresenter == null)
 			{
 				_loginPresenter = new LoginPresenter(model, view);

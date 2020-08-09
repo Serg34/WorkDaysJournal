@@ -2,7 +2,9 @@
 using Furmanov.Data.Data;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
+using System.Linq.Expressions;
 using Furmanov.Dal;
 using Furmanov.Services;
 
@@ -10,6 +12,7 @@ namespace Furmanov.MVP.Login
 {
 	public interface ILoginModel
 	{
+		event EventHandler<Exception> Exception;
 		event EventHandler<string> Error;
 		event EventHandler<LoginViewModel> Updated;
 		event EventHandler Logged;
@@ -33,6 +36,7 @@ namespace Furmanov.MVP.Login
 
 		public event EventHandler<LoginViewModel> Updated;
 		public event EventHandler Logged;
+		public event EventHandler<Exception> Exception;
 		public event EventHandler<string> Error;
 
 		public void Update(bool isStartApp)
@@ -57,39 +61,46 @@ namespace Furmanov.MVP.Login
 
 		public void Login(object sender, LoginViewModel viewModel)
 		{
-			_viewModel = viewModel;
-			var validateResult = new LoginValidator().Validate(_viewModel);
-			if (!validateResult.IsValid)
+			try
 			{
-				Error?.Invoke(this, string.Join("\n", validateResult.Errors));
-				return;
-			}
-
-			var user = _db.GetUser(_viewModel.Login, _viewModel.Password);
-			if (user != null)
-			{
-				ApplicationUser.User = user;
-				var loginPass = new LoginPassword();
-				if (_viewModel.IsRememberLogin)
+				_viewModel = viewModel;
+				var validateResult = new LoginValidator().Validate(_viewModel);
+				if (!validateResult.IsValid)
 				{
-					loginPass.Login = _viewModel.Login;
-					if (_viewModel.IsRememberPassword) loginPass.Password = _viewModel.Password;
+					Error?.Invoke(this, string.Join("\n", validateResult.Errors));
+					return;
 				}
 
-				_db.SaveAutoLoginPassword(loginPass);
-				LoginChecked = true;
-
-				if (_viewModel.CanLogin)
+				var user = _db.GetUser(_viewModel.Login, _viewModel.Password);
+				if (user != null)
 				{
-					Logged?.Invoke(this, EventArgs.Empty);
+					ApplicationUser.User = user;
+					var loginPass = new LoginPassword();
+					if (_viewModel.IsRememberLogin)
+					{
+						loginPass.Login = _viewModel.Login;
+						if (_viewModel.IsRememberPassword) loginPass.Password = _viewModel.Password;
+					}
+
+					_db.SaveAutoLoginPassword(loginPass);
+					LoginChecked = true;
+
+					if (_viewModel.CanLogin)
+					{
+						Logged?.Invoke(this, EventArgs.Empty);
+					}
+				}
+				else
+				{
+					ApplicationUser.User = null;
+					LoginChecked = false;
+
+					Error?.Invoke(this, "Неверный логин или пароль");
 				}
 			}
-			else
+			catch (Exception ex)
 			{
-				ApplicationUser.User = null;
-				LoginChecked = false;
-
-				Error?.Invoke(this, "Неверный логин или пароль");
+				Exception?.Invoke(this, ex);
 			}
 		}
 

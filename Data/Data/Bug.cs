@@ -10,15 +10,12 @@ namespace Furmanov.Data.Data
 	{
 		[PrimaryKey, Identity] public int Id { get; set; }
 
-		[DisplayName("Решение")]
-		[Column] public string Solution { get; set; }
-
 		[DisplayName("Проект")]
 		[Column] public string Project { get; set; }
 
 		[DisplayName("Сообщение")]
 		[Column] public string Message { get; set; }
-		[Column] public string InfoToDeveloper { get; set; }
+		[Column] public string InfoForDeveloper { get; set; }
 
 		[DisplayName("Снимок экрана")]
 		[Column] public byte[] PrintScreen { get; set; }

@@ -76,7 +76,6 @@
     <Compile Include="BugReporter.cs" />
     <Compile Include="Cloner.cs" />
     <Compile Include="ColorService.cs" />
-    <Compile Include="ConnectionString.cs" />
     <Compile Include="DataGenerator.cs" />
     <Compile Include="DateService.cs" />
     <Compile Include="Email.cs" />
@@ -92,7 +91,6 @@
     <Compile Include="MoneyToString.cs" />
     <Compile Include="NumberService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repositories\XmlRepository.cs" />
     <Compile Include="ScreenPrinter.cs" />
     <Compile Include="StringMethods.cs" />
     <Compile Include="TaskbarProgress.cs" />

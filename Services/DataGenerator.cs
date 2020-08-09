@@ -1,11 +1,11 @@
-﻿using Furmanov.Data.Data;
+﻿using Furmanov.Data;
+using Furmanov.Data.Data;
+using LinqToDB;
+using LinqToDB.Data;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Furmanov.Data;
-using LinqToDB;
-using LinqToDB.Data;
 
 namespace Furmanov.Services
 {
@@ -1124,7 +1124,7 @@ namespace Furmanov.Services
 		}
 		public void RefillDataBase(DbContext db)
 		{
-			#region Clear DataBase
+			#region Очистка базы данных
 			db.Delete<WorkedDayDto>();
 			db.Delete<SalaryPayDto>();
 			db.Delete<EmployeeDto>();
@@ -1135,6 +1135,8 @@ namespace Furmanov.Services
 			#endregion
 
 			var year = 2019;
+
+			#region Добавление юзеров
 			var users = new List<UserDto>();
 			List<UserDto> Add(Role role, int count)
 			{
@@ -1165,6 +1167,7 @@ namespace Furmanov.Services
 			Add(Role.Admin, 2);
 			Add(Role.Director, 3);
 			Add(Role.ProjectManager, 5);
+			#endregion
 
 			var projectManagers = users.Where(u => u.Role == Role.ProjectManager).ToArray();
 			Progress?.Invoke(this, new ProgressEventArgs(1, projectManagers.Length + 1));

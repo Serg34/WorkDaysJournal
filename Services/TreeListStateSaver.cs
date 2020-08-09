@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Serialization;
-using DevExpress.Utils.Extensions;
+﻿using DevExpress.Utils.Extensions;
 using DevExpress.XtraTreeList;
 using DevExpress.XtraTreeList.Nodes;
 using Furmanov.Dal;
 using Furmanov.Data.Data;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.Serialization;
 
 namespace Furmanov.Services
 {

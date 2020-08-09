@@ -33,5 +33,6 @@ namespace Furmanov.MVP.MainView
 		void UpdateDays(List<WorkedDay> viewModel);
 		void UpdateUndoRedo(IEnumerable<string> undoItems, IEnumerable<string> redoItems);
 		void Progress(object sender, ProgressEventArgs e);
+		void ShowSqlError();
 	}
 }

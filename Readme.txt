@@ -6,7 +6,7 @@
 -MS SQL
 -DevExpress
 -Linq2db (http://linq2db.com/)
--Сохранение sql запросов в отдельные файлы (внедрённые ресурсы в папке "Data.Sql").
+-Сохранение sql запросов в отдельные файлы (внедрённые ресурсы в папке "Data/Sql").
 Данный подход помимо возможности изоляции запросов в файлы и папки даёт возможность отладки запросов из Visual Studio.
 -FluentValidation (https://fluentvalidation.net/)
 -AutoMapper (https://automapper.org/)
@@ -14,3 +14,5 @@
 -MVP
 -Паттерн Command в UndoRedoService
 -DeepCloner
+
+Для начала работы с БД используйте backup 'Data/Database startup.bak'
