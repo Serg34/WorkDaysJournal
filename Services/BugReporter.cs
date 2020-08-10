@@ -32,8 +32,8 @@ namespace Furmanov.Services
 			}
 
 			var bugDto = db.FirstOrDefault<BugDto>(b => b.Message == message);
-			var isExist = bugDto != null;
-			if (!isExist)
+			var isNew = bugDto == null;
+			if (isNew)
 			{
 				bugDto = new BugDto
 				{
@@ -59,7 +59,7 @@ namespace Furmanov.Services
 			db.Insert(incident);
 
 			var bug = MapperService.Map<Bug>(bugDto);
-			bug.IsExist = isExist;
+			bug.IsNew = isNew;
 			return bug;
 		}
 	}

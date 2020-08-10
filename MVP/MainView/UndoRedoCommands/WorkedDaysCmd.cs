@@ -1,41 +1,32 @@
-﻿using Furmanov.Data.Data;
-using Furmanov.MVP.MainView;
+﻿using System.Collections.Generic;
+using Furmanov.Data.Data;
 using Furmanov.Services.UndoRedo;
-using System.Collections.Generic;
 
-namespace SwissClean.Services.UndoRedo.Commands
+namespace Furmanov.MVP.MainView.UndoRedoCommands
 {
 	public class WorkedDaysCmd : ICommand
 	{
-		public WorkedDaysCmd(IMainModel model, List<WorkedDay> value)
+		public WorkedDaysCmd(IMainModel model, WorkedDay[] value, WorkedDay[] prevValue)
 		{
 			_model = model;
-			_pay = _model.CurrentPay;
 			_value = value;
-			_prevValue = _model.CurrentDaysInMonth;
+			_prevValue = prevValue;
 			Name = $"Изменение дней выхода для сотрудника '{_model.CurrentEmployeeName}'";
 		}
 
 		private readonly IMainModel _model;
-		private readonly SalaryPay _pay;
-		private readonly List<WorkedDay> _value;
-		private readonly List<WorkedDay> _prevValue;
+		private readonly WorkedDay[] _value;
+		private readonly WorkedDay[] _prevValue;
 
 		public string Name { get; }
 
 		public void Execute()
 		{
-			var oldPay = _model.CurrentPay;
-			_model.CurrentPay = _pay;
 			_model.SaveWorkedDays(_value);
-			_model.CurrentPay = oldPay;
 		}
 		public void UnExecute()
 		{
-			var oldPay = _model.CurrentPay;
-			_model.CurrentPay = _pay;
 			_model.SaveWorkedDays(_prevValue);
-			_model.CurrentPay = oldPay;
 		}
 	}
 }

@@ -61,13 +61,16 @@ namespace Furmanov.Data.Properties {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на --DEBUG
-        ///--declare @payId int = 69;
-        ///--declare @day DateTime = Cast(&apos;20191015&apos; as DateTime);
+        ///   Ищет локализованную строку, похожую на --declare @payId int = 69;
+        ///--declare @year int = 2019;
+        ///--declare @month int = 1;
+        ///--declare @day int = 1;
         ///
         ///delete WorkedDay 
         ///where SalaryPay_Id = @payId
-        ///	and Cast(Date as Date) = Cast(@day as Date)
+        ///	and Year(Date) = @year
+        ///	and Month(Date) = @month
+        ///	and Day(Date) in (@day)
         ///.
         /// </summary>
         internal static string DeleteWorkDay {
@@ -77,8 +80,7 @@ namespace Furmanov.Data.Properties {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на --DEBUG
-        ///--declare @payId int = 69;
+        ///   Ищет локализованную строку, похожую на --declare @payId int = 69;
         ///--declare @day DateTime = Cast(&apos;20191015&apos; as DateTime);
         ///
         ///if not exists (select * from WorkedDay 
@@ -96,73 +98,94 @@ namespace Furmanov.Data.Properties {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на --DEBUG
-        ///--declare @userId int = 9;
-        ///--declare @year int = 2020;
-        ///--declare @month int = 4;
+        ///   Ищет локализованную строку, похожую на --declare @payId int = 562794;
         ///
-        ///with objs as (
-        ///	select -1 Id,
-        ///		1 Type,
-        ///		&apos;Object &apos; + CAST(obj.Id AS nvarchar) ViewModelId,
-        ///		null ParentId,
+        ///select pay.*,
+        ///	2 Type, 
+        ///	&apos;Salary &apos; + CAST(pay.Id AS nvarchar) ViewModelId,
+        ///	&apos;Object &apos; + CAST(obj.Id AS nvarchar) ParentId,
+        ///	emp.Name Name,
+        ///	emp.Position Position,
+        ///	emp.Phone Phone,
+        ///	emp.Salary Salary
+        ///from SalaryPay pay
+        ///	left join [Object] obj on pay.Object_Id = obj.Id
+        ///	left join Employee emp on emp.Id = pay.Employee_Id
+        ///where pay.Id = @payId
+        ///.
+        /// </summary>
+        internal static string SalaryPay {
+            get {
+                return ResourceManager.GetString("SalaryPay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на --declare @userId int = 1003;
+        ///--declare @year int = 2019;
+        ///--declare @month int = 8;
+        ///
+        ///with pays as (
+        ///	 select pay.Id,
+        ///		2 Type, 
+        ///		&apos;Salary &apos; + CAST(pay.Id AS nvarchar) ViewModelId,
+        ///		&apos;Object &apos; + CAST(obj.Id AS nvarchar) ParentId,
+        ///		@year Year,
+        ///		@month Month,
+        ///		1 EmployeeCount,
         ///		obj.Id Object_Id,
-        ///		obj.Address ObjectNameForSalaryPay,
         ///		obj.Manager_Id Manager_Id,
-        ///		null PositionId,
-        ///		null EmployeeId,
-        ///		obj.Address Name,
-        ///		&apos;Выплат: &apos; + CAST(Count(sal.Id) AS nvarchar) Phone,
-        ///		null PositionName,
-        ///		SUM(norm.Salary) Salary,
-        ///		SUM(sal.RateDays) RateDays,
-        ///		SUM(sal.FactDa [остаток строки не уместился]&quot;;.
+        ///		emp.Id Employee_Id,
+        ///		emp.Name Name,
+        ///		emp.Position Position,
+        ///		emp.Phone Phone,
+        ///		emp.Salary Salary,
+        ///		pay.RateDays RateDays,
+        ///		pay.FactDays FactDays,
+        ///		pay.Adva [остаток строки не уместился]&quot;;.
         /// </summary>
-        internal static string SalaryPayForManager {
+        internal static string SalaryPaysForManager {
             get {
-                return ResourceManager.GetString("SalaryPayForManager", resourceCulture);
+                return ResourceManager.GetString("SalaryPaysForManager", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на --DEBUG
-        ///--declare @userId int = 63;
-        ///--declare @year int = 2020;
+        ///   Ищет локализованную строку, похожую на --declare @userId int = 1027;
+        ///--declare @year int = 2019;
         ///--declare @month int = 4;
         ///
-        ///with projects as(
-        ///	 select -2 Id,
-        ///		 0 Type,
-        ///		 &apos;Project &apos; + CAST(pr.Id AS nvarchar) ViewModelId,
-        ///		 null ParentId,
-        ///		 null ObjectId,
-        ///		 null ManagerId,
-        ///		 null PositionId,
-        ///		 null EmployeeId,
-        ///		 pr.Name Name,
-        ///		 &apos;Выплат: &apos; + CAST(Count(sal.Id) AS nvarchar) Phone,
-        ///		 &apos;Объектов: &apos; + CAST((select Count(*) 
-        ///							  from Object 
-        ///							  where ProjectId = pr.ID and IsDeleted = 0) 
-        ///							  AS nvarchar) [остаток строки не уместился]&quot;;.
+        ///with pays as (
+        ///	 select pay.Id,
+        ///		2 Type, 
+        ///		&apos;Salary &apos; + CAST(pay.Id as nvarchar) ViewModelId,
+        ///		&apos;Object &apos; + CAST(obj.Id as nvarchar) ParentId,
+        ///		pr.Id Project_Id,
+        ///		obj.Id Object_Id,
+        ///		obj.Manager_Id Manager_Id,
+        ///		emp.Id Employee_Id,
+        ///		@year Year,
+        ///		@month Month,
+        ///		0 ObjectCount,
+        ///		1 EmployeeCount,
+        ///		emp.Name Name,
+        ///		emp.Position Position,
+        ///		emp.Phone Phone,
+        ///		emp.Salary Salary,
+        ///		pay.RateDays RateDays [остаток строки не уместился]&quot;;.
         /// </summary>
-        internal static string SalaryPayForProjectManager {
+        internal static string SalaryPaysForProjectManager {
             get {
-                return ResourceManager.GetString("SalaryPayForProjectManager", resourceCulture);
+                return ResourceManager.GetString("SalaryPaysForProjectManager", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на --DEBUG
-        ///--declare @login nvarchar(50) = &apos;User1&apos;;
+        ///   Ищет локализованную строку, похожую на --declare @login nvarchar(50) = &apos;User1&apos;;
         ///--declare @password nvarchar(50) = &apos;123&apos;;
         ///
         ///select 
-        ///	u.Id,
-        ///	u.Login,
-        ///	u.Password,
-        ///	u.Name,
-        ///	u.Role_Id,
+        ///	u.*,
         ///	Role.Name RoleName
         ///from [User] u
         ///	left join Role

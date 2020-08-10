@@ -124,11 +124,14 @@
   <data name="InsertWorkDay" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Sql\InsertWorkDay.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
-  <data name="SalaryPayForManager" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Sql\SalaryPayForManager.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  <data name="SalaryPay" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Sql\SalaryPay.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
-  <data name="SalaryPayForProjectManager" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Sql\SalaryPayForProjectManager.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  <data name="SalaryPaysForManager" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Sql\SalaryPaysForManager.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="SalaryPaysForProjectManager" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Sql\SalaryPaysForProjectManager.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="User" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Sql\User.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>

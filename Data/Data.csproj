@@ -75,6 +75,7 @@
     <Content Include="Database startup.bak">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <EmbeddedResource Include="Sql\SalaryPay.sql" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -85,10 +86,10 @@
     <EmbeddedResource Include="Sql\User.sql" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Sql\SalaryPayForProjectManager.sql" />
+    <EmbeddedResource Include="Sql\SalaryPaysForProjectManager.sql" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Sql\SalaryPayForManager.sql" />
+    <EmbeddedResource Include="Sql\SalaryPaysForManager.sql" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Sql\DeleteWorkDay.sql" />

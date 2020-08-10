@@ -32,7 +32,17 @@ namespace Furmanov.UI
 			try
 			{
 				var bug = e.Bug;
-				if (bug.IsExist)
+				if (bug.IsNew)
+				{
+					lbTitle.Text = "Возникла неизвестная проблема в работе программы";
+					lbTitle.ForeColor = Color.FromArgb(255, 100, 100);
+					lbDescr.Text = $"Тип: {e.Exception.GetType()}\n" +
+		               $"{e.Exception.Message}\n\n" +
+		               "Все необходимые сведения уже отправлены разработчикам\n" +
+		               $"Сборка: {bug.Project}\n" +
+		               $"Номер ошибки: {bug.Id}";
+				}
+				else
 				{
 					lbTitle.Text = "Возникла известная проблема в работе программы";
 					lbTitle.ForeColor = Color.FromArgb(100, 200, 100);
@@ -43,16 +53,6 @@ namespace Furmanov.UI
 		               "Решение проблемы уже в работе.\n" +
 		               (bug.SolvedDate != null ? $"Планируемая дата решения: {bug.SolvedDate:d}\n\n" : "") +
 		               bug.InfoToUser;
-				}
-				else
-				{
-					lbTitle.Text = "Возникла неизвестная проблема в работе программы";
-					lbTitle.ForeColor = Color.FromArgb(255, 100, 100);
-					lbDescr.Text = $"Тип: {e.Exception.GetType()}\n" +
-		               $"{e.Exception.Message}\n\n" +
-		               "Все необходимые сведения уже отправлены разработчикам\n" +
-		               $"Сборка: {bug.Project}\n" +
-		               $"Номер ошибки: {bug.Id}";
 				}
 			}
 			catch (Exception ex)

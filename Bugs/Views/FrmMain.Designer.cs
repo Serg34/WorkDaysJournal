@@ -17,6 +17,7 @@
 			{
 				components.Dispose();
 			}
+			_model.Dispose();
 			base.Dispose(disposing);
 		}
 
@@ -75,7 +76,7 @@
 			this.gcBugs.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
             this.riMessage,
             this.riMessageToUser});
-			this.gcBugs.Size = new System.Drawing.Size(611, 414);
+			this.gcBugs.Size = new System.Drawing.Size(660, 553);
 			this.gcBugs.TabIndex = 0;
 			this.gcBugs.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gvBugs});
@@ -110,6 +111,7 @@
 			this.gvBugs.Name = "gvBugs";
 			this.gvBugs.OptionsEditForm.EditFormColumnCount = 1;
 			this.gvBugs.OptionsView.RowAutoHeight = true;
+			this.gvBugs.OptionsView.ShowGroupPanel = false;
 			this.gvBugs.RowCellClick += new DevExpress.XtraGrid.Views.Grid.RowCellClickEventHandler(this.gvBugs_RowCellClick);
 			this.gvBugs.RowStyle += new DevExpress.XtraGrid.Views.Grid.RowStyleEventHandler(this.gvBugs_RowStyle);
 			this.gvBugs.CalcRowHeight += new DevExpress.XtraGrid.Views.Grid.RowHeightEventHandler(this.gvBugs_CalcRowHeight);
@@ -131,8 +133,6 @@
 			this.colProject.FieldName = "Project";
 			this.colProject.Name = "colProject";
 			this.colProject.OptionsColumn.AllowEdit = false;
-			this.colProject.Visible = true;
-			this.colProject.VisibleIndex = 1;
 			// 
 			// colTotalMessage
 			// 
@@ -140,7 +140,7 @@
 			this.colTotalMessage.FieldName = "TotalMessage";
 			this.colTotalMessage.Name = "colTotalMessage";
 			this.colTotalMessage.Visible = true;
-			this.colTotalMessage.VisibleIndex = 2;
+			this.colTotalMessage.VisibleIndex = 1;
 			this.colTotalMessage.Width = 93;
 			// 
 			// riMessage
@@ -162,6 +162,8 @@
 			this.colPrintScreen.OptionsColumn.AllowEdit = false;
 			this.colPrintScreen.OptionsEditForm.RowSpan = 20;
 			this.colPrintScreen.OptionsEditForm.UseEditorColRowSpan = false;
+			this.colPrintScreen.Visible = true;
+			this.colPrintScreen.VisibleIndex = 2;
 			// 
 			// colSolvedDate
 			// 
@@ -214,7 +216,7 @@
 			this.splitContainerControl1.Panel1.Text = "Panel1";
 			this.splitContainerControl1.Panel2.Controls.Add(this.gcIncidents);
 			this.splitContainerControl1.Panel2.Text = "Panel2";
-			this.splitContainerControl1.Size = new System.Drawing.Size(835, 414);
+			this.splitContainerControl1.Size = new System.Drawing.Size(884, 553);
 			this.splitContainerControl1.SplitterPosition = 212;
 			this.splitContainerControl1.TabIndex = 1;
 			// 
@@ -227,7 +229,7 @@
 			this.gcIncidents.MainView = this.gvIncidents;
 			this.gcIncidents.Margin = new System.Windows.Forms.Padding(1, 3, 1, 3);
 			this.gcIncidents.Name = "gcIncidents";
-			this.gcIncidents.Size = new System.Drawing.Size(212, 414);
+			this.gcIncidents.Size = new System.Drawing.Size(212, 553);
 			this.gcIncidents.TabIndex = 0;
 			this.gcIncidents.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gvIncidents});
@@ -266,13 +268,13 @@
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(835, 414);
+			this.ClientSize = new System.Drawing.Size(884, 553);
 			this.Controls.Add(this.splitContainerControl1);
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.KeyPreview = true;
 			this.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
 			this.Name = "FrmMain";
-			this.Text = "FeedBack";
+			this.Text = "Баги";
 			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FrmMain_FormClosed);
 			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FrmMain_KeyDown);
 			((System.ComponentModel.ISupportInitialize)(this.gcBugs)).EndInit();

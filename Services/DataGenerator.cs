@@ -1132,6 +1132,8 @@ namespace Furmanov.Services
 			db.Delete<ProjectDto>();
 			db.Delete<UserDto>();
 			//db.Delete<RoleDto>(); 
+			db.Delete<BugIncidentDto>();
+			db.Delete<BugDto>();
 			#endregion
 
 			var year = 2019;

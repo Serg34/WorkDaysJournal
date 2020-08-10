@@ -8,7 +8,6 @@ namespace Furmanov.MVP.MainView
 		public User User { get; set; }
 		public int Year { get; set; }
 		public int Month { get; set; }
-		public List<SalaryPay> SalaryPays { get; set; }
-		public List<WorkedDay> WorkedDays { get; set; }
+		public SalaryPay[] SalaryPays { get; set; }
 	}
 }

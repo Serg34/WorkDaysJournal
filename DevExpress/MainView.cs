@@ -52,15 +52,15 @@ namespace Furmanov.UI
 
 		public event EventHandler RefillingDataBase;
 		public event EventHandler<MonthEventArgs> ChangedMonth;
-		public event EventHandler WorkDaysOnlyClick;
-		public event EventHandler AllDaysClick;
+		public event EventHandler<SalaryPay> WorkDaysOnlyClick;
+		public event EventHandler<SalaryPay> AllDaysClick;
 
 		public event EventHandler<UndoRedoEventArgs<SalaryPay>> ChangedSalaryPay;
 		public event EventHandler<SalaryPay> SelectionChangingSalaryPay;
 
 		public event EventHandler<WorkedDay> ChangedWorkedDay;
 
-		public event EventHandler DeletingAllDays;
+		public event EventHandler<SalaryPay> DeletingAllDays;
 
 		public event EventHandler<int> Undo;
 		public event EventHandler<int> Redo;
@@ -204,13 +204,13 @@ namespace Furmanov.UI
 		}
 		private void BtWorkDaysOnly_ItemClick(object sender, ItemClickEventArgs e)
 		{
-			WorkDaysOnlyClick?.Invoke(this, EventArgs.Empty);
+			WorkDaysOnlyClick?.Invoke(this, _currentPay);
 		}
 		private void BtAllDays_ItemClick(object sender, ItemClickEventArgs e)
 		{
 			try
 			{
-				AllDaysClick?.Invoke(this, EventArgs.Empty);
+				AllDaysClick?.Invoke(this, _currentPay);
 			}
 			catch (Exception ex)
 			{
@@ -219,7 +219,7 @@ namespace Furmanov.UI
 		}
 		private void BtDeleteAllDays_ItemClick(object sender, ItemClickEventArgs e)
 		{
-			DeletingAllDays?.Invoke(this, EventArgs.Empty);
+			DeletingAllDays?.Invoke(this, _currentPay);
 		}
 		#endregion
 
@@ -328,7 +328,7 @@ namespace Furmanov.UI
 			try
 			{
 				ChangedSalaryPay?.Invoke(this,
-				new UndoRedoEventArgs<SalaryPay>(_currentPay, _prevPay));
+					new UndoRedoEventArgs<SalaryPay>(_currentPay.Clone(), _prevPay));
 			}
 			catch (Exception ex)
 			{
@@ -342,7 +342,8 @@ namespace Furmanov.UI
 				var fieldName = treeSalary.FocusedColumn.FieldName;
 				var year = _currentPay.Year;
 				var month = _currentPay.Month;
-				ValidateService.Validate(e, new SalaryPayValidator(year, month), _prevPay, _currentPay, fieldName);
+				var vmToValidate = _prevPay.Clone();
+				ValidateService.Validate(e, new SalaryPayValidator(year, month), vmToValidate, _currentPay, fieldName);
 			}
 			catch (Exception ex)
 			{
@@ -423,23 +424,23 @@ namespace Furmanov.UI
 		{
 			try
 			{
-				if (treeSalary.GetFocusedRow() is SalaryPay vm)
+				if (treeSalary.GetFocusedRow() is SalaryPay pay)
 				{
-					_currentPay = vm;
+					_currentPay = pay;
 
 					btCreateResource.Enabled
 						= btEditResource.Enabled
 						= btReportForObject.Enabled
-						= vm.Type == ObjType.Object ||
-						  vm.Type == ObjType.Salary;
+						= pay.Type == ObjType.Object ||
+						  pay.Type == ObjType.Salary;
 
 					btDeleteResource.Enabled
 						= btAllDays.Enabled
 						= btWorkDaysOnly.Enabled
 						= btDeleteAllDays.Enabled
-						= vm.Type == ObjType.Salary;
+						= pay.Type == ObjType.Salary;
 
-					SelectionChangingSalaryPay?.Invoke(this, vm);
+					SelectionChangingSalaryPay?.Invoke(this, pay);
 				}
 			}
 			catch (Exception ex)

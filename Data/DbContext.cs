@@ -26,6 +26,12 @@ namespace Furmanov.Data
 			var res = GetTable<T>().Where(func).FirstOrDefault();
 			return res;
 		}
-		public void Delete<T>() where T : Dto => GetTable<T>().Delete();
+
+		public T[] GetWhere<T>(Expression<Func<T, bool>> func) where T : class
+		{
+			var res = GetTable<T>().Where(func).ToArray();
+			return res;
+		}
+		public void Delete<T>() where T : class => GetTable<T>().Delete();
 	}
 }

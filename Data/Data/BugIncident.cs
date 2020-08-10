@@ -1,5 +1,6 @@
 ﻿using LinqToDB.Mapping;
 using System;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace Furmanov.Data.Data
@@ -12,6 +13,7 @@ namespace Furmanov.Data.Data
 		[Column] public string User { get; set; }
 
 		[Column(SkipOnInsert = true, SkipOnUpdate = true)]
+		[DisplayName("Дата возникновения")]
 		[DisplayFormat(DataFormatString = "dd.MM.yy HH:mm")]
 		public DateTime DateTime { get; set; }
 	}

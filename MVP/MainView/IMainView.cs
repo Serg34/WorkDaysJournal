@@ -15,9 +15,9 @@ namespace Furmanov.MVP.MainView
 
 		event EventHandler RefillingDataBase;
 		event EventHandler<MonthEventArgs> ChangedMonth;
-		event EventHandler WorkDaysOnlyClick;
-		event EventHandler AllDaysClick;
-		event EventHandler DeletingAllDays;
+		event EventHandler<SalaryPay> WorkDaysOnlyClick;
+		event EventHandler<SalaryPay> AllDaysClick;
+		event EventHandler<SalaryPay> DeletingAllDays;
 
 		event EventHandler<UndoRedoEventArgs<SalaryPay>> ChangedSalaryPay;
 		event EventHandler<SalaryPay> SelectionChangingSalaryPay;

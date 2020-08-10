@@ -1,7 +1,6 @@
 ﻿using Furmanov.MVP.Login;
 using Furmanov.MVP.MainView.UndoRedoCommands;
 using Furmanov.Services.UndoRedo;
-using SwissClean.Services.UndoRedo.Commands;
 
 namespace Furmanov.MVP.MainView
 {
@@ -48,22 +47,25 @@ namespace Furmanov.MVP.MainView
 				_undoService.Execute(cmd);
 			};
 
-			_view.WorkDaysOnlyClick += (sender, args) =>
+			_view.WorkDaysOnlyClick += (sender, pay) =>
 			{
-				var days = _model.GenWorkedDays(false, true);
-				var cmd = new WorkedDaysCmd(_model, days);
+				var days = _model.GenWorkedDays(pay.Id,false, true);
+				var prevDays = _model.GetWorkedDays(pay.Id);
+				var cmd = new WorkedDaysCmd(_model, days, prevDays);
 				_undoService.Execute(cmd);
 			};
-			_view.AllDaysClick += (sender, args) =>
+			_view.AllDaysClick += (sender, pay) =>
 			{
-				var days = _model.GenWorkedDays(true, true);
-				var cmd = new WorkedDaysCmd(_model, days);
+				var days = _model.GenWorkedDays(pay.Id, true, true);
+				var prevDays = _model.GetWorkedDays(pay.Id);
+				var cmd = new WorkedDaysCmd(_model, days, prevDays);
 				_undoService.Execute(cmd);
 			};
-			_view.DeletingAllDays += (sender, args) =>
+			_view.DeletingAllDays += (sender, pay) =>
 			{
-				var days = _model.GenWorkedDays(true, false);
-				var cmd = new WorkedDaysCmd(_model, days);
+				var days = _model.GenWorkedDays(pay.Id, true, false);
+				var prevDays = _model.GetWorkedDays(pay.Id);
+				var cmd = new WorkedDaysCmd(_model, days, prevDays);
 				_undoService.Execute(cmd);
 			};
 

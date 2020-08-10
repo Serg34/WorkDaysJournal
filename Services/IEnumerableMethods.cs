@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 namespace Furmanov.Services
 {
 	public static class EnumerableMethods
 	{
+		[DebuggerStepThrough]
 		public static void ForEach<T>(this IEnumerable<T> enumerable, Action<T> action)
 		{
 			var array = enumerable as T[] ?? enumerable.ToArray();

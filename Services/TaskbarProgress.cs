@@ -74,6 +74,11 @@ namespace Furmanov.Services
 		}
 
 		public static void Start(Control form = null) => SetValue(0, 1, form);
+		public static void Pause(Control form = null)
+		{
+			SetValue(1, 1, form);
+			SetState(TaskbarStates.Paused, form);
+		}
 		public static void Error(Control form = null)
 		{
 			SetValue(1, 1, form);

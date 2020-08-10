@@ -1,31 +1,19 @@
 ﻿using DevExpress.XtraEditors.Controls;
 using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraGrid.Views.Grid;
-using Furmanov.Data;
 using Furmanov.Data.Data;
-using Furmanov.Properties;
+using Furmanov.Models;
 using Furmanov.Services;
-using LinqToDB;
-using LinqToDB.Data;
 using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using DevExpress.XtraGrid;
 
 namespace Furmanov.Views
 {
 	public partial class FrmMain : DevExpress.XtraEditors.XtraForm
 	{
-		#region Fields
-		private readonly string _connectionString = Settings.Default.ConnectionString;
-		private DateTime? _lastBugDateTime;
-		private DateTime? _lastIncidentDateTime;
-		private readonly List<int> _incidentBugIDs = new List<int>();
-		private bool _isActive = true; 
-		#endregion
+		private readonly MainModel _model = new MainModel();
 		public FrmMain()
 		{
 			try
@@ -33,10 +21,15 @@ namespace Furmanov.Views
 				InitializeComponent();
 				LayoutSaver.Restore(this);
 
-				UpdateData();
-
-				new Task(CheckBugs).Start();
-				new Task(CheckIncidents).Start();
+				_model.Updating += (sender, bugs) =>
+				{
+					Invoke(new Action(() => UpdateData(bugs)));
+				};
+				Shown += (sender, e) =>
+				{
+					_model.Update();
+					_model.Start();
+				};
 			}
 			catch (Exception ex)
 			{
@@ -44,16 +37,15 @@ namespace Furmanov.Views
 			}
 		}
 
-		private void UpdateData()
+		private void UpdateData(Bug[] bugs)
 		{
 			try
 			{
-				using (var db = new DbContext(_connectionString))
+				using (new GridViewStateSaver(gvBugs))
 				{
-					var bugs = db.Query<Bug>(Resources.Bugs)
-						.ToArray();
 					gcBugs.DataSource = bugs;
 				}
+				UpdateTaskBar();
 			}
 			catch (Exception ex)
 			{
@@ -61,57 +53,27 @@ namespace Furmanov.Views
 			}
 		}
 
-		private void CheckBugs()
+		private void UpdateTaskBar()
 		{
-			using (var db = new DbContext(_connectionString))
+			try
 			{
-				while (!Disposing && !IsDisposed)
+				if (!(gcBugs.DataSource is Bug[] bugs)) return;
+				if (bugs.Any(b => b.IsNew))
 				{
-					System.Threading.Thread.Sleep(60_000);
-					if (!_isActive) continue;
-					var lastBug = db.GetTable<BugDto>()
-						.OrderByDescending(b => b.CreatedDate)
-						.FirstOrDefault();
-					if (_lastBugDateTime == null) _lastBugDateTime = lastBug?.CreatedDate;
-					if (lastBug?.CreatedDate > _lastBugDateTime)
-					{
-						_lastBugDateTime = lastBug.CreatedDate;
-						_isActive = false;
-						Invoke(new Action(() =>
-						{
-							TaskbarProgress.Error(this);
-							UpdateData();
-							MessageService.Message($"Новый баг:\n{lastBug.Message}");
-							TaskbarProgress.Finish(this);
-							_isActive = true;
-						}));
-					}
+					TaskbarProgress.Error(this);
+				}
+				else if (bugs.Any(b => b.HasNewIncident))
+				{
+					TaskbarProgress.Pause(this);
+				}
+				else
+				{
+					TaskbarProgress.Finish(this);
 				}
 			}
-		}
-		private void CheckIncidents()
-		{
-			using (var db = new DbContext(_connectionString))
+			catch (Exception ex)
 			{
-				while (!Disposing && !IsDisposed)
-				{
-					System.Threading.Thread.Sleep(60_000);
-					//if (!_isActive) continue;
-					var last = db.GetTable<BugIncidentDto>()
-						.OrderByDescending(i => i.DateTime)
-						.FirstOrDefault();
-					if (_lastIncidentDateTime == null) _lastIncidentDateTime = last?.DateTime;
-					if (last?.DateTime > _lastIncidentDateTime)
-					{
-						_lastIncidentDateTime = last.DateTime;
-						_incidentBugIDs.Add(last.Bug_Id);
-						Invoke(new Action(() =>
-						{
-							TaskbarProgress.SetState(TaskbarProgress.TaskbarStates.Indeterminate, this);
-							UpdateData();
-						}));
-					}
-				}
+				MessageService.Error(ex.ToString());
 			}
 		}
 
@@ -145,15 +107,10 @@ namespace Furmanov.Views
 			try
 			{
 				if (!(gvBugs.GetFocusedRow() is Bug bug)) return;
-				using (var db = new DbContext(_connectionString))
-				{
-					var incidents = db.GetTable<BugIncidentDto>()
-						.Where(i => i.Bug_Id == bug.Id)
-						.ToArray();
 
-					gcIncidents.DataSource = incidents;
-					gvBugs.LayoutChanged();
-				}
+				var incidents = _model.GetIncidents(bug.Id);
+				gcIncidents.DataSource = incidents;
+				gvBugs.LayoutChanged();
 			}
 			catch (Exception ex)
 			{
@@ -165,11 +122,8 @@ namespace Furmanov.Views
 			try
 			{
 				if (!(gvBugs.GetFocusedRow() is Bug bug)) return;
-				using (var db = new DbContext(_connectionString))
-				{
-					var bugDto = MapperService.Map<BugDto>(bug);
-					db.Update(bugDto);
-				}
+
+				_model.UpdateBug(bug);
 			}
 			catch (Exception ex)
 			{
@@ -189,15 +143,15 @@ namespace Furmanov.Views
 			try
 			{
 				if (!(gvBugs.GetRow(e.RowHandle) is Bug bug)) return;
-				if (_incidentBugIDs.Contains(bug.Id))
+				if (bug.IsNew || bug.HasNewIncident)
 				{
-					_incidentBugIDs.Remove(bug.Id);
+					bug.IsNew = false;
+					_model.DeleteNewBug(bug);
+					bug.HasNewIncident = false;
+					_model.DeleteNewIncident(bug.Id);
 					gvBugs.LayoutChanged();
-					if (!_incidentBugIDs.Any())
-					{
-						TaskbarProgress.Start(this);
-					}
 				}
+				UpdateTaskBar();
 			}
 			catch (Exception ex)
 			{
@@ -223,7 +177,7 @@ namespace Furmanov.Views
 				{
 					//e.Appearance.BackColor = Color.FromArgb(30, 200, 0, 50);
 				}
-				if (_incidentBugIDs.Contains(bug.Id))
+				if (bug.HasNewIncident)
 				{
 					e.Appearance.Font = new Font(e.Appearance.Font, FontStyle.Bold);
 				}
@@ -234,12 +188,13 @@ namespace Furmanov.Views
 			}
 		}
 
-		private void FrmMain_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
+		private void FrmMain_KeyDown(object sender, KeyEventArgs e)
 		{
-			if (e.KeyCode == Keys.F5) UpdateData();
+			if (e.KeyCode == Keys.F5) _model.Update();
 		}
 		private void FrmMain_FormClosed(object sender, FormClosedEventArgs e)
 		{
+			_model.Dispose();
 			LayoutSaver.Save(this);
 		}
 	}

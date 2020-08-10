@@ -9,7 +9,6 @@ namespace Furmanov.MVP.MainView.UndoRedoCommands
 		public WorkedDayCmd(IMainModel model, WorkedDay value)
 		{
 			_model = model;
-			_pay = _model.CurrentPay;
 			_value = value;
 			_prevValue = Cloner.DeepCopy(value);
 			_prevValue.IsWorked = !value.IsWorked;
@@ -17,7 +16,6 @@ namespace Furmanov.MVP.MainView.UndoRedoCommands
 		}
 
 		private readonly IMainModel _model;
-		private readonly SalaryPay _pay;
 		private readonly WorkedDay _value;
 		private readonly WorkedDay _prevValue;
 
@@ -25,17 +23,11 @@ namespace Furmanov.MVP.MainView.UndoRedoCommands
 
 		public void Execute()
 		{
-			var oldPay = _model.CurrentPay;
-			_model.CurrentPay = _pay;
 			_model.SaveWorkDay(_value);
-			_model.CurrentPay = oldPay;
 		}
 		public void UnExecute()
 		{
-			var oldPay = _model.CurrentPay;
-			_model.CurrentPay = _pay;
 			_model.SaveWorkDay(_prevValue);
-			_model.CurrentPay = oldPay;
 		}
 	}
 }

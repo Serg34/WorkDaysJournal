@@ -19,10 +19,11 @@ namespace Furmanov.Data
 		void DeleteAutoLogin(string login);
 		User GetUser(string login, string password);
 
-		List<SalaryPay> GetSalaryPays(User user, int year, int month);
+		SalaryPay[] GetSalaryPays(User user, int year, int month);
+		SalaryPay GetSalaryPay(int payId);
 		void SaveSalaryPay(SalaryPayDto salaryPayDto);
 
-		List<WorkedDayDto> GetWorkedDays(int salaryPayId, int year, int month);
+		WorkedDayDto[] GetWorkedDays(int salaryPayId, int year, int month);
 		void SaveWorkedDays(params WorkedDay[] workedDayDb);
 		void Insert<T>(T obj);
 		T[] GetTable<T>() where T : Dto;
@@ -83,21 +84,21 @@ namespace Furmanov.Data
 			_loginPasswordRepository.Save(users);
 		}
 
-		public List<SalaryPay> GetSalaryPays(User user, int year, int month)
+		public SalaryPay[] GetSalaryPays(User user, int year, int month)
 		{
-			if (user == null) return new List<SalaryPay>();
+			if (user == null) return new SalaryPay[0];
 			var userId = user.Role == Role.Admin || user.Role == Role.Director ? 0 : user.Id;
 
 			using (var db = new DbContext(_connectionString))
 			{
-				var sql = user.Role == Role.Manager ? Resources.SalaryPayForManager
-					: Resources.SalaryPayForProjectManager;
+				var sql = user.Role == Role.Manager ? Resources.SalaryPaysForManager
+					: Resources.SalaryPaysForProjectManager;
 
 				var res = db.Query<SalaryPay>(sql,
 					new DataParameter("@userId", userId),
 					new DataParameter("@year", year),
 					new DataParameter("@month", month))
-					.ToList();
+					.ToArray();
 				return res;
 			}
 		}
@@ -111,7 +112,7 @@ namespace Furmanov.Data
 			}
 		}
 
-		public List<WorkedDayDto> GetWorkedDays(int salaryPayId, int year, int month)
+		public WorkedDayDto[] GetWorkedDays(int salaryPayId, int year, int month)
 		{
 			using (var db = new DbContext(_connectionString))
 			{
@@ -119,7 +120,7 @@ namespace Furmanov.Data
 						.Where(p => p.SalaryPay_Id == salaryPayId)
 						.Where(p => p.Date.Year == year)
 						.Where(p => p.Date.Month == month)
-						.ToList();
+						.ToArray();
 
 				return res;
 			}
@@ -167,6 +168,18 @@ namespace Furmanov.Data
 			using (var db = new DbContext(_connectionString))
 			{
 				return db.GetTable<T>().ToArray();
+			}
+		}
+
+		public SalaryPay GetSalaryPay(int payId)
+		{
+			using (var db = new DbContext(_connectionString))
+			{
+				var res = db.Query<SalaryPay>(Resources.SalaryPay,
+						new DataParameter("@payId", payId))
+						.FirstOrDefault();
+
+				return res;
 			}
 		}
 	}

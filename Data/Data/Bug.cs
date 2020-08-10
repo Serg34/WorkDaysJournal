@@ -35,8 +35,8 @@ namespace Furmanov.Data.Data
 
 	public class Bug : BugDto
 	{
-
-		public bool IsExist { get; set; }
+		public bool IsNew { get; set; }
+		public bool HasNewIncident { get; set; }
 
 		[DisplayName("Количество")]
 		[Column] public int IncidentCount { get; set; }
