@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <RootNamespace>Furmanov</RootNamespace>
+    <StartupObject>Furmanov.Program</StartupObject>
+    <Company>Furmanov</Company>
+    <Authors>Furmanov</Authors>
+    <Product>Табель учёта рабочего времени</Product>
+    <NeutralLanguage>en-US</NeutralLanguage>
+  </PropertyGroup>
+
+
+
+</Project>
