@@ -13,6 +13,7 @@ namespace Furmanov.MVP.Login
 		event EventHandler SqlConnectingError;
 		event EventHandler<string> Error;
 		bool LoginChecked { get; }
+		User User { get; }
 
 		void Update(bool isStartApp);
 		void Login(object sender, LoginViewModel viewModel);
@@ -23,7 +24,6 @@ namespace Furmanov.MVP.Login
 		private readonly IDataAccessService _db;
 		private LoginViewModel _viewModel;
 
-		public bool LoginChecked { get; private set; }
 
 		public LoginModel(IDataAccessService dataAccessService)
 		{
@@ -34,7 +34,8 @@ namespace Furmanov.MVP.Login
 		public event EventHandler Logged;
 		public event EventHandler SqlConnectingError;
 		public event EventHandler<string> Error;
-
+		public bool LoginChecked { get; private set; }
+		public User User { get; private set; }
 		public void Update(bool isStartApp)
 		{
 			_viewModel = new LoginViewModel { CanLogin = isStartApp };
@@ -70,7 +71,7 @@ namespace Furmanov.MVP.Login
 				var user = _db.GetUser(_viewModel.Login, _viewModel.Password);
 				if (user != null)
 				{
-					ApplicationUser.User = user;
+					User = ApplicationUser.User = user;
 					var loginPass = new LoginPassword();
 					if (_viewModel.IsRememberLogin)
 					{
@@ -88,7 +89,7 @@ namespace Furmanov.MVP.Login
 				}
 				else
 				{
-					ApplicationUser.User = null;
+					User = ApplicationUser.User = null;
 					LoginChecked = false;
 
 					Error?.Invoke(this, "Неверный логин или пароль");
