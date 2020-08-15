@@ -1149,6 +1149,7 @@ namespace Furmanov.Services
 					var debugUser = new UserDto
 					{
 						Login = role.ToString(),
+						Email = $"{role}@mail.ru",
 						Name = role.ToString(),
 						Role = role,
 						Password = "1"
