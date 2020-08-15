@@ -1,30 +1,69 @@
-﻿using System;
+﻿using Furmanov.Data.Data;
+using Furmanov.IoC;
+using Furmanov.Models;
+using Furmanov.MVP.MainView;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using Furmanov.Models;
 
 namespace Furmanov.Controllers
 {
+	[Authorize]
 	public class HomeController : Controller
 	{
 		private readonly ILogger<HomeController> _logger;
+		private readonly IMainModel _model;
+		private MainViewModel _mainViewModel;
+		private List<WorkedDay> _workedDays;
 
-		public HomeController(ILogger<HomeController> logger)
+		public HomeController(IConfiguration config,
+			//UserManager<AspNetApplicationUser> userManager, 
+			ILogger<HomeController> logger)
 		{
 			_logger = logger;
+
+			var connectionString = config.GetConnectionString("DefaultConnection");
+			var resolver = IoCBuilder.Build(connectionString);
+
+			_model = resolver.Resolve<IMainModel>();
+
+			var loginModel = _model.LoginModel;
+			//loginModel.Updated
+			//loginModel.Update(true);
+
+			_model.Updated += (sender, vm) => _mainViewModel = vm;
+			_model.SelectedSalaryPay += (sender, days) => _workedDays = days;
 		}
 
-		public IActionResult Index()
+		private void ShowLoginView(bool isStartApp)
 		{
-			return View();
+			var model = _model.LoginModel;
+			//model.SqlConnectingError += (sender, e) => _view.ShowSqlError();
+		}
+
+		public IActionResult Index(int year = 2019, int month = 1)
+		{
+			var user = Content(User.Identity.Name);
+
+
+			Response.Cookies.Append("Test", "Test value",
+				new CookieOptions
+				{
+					Expires = DateTimeOffset.Now.AddMonths(1)
+				});
+
+			_model.ChangeMonth(year, month);
+			return View(_mainViewModel);
 		}
 
 		public IActionResult Privacy()
 		{
+			var cookie = Request.Cookies["Test"];
 			return View();
 		}
 

@@ -40,7 +40,7 @@ namespace Furmanov.Services
 					Project = Application.ProductName,
 					Message = message,
 					InfoForDeveloper = infoForDeveloper,
-					User = Environment.UserName,
+					User = ApplicationUser.User.Login,
 					PrintScreen = ScreenPrinter.Print().ToByteArray()
 				};
 				bugDto.Id = db.InsertWithInt32Identity(bugDto);

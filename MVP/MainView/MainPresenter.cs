@@ -95,7 +95,7 @@ namespace Furmanov.MVP.MainView
 		{
 			var model = _model.LoginModel;
 			var view = _view.LoginView;
-			model.SqlConnectingError += (sender, ex) => _view.ShowSqlError();
+			model.SqlConnectingError += (sender, args) => _view.ShowSqlError();
 
 			if (_loginPresenter == null)
 			{

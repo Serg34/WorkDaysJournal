@@ -28,6 +28,10 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+			DevExpress.Utils.Layout.TablePanelColumn tablePanelColumn1 = new DevExpress.Utils.Layout.TablePanelColumn();
+			DevExpress.Utils.Layout.TablePanelColumn tablePanelColumn2 = new DevExpress.Utils.Layout.TablePanelColumn();
+			DevExpress.Utils.Layout.TablePanelColumn tablePanelColumn3 = new DevExpress.Utils.Layout.TablePanelColumn();
+			DevExpress.Utils.Layout.TablePanelRow tablePanelRow1 = new DevExpress.Utils.Layout.TablePanelRow();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmReportBug));
 			this.lbTitle = new System.Windows.Forms.Label();
 			this.btOk = new DevExpress.XtraEditors.SimpleButton();
@@ -35,7 +39,6 @@
 			this.lbDescr = new System.Windows.Forms.Label();
 			this.picLogo = new DevExpress.XtraEditors.PictureEdit();
 			((System.ComponentModel.ISupportInitialize)(this.tablePanel1)).BeginInit();
-			this.tablePanel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.picLogo.Properties)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -66,16 +69,23 @@
 			// 
 			// tablePanel1
 			// 
+			tablePanelColumn1.Style = DevExpress.Utils.Layout.TablePanelEntityStyle.Relative;
+			tablePanelColumn1.Width = 50F;
+			tablePanelColumn2.Width = 100F;
+			tablePanelColumn3.Style = DevExpress.Utils.Layout.TablePanelEntityStyle.Relative;
+			tablePanelColumn3.Width = 50F;
 			this.tablePanel1.Columns.AddRange(new DevExpress.Utils.Layout.TablePanelColumn[] {
-            new DevExpress.Utils.Layout.TablePanelColumn(DevExpress.Utils.Layout.TablePanelEntityStyle.Relative, 50F),
-            new DevExpress.Utils.Layout.TablePanelColumn(DevExpress.Utils.Layout.TablePanelEntityStyle.AutoSize, 100F),
-            new DevExpress.Utils.Layout.TablePanelColumn(DevExpress.Utils.Layout.TablePanelEntityStyle.Relative, 50F)});
+            tablePanelColumn1,
+            tablePanelColumn2,
+            tablePanelColumn3});
 			this.tablePanel1.Controls.Add(this.btOk);
 			this.tablePanel1.Dock = System.Windows.Forms.DockStyle.Bottom;
 			this.tablePanel1.Location = new System.Drawing.Point(0, 359);
 			this.tablePanel1.Name = "tablePanel1";
+			tablePanelRow1.Height = 30F;
+			tablePanelRow1.Style = DevExpress.Utils.Layout.TablePanelEntityStyle.Absolute;
 			this.tablePanel1.Rows.AddRange(new DevExpress.Utils.Layout.TablePanelRow[] {
-            new DevExpress.Utils.Layout.TablePanelRow(DevExpress.Utils.Layout.TablePanelEntityStyle.Absolute, 30F)});
+            tablePanelRow1});
 			this.tablePanel1.Size = new System.Drawing.Size(700, 36);
 			this.tablePanel1.TabIndex = 22;
 			// 
@@ -90,7 +100,7 @@
 			this.lbDescr.MinimumSize = new System.Drawing.Size(700, 0);
 			this.lbDescr.Name = "lbDescr";
 			this.lbDescr.Padding = new System.Windows.Forms.Padding(25, 0, 25, 25);
-			this.lbDescr.Size = new System.Drawing.Size(700, 65);
+			this.lbDescr.Size = new System.Drawing.Size(700, 75);
 			this.lbDescr.TabIndex = 17;
 			this.lbDescr.Text = "К сожалению, не удалось отправить данные об ошибке разработчикам. Передайте, пожа" +
     "луйста, данные вручную";
@@ -102,6 +112,9 @@
 			this.picLogo.EditValue = global::Furmanov.UI.Properties.Resources.Fsi;
 			this.picLogo.Location = new System.Drawing.Point(0, 30);
 			this.picLogo.Name = "picLogo";
+			// 
+			// 
+			// 
 			this.picLogo.Properties.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder;
 			this.picLogo.Properties.ShowCameraMenuItem = DevExpress.XtraEditors.Controls.CameraMenuItemVisibility.Auto;
 			this.picLogo.Size = new System.Drawing.Size(700, 96);
@@ -110,7 +123,7 @@
 			// FrmReportBug
 			// 
 			this.AcceptButton = this.btOk;
-			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
+			this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 25F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.AutoSize = true;
 			this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
@@ -135,7 +148,6 @@
 			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FrmReportBug_FormClosed);
 			this.Shown += new System.EventHandler(this.FrmReportBug_Shown);
 			((System.ComponentModel.ISupportInitialize)(this.tablePanel1)).EndInit();
-			this.tablePanel1.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.picLogo.Properties)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();

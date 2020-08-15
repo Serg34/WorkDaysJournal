@@ -1150,7 +1150,7 @@ namespace Furmanov.Services
 					{
 						Login = role.ToString(),
 						Name = role.ToString(),
-						Role = role,
+						Role_Id = role,
 						Password = "1"
 					};
 					debugUser.Id = db.InsertWithInt32Identity(debugUser);
@@ -1171,7 +1171,7 @@ namespace Furmanov.Services
 			Add(Role.ProjectManager, 5);
 			#endregion
 
-			var projectManagers = users.Where(u => u.Role == Role.ProjectManager).ToArray();
+			var projectManagers = users.Where(u => u.Role_Id == Role.ProjectManager).ToArray();
 			Progress?.Invoke(this, new ProgressEventArgs(1, projectManagers.Length + 1));
 
 			var projectsNames = new List<string>();
@@ -1248,7 +1248,7 @@ namespace Furmanov.Services
 			var user = new UserDto
 			{
 				Name = GenName(),
-				Role = role,
+				Role_Id = role,
 				Password = "1"
 			};
 

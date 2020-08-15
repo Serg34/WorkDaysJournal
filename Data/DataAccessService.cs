@@ -87,11 +87,11 @@ namespace Furmanov.Data
 		public SalaryPay[] GetSalaryPays(User user, int year, int month)
 		{
 			if (user == null) return new SalaryPay[0];
-			var userId = user.Role == Role.Admin || user.Role == Role.Director ? 0 : user.Id;
+			var userId = user.Role_Id == Role.Admin || user.Role_Id == Role.Director ? 0 : user.Id;
 
 			using (var db = new DbContext(_connectionString))
 			{
-				var sql = user.Role == Role.Manager ? Resources.SalaryPaysForManager
+				var sql = user.Role_Id == Role.Manager ? Resources.SalaryPaysForManager
 					: Resources.SalaryPaysForProjectManager;
 
 				var res = db.Query<SalaryPay>(sql,

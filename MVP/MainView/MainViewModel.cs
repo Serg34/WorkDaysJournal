@@ -1,5 +1,4 @@
 ﻿using Furmanov.Data.Data;
-using System.Collections.Generic;
 
 namespace Furmanov.MVP.MainView
 {

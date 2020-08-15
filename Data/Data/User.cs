@@ -21,9 +21,7 @@ namespace Furmanov.Data.Data
 		[Display(Name = "Почта")]
 		[Required(ErrorMessage = "Почта не может быть пустой")]
 		[Column] public string Email { get; set; }
-
-		[Column(Name = "Role_Id")]
-		public Role Role { get; set; }
+		[Column] public Role Role_Id { get; set; } //Для Entity Framework нужно соответсвие названия свойства и столбца
 	}
 
 	public class User : UserDto

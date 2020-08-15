@@ -1,5 +1,3 @@
-using System;
-
 namespace Furmanov.Models
 {
 	public class ErrorViewModel
