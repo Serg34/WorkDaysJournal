@@ -4,6 +4,7 @@ using DevExpress.XtraGrid.Views.Grid.ViewInfo;
 using DevExpress.XtraTreeList;
 using Furmanov.Data;
 using Furmanov.Data.Data;
+using Furmanov.MVP;
 using Furmanov.MVP.Login;
 using Furmanov.MVP.MainView;
 using Furmanov.Services;
@@ -18,8 +19,6 @@ using System.Drawing;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
-using DevExpress.XtraEditors.Controls;
-using Furmanov.MVP;
 
 namespace Furmanov.UI
 {

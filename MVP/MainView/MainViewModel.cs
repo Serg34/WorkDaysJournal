@@ -4,7 +4,7 @@ namespace Furmanov.MVP.MainView
 {
 	public class MainViewModel
 	{
-		public User User { get; set; }
+		public UserDto User { get; set; }
 		public int Year { get; set; }
 		public int Month { get; set; }
 		public SalaryPay[] SalaryPays { get; set; }
