@@ -9,15 +9,15 @@ namespace Furmanov.MVP.Login
 	public interface ILoginModel
 	{
 		event EventHandler<LoginViewModel> Updated;
-		event EventHandler Logged;
+		event EventHandler<UserDto> Logged;
 		event EventHandler SqlConnectingError;
 		event EventHandler<string> Error;
 		bool LoginChecked { get; }
-		User User { get; }
+		UserDto User { get; }
 
 		void Update(bool isStartApp);
-		void Login(object sender, LoginViewModel viewModel);
-		void DeleteAutoLogin(object sender, string login);
+		void Login(LoginViewModel viewModel);
+		void DeleteAutoLogin(string login);
 	}
 	public class LoginModel : ILoginModel
 	{
@@ -31,11 +31,11 @@ namespace Furmanov.MVP.Login
 		}
 
 		public event EventHandler<LoginViewModel> Updated;
-		public event EventHandler Logged;
+		public event EventHandler<UserDto> Logged;
 		public event EventHandler SqlConnectingError;
 		public event EventHandler<string> Error;
 		public bool LoginChecked { get; private set; }
-		public User User { get; private set; }
+		public UserDto User { get; private set; }
 		public void Update(bool isStartApp)
 		{
 			_viewModel = new LoginViewModel { CanLogin = isStartApp };
@@ -50,13 +50,13 @@ namespace Furmanov.MVP.Login
 				_viewModel.IsRememberPassword = loginPass.Password.NoEmpty();
 				if (_viewModel.IsRememberLogin && _viewModel.IsRememberPassword)
 				{
-					Login(this, _viewModel);
+					Login(_viewModel);
 				}
 			}
 			Updated?.Invoke(this, _viewModel);
 		}
 
-		public void Login(object sender, LoginViewModel viewModel)
+		public void Login(LoginViewModel viewModel)
 		{
 			try
 			{
@@ -71,7 +71,7 @@ namespace Furmanov.MVP.Login
 				var user = _db.GetUser(_viewModel.Login, _viewModel.Password);
 				if (user != null)
 				{
-					User = ApplicationUser.User = user;
+					User = user;
 					var loginPass = new LoginPassword();
 					if (_viewModel.IsRememberLogin)
 					{
@@ -84,12 +84,12 @@ namespace Furmanov.MVP.Login
 
 					if (_viewModel.CanLogin)
 					{
-						Logged?.Invoke(this, EventArgs.Empty);
+						Logged?.Invoke(this, User);
 					}
 				}
 				else
 				{
-					User = ApplicationUser.User = null;
+					User = null;
 					LoginChecked = false;
 
 					Error?.Invoke(this, "Неверный логин или пароль");
@@ -105,7 +105,7 @@ namespace Furmanov.MVP.Login
 			}
 		}
 
-		public void DeleteAutoLogin(object sender, string login)
+		public void DeleteAutoLogin(string login)
 		{
 			_db.DeleteAutoLogin(login);
 			Update(false);

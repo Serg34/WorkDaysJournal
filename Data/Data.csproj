@@ -48,7 +48,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ApplicationUser.cs" />
     <Compile Include="DataAccessService.cs" />
     <Compile Include="Data\Bug.cs" />
     <Compile Include="Data\BugIncident.cs" />

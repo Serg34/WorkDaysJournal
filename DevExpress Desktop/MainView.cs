@@ -19,6 +19,7 @@ using System.Drawing;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
+using DevExpress.Internal.WinApi.Windows.UI.Notifications;
 
 namespace Furmanov.UI
 {
@@ -28,6 +29,7 @@ namespace Furmanov.UI
 		private SalaryPay _currentPay;
 		private SalaryPay _prevPay;
 		private bool _updating;
+		private UserDto _user;
 		#endregion
 
 		public MainView()
@@ -41,7 +43,7 @@ namespace Furmanov.UI
 			}
 			catch (Exception ex)
 			{
-				ReportingBug?.Invoke(this, new BugEventArgs(ex));
+				ReportingBug?.Invoke(this, new BugEventArgs(ex, _user));
 			}
 		}
 
@@ -68,13 +70,13 @@ namespace Furmanov.UI
 		#endregion
 
 		#region Login
-		public void UpdateLogin()
+		public void UpdateLogin(UserDto user)
 		{
 			try
 			{
-				pnMain.BeginInit();
+				_user = user;
 
-				var user = ApplicationUser.User;
+				pnMain.BeginInit();
 
 				//Контролы должны быть видимыми до заполнения
 				pnMain.Visible =
@@ -96,7 +98,7 @@ namespace Furmanov.UI
 
 				if (user != null)
 				{
-					lblUser.Caption = $"Пользователь: {user.Login} | {user.Name} | {user.RoleName}";
+					lblUser.Caption = $"Пользователь: {user.Login} | {user.Name} | {user.Role_Id.DisplayName()}";
 					TreeSalary_SelectionChange();
 				}
 				else
@@ -106,7 +108,7 @@ namespace Furmanov.UI
 			}
 			catch (Exception ex)
 			{
-				ReportingBug?.Invoke(this, new BugEventArgs(ex));
+				ReportingBug?.Invoke(this, new BugEventArgs(ex, _user));
 			}
 		}
 
@@ -120,7 +122,7 @@ namespace Furmanov.UI
 			}
 			catch (Exception ex)
 			{
-				ReportingBug?.Invoke(this, new BugEventArgs(ex));
+				ReportingBug?.Invoke(this, new BugEventArgs(ex, _user));
 			}
 		}
 
@@ -135,7 +137,7 @@ namespace Furmanov.UI
 			}
 			catch (Exception ex)
 			{
-				ReportingBug?.Invoke(this, new BugEventArgs(ex));
+				ReportingBug?.Invoke(this, new BugEventArgs(ex, _user));
 			}
 		}
 		#endregion
@@ -158,7 +160,7 @@ namespace Furmanov.UI
 			}
 			catch (Exception ex)
 			{
-				ReportingBug?.Invoke(this, new BugEventArgs(ex));
+				ReportingBug?.Invoke(this, new BugEventArgs(ex, _user));
 			}
 			finally
 			{
@@ -185,7 +187,7 @@ namespace Furmanov.UI
 			}
 			catch (Exception ex)
 			{
-				ReportingBug?.Invoke(this, new BugEventArgs(ex));
+				ReportingBug?.Invoke(this, new BugEventArgs(ex, _user));
 			}
 		}
 		private void DeMonth_EditValueChanged(object sender, EventArgs e)
@@ -198,7 +200,7 @@ namespace Furmanov.UI
 			}
 			catch (Exception ex)
 			{
-				ReportingBug?.Invoke(this, new BugEventArgs(ex));
+				ReportingBug?.Invoke(this, new BugEventArgs(ex, _user));
 			}
 		}
 		private void BtWorkDaysOnly_ItemClick(object sender, ItemClickEventArgs e)
@@ -213,7 +215,7 @@ namespace Furmanov.UI
 			}
 			catch (Exception ex)
 			{
-				ReportingBug?.Invoke(this, new BugEventArgs(ex));
+				ReportingBug?.Invoke(this, new BugEventArgs(ex, _user));
 			}
 		}
 		private void BtDeleteAllDays_ItemClick(object sender, ItemClickEventArgs e)
@@ -232,7 +234,7 @@ namespace Furmanov.UI
 			}
 			catch (Exception ex)
 			{
-				ReportingBug?.Invoke(this, new BugEventArgs(ex));
+				ReportingBug?.Invoke(this, new BugEventArgs(ex, _user));
 			}
 			finally
 			{
@@ -254,7 +256,7 @@ namespace Furmanov.UI
 			}
 			catch (Exception ex)
 			{
-				ReportingBug?.Invoke(this, new BugEventArgs(ex));
+				ReportingBug?.Invoke(this, new BugEventArgs(ex, _user));
 			}
 			finally
 			{
@@ -272,7 +274,7 @@ namespace Furmanov.UI
 			}
 			catch (Exception ex)
 			{
-				ReportingBug?.Invoke(this, new BugEventArgs(ex));
+				ReportingBug?.Invoke(this, new BugEventArgs(ex, _user));
 			}
 		}
 		public void UpdateUndoRedo(string[] undoItems, string[] redoItems)
@@ -305,7 +307,7 @@ namespace Furmanov.UI
 			}
 			catch (Exception ex)
 			{
-				ReportingBug?.Invoke(this, new BugEventArgs(ex));
+				ReportingBug?.Invoke(this, new BugEventArgs(ex, _user));
 			}
 		}
 		#endregion
@@ -319,7 +321,7 @@ namespace Furmanov.UI
 			}
 			catch (Exception ex)
 			{
-				ReportingBug?.Invoke(this, new BugEventArgs(ex));
+				ReportingBug?.Invoke(this, new BugEventArgs(ex, _user));
 			}
 		}
 		private void TreeSalary_CellValueChanged(object sender, CellValueChangedEventArgs e)
@@ -331,7 +333,7 @@ namespace Furmanov.UI
 			}
 			catch (Exception ex)
 			{
-				ReportingBug?.Invoke(this, new BugEventArgs(ex));
+				ReportingBug?.Invoke(this, new BugEventArgs(ex, _user));
 			}
 		}
 		private void TreeSalary_ValidatingEditor(object sender, DevExpress.XtraEditors.Controls.BaseContainerValidateEditorEventArgs e)
@@ -364,7 +366,7 @@ namespace Furmanov.UI
 			}
 			catch (Exception ex)
 			{
-				ReportingBug?.Invoke(this, new BugEventArgs(ex));
+				ReportingBug?.Invoke(this, new BugEventArgs(ex, _user));
 			}
 		}
 
@@ -384,7 +386,7 @@ namespace Furmanov.UI
 			}
 			catch (Exception ex)
 			{
-				ReportingBug?.Invoke(this, new BugEventArgs(ex));
+				ReportingBug?.Invoke(this, new BugEventArgs(ex, _user));
 			}
 		}
 		private void DeleteSalaryPay()
@@ -407,7 +409,7 @@ namespace Furmanov.UI
 			}
 			catch (Exception ex)
 			{
-				ReportingBug?.Invoke(this, new BugEventArgs(ex));
+				ReportingBug?.Invoke(this, new BugEventArgs(ex, _user));
 			}
 		}
 
@@ -444,7 +446,7 @@ namespace Furmanov.UI
 			}
 			catch (Exception ex)
 			{
-				ReportingBug?.Invoke(this, new BugEventArgs(ex));
+				ReportingBug?.Invoke(this, new BugEventArgs(ex, _user));
 			}
 		}
 
@@ -484,7 +486,7 @@ namespace Furmanov.UI
 			}
 			catch (Exception ex)
 			{
-				ReportingBug?.Invoke(this, new BugEventArgs(ex));
+				ReportingBug?.Invoke(this, new BugEventArgs(ex, _user));
 			}
 		}
 		[DebuggerStepThrough]
@@ -510,7 +512,7 @@ namespace Furmanov.UI
 			}
 			catch (Exception ex)
 			{
-				ReportingBug?.Invoke(this, new BugEventArgs(ex));
+				ReportingBug?.Invoke(this, new BugEventArgs(ex, _user));
 			}
 		}
 		#endregion
@@ -528,7 +530,7 @@ namespace Furmanov.UI
 			}
 			catch (Exception ex)
 			{
-				ReportingBug?.Invoke(this, new BugEventArgs(ex));
+				ReportingBug?.Invoke(this, new BugEventArgs(ex, _user));
 			}
 		}
 
@@ -549,7 +551,7 @@ namespace Furmanov.UI
 			}
 			catch (Exception ex)
 			{
-				ReportingBug?.Invoke(this, new BugEventArgs(ex));
+				ReportingBug?.Invoke(this, new BugEventArgs(ex, _user));
 			}
 		}
 		private void GcWorkedDays_Paint(object sender, PaintEventArgs e)
@@ -574,7 +576,7 @@ namespace Furmanov.UI
 			}
 			catch (Exception ex)
 			{
-				ReportingBug?.Invoke(this, new BugEventArgs(ex));
+				ReportingBug?.Invoke(this, new BugEventArgs(ex, _user));
 			}
 		}
 		#endregion
@@ -599,7 +601,7 @@ namespace Furmanov.UI
 			}
 			catch (Exception ex)
 			{
-				ReportingBug?.Invoke(this, new BugEventArgs(ex));
+				ReportingBug?.Invoke(this, new BugEventArgs(ex, _user));
 			}
 		}
 
@@ -611,7 +613,7 @@ namespace Furmanov.UI
 			}
 			catch (Exception ex)
 			{
-				ReportingBug?.Invoke(this, new BugEventArgs(ex));
+				ReportingBug?.Invoke(this, new BugEventArgs(ex, _user));
 			}
 		}
 
@@ -627,7 +629,7 @@ namespace Furmanov.UI
 			}
 			catch (Exception ex)
 			{
-				ReportingBug?.Invoke(this, new BugEventArgs(ex));
+				ReportingBug?.Invoke(this, new BugEventArgs(ex, _user));
 			}
 		}
 		private void btResetSettings_ItemClick(object sender, ItemClickEventArgs e)
@@ -643,7 +645,7 @@ namespace Furmanov.UI
 			}
 			catch (Exception ex)
 			{
-				ReportingBug?.Invoke(this, new BugEventArgs(ex));
+				ReportingBug?.Invoke(this, new BugEventArgs(ex, _user));
 			}
 		}
 		private void MenuUndo_PaintMenuBar(object sender, BarCustomDrawEventArgs e)
@@ -670,7 +672,7 @@ namespace Furmanov.UI
 			}
 			catch (Exception ex)
 			{
-				ReportingBug?.Invoke(this, new BugEventArgs(ex));
+				ReportingBug?.Invoke(this, new BugEventArgs(ex, _user));
 			}
 		}
 
@@ -692,7 +694,7 @@ namespace Furmanov.UI
 			}
 			catch (Exception ex)
 			{
-				ReportingBug?.Invoke(this, new BugEventArgs(ex));
+				ReportingBug?.Invoke(this, new BugEventArgs(ex, _user));
 			}
 		}
 		private void btOpenConfigFile_Click(object sender, EventArgs e)
@@ -713,7 +715,7 @@ namespace Furmanov.UI
 			}
 			catch (Exception ex)
 			{
-				ReportingBug?.Invoke(this, new BugEventArgs(ex));
+				ReportingBug?.Invoke(this, new BugEventArgs(ex, _user));
 			}
 		}
 
@@ -729,7 +731,7 @@ namespace Furmanov.UI
 			}
 			catch (Exception ex)
 			{
-				ReportingBug?.Invoke(this, new BugEventArgs(ex));
+				ReportingBug?.Invoke(this, new BugEventArgs(ex, _user));
 			}
 		}
 

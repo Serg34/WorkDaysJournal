@@ -19,11 +19,11 @@ namespace Furmanov.Data
 		void DeleteAutoLogin(string login);
 		User GetUser(string login, string password);
 
-		SalaryPay[] GetSalaryPays(User user, int year, int month);
+		SalaryPay[] GetSalaryPays(UserDto user, int year, int month);
 		SalaryPay GetSalaryPay(int payId);
 		void SaveSalaryPay(SalaryPayDto salaryPayDto);
 
-		WorkedDayDto[] GetWorkedDays(int salaryPayId, int year, int month);
+		WorkedDayDto[] GetWorkedDays(int salaryPayId);
 		void SaveWorkedDays(params WorkedDay[] workedDayDb);
 		void Insert<T>(T obj);
 		T[] GetTable<T>() where T : Dto;
@@ -84,7 +84,7 @@ namespace Furmanov.Data
 			_loginPasswordRepository.Save(users);
 		}
 
-		public SalaryPay[] GetSalaryPays(User user, int year, int month)
+		public SalaryPay[] GetSalaryPays(UserDto user, int year, int month)
 		{
 			if (user == null) return new SalaryPay[0];
 			var userId = user.Role_Id == Role.Admin || user.Role_Id == Role.Director ? 0 : user.Id;
@@ -112,14 +112,12 @@ namespace Furmanov.Data
 			}
 		}
 
-		public WorkedDayDto[] GetWorkedDays(int salaryPayId, int year, int month)
+		public WorkedDayDto[] GetWorkedDays(int salaryPayId)
 		{
 			using (var db = new DbContext(_connectionString))
 			{
 				var res = db.GetTable<WorkedDayDto>()
 						.Where(p => p.SalaryPay_Id == salaryPayId)
-						.Where(p => p.Date.Year == year)
-						.Where(p => p.Date.Month == month)
 						.ToArray();
 
 				return res;

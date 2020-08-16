@@ -18,7 +18,5 @@ namespace Furmanov.Data.Data
 	{
 		[Display(Name = "Выход")]
 		public bool IsWorked { get; set; }
-		public int Employee_Id { get; set; }
-		public int Object_Id { get; set; }
 	}
 }

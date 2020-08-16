@@ -1,0 +1,90 @@
+﻿.table td, .table th {
+    font-size: 14px;
+    padding: 0 5px;
+}
+
+.show-hide-icon {
+    cursor: pointer;
+    color: rgb(128, 128, 128);
+    text-align: center;
+    vertical-align: middle !important;
+}
+
+.no-cell {
+    background-color: white;
+    border-top: none !important;
+    border-bottom: none !important;
+}
+
+.project-icon {
+    background: url(../img/project-16.png) no-repeat center center;
+    background-color: white;
+    border-right: 1px solid rgb(219, 177, 100);
+}
+
+.project-row {
+    background-color: rgb(255, 217, 143);
+    font-weight: bold;
+}
+
+    .project-row:active, .project-row:current, .project-row:hover {
+        background-color: rgb(219, 177, 100);
+        font-weight: bold;
+    }
+
+.project-cell {
+    border-top: 1px solid rgb(121, 124, 145) !important;
+    border-right: 1px solid rgb(219, 177, 100);
+}
+
+.object-icon {
+    background: url(../img/object-16.png) no-repeat center center;
+    background-color: white;
+    border-right: 1px solid rgb(170, 221, 200);
+}
+
+.object-row {
+    background-color: rgb(230, 245, 255);
+    text-decoration: underline;
+}
+
+.object-cell {
+    border-top: 1px solid rgb(150, 153, 169) !important;
+    border-right: 1px solid rgb(170, 221, 200);
+}
+
+.pay-icon {
+    background: url(../img/pay-16.png) no-repeat center center;
+    border-right: 1px solid rgb(200, 200, 200);
+}
+
+.pay-row {
+}
+
+.pay-cell {
+    border-right: 1px solid rgb(240, 240, 240);
+}
+
+.summary-icon {
+    background: url(../img/summary-16.png) no-repeat center center;
+    background-color: white;
+    border-right: 1px solid rgb(200, 200, 200);
+}
+
+.summary-row {
+    background-color: rgb(218, 218, 218);
+    font-weight: bold;
+}
+
+.summary-cell {
+    border-top: 1px solid rgb(150, 153, 169) !important;
+    border-right: 1px solid rgb(200, 200, 200);
+}
+
+.row-show {
+    display: table-row;
+}
+
+.row-hide {
+    display: none;
+}

@@ -4,27 +4,29 @@
     ViewData["Title"] = "Вход";
 }
 
-<h1 class="display-4">Вход</h1>
+<div class="container">
 
-<form asp-action="Login" asp-controller="Account" asp-anti-forgery="true" method="post">
-    <div class="col-5">
-        <div class="text-danger" asp-validation-summary="ModelOnly"></div>
-        <div class="form-group">
-            <label asp-for="Login" class="col-form-label">Введите логин</label>
-            <input type="text" asp-for="Login" class="input-group" />
-            <span asp-validation-for="Login" class="text-danger" />
-        </div>
-        <div class="form-group card-group">
-            <label asp-for="Password" class="col-form-label">Введите пароль</label>
-            <input type="password" asp-for="Password" class="input-group" />
-            <span asp-validation-for="Password" class="text-danger" />
-        </div>
-        <div class="form-group">
-            <input type="submit" value="Войти" class="btn btn-outline-primary" />
-        </div>
-    </div>
-</form>
+    <h1 class="display-4">Вход</h1>
 
+    <form asp-action="Login" asp-controller="Account" asp-anti-forgery="true" method="post">
+        <div class="col-5">
+            <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+            <div class="form-group">
+                <label asp-for="Login" class="col-form-label">Введите логин</label>
+                <input type="text" asp-for="Login" class="input-group"/>
+                <span asp-validation-for="Login" class="text-danger"/>
+            </div>
+            <div class="form-group card-group">
+                <label asp-for="Password" class="col-form-label">Введите пароль</label>
+                <input type="password" asp-for="Password" class="input-group"/>
+                <span asp-validation-for="Password" class="text-danger"/>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Войти" class="btn btn-outline-primary"/>
+            </div>
+        </div>
+    </form>
+</div>
 @section Scripts {
     @await Html.PartialAsync("_ValidationScriptsPartial")
 }

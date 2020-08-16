@@ -8,6 +8,17 @@
     <link rel="icon" type="image/png" href="~/favicon.png" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <script src="https://use.fontawesome.com/56bf499e7e.js"></script>
+
+    @if (ViewData["css"] is string[] styles)
+    {
+        foreach (var css in styles)
+        {
+            <link rel="stylesheet" href="@css" />
+        }
+    }
 </head>
 <body>
     <header>
@@ -42,11 +53,9 @@
             </div>
         </nav>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
+    <main role="main" class="pb-3">
+        @RenderBody()
+    </main>
 
     <footer class="border-top footer text-muted">
         <div class="container">
@@ -57,5 +66,12 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @RenderSection("Scripts", required: false)
+    @if (ViewData["js"] is string[] scripts)
+    {
+        foreach (var js in scripts)
+        {
+            <script src="@js"></script>
+        }
+    }
 </body>
 </html>

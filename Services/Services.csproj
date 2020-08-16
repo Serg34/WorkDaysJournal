@@ -84,6 +84,7 @@
     <Compile Include="GridViewStateSaver.cs" />
     <Compile Include="IEnumerableMethods.cs" />
     <Compile Include="ImageService.cs" />
+    <Compile Include="JsonExtensions.cs" />
     <Compile Include="LayoutSaver.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="MapperService.cs" />

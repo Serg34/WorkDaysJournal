@@ -11,15 +11,16 @@ namespace Furmanov.MVP.MainView
 	#region IMainModel
 	public interface IMainModel
 	{
-		event EventHandler<User> LoginChanged;
+		event EventHandler<UserDto> LoginChanged;
 		event EventHandler<MainViewModel> Updated;
 		event EventHandler<List<WorkedDay>> SelectedSalaryPay;
 		event EventHandler<ProgressEventArgs> Progress;
 		event EventHandler<BugEventArgs> ReportingBug;
 
 		ILoginModel LoginModel { get; }
-		void Logout();
+		void UpdateLogin(UserDto user);
 
+		UserDto User { get; }
 		int Year { get; }
 		int Month { get; }
 		string CurrentEmployeeName { get; }
@@ -47,11 +48,11 @@ namespace Furmanov.MVP.MainView
 		{
 			_db = dataAccessService;
 			LoginModel = loginModel;
-			LoginModel.Logged += (sender, args) => UpdateLogin();
+			LoginModel.Logged += (sender, user) => UpdateLogin(user);
 		}
 
 		#region Events
-		public event EventHandler<User> LoginChanged;
+		public event EventHandler<UserDto> LoginChanged;
 		public event EventHandler<MainViewModel> Updated;
 		public event EventHandler<List<WorkedDay>> SelectedSalaryPay;
 		public event EventHandler<ProgressEventArgs> Progress;
@@ -60,26 +61,22 @@ namespace Furmanov.MVP.MainView
 
 		#region Login
 		public ILoginModel LoginModel { get; }
-		public void Logout()
+		public void UpdateLogin(UserDto user)
 		{
-			ApplicationUser.User = null;
-			UpdateLogin();
-		}
-		private void UpdateLogin()
-		{
+			User = user;
 			Update();
-			LoginChanged?.Invoke(this, ApplicationUser.User); //после обновления восстанавливаем состояние контролов
+			LoginChanged?.Invoke(this, User); //после обновления восстанавливаем состояние контролов
 		}
 		#endregion
 
 		#region Properties
+		public UserDto User { get; private set; }
 		public int Year { get; private set; } = 2019;
 		public int Month { get; private set; } = 1;
 		public string CurrentEmployeeName { get; private set; }
 		#endregion
 
 		#region TopMenu
-
 		public void RefillDataBase()
 		{
 			using (var dbContext = _db.GetDbContext())
@@ -95,7 +92,6 @@ namespace Furmanov.MVP.MainView
 		{
 			Year = year;
 			Month = month;
-			Update();
 		}
 		#endregion
 
@@ -104,11 +100,12 @@ namespace Furmanov.MVP.MainView
 		{
 			try
 			{
-				Updated?.Invoke(this, GetMainVieModels());
+				var vm = GetMainVieModels();
+				Updated?.Invoke(this, vm);
 			}
 			catch (Exception ex)
 			{
-				ReportBug(this, new BugEventArgs(ex));
+				ReportBug(this, new BugEventArgs(ex, User));
 			}
 		}
 		#endregion
@@ -125,7 +122,7 @@ namespace Furmanov.MVP.MainView
 			{
 				CurrentEmployeeName = pay.Type == ObjType.Salary ? pay.Name : null;
 
-				var days = _db.GetWorkedDays(pay.Id, Year, Month);
+				var days = _db.GetWorkedDays(pay.Id);
 				var currentDaysInMonth = DateService.AllDaysInMonth(Year, Month)
 					.Select(date => new WorkedDay
 					{
@@ -139,7 +136,7 @@ namespace Furmanov.MVP.MainView
 			}
 			catch (Exception ex)
 			{
-				ReportBug(this, new BugEventArgs(ex));
+				ReportBug(this, new BugEventArgs(ex, User));
 			}
 		}
 		#endregion
@@ -156,7 +153,7 @@ namespace Furmanov.MVP.MainView
 
 		public WorkedDay[] GetWorkedDays(int payId)
 		{
-			var workedDays = _db.GetWorkedDays(payId, Year, Month);
+			var workedDays = _db.GetWorkedDays(payId);
 			var days = DateService.AllDaysInMonth(Year, Month)
 				.Select(date => new WorkedDay
 				{
@@ -192,7 +189,7 @@ namespace Furmanov.MVP.MainView
 		#region CalculateAndSaveSalaryPay
 		private void CalculateAndSaveSalaryPay(SalaryPay pay)
 		{
-			var workDays = _db.GetWorkedDays(pay.Id, Year, Month);
+			var workDays = _db.GetWorkedDays(pay.Id);
 			var currentDaysInMonth = DateService.AllDaysInMonth(Year, Month)
 				.Select(date => new WorkedDay
 				{
@@ -225,11 +222,11 @@ namespace Furmanov.MVP.MainView
 		{
 			var vm = new MainViewModel
 			{
-				User = ApplicationUser.User,
+				User = User,
 				Year = Year,
 				Month = Month,
 
-				SalaryPays = _db.GetSalaryPays(ApplicationUser.User, Year, Month),
+				SalaryPays = _db.GetSalaryPays(User, Year, Month),
 			};
 			return vm;
 		}
@@ -239,7 +236,7 @@ namespace Furmanov.MVP.MainView
 		{
 			using (var dbContext = _db.GetDbContext())
 			{
-				var bug = BugReporter.Report(dbContext, e.Exception, e.InfoForDeveloper);
+				var bug = BugReporter.Report(dbContext, e.Exception, e.User, e.InfoForDeveloper);
 				if (bug != null)
 				{
 					e.Bug = bug;

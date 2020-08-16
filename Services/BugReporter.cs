@@ -9,7 +9,7 @@ namespace Furmanov.Services
 {
 	public static class BugReporter
 	{
-		public static Bug Report(DbContext db, Exception ex, string infoForDeveloper)
+		public static Bug Report(DbContext db, Exception ex, UserDto user, string infoForDeveloper)
 		{
 //#if DEBUG
 //			MessageService.Error(ex.ToString());
@@ -39,8 +39,8 @@ namespace Furmanov.Services
 				{
 					Project = Application.ProductName,
 					Message = message,
+					User = user?.Login,
 					InfoForDeveloper = infoForDeveloper,
-					User = ApplicationUser.User.Login,
 					PrintScreen = ScreenPrinter.Print().ToByteArray()
 				};
 				bugDto.Id = db.InsertWithInt32Identity(bugDto);

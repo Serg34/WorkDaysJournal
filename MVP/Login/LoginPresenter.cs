@@ -15,8 +15,8 @@
 			_model.Error += (sender, error) => _view.ShowError(error);
 			_model.Logged += (sender, user) => _view.Hide();
 
-			_view.Logging += (sender, args) => _model.Login(sender, args);
-			_view.DeletingAutoLogin += (sender, login) => _model.DeleteAutoLogin(sender, login);
+			_view.Logging += (sender, args) => _model.Login(args);
+			_view.DeletingAutoLogin += (sender, login) => _model.DeleteAutoLogin(login);
 		}
 
 		public void ShowView(bool isStartApp)

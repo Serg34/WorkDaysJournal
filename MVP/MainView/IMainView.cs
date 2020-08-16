@@ -29,7 +29,7 @@ namespace Furmanov.MVP.MainView
 
 		event EventHandler<BugEventArgs> ReportingBug;
 
-		void UpdateLogin();
+		void UpdateLogin(UserDto user);
 		void UpdateMonth(object sender, MainViewModel viewModel);
 		void UpdateSalaries(object sender, MainViewModel viewModel);
 		void UpdateDays(object sender, List<WorkedDay> viewModel);

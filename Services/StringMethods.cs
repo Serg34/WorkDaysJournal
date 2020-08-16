@@ -85,5 +85,10 @@ namespace Furmanov.Services
 			}
 			return rus;
 		}
+
+		public static string ToId(this string str)
+		{
+			return str.Replace(" ", "_").Replace(".", "_");
+		}
 	}
 }

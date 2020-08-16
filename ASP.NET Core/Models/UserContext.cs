@@ -16,6 +16,7 @@ namespace Furmanov.Models
 
 		public async Task<UserDto> GetUserAsync(ClaimsPrincipal user)
 		{
+			if (user == null) return null;
 			var login = user.Identity.Name;
 			var userDto = await User.AsNoTracking()
 					.FirstOrDefaultAsync(u => u.Login == login);
