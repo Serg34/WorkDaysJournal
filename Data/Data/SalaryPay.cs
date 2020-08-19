@@ -4,7 +4,7 @@ using System.Diagnostics;
 
 namespace Furmanov.Data.Data
 {
-	public enum ObjType { Project, Object, Salary, Summary }
+	public enum ObjType { Project, Object, SalaryPay, Summary }
 
 	[Table(Name = "SalaryPay")]
 	public class SalaryPayDto : Dto

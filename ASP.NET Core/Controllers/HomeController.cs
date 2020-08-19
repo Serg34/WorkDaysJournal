@@ -3,14 +3,12 @@ using Furmanov.Models;
 using Furmanov.MVP.MainView;
 using Furmanov.Services;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using Furmanov.Data.Data;
 
 namespace Furmanov.Controllers
 {
@@ -19,7 +17,7 @@ namespace Furmanov.Controllers
 	{
 		private readonly UserContext _db;
 		private readonly IMainModel _model;
-		private MainViewModel _mainViewModel;
+		private MainViewModelWithWorkedDays _mainViewModel;
 
 		public HomeController(IConfiguration config, UserContext context)
 		{
@@ -29,7 +27,7 @@ namespace Furmanov.Controllers
 			var resolver = IoCBuilder.Build(connectionString);
 
 			_model = resolver.Resolve<IMainModel>();
-			_model.Updated += (sender, vm) => _mainViewModel = vm;
+			_model.Updated += (sender, vm) => _mainViewModel = new MainViewModelWithWorkedDays(vm);
 		}
 
 		[HttpGet]
@@ -59,14 +57,31 @@ namespace Furmanov.Controllers
 		{
 			await Authorize();
 			var vm = JsonService.FromJson<SaveWorkedDayViewModel>(json);
-			var workDay = vm.WorkedDay;
-			workDay.Date = DateTime.Parse(workDay.DateJson);
-			_model.SaveWorkDay(workDay);
-			_mainViewModel.SalaryPays.ForEach(p => p.IsExpanded = vm.ExpandList.Contains(p.ViewModelId.ToId()));
-
+			vm.WorkedDay.Date = DateTime.Parse(vm.WorkedDay.DateJson);
+			_model.SaveWorkedDays(vm.WorkedDay);
+			foreach (var p in _mainViewModel.SalaryPays)
+			{
+				p.IsExpanded = vm.ExpandList.Contains(p.ViewModelId.ToId());
+			}
 			ViewBag.SelectedRow = vm.SelectedRow;
 
 			return PartialView("_SalaryPays", _mainViewModel);
+		}
+		[HttpPost]
+		public async Task<IActionResult> SaveWorkedDays(string json)
+		{
+			await Authorize();
+			var vm = JsonService.FromJson<SaveWorkedDaysViewModel>(json);
+			var days = _model.GenWorkedDays(vm.PayId, vm.AllDays, vm.IsExist);
+			_model.SaveWorkedDays(days);
+			foreach (var p in _mainViewModel.SalaryPays)
+			{
+				p.IsExpanded = vm.ExpandList.Contains(p.ViewModelId.ToId());
+			}
+			_mainViewModel.WorkedDays = _model.GetWorkedDays(vm.PayId);
+			ViewBag.SelectedRow = vm.SelectedRow;
+
+			return View(nameof(Index), _mainViewModel);
 		}
 
 		[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
@@ -74,7 +89,6 @@ namespace Furmanov.Controllers
 		{
 			return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
 		}
-
 		private async Task Authorize()
 		{
 			var user = await _db.GetUserAsync(User);

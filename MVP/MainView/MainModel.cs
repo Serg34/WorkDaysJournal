@@ -31,10 +31,9 @@ namespace Furmanov.MVP.MainView
 		void SaveSalaryPay(SalaryPay viewModel);
 		void SelectSalaryPay(SalaryPay vm);
 
+		void SaveWorkedDays(params WorkedDay[] days);
 		WorkedDay[] GetWorkedDays(int payId);
 		WorkedDay[] GenWorkedDays(int payId, bool allDays, bool isExist);
-		void SaveWorkDay(WorkedDay day);
-		void SaveWorkedDays(WorkedDay[] days);
 
 		void ReportBug(object sender, BugEventArgs e);
 
@@ -121,7 +120,7 @@ namespace Furmanov.MVP.MainView
 		{
 			try
 			{
-				CurrentEmployeeName = pay.Type == ObjType.Salary ? pay.Name : null;
+				CurrentEmployeeName = pay.Type == ObjType.SalaryPay ? pay.Name : null;
 
 				var days = _db.GetWorkedDays(pay.Id);
 				var currentDaysInMonth = DateService.AllDaysInMonth(Year, Month)
@@ -133,7 +132,7 @@ namespace Furmanov.MVP.MainView
 					}).ToList();
 
 				SelectedSalaryPay?.Invoke(this,
-					pay.Type == ObjType.Salary ? currentDaysInMonth : new List<WorkedDay>());
+					pay.Type == ObjType.SalaryPay ? currentDaysInMonth : new List<WorkedDay>());
 			}
 			catch (Exception ex)
 			{
@@ -143,18 +142,16 @@ namespace Furmanov.MVP.MainView
 		#endregion
 
 		#region WorkedDays
-		public void SaveWorkDay(WorkedDay day)
+		public void SaveWorkedDays(params WorkedDay[] days)
 		{
-			Year = day.Date.Year;
-			Month = day.Date.Month;
+			Year = days[0].Date.Year;
+			Month = days[0].Date.Month;
 
-			day.IsWorked = !day.IsWorked; // данные приходят до изменений, поэтому обратное значение
-			_db.SaveWorkedDays(day);
-			var pay = _db.GetSalaryPay(day.SalaryPay_Id);
+			var pay = _db.GetSalaryPay(days[0].SalaryPay_Id);
+			_db.SaveWorkedDays(days);
 			CalculateAndSaveSalaryPay(pay);
 			Update();
 		}
-
 		public WorkedDay[] GetWorkedDays(int payId)
 		{
 			var pay = _db.GetSalaryPay(payId);
@@ -173,7 +170,6 @@ namespace Furmanov.MVP.MainView
 				}).ToArray();
 			return days;
 		}
-
 		public WorkedDay[] GenWorkedDays(int payId, bool allDays, bool isExist)
 		{
 			var pay = _db.GetSalaryPay(payId);
@@ -192,13 +188,6 @@ namespace Furmanov.MVP.MainView
 							 date.DayOfWeek != DayOfWeek.Sunday)
 				}).ToArray();
 			return days;
-		}
-		public void SaveWorkedDays(WorkedDay[] days)
-		{
-			_db.SaveWorkedDays(days);
-			var pay = _db.GetSalaryPay(days[0].SalaryPay_Id);
-			CalculateAndSaveSalaryPay(pay);
-			Update();
 		}
 		#endregion
 
@@ -238,7 +227,6 @@ namespace Furmanov.MVP.MainView
 		{
 			var vm = new MainViewModel
 			{
-				User = User,
 				Year = Year,
 				Month = Month,
 

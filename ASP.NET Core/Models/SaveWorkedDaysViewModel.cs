@@ -4,9 +4,11 @@ using Furmanov.Data.Data;
 namespace Furmanov.Models
 {
 	[DataContract]
-	public class SaveWorkedDayViewModel
+	public class SaveWorkedDaysViewModel
 	{
-		[DataMember] public WorkedDay WorkedDay { get; set; }
+		[DataMember] public int PayId { get; set; }
+		[DataMember] public bool AllDays { get; set; }
+		[DataMember] public bool IsExist { get; set; }
 		[DataMember] public string[] ExpandList { get; set; }
 		[DataMember] public string SelectedRow { get; set; }
 	}

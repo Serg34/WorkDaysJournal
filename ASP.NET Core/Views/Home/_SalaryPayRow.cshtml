@@ -10,7 +10,7 @@
 
     var clsReadOnly = cls + " readonly";
 
-    if (Model.Type != ObjType.Salary)
+    if (Model.Type != ObjType.SalaryPay)
     {
         cls += " readonly";
     }
@@ -31,7 +31,7 @@ else if (Model.Type == ObjType.Object)
     @Html.Raw(DisplayService.ExpandIcon(Model))
     <td class="no-cell object-icon"></td>
 }
-else if (Model.Type == ObjType.Salary)
+else if (Model.Type == ObjType.SalaryPay)
 {
     <td class="no-cell"></td>
     <td class="no-cell"></td>

@@ -23,11 +23,11 @@ namespace Furmanov.MVP.MainView.UndoRedoCommands
 
 		public void Execute()
 		{
-			_model.SaveWorkDay(_value);
+			_model.SaveWorkedDays(_value);
 		}
 		public void UnExecute()
 		{
-			_model.SaveWorkDay(_prevValue);
+			_model.SaveWorkedDays(_prevValue);
 		}
 	}
 }

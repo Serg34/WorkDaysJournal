@@ -87,24 +87,51 @@ function GetWorkedDays(payId) {
     });
 }
 
-function SaveWorkedDay(payId, date, chBox) {
+function SaveWorkedDays(payId, allDays, isExist) {
 
     var expandList = GetExpandList("tree-salary");
     var selectedRow = GetSelectRow("tree-salary");
 
-    let workedDay = {
+    var model = {
+        PayId: payId,
+        AllDays: allDays,
+        IsExist: isExist,
+        ExpandList: expandList,
+        SelectedRow: selectedRow
+    };
+
+    var json = JSON.stringify(model);
+
+    var url = "/Home/SaveWorkedDays";
+    $.ajax({
+        url: url,
+        method: "post",
+        dataType: "html",
+        data: { json: json },
+        success: function (data) {
+            html.innerHTML = data;
+        }
+    });
+}
+
+function SaveWorkedDay(payId, date, checkBox) {
+
+    var expandList = GetExpandList("tree-salary");
+    var selectedRow = GetSelectRow("tree-salary");
+
+    var workedDay = {
         SalaryPay_Id: payId,
         DateJson: date,
-        IsWorked: chBox.checked
+        IsWorked: checkBox.checked
     };
 
-    let model = {
+    var model = {
+        WorkedDay: workedDay,
         ExpandList: expandList,
-        SelectedRow: selectedRow,
-        WorkedDay: workedDay
+        SelectedRow: selectedRow
     };
 
-    let json = JSON.stringify(model);
+    var json = JSON.stringify(model);
 
     var url = "/Home/SaveWorkedDay";
     $.ajax({

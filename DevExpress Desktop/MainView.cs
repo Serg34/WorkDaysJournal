@@ -2,7 +2,6 @@
 using DevExpress.XtraGrid.Views.Grid;
 using DevExpress.XtraGrid.Views.Grid.ViewInfo;
 using DevExpress.XtraTreeList;
-using Furmanov.Data;
 using Furmanov.Data.Data;
 using Furmanov.MVP;
 using Furmanov.MVP.Login;
@@ -19,7 +18,6 @@ using System.Drawing;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
-using DevExpress.Internal.WinApi.Windows.UI.Notifications;
 
 namespace Furmanov.UI
 {
@@ -40,6 +38,8 @@ namespace Furmanov.UI
 				lblVersion.Caption = $"Версия: {Application.ProductVersion}";
 
 				LayoutSaver.Restore(this);
+
+				gcWorkedDays.Paint += GcWorkedDays_Paint;
 			}
 			catch (Exception ex)
 			{
@@ -361,7 +361,7 @@ namespace Furmanov.UI
 				if (sender is TreeList view &&
 				view.GetFocusedRow() is SalaryPay vm)
 				{
-					e.Cancel = vm.Type != ObjType.Salary;
+					e.Cancel = vm.Type != ObjType.SalaryPay;
 				}
 			}
 			catch (Exception ex)
@@ -379,7 +379,7 @@ namespace Furmanov.UI
 				var hitInfo = treeList.CalcHitInfo(pt);
 				if (!hitInfo.InRow) return;
 
-				if (_currentPay.Type == ObjType.Salary)
+				if (_currentPay.Type == ObjType.SalaryPay)
 				{
 					ShowNoImplementedCode(this, null);
 				}
@@ -393,7 +393,7 @@ namespace Furmanov.UI
 		{
 			try
 			{
-				if (_currentPay.Type != ObjType.Salary) return;
+				if (_currentPay.Type != ObjType.SalaryPay) return;
 				var resName = _currentPay.Name;
 				if (_currentPay.FactDays > 0)
 				{
@@ -425,24 +425,21 @@ namespace Furmanov.UI
 		{
 			try
 			{
-				if (treeSalary.GetFocusedRow() is SalaryPay pay)
-				{
-					_currentPay = pay;
+				if (!(treeSalary.GetFocusedRow() is SalaryPay pay)) return;
 
-					btCreateResource.Enabled
-						= btEditResource.Enabled
-						= btReportForObject.Enabled
-						= pay.Type == ObjType.Object ||
-						  pay.Type == ObjType.Salary;
+				_currentPay = pay;
 
-					btDeleteResource.Enabled
-						= btAllDays.Enabled
-						= btWorkDaysOnly.Enabled
-						= btDeleteAllDays.Enabled
-						= pay.Type == ObjType.Salary;
+				btCreateResource.Enabled =
+				btEditResource.Enabled =
+				btReportForObject.Enabled = pay.Type == ObjType.Object ||
+											pay.Type == ObjType.SalaryPay;
 
-					SelectionChangingSalaryPay?.Invoke(this, pay);
-				}
+				btDeleteResource.Enabled =
+				btAllDays.Enabled =
+				btWorkDaysOnly.Enabled =
+				btDeleteAllDays.Enabled = pay.Type == ObjType.SalaryPay;
+
+				SelectionChangingSalaryPay?.Invoke(this, pay);
 			}
 			catch (Exception ex)
 			{
@@ -455,33 +452,30 @@ namespace Furmanov.UI
 		{
 			try
 			{
-				if (sender is TreeList view &&
-				view.GetRow(e.Node.Id) is SalaryPay vm)
+				if (!(sender is TreeList view) || !(view.GetRow(e.Node.Id) is SalaryPay vm)) return;
+				if (vm.Type == ObjType.Project)
 				{
-					if (vm.Type == ObjType.Project)
+					e.Appearance.BackColor = Color.FromArgb(150, 255, 190, 64);
+					e.Appearance.BorderColor = Color.FromArgb(255, 121, 124, 145);
+					e.Appearance.Font = new Font(e.Appearance.Font, FontStyle.Bold);
+				}
+				else if (vm.Type == ObjType.Object)
+				{
+					if (e.Column != colName && e.Column != colPhone)
 					{
-						e.Appearance.BackColor = Color.FromArgb(150, 255, 190, 64);
-						e.Appearance.BorderColor = Color.FromArgb(255, 121, 124, 145);
-						e.Appearance.Font = new Font(e.Appearance.Font, FontStyle.Bold);
+						e.Appearance.Font = new Font(e.Appearance.Font, FontStyle.Underline);
 					}
-					else if (vm.Type == ObjType.Object)
-					{
-						if (e.Column != colName && e.Column != colPhone)
-						{
-							e.Appearance.Font = new Font(e.Appearance.Font, FontStyle.Underline);
-						}
 
-						e.Appearance.BackColor = Color.FromArgb(150, 213, 238, 255);
-						e.Appearance.BorderColor = Color.FromArgb(255, 150, 153, 169);
-					}
-					else if (vm.Type == ObjType.Summary)
-					{
-						e.Appearance.Font = new Font(e.Appearance.Font, FontStyle.Bold);
-						e.Appearance.BackColor = Color.FromArgb(75, 128, 128, 128);
-					}
-					else if (vm.Type == ObjType.Salary)
-					{
-					}
+					e.Appearance.BackColor = Color.FromArgb(150, 213, 238, 255);
+					e.Appearance.BorderColor = Color.FromArgb(255, 150, 153, 169);
+				}
+				else if (vm.Type == ObjType.SalaryPay)
+				{
+				}
+				else if (vm.Type == ObjType.Summary)
+				{
+					e.Appearance.Font = new Font(e.Appearance.Font, FontStyle.Bold);
+					e.Appearance.BackColor = Color.FromArgb(75, 128, 128, 128);
 				}
 			}
 			catch (Exception ex)
@@ -496,7 +490,7 @@ namespace Furmanov.UI
 			{
 				if (sender is TreeList view &&
 					view.GetRow(e.Node.Id) is SalaryPay vm &&
-					vm.Type != ObjType.Salary)
+					vm.Type != ObjType.SalaryPay)
 				{
 					TreeListService.CustomDrawNodeCell(e);
 				}
@@ -514,10 +508,12 @@ namespace Furmanov.UI
 		{
 			try
 			{
-				if (sender is GridView view && view.GetRow(e.RowHandle) is WorkedDay vm)
+				if (!(sender is GridView view) || !(view.GetRow(e.RowHandle) is WorkedDay vm)) return;
+				if (e.Column == colIsWorked)
 				{
-					ChangedWorkedDay?.Invoke(this, vm);
+					vm.IsWorked = !vm.IsWorked;
 				}
+				ChangedWorkedDay?.Invoke(this, vm);
 			}
 			catch (Exception ex)
 			{
@@ -549,18 +545,16 @@ namespace Furmanov.UI
 		{
 			try
 			{
-				if (gvWorkedDays.GetViewInfo() is GridViewInfo viewInfo)
+				if (!(gvWorkedDays.GetViewInfo() is GridViewInfo viewInfo)) return;
+				foreach (var rowInfo in viewInfo.RowsInfo)
 				{
-					foreach (var rowInfo in viewInfo.RowsInfo)
+					if (rowInfo.Appearance.Options.UseBorderColor)
 					{
-						if (rowInfo.Appearance.Options.UseBorderColor)
+						using (var pen = new Pen(rowInfo.Appearance.BorderColor))
 						{
-							using (var pen = new Pen(rowInfo.Appearance.BorderColor))
-							{
-								var bounds = rowInfo.TotalBounds;
-								bounds.Offset(0, -1);
-								e.Graphics.DrawRectangle(pen, bounds);
-							}
+							var bounds = rowInfo.TotalBounds;
+							bounds.Offset(0, -1);
+							e.Graphics.DrawRectangle(pen, bounds);
 						}
 					}
 				}
@@ -578,8 +572,8 @@ namespace Furmanov.UI
 			try
 			{
 				if (e.KeyCode == Keys.Delete ||
-				e.KeyCode == Keys.OemMinus ||
-				e.KeyCode == Keys.Subtract)
+					e.KeyCode == Keys.OemMinus ||
+					e.KeyCode == Keys.Subtract)
 				{
 					DeleteSalaryPay();
 				}
