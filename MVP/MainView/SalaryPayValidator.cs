@@ -8,7 +8,7 @@ namespace Furmanov.MVP.MainView
 {
 	public class SalaryPayValidator : AbstractValidator<SalaryPay>
 	{
-		public SalaryPayValidator(int year, int month)
+		public SalaryPayValidator(bool checkDaysMaxCount = true)
 		{
 			new Expression<Func<SalaryPay, decimal?>>[]
 			{
@@ -39,6 +39,16 @@ namespace Furmanov.MVP.MainView
 					.WithMessage("Это число не может быть отрицательным");
 			});
 
+			if (checkDaysMaxCount)
+			{
+				var daysMaxCount = 31;
+				RuleFor(s => s.RateDays)
+					.LessThanOrEqualTo(daysMaxCount)
+					.WithMessage($"Норма не может быть больше {daysMaxCount}");
+			}
+		}
+		public SalaryPayValidator(int year, int month) : this(false)
+		{
 			var daysMaxCount = DateTime.DaysInMonth(year, month);
 			RuleFor(s => s.RateDays)
 				.LessThanOrEqualTo(daysMaxCount)

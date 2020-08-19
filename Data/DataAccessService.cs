@@ -171,6 +171,7 @@ namespace Furmanov.Data
 
 		public SalaryPay GetSalaryPay(int payId)
 		{
+			if (payId <= 0) return null;
 			using (var db = new DbContext(_connectionString))
 			{
 				var res = db.Query<SalaryPay>(Resources.SalaryPay,

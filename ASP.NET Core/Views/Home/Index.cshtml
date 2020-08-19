@@ -1,100 +1,24 @@
 ﻿@using Furmanov.Data.Data
-@using Furmanov.Services
 @model Furmanov.MVP.MainView.MainViewModel
 
 @{
     ViewData["Title"] = "Главная";
-    ViewData["css"] = new[] { "/css/tree-salary.css" };
-    ViewData["js"] = new[] { "/js/tree-salary.js" };
 }
 
-<div>
-    <table id="treeSalary" class="table">
-        <thead>
-            <tr>
-                <th style="width:25px"></th>
-                <th style="width:25px"></th>
-                <th style="width:25px"></th>
-                <th style="width:25px"></th>
-                <th>ФИО/Наименование</th>
-                <th>Должность / Адрес</th>
-                <th>Телефон</th>
-                <th>Оклад</th>
-                <th>Норма</th>
-                <th>Факт</th>
-                <th>Аванс</th>
-                <th>Штрафы</th>
-                <th>Премии</th>
-                <th>К выплате</th>
-                <th>Комментарии</th>
-            </tr>
-        </thead>
-        <tbody>
-            @{
-                if (Model.SalaryPays.Any(p => p.Type == ObjType.Project))
-                {
-                    foreach (var project in Model.SalaryPays.Where(p => p.Type == ObjType.Project).ToArray())
-                    {
-                        var objects = Model.SalaryPays.Where(p => p.ParentId == project.ViewModelId).ToArray();
-                        <tr class="project-row"
-                            id="@project.ViewModelId.ToId()"
-                            onclick="SelectRow(this,'treeSalary')"
-                            ondblclick="ShowHideRow('@project.ViewModelId.ToId()')"
-                            data-expand="false">
-                            @if (objects.Any())
-                            {
-                                @Html.Raw(DisplayService.ExpandIcon(project.ViewModelId.ToId()))
-                            }
-                            else
-                            {
-                                <td class="no-cell"></td>
-                            }
-                            <td class="no-cell project-icon"></td>
-                            @Html.Raw(DisplayService.Row(project))
-                        </tr>
-                        foreach (var obj in objects)
-                        {
-                            var pays = Model.SalaryPays.Where(p => p.ParentId == obj.ViewModelId).ToArray();
-                            <tr class="object-row @project.ViewModelId.ToId()"
-                                id="@obj.ViewModelId.ToId()"
-                                onclick="SelectRow(this,'treeSalary')"
-                                ondblclick="ShowHideRow('@obj.ViewModelId.ToId()')"
-                                data-expand="false" style="display: none">
-                                <td class="no-cell"></td>
-                                @if (pays.Any())
-                                {
-                                    @Html.Raw(DisplayService.ExpandIcon(obj.ViewModelId.ToId()))
-                                }
-                                else
-                                {
-                                    <td class="no-cell object-icon"></td>
-                                }
-                                <td class="no-cell object-icon"></td>
-                                @Html.Raw(DisplayService.Row(obj))
-                            </tr>
-                            foreach (var pay in pays)
-                            {
-                                <tr id="@pay.ViewModelId.ToId()" class="pay-row @obj.ViewModelId.ToId()" onclick="SelectRow(this,'treeSalary')" style="display: none">
-                                    <td class="no-cell"></td>
-                                    <td class="no-cell"></td>
-                                    <td class="no-cell"></td>
-                                    <td class="no-cell pay-icon"></td>
-                                    @Html.Raw(DisplayService.Row(pay))
-                                </tr>
-                            }
-                        }
-                    }
-                }
-                var summary = Model.SalaryPays.FirstOrDefault(p => p.Type == ObjType.Summary);
-                if (summary != null)
-                {
-                    <tr id="@summary.ViewModelId.ToId()" onclick="SelectRow(this,'treeSalary')" class="summary-row">
-                        <td class="no-cell"></td>
-                        <td class="no-cell summary-icon"></td>
-                        @Html.Raw(DisplayService.Row(summary))
-                    </tr>
-                }
-            }
-        </tbody>
-    </table>
+@section Styles  {
+    <link rel="stylesheet" href="~/css/main-view.css" />
+}
+
+<div class="row" style="margin: auto">
+    <div class="tree-salary">
+        @await Html.PartialAsync("_SalaryPays")
+    </div>
+    <div class="separator"></div>
+    <div id="table-days" class="table-days">
+        @await Html.PartialAsync("_WorkedDays", new WorkedDay[0])
+    </div>
 </div>
+
+@section Scripts  {
+    <script src="~/js/main-view.js"></script>
+}

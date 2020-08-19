@@ -1,28 +1,49 @@
-﻿@model Furmanov.MVP.Login.LoginViewModel
+﻿@model LoginViewModel
 
 @{
     ViewData["Title"] = "Вход";
 }
 
+@section Styles  {
+    <link rel="stylesheet" href="~/css/site.css" />
+}
 <div class="container">
-
-    <h1 class="display-4">Вход</h1>
+    <div class="row" style="margin: 50px auto">
+        <div class="col-2">
+            <img src="~/img/app-icon.png" class="float-right" alt="Иконка">
+        </div>
+        <div>
+            <h1 class="display-4">Табель учёта рабочего времени</h1>
+        </div>
+    </div>
 
     <form asp-action="Login" asp-controller="Account" asp-anti-forgery="true" method="post">
-        <div class="col-5">
-            <div class="text-danger" asp-validation-summary="ModelOnly"></div>
-            <div class="form-group">
-                <label asp-for="Login" class="col-form-label">Введите логин</label>
-                <input type="text" asp-for="Login" class="input-group"/>
-                <span asp-validation-for="Login" class="text-danger"/>
+
+        <div class="login-form row offset-2 col-8">
+            <div class="col-4">
+                <img src="~/img/login.png" class="login-icon card-img" alt="Логин">
             </div>
-            <div class="form-group card-group">
-                <label asp-for="Password" class="col-form-label">Введите пароль</label>
-                <input type="password" asp-for="Password" class="input-group"/>
-                <span asp-validation-for="Password" class="text-danger"/>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Войти" class="btn btn-outline-primary"/>
+            <div class="col-8">
+                <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+                <div class="form-group">
+                    <label asp-for="Login" class="col-form-label">Введите логин</label>
+                    <input type="text" asp-for="Login" class="input-group" />
+                    <span asp-validation-for="Login" class="text-danger" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="Password" class="col-form-label">Введите пароль</label>
+                    <input type="password" asp-for="Password" class="input-group" />
+                    <span asp-validation-for="Password" class="text-danger" />
+                </div>
+                <div class="form-group">
+                    <input type="checkbox" asp-for="IsRemember" />
+                    <label asp-for="IsRemember">Запомнить меня</label>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Войти"
+                           class="btn btn btn-outline-primary"
+                           style="width: 100%" />
+                </div>
             </div>
         </div>
     </form>

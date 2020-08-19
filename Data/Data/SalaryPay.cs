@@ -48,6 +48,8 @@ namespace Furmanov.Data.Data
 		[Column] public string ViewModelId { get; set; }
 		[Column] public ObjType Type { get; set; }
 		[Column] public string ParentId { get; set; }
+		public bool HasChildren { get; set; } // for treelist
+		public bool IsExpanded { get; set; } // for treelist
 
 		[Display(Name = "ФИО / Наименование")]
 		[Editable(false)]

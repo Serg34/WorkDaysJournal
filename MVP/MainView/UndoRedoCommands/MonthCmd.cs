@@ -24,12 +24,10 @@ namespace Furmanov.MVP.MainView.UndoRedoCommands
 		public void Execute()
 		{
 			_model.ChangeMonth(_year, _month);
-			_model.Update();
 		}
 		public void UnExecute()
 		{
 			_model.ChangeMonth(_prevYear, _prevMonth);
-			_model.Update();
 		}
 	}
 }

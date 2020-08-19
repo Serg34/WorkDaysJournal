@@ -36,5 +36,10 @@ namespace Furmanov.Services
 			var count = (end - start).Days + 1;
 			return Enumerable.Range(0, count).Select(i => start.AddDays(i));
 		}
+
+		public static bool IsWeekend(this DateTime day)
+		{
+			return day.DayOfWeek == DayOfWeek.Saturday || day.DayOfWeek == DayOfWeek.Sunday;
+		}
 	}
 }

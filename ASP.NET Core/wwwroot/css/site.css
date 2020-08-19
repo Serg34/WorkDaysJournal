@@ -69,3 +69,13 @@ body {
   white-space: nowrap;
   line-height: 60px; /* Vertically center the text there */
 }
+
+.login-form {
+    padding: 25px;
+    background-color: rgb(250, 250, 250);
+    border: 1px solid rgb(200, 200, 200);
+}
+.login-icon {
+    background-color: white;
+    border: 1px solid rgb(200, 200, 200);
+}

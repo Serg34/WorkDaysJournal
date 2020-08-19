@@ -8,7 +8,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
+using Furmanov.Data.Data;
 
 namespace Furmanov.Controllers
 {
@@ -30,27 +32,41 @@ namespace Furmanov.Controllers
 			_model.Updated += (sender, vm) => _mainViewModel = vm;
 		}
 
+		[HttpGet]
 		public async Task<IActionResult> Index()
 		{
 			await Authorize();
 			_model.Update();
 			return View(_mainViewModel);
 		}
+		[HttpGet]
 		public async Task<IActionResult> ChangeMonth(int year, int month)
 		{
 			await Authorize();
 			_model.ChangeMonth(year, month);
-			_model.Update();
 			return View(nameof(Index), _mainViewModel);
 		}
 
-		public string GetWorkedDays(int payId, int year, int month)
+		[HttpGet]
+		public IActionResult _WorkedDays(int payId)
 		{
-			_model.ChangeMonth(year, month);
 			var workedDays = _model.GetWorkedDays(payId);
-			workedDays.ForEach(d => d.CreatedDate = DateTime.Now);
-			var json = workedDays.ToJson();
-			return json;
+			return PartialView(workedDays);
+		}
+
+		[HttpPost]
+		public async Task<IActionResult> SaveWorkedDay(string json)
+		{
+			await Authorize();
+			var vm = JsonService.FromJson<SaveWorkedDayViewModel>(json);
+			var workDay = vm.WorkedDay;
+			workDay.Date = DateTime.Parse(workDay.DateJson);
+			_model.SaveWorkDay(workDay);
+			_mainViewModel.SalaryPays.ForEach(p => p.IsExpanded = vm.ExpandList.Contains(p.ViewModelId.ToId()));
+
+			ViewBag.SelectedRow = vm.SelectedRow;
+
+			return PartialView("_SalaryPays", _mainViewModel);
 		}
 
 		[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

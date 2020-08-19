@@ -183,7 +183,7 @@ namespace Furmanov.UI
 				if (r < 700) throw new DataException("Test");
 				if (r < 800) throw new DuplicateWaitObjectException("Test");
 				if (r < 900) throw new DivideByZeroException("Test");
-				 throw new Exception("Test");
+				throw new Exception("Test");
 			}
 			catch (Exception ex)
 			{
@@ -495,19 +495,10 @@ namespace Furmanov.UI
 			try
 			{
 				if (sender is TreeList view &&
-				view.GetRow(e.Node.Id) is SalaryPay vm &&
-				vm.Type != ObjType.Salary)
+					view.GetRow(e.Node.Id) is SalaryPay vm &&
+					vm.Type != ObjType.Salary)
 				{
-					if (e.Info.Appearance.Options.UseBorderColor)
-					{
-						var b = e.Bounds;
-						b.Inflate(1, 1);
-						e.Cache.DrawRectangle(e.Cache.GetPen(Color.FromArgb(25, e.Info.Appearance.BorderColor)), b);
-						e.Cache.DrawLine(e.Cache.GetPen(e.Info.Appearance.BorderColor),
-							new Point(b.Left, b.Top), new Point(b.Right, b.Top));
-						e.Cache.DrawLine(e.Cache.GetPen(e.Info.Appearance.BorderColor),
-							new Point(b.Left, b.Bottom - 1), new Point(b.Right, b.Bottom - 1));
-					}
+					TreeListService.CustomDrawNodeCell(e);
 				}
 			}
 			catch (Exception ex)

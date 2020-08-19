@@ -18,5 +18,12 @@ namespace Furmanov.Services
 			var res = double.Parse(txt);
 			return res;
 		}
+
+		public static string ToHtml(this decimal? num) => num?.ToHtml();
+
+		public static string ToHtml(this decimal num)
+		{
+			return num.ToString("c2").Replace(" ", $"{(char)160}");
+		}
 	}
 }

@@ -1,8 +1,10 @@
 ﻿using LinqToDB.Mapping;
 using System;
+using System.Runtime.Serialization;
 
 namespace Furmanov.Data.Data
 {
+	[DataContract]
 	public abstract class Dto
 	{
 		[PrimaryKey, Identity]

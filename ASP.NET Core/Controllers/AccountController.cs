@@ -1,6 +1,5 @@
 ﻿using Furmanov.Data.Data;
 using Furmanov.Models;
-using Furmanov.MVP.Login;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
@@ -32,16 +31,16 @@ namespace Furmanov.Controllers
 				var user = await _db.GetUserAsync(vm.Login, vm.Password);
 				if (user != null)
 				{
-					await Authenticate(user); // аутентификация
+					await Authenticate(user, vm.IsRemember); // аутентификация
 
-					return RedirectToAction(nameof(HomeController.Index),HomeController.Name);
+					return RedirectToAction(nameof(HomeController.Index), HomeController.Name);
 				}
 				ModelState.AddModelError("", "Некорректные логин и(или) пароль");
 			}
 			return View(vm);
 		}
 
-		private async Task Authenticate(UserDto user)
+		private async Task Authenticate(UserDto user, bool isRemember)
 		{
 			var claims = new List<Claim>
 			{
@@ -49,13 +48,16 @@ namespace Furmanov.Controllers
 				new Claim(ClaimsIdentity.DefaultRoleClaimType, user?.Role_Id.ToString()),
 			};
 
-			var id = new ClaimsIdentity(claims,
-				"ApplicationCookie",
-				ClaimsIdentity.DefaultNameClaimType,
-				ClaimsIdentity.DefaultRoleClaimType);
+			const string nameType = ClaimsIdentity.DefaultNameClaimType;
+			const string roleType = ClaimsIdentity.DefaultRoleClaimType;
+			var id = new ClaimsIdentity(claims,"ApplicationCookie",nameType, roleType);
 
-			await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
-				new ClaimsPrincipal(id));
+			const string scheme = CookieAuthenticationDefaults.AuthenticationScheme;
+			var properties = new AuthenticationProperties
+			{
+				IsPersistent = isRemember
+			};
+			await HttpContext.SignInAsync(scheme, new ClaimsPrincipal(id), properties);
 		}
 
 		public async Task<IActionResult> Logout()

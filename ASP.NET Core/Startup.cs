@@ -1,4 +1,9 @@
+using FluentValidation;
+using FluentValidation.AspNetCore;
+using Furmanov.Controllers;
+using Furmanov.Data.Data;
 using Furmanov.Models;
+using Furmanov.MVP.MainView;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -22,7 +27,10 @@ namespace Furmanov
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
 		{
-			string connection = Configuration.GetConnectionString("DefaultConnection");
+			services.AddMvc().AddFluentValidation();
+			services.AddTransient<IValidator<SalaryPay>, SalaryPayValidator>();
+
+			var connection = Configuration.GetConnectionString("DefaultConnection");
 			services.AddDbContext<UserContext>(options => options.UseSqlServer(connection));
 
 			// установка конфигурации подключения
@@ -43,7 +51,7 @@ namespace Furmanov
 			}
 			else
 			{
-				app.UseExceptionHandler("/Home/Error");
+				app.UseExceptionHandler($"/{HomeController.Name}/{nameof(HomeController.Error)}");
 				// The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
 				app.UseHsts();
 			}

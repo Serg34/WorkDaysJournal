@@ -92,6 +92,7 @@ namespace Furmanov.MVP.MainView
 		{
 			Year = year;
 			Month = month;
+			Update();
 		}
 		#endregion
 
@@ -144,6 +145,9 @@ namespace Furmanov.MVP.MainView
 		#region WorkedDays
 		public void SaveWorkDay(WorkedDay day)
 		{
+			Year = day.Date.Year;
+			Month = day.Date.Month;
+
 			day.IsWorked = !day.IsWorked; // данные приходят до изменений, поэтому обратное значение
 			_db.SaveWorkedDays(day);
 			var pay = _db.GetSalaryPay(day.SalaryPay_Id);
@@ -153,6 +157,12 @@ namespace Furmanov.MVP.MainView
 
 		public WorkedDay[] GetWorkedDays(int payId)
 		{
+			var pay = _db.GetSalaryPay(payId);
+			if (pay == null) return new WorkedDay[0];
+
+			Year = pay.Year;
+			Month = pay.Month;
+
 			var workedDays = _db.GetWorkedDays(payId);
 			var days = DateService.AllDaysInMonth(Year, Month)
 				.Select(date => new WorkedDay
@@ -166,6 +176,12 @@ namespace Furmanov.MVP.MainView
 
 		public WorkedDay[] GenWorkedDays(int payId, bool allDays, bool isExist)
 		{
+			var pay = _db.GetSalaryPay(payId);
+			if (pay == null) return new WorkedDay[0];
+
+			Year = pay.Year;
+			Month = pay.Month;
+
 			var days = DateService.AllDaysInMonth(Year, Month)
 				.Select(date => new WorkedDay
 				{

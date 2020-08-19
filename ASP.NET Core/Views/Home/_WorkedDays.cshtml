@@ -1,0 +1,26 @@
+﻿@using Furmanov.Services
+@model Furmanov.Data.Data.WorkedDay[]
+
+<table id="table-days" class="table table-days text-center">
+    <thead>
+        <tr>
+            <th style="width: 50%">Дата</th>
+            <th style="width: 50%">Выход</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            foreach (var day in Model)
+            {
+                var cls = day.Date.IsWeekend() ? "class=weekend-cell" : "class=workday-cell";
+                <tr onclick="SelectRow(this,'table-days')">
+                    <td @cls>@day.Date.ToString("dd.MM.yyyy")</td>
+                    <td @cls>
+                        <input type="checkbox" asp-for="@day.IsWorked"
+                        onclick="(SaveWorkedDay(@day.SalaryPay_Id, '@day.Date.ToString("u")', this))"/>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

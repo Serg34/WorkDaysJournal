@@ -1,0 +1,57 @@
+﻿@using Furmanov.Data.Data
+@using Furmanov.Services
+@model Furmanov.Data.Data.SalaryPay
+
+@{
+    var cls = Model.Type == ObjType.Project ? "project-cell"
+        : Model.Type == ObjType.Object ? "object-cell"
+        : Model.Type == ObjType.Summary ? "summary-cell"
+        : "pay-cell";
+
+    var clsReadOnly = cls + " readonly";
+
+    if (Model.Type != ObjType.Salary)
+    {
+        cls += " readonly";
+    }
+
+    var colspan = Model.Type == ObjType.Project || Model.Type == ObjType.Summary ? "colspan=3"
+        : Model.Type == ObjType.Object ? "colspan=2"
+        : "";
+}
+
+@if (Model.Type == ObjType.Project)
+{
+    @Html.Raw(DisplayService.ExpandIcon(Model))
+    <td class="no-cell project-icon"></td>
+}
+else if (Model.Type == ObjType.Object)
+{
+    <td class="no-cell"></td>
+    @Html.Raw(DisplayService.ExpandIcon(Model))
+    <td class="no-cell object-icon"></td>
+}
+else if (Model.Type == ObjType.Salary)
+{
+    <td class="no-cell"></td>
+    <td class="no-cell"></td>
+    <td class="no-cell"></td>
+    <td class="no-cell pay-icon"></td>
+}
+@if (Model.Type == ObjType.Summary)
+{
+    <td class="no-cell"></td>
+    <td class="no-cell summary-icon"></td>
+}
+
+<td class="@clsReadOnly" @colspan>@Model.Name</td>
+<td class="@clsReadOnly">@Model.Position</td>
+<td class="@clsReadOnly">@Model.Phone</td>
+<td class="@clsReadOnly">@Model.Salary.ToHtml()</td>
+<td class="@cls">@Model.RateDays</td>
+<td class="@clsReadOnly">@Model.FactDays</td>
+<td class="@cls">@Model.Advance.ToHtml()</td>
+<td class="@cls">@Model.Penalty.ToHtml()</td>
+<td class="@cls">@Model.Premium.ToHtml()</td>
+<td class="@cls">@Model.SalaryToPay.ToHtml()</td>
+<td class="@cls">@Model.Comment</td>

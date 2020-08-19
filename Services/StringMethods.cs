@@ -88,6 +88,7 @@ namespace Furmanov.Services
 
 		public static string ToId(this string str)
 		{
+			if (str.IsEmpty()) return "null";
 			return str.Replace(" ", "_").Replace(".", "_");
 		}
 	}

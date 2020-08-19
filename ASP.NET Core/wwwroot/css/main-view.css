@@ -3,6 +3,34 @@
     padding: 0 5px;
 }
 
+.table tr, .table tr td {
+    -webkit-transition: all 0.25s;
+    -moz-transition: all 0.25s;
+    -ms-transition: all 0.25s;
+    -o-transition: all 0.25s;
+    transition: all 0.25s;
+}
+
+.tree-salary {
+    ms-flex: 0 0 calc(100% - 204px);
+    flex: 0 0 calc(100% - 204px);
+    max-width: calc(100% - 204px);
+}
+
+.separator {
+    background-color: rgb(240, 240, 240); 
+    ms-flex: 0 0 4px;
+    flex: 0 0 4px;
+    max-width: 4px;
+}
+
+.table-days {
+    background-color: white;
+    ms-flex: 0 0 200px;
+    flex: 0 0 200px;
+    max-width: 200px;
+}
+
 .show-hide-icon {
     cursor: pointer;
     color: rgb(128, 128, 128);
@@ -81,10 +109,16 @@
     border-right: 1px solid rgb(200, 200, 200);
 }
 
-.row-show {
-    display: table-row;
+.weekend-cell {
+    background-color: rgb(255, 100, 100);
+    border-top: 1px solid rgb(150, 153, 169) !important;
+    border-left: 1px solid rgb(200, 200, 200);
+}
+.workday-cell {
+    border-top: 1px solid rgb(200, 200, 200) !important;
+    border-left: 1px solid rgb(240, 240, 240);
 }
 
-.row-hide {
-    display: none;
+.readonly {
+    cursor: default
 }
