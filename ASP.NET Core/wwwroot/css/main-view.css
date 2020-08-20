@@ -3,14 +3,6 @@
     padding: 0 5px;
 }
 
-.table tr, .table tr td {
-    -webkit-transition: all 0.25s;
-    -moz-transition: all 0.25s;
-    -ms-transition: all 0.25s;
-    -o-transition: all 0.25s;
-    transition: all 0.25s;
-}
-
 .tree-salary {
     ms-flex: 0 0 calc(100% - 204px);
     flex: 0 0 calc(100% - 204px);
