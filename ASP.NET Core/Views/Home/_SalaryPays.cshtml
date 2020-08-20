@@ -34,34 +34,37 @@
                 var project = projects.Any() ? projects[i] : null;
                 var objects = Model.SalaryPays.Where(p => p.ParentId == project?.ViewModelId &&
                                                           p.Type == ObjType.Object).ToArray();
+                var projId = project?.ViewModelId.ToId();
                 @if (project != null)
                 {
                     project.HasChildren = objects.Any();
-                    <tr class="project-row"
-                        id="@project?.ViewModelId.ToId()"
-                        onclick="SelectRow('@project.ViewModelId.ToId()','tree-salary'),GetWorkedDays(-1)"
-                        ondblclick="ShowHideRow('@project.ViewModelId.ToId()')"
+                    <tr class='project-row'
+                        id="@projId"
+                        onclick="SelectRow('@projId','tree-salary')"
+                        ondblclick="ShowHideRow('@projId')"
                         @(project.IsExpanded ? "data-expand=true" : "data-expand=false")>
                         @await Html.PartialAsync("_SalaryPayRow", project)
                     </tr>
                 }
                 foreach (var obj in objects)
                 {
+                    var objId = obj.ViewModelId.ToId();
                     var pays = Model.SalaryPays.Where(p => p.ParentId == obj.ViewModelId).ToArray();
                     obj.HasChildren = pays.Any();
-                    <tr class="object-row @project?.ViewModelId.ToId()"
-                        id="@obj.ViewModelId.ToId()"
-                        onclick="SelectRow('@obj.ViewModelId.ToId()', 'tree-salary'),GetWorkedDays(-1)"
-                        ondblclick="ShowHideRow('@obj.ViewModelId.ToId()')"
+                    <tr class='object-row @projId'
+                        id="@objId"
+                        onclick="SelectRow('@objId', 'tree-salary')"
+                        ondblclick="ShowHideRow('@objId')"
                         @(obj.IsExpanded ? "data-expand=true" : "data-expand=false")
                         @($"style=display:{(!project?.IsExpanded ?? false ? "none" : "table-row")}")>
                         @await Html.PartialAsync("_SalaryPayRow", obj)
                     </tr>
                     foreach (var pay in pays)
                     {
-                        <tr id="@pay.ViewModelId.ToId()"
-                            class="pay-row @obj.ViewModelId.ToId()"
-                            onclick="SelectRow('@pay.ViewModelId.ToId()','tree-salary'),GetWorkedDays(@pay.Id)"
+                        var payId = pay.ViewModelId.ToId();
+                        <tr id="@payId"
+                            class='pay-row @objId'
+                            onclick="SelectRow('@payId','tree-salary')"
                             @($"style=display:{(!obj.IsExpanded ? "none" : "table-row")}")>
                             @await Html.PartialAsync("_SalaryPayRow", pay)
                         </tr>
@@ -71,8 +74,9 @@
             var summary = Model.SalaryPays.FirstOrDefault(p => p.Type == ObjType.Summary);
             if (summary != null)
             {
-                <tr id="@summary.ViewModelId.ToId()"
-                    onclick="SelectRow('@summary.ViewModelId.ToId()','tree-salary'),GetWorkedDays(-1)"
+                var sumId = summary.ViewModelId.ToId();
+                <tr id="@sumId"
+                    onclick="SelectRow('@sumId','tree-salary')"
                     class="summary-row">
                     @await Html.PartialAsync("_SalaryPayRow", summary)
                 </tr>

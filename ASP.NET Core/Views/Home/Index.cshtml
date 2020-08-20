@@ -1,5 +1,5 @@
 ﻿@using Furmanov.Data.Data
-@model MainViewModelWithWorkedDays
+@model Furmanov.MVP.MainView.MainViewModel
 
 @{
     ViewData["Title"] = "Главная";
@@ -10,12 +10,12 @@
 }
 
 <div class="row" style="margin: auto">
-    <div class="tree-salary">
+    <div id="tree-salary-div" class="tree-salary">
         @await Html.PartialAsync("_SalaryPays")
     </div>
     <div class="separator"></div>
-    <div id="table-days" class="table-days">
-        @await Html.PartialAsync("_WorkedDays", Model.WorkedDays)
+    <div id="table-days-div" class="table-days">
+        @await Html.PartialAsync("_WorkedDays", new WorkedDay[0])
     </div>
 </div>
 

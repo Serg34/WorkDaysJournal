@@ -61,6 +61,18 @@ function SelectRow(rowId, tableId) {
         selectRow.style.backgroundColor = "rgb(" + (r - 20) + ", " + (g - 20) + ", " + (b - 20) + ")";
     }
     selectRow.classList.add("selected");
+
+    var btOnlyWorkDays = document.getElementById("btOnlyWorkDays");
+    var btAllDays = document.getElementById("btAllDays");
+    var btNoDays = document.getElementById("btNoDays");
+    var noPay = rowId.indexOf("Salary") < 0;
+
+    btOnlyWorkDays.disabled =
+        btAllDays.disabled =
+        btNoDays.disabled = noPay;
+
+    var payId = rowId.replace("Salary_", "");
+    GetWorkedDays(payId);
 }
 
 function GetSelectRow(tableId) {
@@ -81,19 +93,18 @@ function GetWorkedDays(payId) {
         method: "get",
         dataType: "html",
         success: function (data) {
-            var tableWorkDays = document.getElementById("table-days");
+            var tableWorkDays = document.getElementById("table-days-div");
             tableWorkDays.innerHTML = data;
         }
     });
 }
 
-function SaveWorkedDays(payId, allDays, isExist) {
+function SaveWorkedDays(allDays, isExist) {
 
     var expandList = GetExpandList("tree-salary");
     var selectedRow = GetSelectRow("tree-salary");
 
     var model = {
-        PayId: payId,
         AllDays: allDays,
         IsExist: isExist,
         ExpandList: expandList,
@@ -109,7 +120,9 @@ function SaveWorkedDays(payId, allDays, isExist) {
         dataType: "html",
         data: { json: json },
         success: function (data) {
-            html.innerHTML = data;
+            var treeSalary = document.getElementById("tree-salary-div");
+            treeSalary.innerHTML = data;
+            SelectRow(selectedRow, "tree-salary");
         }
     });
 }
@@ -140,8 +153,9 @@ function SaveWorkedDay(payId, date, checkBox) {
         dataType: "html",
         data: { json: json },
         success: function (data) {
-            var treeSalary = document.getElementById("tree-salary");
+            var treeSalary = document.getElementById("tree-salary-div");
             treeSalary.innerHTML = data;
+            SelectRow(selectedRow, "tree-salary");
         }
     });
 }

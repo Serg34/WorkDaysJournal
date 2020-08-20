@@ -21,6 +21,24 @@
                 {
                     <ul class="nav navbar-nav">
                         <li>
+                            <button id="btOnlyWorkDays" class="btn btn-top-menu" onclick="SaveWorkedDays('false', 'true')" disabled>
+                                <img src="~/img/OnlyWorkDays.png" alt="5/2">
+                                <p>5/2</p>
+                            </button>
+                        </li>
+                        <li>
+                            <button id="btAllDays" class="btn btn-top-menu" onclick="SaveWorkedDays('true', 'true')" disabled>
+                                <img src="~/img/AllDays.png" alt="Все дни">
+                                <p>Все дни</p>
+                            </button>
+                        </li>
+                        <li>
+                            <button id="btNoDays" class="btn btn-top-menu" onclick="SaveWorkedDays('false', 'false')" disabled>
+                                <img src="~/img/NoDays.png" alt="Удалить дни">
+                                <p>Удалить дни</p>
+                            </button>
+                        </li>
+                        <li>
                             <h4>
                                 @User.Identity.Name
                             </h4>
@@ -52,7 +70,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2020 - Furmanov
+            Furmanov &copy; 2020
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
