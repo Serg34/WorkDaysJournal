@@ -1,11 +1,13 @@
-﻿using DevExpress.Utils.Extensions;
-using DevExpress.XtraTreeList;
-using DevExpress.XtraTreeList.Nodes;
-using Furmanov.Dal;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
+using DevExpress.Utils.Extensions;
+using DevExpress.XtraTreeList;
+using DevExpress.XtraTreeList.Nodes;
+using Furmanov.Dal;
+using Furmanov.Data.Data;
+using StringMethods = Furmanov.Services.StringMethods;
 
 namespace Furmanov.UI.Services
 {
@@ -16,15 +18,19 @@ namespace Furmanov.UI.Services
 		private string _selectedId;
 		private string _selectedColumnName;
 		private int _topVisibleNodeIndex;
+		private object _tag;
 
 		public TreeListStateSaver(TreeList treeList)
 		{
 			_treeList = treeList;
-			_treeList.Nodes.ForEach(GetExpanded);
+			EnumerableExtensions.ForEach(_treeList.Nodes, GetExpanded);
 			_selectedId = (_treeList.GetRow(_treeList.FocusedNode?.Id ?? -1) as IViewModel)?.ViewModelId;
 			_selectedColumnName = _treeList.FocusedColumn?.Name;
 			_topVisibleNodeIndex = _treeList.TopVisibleNodeIndex;
+			_tag = _treeList.Tag;
+			_treeList.Tag = Updating;
 		}
+		public static object Updating { get; } = new object();
 
 		private void GetExpanded(TreeListNode node)
 		{
@@ -38,7 +44,7 @@ namespace Furmanov.UI.Services
 		{
 			if (!(_treeList.GetRow(node.Id) is IViewModel vm)) return;
 			if (_expandedIds?.Any(id => vm.ViewModelId == id) ?? false) node.Expanded = true;
-			if (vm.ViewModelId == _selectedId)
+			if (vm.ViewModelId == _selectedId && StringMethods.NoEmpty(_selectedId))
 			{
 				_treeList.SetFocusedNode(node);
 			}
@@ -66,21 +72,26 @@ namespace Furmanov.UI.Services
 
 		public void Dispose()
 		{
-			_treeList.BeginInit();
+			try
+			{
+				_treeList.BeginInit();
 
-			_treeList.Nodes.ForEach(SetState);
-			_treeList.TopVisibleNodeIndex = _topVisibleNodeIndex;
+				EnumerableExtensions.ForEach(_treeList.Nodes, SetState);
+				_treeList.TopVisibleNodeIndex = _topVisibleNodeIndex;
+				_treeList.Tag = _tag;
 
-			_treeList.EndInit();
+				_treeList.EndInit();
 
-			var focusedColumn = _treeList.Columns
-				.FirstOrDefault(c => c.Name == _selectedColumnName);
-			if (focusedColumn != null) _treeList.FocusedColumn = focusedColumn;
+				var focusedColumn = _treeList.Columns
+					.FirstOrDefault(c => c.Name == _selectedColumnName);
+				if (focusedColumn != null) _treeList.FocusedColumn = focusedColumn;
+			}
+			catch { }
 		}
 
 		[DataContract]
 		[Serializable]
-		private class Data
+		public class Data
 		{
 			[DataMember]
 			public List<string> ExpandedIds { get; set; }

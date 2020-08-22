@@ -1,7 +1,7 @@
 ﻿using System.Runtime.Serialization;
 using Furmanov.Data.Data;
 
-namespace Furmanov.Models
+namespace Furmanov.Models.Home
 {
 	[DataContract]
 	public class SaveWorkedDayViewModel

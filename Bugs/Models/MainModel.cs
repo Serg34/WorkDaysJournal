@@ -15,7 +15,11 @@ namespace Furmanov.Models
 	public class MainModel : IDisposable
 	{
 		#region Fields
+#if DEBUG
+		private const int TimerInterval = 1_000;
+#else
 		private const int TimerInterval = 60_000;
+#endif
 		private readonly string _connectionString = Settings.Default.ConnectionString;
 		private DateTime _lastBugDateTime = DateTime.MinValue;
 		private DateTime _lastIncidentDateTime = DateTime.MinValue;

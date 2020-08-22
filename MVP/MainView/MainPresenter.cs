@@ -36,6 +36,7 @@ namespace Furmanov.MVP.MainView
 			_view.Logout += (sender, args) =>
 			{
 				_model.UpdateLogin(null);
+				_model.Update();
 				_undoService.Reset();
 				ShowLoginView(false);
 			};

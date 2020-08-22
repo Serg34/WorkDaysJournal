@@ -9,7 +9,7 @@
     --indigo: #6610f2;
     --purple: #6f42c1;
     --pink: #e83e8c;
-    --red: #dc3545;
+    --red: #ff6464;
     --orange: #fd7e14;
     --yellow: #ffc107;
     --green: #28a745;
@@ -23,7 +23,7 @@
     --success: #28a745;
     --info: #17a2b8;
     --warning: #ffc107;
-    --danger: #dc3545;
+    --danger: #ff6464;
     --light: #f8f9fa;
     --dark: #343a40;
     --breakpoint-xs: 0;
@@ -9865,7 +9865,7 @@ a.text-secondary:hover, a.text-secondary:focus {
 }
 
 .text-success {
-  color: #28a745 !important;
+    color: #64ff64 !important;
 }
 
 a.text-success:hover, a.text-success:focus {
@@ -9889,7 +9889,7 @@ a.text-warning:hover, a.text-warning:focus {
 }
 
 .text-danger {
-  color: #dc3545 !important;
+    color: #ff6464 !important;
 }
 
 a.text-danger:hover, a.text-danger:focus {

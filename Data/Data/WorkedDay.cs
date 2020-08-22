@@ -25,5 +25,10 @@ namespace Furmanov.Data.Data
 		[Display(Name = "Выход")]
 		[DataMember]
 		public bool IsWorked { get; set; }
+
+		public WorkedDay Clone()
+		{
+			return (WorkedDay)MemberwiseClone();
+		}
 	}
 }

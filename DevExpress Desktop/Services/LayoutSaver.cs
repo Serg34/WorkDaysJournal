@@ -1,12 +1,4 @@
-﻿using DevExpress.XtraBars.Ribbon;
-using DevExpress.XtraEditors;
-using DevExpress.XtraGrid;
-using DevExpress.XtraGrid.Views.Base;
-using DevExpress.XtraGrid.Views.Grid;
-using DevExpress.XtraPivotGrid;
-using DevExpress.XtraTreeList;
-using Furmanov.Dal;
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
@@ -14,8 +6,17 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
+using DevExpress.XtraBars.Ribbon;
+using DevExpress.XtraEditors;
+using DevExpress.XtraGrid;
+using DevExpress.XtraGrid.Views.Base;
+using DevExpress.XtraGrid.Views.Grid;
+using DevExpress.XtraPivotGrid;
+using DevExpress.XtraTreeList;
+using Furmanov.Dal;
+using Furmanov.Services;
 
-namespace Furmanov.Services
+namespace Furmanov.UI.Services
 {
 	public static class LayoutSaver
 	{

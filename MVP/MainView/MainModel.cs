@@ -42,12 +42,17 @@ namespace Furmanov.MVP.MainView
 
 	public class MainModel : IMainModel
 	{
+		private const string AppName = "Табель учёта рабочего времени";
 		private readonly IDataAccessService _db;
 		public MainModel(IDataAccessService dataAccessService, ILoginModel loginModel)
 		{
 			_db = dataAccessService;
 			LoginModel = loginModel;
-			LoginModel.Logged += (sender, user) => UpdateLogin(user);
+			LoginModel.Logged += (sender, user) =>
+			{
+				UpdateLogin(user);
+				Update();
+			};
 		}
 
 		#region Events
@@ -63,7 +68,6 @@ namespace Furmanov.MVP.MainView
 		public void UpdateLogin(UserDto user)
 		{
 			User = user;
-			Update();
 			LoginChanged?.Invoke(this, User); //после обновления восстанавливаем состояние контролов
 		}
 		#endregion
@@ -105,7 +109,7 @@ namespace Furmanov.MVP.MainView
 			}
 			catch (Exception ex)
 			{
-				ReportBug(this, new BugEventArgs(ex, User));
+				ReportBug(this, new BugEventArgs("", ex));
 			}
 		}
 		#endregion
@@ -136,7 +140,7 @@ namespace Furmanov.MVP.MainView
 			}
 			catch (Exception ex)
 			{
-				ReportBug(this, new BugEventArgs(ex, User));
+				ReportBug(this, new BugEventArgs(AppName, ex));
 			}
 		}
 		#endregion
@@ -144,6 +148,8 @@ namespace Furmanov.MVP.MainView
 		#region WorkedDays
 		public void SaveWorkedDays(params WorkedDay[] days)
 		{
+			//throw new Exception("Test");
+
 			Year = days[0].Date.Year;
 			Month = days[0].Date.Month;
 
@@ -154,40 +160,56 @@ namespace Furmanov.MVP.MainView
 		}
 		public WorkedDay[] GetWorkedDays(int payId)
 		{
-			var pay = _db.GetSalaryPay(payId);
-			if (pay == null) return new WorkedDay[0];
+			try
+			{
+				var pay = _db.GetSalaryPay(payId);
+				if (pay == null) return new WorkedDay[0];
 
-			Year = pay.Year;
-			Month = pay.Month;
+				Year = pay.Year;
+				Month = pay.Month;
 
-			var workedDays = _db.GetWorkedDays(payId);
-			var days = DateService.AllDaysInMonth(Year, Month)
-				.Select(date => new WorkedDay
-				{
-					SalaryPay_Id = payId,
-					Date = date,
-					IsWorked = workedDays.Any(d => d.Date.Date == date.Date)
-				}).ToArray();
-			return days;
+				var workedDays = _db.GetWorkedDays(payId);
+				var days = DateService.AllDaysInMonth(Year, Month)
+					.Select(date => new WorkedDay
+					{
+						SalaryPay_Id = payId,
+						Date = date,
+						IsWorked = workedDays.Any(d => d.Date.Date == date.Date)
+					}).ToArray();
+				return days;
+			}
+			catch (Exception ex)
+			{
+				ReportBug(this, new BugEventArgs(AppName, ex));
+				return new WorkedDay[0];
+			}
 		}
 		public WorkedDay[] GenWorkedDays(int payId, bool allDays, bool isExist)
 		{
-			var pay = _db.GetSalaryPay(payId);
-			if (pay == null) return new WorkedDay[0];
+			try
+			{
+				var pay = _db.GetSalaryPay(payId);
+				if (pay == null) return new WorkedDay[0];
 
-			Year = pay.Year;
-			Month = pay.Month;
+				Year = pay.Year;
+				Month = pay.Month;
 
-			var days = DateService.AllDaysInMonth(Year, Month)
-				.Select(date => new WorkedDay
-				{
-					SalaryPay_Id = payId,
-					Date = date,
-					IsWorked = isExist && (allDays ||
-							 date.DayOfWeek != DayOfWeek.Saturday &&
-							 date.DayOfWeek != DayOfWeek.Sunday)
-				}).ToArray();
-			return days;
+				var days = DateService.AllDaysInMonth(Year, Month)
+					.Select(date => new WorkedDay
+					{
+						SalaryPay_Id = payId,
+						Date = date,
+						IsWorked = isExist && (allDays ||
+								 date.DayOfWeek != DayOfWeek.Saturday &&
+								 date.DayOfWeek != DayOfWeek.Sunday)
+					}).ToArray();
+				return days;
+			}
+			catch (Exception ex)
+			{
+				ReportBug(this, new BugEventArgs(AppName, ex));
+				return new WorkedDay[0];
+			}
 		}
 		#endregion
 
@@ -238,9 +260,12 @@ namespace Furmanov.MVP.MainView
 
 		public void ReportBug(object sender, BugEventArgs e)
 		{
-			using (var dbContext = _db.GetDbContext())
+			using (var db = _db.GetDbContext())
 			{
-				var bug = BugReporter.Report(dbContext, e.Exception, e.User, e.InfoForDeveloper);
+				var ex = e.Exception;
+				var info = e.InfoForDeveloper;
+				var appName = e.ApplicationName;
+				var bug = BugReporter.Report(db, ex, User, info, appName);
 				if (bug != null)
 				{
 					e.Bug = bug;

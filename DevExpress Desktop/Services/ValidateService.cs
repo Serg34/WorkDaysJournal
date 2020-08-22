@@ -1,6 +1,6 @@
-﻿using FluentValidation;
+﻿using System;
+using FluentValidation;
 using Furmanov.Services;
-using System;
 
 namespace Furmanov.UI.Services
 {
@@ -9,16 +9,16 @@ namespace Furmanov.UI.Services
 		public static void Validate<TViewModel>(
 			DevExpress.XtraEditors.Controls.BaseContainerValidateEditorEventArgs e,
 			AbstractValidator<TViewModel> validator,
+			TViewModel vmToValidate,
 			TViewModel focusedVm,
 			string fieldName)
 		{
 			var prop = focusedVm.GetType().GetProperty(fieldName);
 			if (prop == null) return;
 			var type = Nullable.GetUnderlyingType(prop.PropertyType) ?? prop.PropertyType;
-			var val = e.Value == null || string.IsNullOrEmpty(e.Value.ToString()) ? null
+			var val = e.Value == null || e.Value.ToString().IsEmpty() ? null
 				: Convert.ChangeType(e.Value, type);
 
-			var vmToValidate = Cloner.DeepCopy(focusedVm);
 			prop.SetValue(vmToValidate, val);
 
 			var res = validator.Validate(vmToValidate, fieldName);

@@ -1,10 +1,9 @@
-﻿using Furmanov.Data.Data;
+﻿using Furmanov.MVP;
 using Furmanov.Services;
 using System;
 using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
-using Furmanov.MVP;
 
 namespace Furmanov.UI
 {
@@ -19,7 +18,7 @@ namespace Furmanov.UI
 				Padding = new Padding(2, HeaderHeight, 2, 2);
 
 				SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw | ControlStyles.UserPaint, true);
-				LoadBug(e);
+				ShowBug(e);
 			}
 			catch (Exception ex)
 			{
@@ -27,7 +26,7 @@ namespace Furmanov.UI
 			}
 		}
 
-		private void LoadBug(BugEventArgs e)
+		private void ShowBug(BugEventArgs e)
 		{
 			try
 			{

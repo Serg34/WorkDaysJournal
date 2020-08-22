@@ -41,7 +41,10 @@ function GetExpandList(tableId) {
 
 function SelectRow(rowId, tableId) {
     var selectRow = document.getElementById(rowId);
-    if (selectRow === undefined || selectRow === null) return;
+    if (selectRow === undefined || selectRow === null) {
+        GetWorkedDays("-1");
+        return;
+    }
     if (selectRow.classList.contains("selected")) return; //если строка уже выделена
 
     var table = document.getElementById(tableId);
@@ -101,7 +104,36 @@ function GetWorkedDays(payId) {
         success: function (data) {
             var tableWorkDays = document.getElementById("table-days-div");
             tableWorkDays.innerHTML = data;
-        }
+        },
+        error: function (jqxhr, status, errorMsg) { ReportBug(jqxhr, status, errorMsg); }
+    });
+}
+
+function ChangeMonth(month) {
+
+    var expandList = GetExpandList("tree-salary");
+    var selectedRow = GetSelectRow("tree-salary");
+
+    var model = {
+        Month: month,
+        ExpandList: expandList,
+        SelectedRow: selectedRow
+    };
+
+    var json = JSON.stringify(model);
+
+    var url = "/Home/ChangeMonth";
+    $.ajax({
+        url: url,
+        method: "post",
+        dataType: "html",
+        data: { json: json },
+        success: function (data) {
+            var treeSalary = document.getElementById("tree-salary-div");
+            treeSalary.innerHTML = data;
+            SelectRow(selectedRow, "tree-salary");
+        },
+        error: function (jqxhr, status, errorMsg) { ReportBug(jqxhr, status, errorMsg); }
     });
 }
 
@@ -129,7 +161,8 @@ function SaveWorkedDays(allDays, isExist) {
             var treeSalary = document.getElementById("tree-salary-div");
             treeSalary.innerHTML = data;
             SelectRow(selectedRow, "tree-salary");
-        }
+        },
+        error: function(jqxhr, status, errorMsg) { ReportBug(jqxhr, status, errorMsg); }
     });
 }
 
@@ -162,6 +195,7 @@ function SaveWorkedDay(payId, date, checkBox) {
             var treeSalary = document.getElementById("tree-salary-div");
             treeSalary.innerHTML = data;
             SelectRow(selectedRow, "tree-salary");
-        }
+        },
+        error: function (jqxhr, status, errorMsg) { ReportBug(jqxhr, status, errorMsg); }
     });
 }

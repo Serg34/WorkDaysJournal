@@ -9,11 +9,9 @@
     <Product>Табель учёта рабочего времени</Product>
     <NeutralLanguage>en-US</NeutralLanguage>
     <ApplicationIcon>favicon.ico</ApplicationIcon>
+    <PackageIcon>favicon.png</PackageIcon>
+    <PackageIconUrl />
   </PropertyGroup>
-
-  <ItemGroup>
-    <Compile Remove="Models\LoginModel.cs" />
-  </ItemGroup>
 
   <ItemGroup>
     <Content Remove="bundleconfig.json" />
@@ -25,6 +23,10 @@
 
   <ItemGroup>
     <None Include="bundleconfig.json" />
+    <None Include="wwwroot\favicon.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
@@ -66,7 +68,5 @@
     <TypeScriptMapRoot />
     <TypeScriptSourceRoot />
   </PropertyGroup>
-
-
 
 </Project>

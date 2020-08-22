@@ -3,26 +3,25 @@ using Furmanov.Data.Data;
 using LinqToDB;
 using System;
 using System.Data.SqlClient;
-using System.Windows.Forms;
 
 namespace Furmanov.Services
 {
 	public static class BugReporter
 	{
-		public static Bug Report(DbContext db, Exception ex, UserDto user, string infoForDeveloper)
+		public static Bug Report(DbContext db, Exception ex, UserDto user, string infoForDeveloper, string appName)
 		{
-//#if DEBUG
-//			MessageService.Error(ex.ToString());
-//			return null;
-//#endif
+			//#if DEBUG
+			//			MessageService.Error(ex.ToString());
+			//			return null;
+			//#endif
 			var message = ex.ToString();
 			if (message.Contains("Время ожидания выполнения истекло") ||
-				message.Contains("Сервер не найден или недоступен") ||
-				message.Contains("Ошибка на транспортном уровне при получении результатов с сервера"))
+			    message.Contains("Сервер не найден или недоступен") ||
+			    message.Contains("Ошибка на транспортном уровне при получении результатов с сервера"))
 			{
 				MessageService.Error("Произошла ошибка подключения к серверу SQL.\n" +
-									 "Обратитесь к системному администратору.\n\n" +
-									 $"{ex.Message}");
+				                     "Обратитесь к системному администратору.\n\n" +
+				                     $"{ex.Message}");
 				return null;
 			}
 			if (ex is SqlException && message.Contains("The DELETE statement conflicted with the REFERENCE constraint"))
@@ -31,13 +30,18 @@ namespace Furmanov.Services
 				return null;
 			}
 
+			return Report(db, message, user, infoForDeveloper, appName);
+		}
+
+		public static Bug Report(DbContext db, string message, UserDto user, string infoForDeveloper, string appName)
+		{
 			var bugDto = db.FirstOrDefault<BugDto>(b => b.Message == message);
 			var isNew = bugDto == null;
 			if (isNew)
 			{
 				bugDto = new BugDto
 				{
-					Project = Application.ProductName,
+					Project = appName,
 					Message = message,
 					User = user?.Login,
 					InfoForDeveloper = infoForDeveloper,

@@ -1,0 +1,43 @@
+﻿@model Furmanov.MVP.BugEventArgs
+
+@{
+    ViewData["Title"] = "Ошибка";
+}
+
+@if (Model != null)
+{
+    var bug = Model.Bug;
+    var ex = Model.Exception;
+
+    <div class="container">
+
+        <h1 style="margin: 50px auto">Табель учёта рабочего времени</h1>
+
+
+        @if (bug.IsNew)
+        {
+            <h3 class="text-danger">Возникла неизвестная проблема</h3>
+            <h4>
+                Тип: @ex.GetType()?.Name<br />
+                @ex.Message<br /><br />
+                Все необходимые сведения уже отправлены разработчикам<br />
+                Сборка: @bug.Project<br />
+                Номер ошибки: @bug.Id<br />
+            </h4>
+        }
+        else
+        {
+            <h3 class="text-success">Возникла известная проблема</h3>
+            <h4>
+                Тип: @ex.GetType()?.Name<br />
+                @ex.Message<br /><br />
+                Сборка: @bug.Project<br />
+                Номер ошибки: @bug.Id<br />
+                Решение проблемы уже в работе.<br />
+                @(bug.SolvedDate != null ? $"Планируемая дата решения: {bug.SolvedDate:d}<br /><br />" : "")<br />
+                @bug.InfoToUser
+            </h4>
+        }
+
+    </div>
+}

@@ -1,7 +1,7 @@
-﻿using DevExpress.XtraTreeList;
-using System.Drawing;
+﻿using System.Drawing;
+using DevExpress.XtraTreeList;
 
-namespace Furmanov.Services
+namespace Furmanov.UI.Services
 {
 	public class TreeListService
 	{

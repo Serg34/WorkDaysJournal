@@ -18,6 +18,7 @@ using System.Drawing;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
+using Furmanov.UI.Services;
 
 namespace Furmanov.UI
 {
@@ -27,7 +28,6 @@ namespace Furmanov.UI
 		private SalaryPay _currentPay;
 		private SalaryPay _prevPay;
 		private bool _updating;
-		private UserDto _user;
 		#endregion
 
 		public MainView()
@@ -43,7 +43,7 @@ namespace Furmanov.UI
 			}
 			catch (Exception ex)
 			{
-				ReportingBug?.Invoke(this, new BugEventArgs(ex, _user));
+				ReportingBug?.Invoke(this, new BugEventArgs(Application.ProductName, ex));
 			}
 		}
 
@@ -74,8 +74,6 @@ namespace Furmanov.UI
 		{
 			try
 			{
-				_user = user;
-
 				pnMain.BeginInit();
 
 				//Контролы должны быть видимыми до заполнения
@@ -108,7 +106,7 @@ namespace Furmanov.UI
 			}
 			catch (Exception ex)
 			{
-				ReportingBug?.Invoke(this, new BugEventArgs(ex, _user));
+				ReportingBug?.Invoke(this, new BugEventArgs(Application.ProductName, ex));
 			}
 		}
 
@@ -122,7 +120,7 @@ namespace Furmanov.UI
 			}
 			catch (Exception ex)
 			{
-				ReportingBug?.Invoke(this, new BugEventArgs(ex, _user));
+				ReportingBug?.Invoke(this, new BugEventArgs(Application.ProductName, ex));
 			}
 		}
 
@@ -137,7 +135,7 @@ namespace Furmanov.UI
 			}
 			catch (Exception ex)
 			{
-				ReportingBug?.Invoke(this, new BugEventArgs(ex, _user));
+				ReportingBug?.Invoke(this, new BugEventArgs(Application.ProductName, ex));
 			}
 		}
 		#endregion
@@ -160,7 +158,7 @@ namespace Furmanov.UI
 			}
 			catch (Exception ex)
 			{
-				ReportingBug?.Invoke(this, new BugEventArgs(ex, _user));
+				ReportingBug?.Invoke(this, new BugEventArgs(Application.ProductName, ex));
 			}
 			finally
 			{
@@ -187,7 +185,7 @@ namespace Furmanov.UI
 			}
 			catch (Exception ex)
 			{
-				ReportingBug?.Invoke(this, new BugEventArgs(ex, _user));
+				ReportingBug?.Invoke(this, new BugEventArgs(Application.ProductName, ex));
 			}
 		}
 		private void DeMonth_EditValueChanged(object sender, EventArgs e)
@@ -200,7 +198,7 @@ namespace Furmanov.UI
 			}
 			catch (Exception ex)
 			{
-				ReportingBug?.Invoke(this, new BugEventArgs(ex, _user));
+				ReportingBug?.Invoke(this, new BugEventArgs(Application.ProductName, ex));
 			}
 		}
 		private void BtWorkDaysOnly_ItemClick(object sender, ItemClickEventArgs e)
@@ -215,7 +213,7 @@ namespace Furmanov.UI
 			}
 			catch (Exception ex)
 			{
-				ReportingBug?.Invoke(this, new BugEventArgs(ex, _user));
+				ReportingBug?.Invoke(this, new BugEventArgs(Application.ProductName, ex));
 			}
 		}
 		private void BtDeleteAllDays_ItemClick(object sender, ItemClickEventArgs e)
@@ -234,7 +232,7 @@ namespace Furmanov.UI
 			}
 			catch (Exception ex)
 			{
-				ReportingBug?.Invoke(this, new BugEventArgs(ex, _user));
+				ReportingBug?.Invoke(this, new BugEventArgs(Application.ProductName, ex));
 			}
 			finally
 			{
@@ -256,7 +254,7 @@ namespace Furmanov.UI
 			}
 			catch (Exception ex)
 			{
-				ReportingBug?.Invoke(this, new BugEventArgs(ex, _user));
+				ReportingBug?.Invoke(this, new BugEventArgs(Application.ProductName, ex));
 			}
 			finally
 			{
@@ -274,7 +272,7 @@ namespace Furmanov.UI
 			}
 			catch (Exception ex)
 			{
-				ReportingBug?.Invoke(this, new BugEventArgs(ex, _user));
+				ReportingBug?.Invoke(this, new BugEventArgs(Application.ProductName, ex));
 			}
 		}
 		public void UpdateUndoRedo(string[] undoItems, string[] redoItems)
@@ -307,7 +305,7 @@ namespace Furmanov.UI
 			}
 			catch (Exception ex)
 			{
-				ReportingBug?.Invoke(this, new BugEventArgs(ex, _user));
+				ReportingBug?.Invoke(this, new BugEventArgs(Application.ProductName, ex));
 			}
 		}
 		#endregion
@@ -321,7 +319,7 @@ namespace Furmanov.UI
 			}
 			catch (Exception ex)
 			{
-				ReportingBug?.Invoke(this, new BugEventArgs(ex, _user));
+				ReportingBug?.Invoke(this, new BugEventArgs(Application.ProductName, ex));
 			}
 		}
 		private void TreeSalary_CellValueChanged(object sender, CellValueChangedEventArgs e)
@@ -333,7 +331,7 @@ namespace Furmanov.UI
 			}
 			catch (Exception ex)
 			{
-				ReportingBug?.Invoke(this, new BugEventArgs(ex, _user));
+				ReportingBug?.Invoke(this, new BugEventArgs(Application.ProductName, ex));
 			}
 		}
 		private void TreeSalary_ValidatingEditor(object sender, DevExpress.XtraEditors.Controls.BaseContainerValidateEditorEventArgs e)
@@ -366,7 +364,7 @@ namespace Furmanov.UI
 			}
 			catch (Exception ex)
 			{
-				ReportingBug?.Invoke(this, new BugEventArgs(ex, _user));
+				ReportingBug?.Invoke(this, new BugEventArgs(Application.ProductName, ex));
 			}
 		}
 
@@ -386,7 +384,7 @@ namespace Furmanov.UI
 			}
 			catch (Exception ex)
 			{
-				ReportingBug?.Invoke(this, new BugEventArgs(ex, _user));
+				ReportingBug?.Invoke(this, new BugEventArgs(Application.ProductName, ex));
 			}
 		}
 		private void DeleteSalaryPay()
@@ -409,7 +407,7 @@ namespace Furmanov.UI
 			}
 			catch (Exception ex)
 			{
-				ReportingBug?.Invoke(this, new BugEventArgs(ex, _user));
+				ReportingBug?.Invoke(this, new BugEventArgs(Application.ProductName, ex));
 			}
 		}
 
@@ -443,7 +441,7 @@ namespace Furmanov.UI
 			}
 			catch (Exception ex)
 			{
-				ReportingBug?.Invoke(this, new BugEventArgs(ex, _user));
+				ReportingBug?.Invoke(this, new BugEventArgs(Application.ProductName, ex));
 			}
 		}
 
@@ -480,7 +478,7 @@ namespace Furmanov.UI
 			}
 			catch (Exception ex)
 			{
-				ReportingBug?.Invoke(this, new BugEventArgs(ex, _user));
+				ReportingBug?.Invoke(this, new BugEventArgs(Application.ProductName, ex));
 			}
 		}
 		[DebuggerStepThrough]
@@ -497,7 +495,7 @@ namespace Furmanov.UI
 			}
 			catch (Exception ex)
 			{
-				ReportingBug?.Invoke(this, new BugEventArgs(ex, _user));
+				ReportingBug?.Invoke(this, new BugEventArgs(Application.ProductName, ex));
 			}
 		}
 		#endregion
@@ -517,7 +515,7 @@ namespace Furmanov.UI
 			}
 			catch (Exception ex)
 			{
-				ReportingBug?.Invoke(this, new BugEventArgs(ex, _user));
+				ReportingBug?.Invoke(this, new BugEventArgs(Application.ProductName, ex));
 			}
 		}
 
@@ -538,7 +536,7 @@ namespace Furmanov.UI
 			}
 			catch (Exception ex)
 			{
-				ReportingBug?.Invoke(this, new BugEventArgs(ex, _user));
+				ReportingBug?.Invoke(this, new BugEventArgs(Application.ProductName, ex));
 			}
 		}
 		private void GcWorkedDays_Paint(object sender, PaintEventArgs e)
@@ -561,7 +559,7 @@ namespace Furmanov.UI
 			}
 			catch (Exception ex)
 			{
-				ReportingBug?.Invoke(this, new BugEventArgs(ex, _user));
+				ReportingBug?.Invoke(this, new BugEventArgs(Application.ProductName, ex));
 			}
 		}
 		#endregion
@@ -586,7 +584,7 @@ namespace Furmanov.UI
 			}
 			catch (Exception ex)
 			{
-				ReportingBug?.Invoke(this, new BugEventArgs(ex, _user));
+				ReportingBug?.Invoke(this, new BugEventArgs(Application.ProductName, ex));
 			}
 		}
 
@@ -598,13 +596,19 @@ namespace Furmanov.UI
 			}
 			catch (Exception ex)
 			{
-				ReportingBug?.Invoke(this, new BugEventArgs(ex, _user));
+				ReportingBug?.Invoke(this, new BugEventArgs(Application.ProductName, ex));
 			}
 		}
 
 		private void ShowNoImplementedCode(object sender, ItemClickEventArgs e)
 		{
-			MessageService.Message("В реальном приложении здесь не очень интересный код");
+			MessageService.Message("В реальном приложении нам этой кнопке не очень интересный код.\n\n" +
+                   "Для демонстрации доступны следующие функции:\n" +
+                   "-Заполнение базы данных новыми записями;\n" +
+                   "-Тест отчёта о баге (желательно при запущенном приложении 'Bugs');\n" +
+                   "-Изменение месяца в пределах 2019г;\n" +
+				   "-Изменение дней выхода сотрудника на работу;\n" +
+                   "-Изменение данных по выплате зарплаты: штраф, премия и т.д");
 		}
 		private void MainView_FormClosed(object sender, FormClosedEventArgs e)
 		{
@@ -614,7 +618,7 @@ namespace Furmanov.UI
 			}
 			catch (Exception ex)
 			{
-				ReportingBug?.Invoke(this, new BugEventArgs(ex, _user));
+				ReportingBug?.Invoke(this, new BugEventArgs(Application.ProductName, ex));
 			}
 		}
 		private void btResetSettings_ItemClick(object sender, ItemClickEventArgs e)
@@ -630,7 +634,7 @@ namespace Furmanov.UI
 			}
 			catch (Exception ex)
 			{
-				ReportingBug?.Invoke(this, new BugEventArgs(ex, _user));
+				ReportingBug?.Invoke(this, new BugEventArgs(Application.ProductName, ex));
 			}
 		}
 		private void MenuUndo_PaintMenuBar(object sender, BarCustomDrawEventArgs e)
@@ -657,7 +661,7 @@ namespace Furmanov.UI
 			}
 			catch (Exception ex)
 			{
-				ReportingBug?.Invoke(this, new BugEventArgs(ex, _user));
+				ReportingBug?.Invoke(this, new BugEventArgs(Application.ProductName, ex));
 			}
 		}
 
@@ -679,7 +683,7 @@ namespace Furmanov.UI
 			}
 			catch (Exception ex)
 			{
-				ReportingBug?.Invoke(this, new BugEventArgs(ex, _user));
+				ReportingBug?.Invoke(this, new BugEventArgs(Application.ProductName, ex));
 			}
 		}
 		private void btOpenConfigFile_Click(object sender, EventArgs e)
@@ -700,7 +704,7 @@ namespace Furmanov.UI
 			}
 			catch (Exception ex)
 			{
-				ReportingBug?.Invoke(this, new BugEventArgs(ex, _user));
+				ReportingBug?.Invoke(this, new BugEventArgs(Application.ProductName, ex));
 			}
 		}
 
@@ -716,7 +720,7 @@ namespace Furmanov.UI
 			}
 			catch (Exception ex)
 			{
-				ReportingBug?.Invoke(this, new BugEventArgs(ex, _user));
+				ReportingBug?.Invoke(this, new BugEventArgs(Application.ProductName, ex));
 			}
 		}
 

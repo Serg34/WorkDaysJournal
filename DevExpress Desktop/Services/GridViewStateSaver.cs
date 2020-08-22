@@ -1,29 +1,40 @@
-﻿using DevExpress.XtraGrid.Columns;
+﻿using System;
+using DevExpress.XtraGrid.Columns;
 using DevExpress.XtraGrid.Views.Grid;
-using System;
+using Furmanov.Data.Data;
 
 namespace Furmanov.UI.Services
 {
 	public class GridViewStateSaver : IDisposable
 	{
 		private readonly GridView _gridView;
-		private readonly int _row;
+		private readonly int _focusedId;
 		private readonly GridColumn _col;
-		private int _top;
+		private readonly int _top;
 
 		public GridViewStateSaver(GridView gridView)
 		{
 			_gridView = gridView;
-			_row = _gridView.FocusedRowHandle;
+			if (gridView.GetFocusedRow() is Dto vm)
+			{
+				_focusedId = vm.Id;
+			}
 			_col = _gridView.FocusedColumn;
 			_top = _gridView.TopRowIndex;
 		}
 
 		public void Dispose()
 		{
-			if (_row < _gridView.RowCount - 1)
+			if (_focusedId > 0)
 			{
-				_gridView.FocusedRowHandle = _row;
+				for (int r = 0; r < _gridView.RowCount; r++)
+				{
+					if (_gridView.GetRow(r) is Dto vm && vm.Id == _focusedId)
+					{
+						_gridView.FocusedRowHandle = r;
+						break;
+					}
+				}
 			}
 
 			if (_gridView.Columns.Contains(_col))

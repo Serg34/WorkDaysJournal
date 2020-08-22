@@ -1,4 +1,5 @@
-﻿@using Furmanov.Data.Data
+﻿@using Furmanov.Controllers
+@using Furmanov.Data.Data
 @model Furmanov.MVP.MainView.MainViewModel
 
 @{
@@ -7,6 +8,93 @@
 
 @section Styles  {
     <link rel="stylesheet" href="~/css/main-view.css" />
+}
+
+@section TopMenu  {
+    <ul class="nav navbar-nav">
+        <li>
+            <a id="btRefillDataBase" class="btn btn-top-menu" href="~/@HomeController.Name/@nameof(HomeController.RefillDataBase)">
+                <img src="~/img/RefillDataBase.png" alt="RefillDataBase">
+                <h6>Сгенерировать<br />новые данные</h6>
+            </a>
+        </li>
+        <li>
+            <a id="btReportBugTest" class="btn btn-top-menu" href="~/@HomeController.Name/@nameof(HomeController.ReportBugTest)">
+                <img src="~/img/bug.png" alt="Баг">
+                <h6>Тест отчёта<br />о баге</h6>
+            </a>
+        </li>
+        <li class="li-separator"></li>
+        <li>
+            <button id="btAddUser" class="btn btn-top-menu" onclick="ShowNoImplementedCode()">
+                <img src="~/img/AddUser.png" alt="AddUser">
+                <h6>Добавить<br />сотрудника</h6>
+            </button>
+        </li>
+        <li>
+            <button id="btEditUser" class="btn btn-top-menu" onclick="ShowNoImplementedCode()" disabled>
+                <img src="~/img/EditUser.png" alt="EditUser">
+                <h6>Редактировать<br />сотрудника</h6>
+            </button>
+        </li>
+        <li>
+            <button id="btDeleteUser" class="btn btn-top-menu" onclick="ShowNoImplementedCode()" disabled>
+                <img src="~/img/DeleteUser.png" alt="DeleteUser">
+                <h6>Удалить<br />сотрудника</h6>
+            </button>
+        </li>
+        <li class="li-separator"></li>
+        <li style="margin: auto 10px">
+
+            @{
+                var month = new DateTime(Model.Year, Model.Month, 1).ToString("MMMM yyyy");
+            }
+
+            <div class="control-group">
+                <div class="controls input-append date edit_month" data-date="" data-date-format="MM yyyy" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
+                    <h6>
+                        Месяц
+                        <input class="text-center" style="width: 150px; cursor: pointer" size="16" type="text" value="@month" readonly>
+                        <span class="add-on"><i class="icon-th"></i></span>
+                        <input type="hidden" id="dtp_input2" value="" /><br />
+                    </h6>
+                </div>
+            </div>
+
+        </li>
+        <li class="li-separator"></li>
+        <li>
+            <button id="btOnlyWorkDays" class="btn btn-top-menu" onclick="SaveWorkedDays('false', 'true')" disabled>
+                <img src="~/img/OnlyWorkDays.png" alt="5/2">
+                <h6>5/2</h6>
+            </button>
+        </li>
+        <li>
+            <button id="btAllDays" class="btn btn-top-menu" onclick="SaveWorkedDays('true', 'true')" disabled>
+                <img src="~/img/AllDays.png" alt="Все дни">
+                <h6>Все дни</h6>
+            </button>
+        </li>
+        <li>
+            <button id="btNoDays" class="btn btn-top-menu" onclick="SaveWorkedDays('false', 'false')" disabled>
+                <img src="~/img/NoDays.png" alt="Удалить дни">
+                <h6>Удалить<br />дни</h6>
+            </button>
+        </li>
+        <li class="li-separator"></li>
+        <li>
+            <button id="btReportAll" class="btn btn-top-menu" onclick="ShowNoImplementedCode()">
+                <img src="~/img/ReportAll.png" alt="ReportAll">
+                <h6>Сводная<br />ведомость</h6>
+            </button>
+        </li>
+        <li>
+            <button id="btReport" class="btn btn-top-menu" onclick="ShowNoImplementedCode()" disabled>
+                <img src="~/img/Report.png" alt="Report">
+                <h6>Ведомость<br />по объекту</h6>
+            </button>
+        </li>
+    </ul>
 }
 
 <div class="row" style="margin: auto">
@@ -20,5 +108,16 @@
 </div>
 
 @section Scripts  {
+
+    <script type="text/javascript" src="~/js/bootstrap-datetimepicker.min.js" charset="UTF-8"></script>
+    <script type="text/javascript" src="~/js/locales/bootstrap-datetimepicker.ru.js" charset="UTF-8"></script>
     <script src="~/js/main-view.js"></script>
+    <script type="text/javascript">
+        $('.edit_month').datetimepicker({
+            language: 'ru',
+            autoclose: 1,
+            startView: 3,
+            minView: 3
+        }).on('changeDate', function (ev) { ChangeMonth(ev.date); });
+    </script>
 }

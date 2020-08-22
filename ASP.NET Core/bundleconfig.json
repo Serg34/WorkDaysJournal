@@ -11,9 +11,9 @@
     "sourceMap": true
   },
   {
-    "outputFileName": "wwwroot/css/datepicker.min.css",
+    "outputFileName": "wwwroot/css/bootstrap-datetimepicker.min.css",
     "inputFiles": [
-      "wwwroot/css/datepicker.css"
+      "wwwroot/css/bootstrap-datetimepicker.css"
     ]
   }
 ]

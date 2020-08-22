@@ -10,7 +10,7 @@ namespace Furmanov.MVP.MainView.UndoRedoCommands
 		{
 			_model = model;
 			_value = value;
-			_prevValue = Cloner.DeepCopy(value);
+			_prevValue = value.Clone();
 			_prevValue.IsWorked = !value.IsWorked;
 			Name = $"Изменение дня выхода для сотрудника '{_model.CurrentEmployeeName}'";
 		}
