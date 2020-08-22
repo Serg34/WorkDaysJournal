@@ -18,6 +18,12 @@ a {
     border-color: #1861ac;
 }
 
+.navbar-right {
+    float: right !important;
+    margin-right: 15px;
+    margin-left: auto;
+}
+
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
@@ -92,3 +98,7 @@ body {
         cursor: default;
         background-color: white;
     }
+
+.li-separator {
+    border-left: 1px solid rgb(200, 200, 200);
+}

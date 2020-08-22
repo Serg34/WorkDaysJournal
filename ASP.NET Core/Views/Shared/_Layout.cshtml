@@ -8,60 +8,145 @@
     <link rel="icon" type="image/png" href="~/favicon.png" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/datepicker.min.css" />
 
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
     <script src="https://use.fontawesome.com/56bf499e7e.js"></script>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/js/datepicker.min.js"></script>
+
     @RenderSection("Styles", required: false)
 </head>
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                @if (User.Identity.IsAuthenticated)
-                {
-                    <ul class="nav navbar-nav">
-                        <li>
-                            <button id="btOnlyWorkDays" class="btn btn-top-menu" onclick="SaveWorkedDays('false', 'true')" disabled>
-                                <img src="~/img/OnlyWorkDays.png" alt="5/2">
-                                <p>5/2</p>
-                            </button>
-                        </li>
-                        <li>
-                            <button id="btAllDays" class="btn btn-top-menu" onclick="SaveWorkedDays('true', 'true')" disabled>
-                                <img src="~/img/AllDays.png" alt="Все дни">
-                                <p>Все дни</p>
-                            </button>
-                        </li>
-                        <li>
-                            <button id="btNoDays" class="btn btn-top-menu" onclick="SaveWorkedDays('false', 'false')" disabled>
-                                <img src="~/img/NoDays.png" alt="Удалить дни">
-                                <p>Удалить дни</p>
-                            </button>
-                        </li>
-                        <li>
-                            <h4>
-                                @User.Identity.Name
-                            </h4>
-                        </li>
-                        <li><h4> | </h4></li>
-                        <li>
-                            <h4>
-                                <a class="text-danger" asp-controller="Account" asp-action="Logout">Выход</a>
-                            </h4>
-                        </li>
-                    </ul>
-                }
-                else
-                {
-                    <ul class="nav navbar-nav">
-                        <li>
-                            <h4>
-                                <a asp-controller="Account" asp-action="Login">Вход</a>
-                            </h4>
-                        </li>
-                    </ul>
-                }
-            </div>
+            @if (User.Identity.IsAuthenticated)
+            {
+                <ul class="nav navbar-nav">
+                    <li>
+                        <button id="btRefillDataBase" class="btn btn-top-menu" onclick="window.location.href='Home/RefillDataBase';">
+                            <img src="~/img/RefillDataBase.png" alt="RefillDataBase">
+                            <h6>Сгенерировать<br />новые данные</h6>
+                        </button>
+                    </li>
+                    <li>
+                        <button id="btReportBugTest" class="btn btn-top-menu" onclick="window.location.href='Home/ReportBugTest';">
+                            <img src="~/img/bug.png" alt="Баг">
+                            <h6>Тест отчёта<br />о баге</h6>
+                        </button>
+                    </li>
+                    <li class="li-separator"></li>
+                    <li>
+                        <button id="btAddUser" class="btn btn-top-menu" onclick="ShowNoImplementedCode()">
+                            <img src="~/img/AddUser.png" alt="AddUser">
+                            <h6>Добавить<br />сотрудника</h6>
+                        </button>
+                    </li>
+                    <li>
+                        <button id="btEditUser" class="btn btn-top-menu" onclick="ShowNoImplementedCode()" disabled>
+                            <img src="~/img/EditUser.png" alt="EditUser">
+                            <h6>Редактировать<br />сотрудника</h6>
+                        </button>
+                    </li>
+                    <li>
+                        <button id="btDeleteUser" class="btn btn-top-menu" onclick="ShowNoImplementedCode()" disabled>
+                            <img src="~/img/DeleteUser.png" alt="DeleteUser">
+                            <h6>Удалить<br />сотрудника</h6>
+                        </button>
+                    </li>
+                    <li class="li-separator"></li>
+                    <li style="margin: auto 10px">
+
+                        <h6>
+                            Месяц  
+                            <div class="control-group">
+                                <div class="controls input-append date edit_month" data-date="" data-date-format="MM yyyy" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
+                                    <input size="16" type="text" value="Январь 2019" readonly>
+                                    <span class="add-on"><i class="icon-th"></i></span>
+                                </div>
+                                <input type="hidden" id="dtp_input2" value="2020-07-01" /><br />
+                            </div>
+                        </h6>
+
+
+                        <h6>
+                            Месяц
+                            <input type="text"
+                                   id="deMonth"
+                                   class="datepicker-here text-center"
+                                   readonly
+                                   data-min-view="months"
+                                   data-view="months"
+                                   data-date-format="MM yyyy"
+                                   style="width: 150px" />
+                            <script>
+                                $('#deMonth').datepicker({
+                                    minDate: new Date(2019, 0, 1),
+                                    maxDate: new Date(2019, 11, 31),
+                                    autoClose: true
+                                });
+                            </script>
+                        </h6>
+                    </li>
+                    <li class="li-separator"></li>
+                    <li>
+                        <button id="btOnlyWorkDays" class="btn btn-top-menu" onclick="SaveWorkedDays('false', 'true')" disabled>
+                            <img src="~/img/OnlyWorkDays.png" alt="5/2">
+                            <h6>5/2</h6>
+                        </button>
+                    </li>
+                    <li>
+                        <button id="btAllDays" class="btn btn-top-menu" onclick="SaveWorkedDays('true', 'true')" disabled>
+                            <img src="~/img/AllDays.png" alt="Все дни">
+                            <h6>Все дни</h6>
+                        </button>
+                    </li>
+                    <li>
+                        <button id="btNoDays" class="btn btn-top-menu" onclick="SaveWorkedDays('false', 'false')" disabled>
+                            <img src="~/img/NoDays.png" alt="Удалить дни">
+                            <h6>Удалить<br />дни</h6>
+                        </button>
+                    </li>
+                    <li class="li-separator"></li>
+                    <li>
+                        <button id="btReportAll" class="btn btn-top-menu" onclick="ShowNoImplementedCode()">
+                            <img src="~/img/ReportAll.png" alt="ReportAll">
+                            <h6>Сводная<br />ведомость</h6>
+                        </button>
+                    </li>
+                    <li>
+                        <button id="btReport" class="btn btn-top-menu" onclick="ShowNoImplementedCode()" disabled>
+                            <img src="~/img/Report.png" alt="Report">
+                            <h6>Ведомость<br />по объекту</h6>
+                        </button>
+                    </li>
+                </ul>
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <h4>
+                            @User.Identity.Name
+                        </h4>
+                    </li>
+                    <li><h4> | </h4></li>
+                    <li>
+                        <h4>
+                            <a class="text-danger" asp-controller="Account" asp-action="Logout">Выход</a>
+                        </h4>
+                    </li>
+                </ul>
+            }
+            else
+            {
+                <ul class="nav navbar-nav">
+                    <li>
+                        <h4>
+                            <a asp-controller="Account" asp-action="Login">Вход</a>
+                        </h4>
+                    </li>
+                </ul>
+            }
         </nav>
     </header>
     <main role="main" class="pb-3">
@@ -73,9 +158,18 @@
             Furmanov &copy; 2020
         </div>
     </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @RenderSection("Scripts", required: false)
+    <script type="text/javascript">
+        $('.edit_month').datetimepicker({
+            language: 'ru',
+            todayBtn: 1,
+            autoclose: 1,
+            startView: 3,
+            minView: 3,
+            forceParse: 0
+        });
+    </script>
 </body>
 </html>

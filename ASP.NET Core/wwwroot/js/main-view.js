@@ -62,14 +62,20 @@ function SelectRow(rowId, tableId) {
     }
     selectRow.classList.add("selected");
 
+    var noPay = rowId.indexOf("Salary") < 0;
     var btOnlyWorkDays = document.getElementById("btOnlyWorkDays");
     var btAllDays = document.getElementById("btAllDays");
     var btNoDays = document.getElementById("btNoDays");
-    var noPay = rowId.indexOf("Salary") < 0;
+    var btEditUser = document.getElementById("btEditUser");
+    var btDeleteUser = document.getElementById("btDeleteUser");
+    var btReport = document.getElementById("btReport");
 
     btOnlyWorkDays.disabled =
         btAllDays.disabled =
-        btNoDays.disabled = noPay;
+        btNoDays.disabled =
+        btEditUser.disabled =
+        btDeleteUser.disabled =
+        btReport.disabled = noPay;
 
     var payId = rowId.replace("Salary_", "");
     GetWorkedDays(payId);

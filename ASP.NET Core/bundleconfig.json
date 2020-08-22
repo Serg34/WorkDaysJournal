@@ -9,5 +9,11 @@
       "renameLocals": true
     },
     "sourceMap": true
+  },
+  {
+    "outputFileName": "wwwroot/css/datepicker.min.css",
+    "inputFiles": [
+      "wwwroot/css/datepicker.css"
+    ]
   }
 ]
