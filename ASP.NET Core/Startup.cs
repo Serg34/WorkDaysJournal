@@ -13,6 +13,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System.Diagnostics;
 
 namespace Furmanov
 {
@@ -25,10 +26,9 @@ namespace Furmanov
 
 		public IConfiguration Configuration { get; }
 
-		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
 		{
-			services.AddSingleton<ExceptionService>();
+			//services.AddSingleton<ExceptionService>();
 
 			services.AddMvc().AddFluentValidation();
 			services.AddTransient<IValidator<SalaryPay>, SalaryPayValidator>();
@@ -36,18 +36,26 @@ namespace Furmanov
 			var connection = Configuration.GetConnectionString("DefaultConnection");
 			services.AddDbContext<UserContext>(options => options.UseSqlServer(connection));
 
-			// установка конфигурации подключения
 			services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-				.AddCookie(options => //CookieAuthenticationOptions
+				.AddCookie(options =>
 				{
 					options.LoginPath = new PathString("/Account/Login");
 				});
 			services.AddControllersWithViews();
 		}
 
-		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
 		{
+			app.Use(async (context, next) =>
+			{
+				var requestId = Activity.Current?.Id ?? context.TraceIdentifier;
+				if (!context.Request.Cookies.ContainsKey(ExceptionService.RequestKey))
+				{
+					context.Response.Cookies.Append(ExceptionService.RequestKey, requestId);
+				}
+				await next();
+			});
+
 #warning env.EnvironmentName = "Production";
 			env.EnvironmentName = "Production";
 
@@ -58,7 +66,6 @@ namespace Furmanov
 			else
 			{
 				app.UseExceptionHandler($"/{ExceptionController.Name}/{nameof(ExceptionController.ReportBug)}");
-				//The default HSTS value is 30 days.You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
 				app.UseHsts();
 			}
 

@@ -94,6 +94,29 @@ function GetSelectRow(tableId) {
     return "";
 }
 
+function RefillDataBase() {
+
+    var q = "Сгенерировать новые данные в базе данных?<br/><br/>" +
+        "Все текущие записи будут удалены.<br/><br/>" +
+        "Для отладки будут доступны три учётки:<br/>" +
+        "-'Admin';<br/>" +
+        "-'ProjectManager';<br/>" +
+        "-'Manager'<br/>" +
+        "с соответствующими ролями.<br/><br/>" +
+        "Пароль для любой учётки '1'";
+
+    var func = function () {
+        var url = "/Home/RefillDataBase";
+        try {
+            document.location.href = url;
+        } catch (e) {
+            ReportBug(url, e.name, e.message);
+        }
+    };
+
+    if (ShowQuestion(q, func));
+}
+
 function GetWorkedDays(payId) {
 
     var url = "/Home/_WorkedDays?payId=" + payId;
@@ -105,7 +128,7 @@ function GetWorkedDays(payId) {
             var tableWorkDays = document.getElementById("table-days-div");
             tableWorkDays.innerHTML = data;
         },
-        error: function (jqxhr, status, errorMsg) { ReportBug(jqxhr, status, errorMsg); }
+        error: function (jqxhr, status, errorMsg) { ReportBug(url, status, errorMsg); }
     });
 }
 
@@ -133,7 +156,7 @@ function ChangeMonth(month) {
             treeSalary.innerHTML = data;
             SelectRow(selectedRow, "tree-salary");
         },
-        error: function (jqxhr, status, errorMsg) { ReportBug(jqxhr, status, errorMsg); }
+        error: function (jqxhr, status, errorMsg) { ReportBug(url, status, errorMsg); }
     });
 }
 
@@ -162,7 +185,7 @@ function SaveWorkedDays(allDays, isExist) {
             treeSalary.innerHTML = data;
             SelectRow(selectedRow, "tree-salary");
         },
-        error: function(jqxhr, status, errorMsg) { ReportBug(jqxhr, status, errorMsg); }
+        error: function (jqxhr, status, errorMsg) { ReportBug(url, status, errorMsg); }
     });
 }
 
@@ -196,6 +219,6 @@ function SaveWorkedDay(payId, date, checkBox) {
             treeSalary.innerHTML = data;
             SelectRow(selectedRow, "tree-salary");
         },
-        error: function (jqxhr, status, errorMsg) { ReportBug(jqxhr, status, errorMsg); }
+        error: function (jqxhr, status, errorMsg) { ReportBug(url, status, errorMsg); }
     });
 }

@@ -1,17 +1,17 @@
-﻿using System.Security.Claims;
-using Furmanov.Data.Data;
+﻿using Furmanov.Data.Data;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace Furmanov.Models
 {
 	public class UserContext : DbContext
 	{
-		public DbSet<UserDto> User { get; set; }
+		private DbSet<UserDto> User { get; set; }
 		public UserContext(DbContextOptions<UserContext> options)
 			: base(options)
 		{
-			Database.EnsureCreated();
+			//Database.EnsureCreated();
 		}
 
 		public async Task<UserDto> GetUserAsync(ClaimsPrincipal user)

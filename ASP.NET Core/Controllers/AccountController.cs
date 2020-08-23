@@ -1,7 +1,9 @@
 ﻿using Furmanov.Data.Data;
 using Furmanov.Models;
+using Furmanov.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Security.Claims;
@@ -9,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace Furmanov.Controllers
 {
+	[ReportBug]
 	public class AccountController : Controller
 	{
 		private readonly UserContext _db;
@@ -50,7 +53,7 @@ namespace Furmanov.Controllers
 
 			const string nameType = ClaimsIdentity.DefaultNameClaimType;
 			const string roleType = ClaimsIdentity.DefaultRoleClaimType;
-			var id = new ClaimsIdentity(claims,"ApplicationCookie",nameType, roleType);
+			var id = new ClaimsIdentity(claims, "ApplicationCookie", nameType, roleType);
 
 			const string scheme = CookieAuthenticationDefaults.AuthenticationScheme;
 			var properties = new AuthenticationProperties

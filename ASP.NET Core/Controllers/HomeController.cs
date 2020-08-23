@@ -1,43 +1,35 @@
 ﻿using Furmanov.IoC;
 using Furmanov.Models;
 using Furmanov.Models.Home;
-using Furmanov.MVP;
 using Furmanov.MVP.MainView;
 using Furmanov.Services;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Diagnostics;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Data;
-using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis;
 
 namespace Furmanov.Controllers
 {
 	[Authorize]
-	//[ReportBug]
+	[ReportBug]
 	public class HomeController : Controller
 	{
 		private readonly ILogger<HomeController> _logger;
 		private readonly UserContext _db;
-		private readonly ExceptionService _exceptionService;
 		private readonly IMainModel _model;
 		private MainViewModel _mainViewModel;
 
 		public HomeController(IConfiguration config,
 			ILogger<HomeController> logger,
-			UserContext context,
-			ExceptionService exceptionService)
+			UserContext context)
 		{
 			_logger = logger;
 			_db = context;
-			_exceptionService = exceptionService;
 
 			var connectionString = config.GetConnectionString("DefaultConnection");
 			var resolver = IoCBuilder.Build(connectionString);
@@ -47,44 +39,34 @@ namespace Furmanov.Controllers
 		}
 
 		[HttpGet]
-		public async Task<IActionResult> Index()
+		public async Task<IActionResult> Index(string message = null)
 		{
 			await Authorize();
 			_model.Update();
-			var view = View(_mainViewModel);
-			return view;
+			ViewBag.Message = message;
+			return View(_mainViewModel);
 		}
 
-		[HttpPost]
-		public void RefillDataBase()
+		public IActionResult RefillDataBase()
 		{
-			_model.RefillDataBase();
+			//_model.RefillDataBase();
+			return RedirectToAction(nameof(Index), new { message = "Данные успешно сгенерированы" });
 		}
 		[HttpGet]
 		public IActionResult ReportBugTest()
 		{
-			try
-			{
-
-				var rnd = new Random();
-				var r = rnd.Next(1000);
-				if (r < 100) throw new ArgumentException("Test");
-				if (r < 200) throw new AggregateException("Test");
-				if (r < 300) throw new ApplicationException("Test");
-				if (r < 400) throw new ArgumentOutOfRangeException("Test");
-				if (r < 500) throw new COMException("Test");
-				if (r < 600) throw new BadImageFormatException("Test");
-				if (r < 700) throw new DataException("Test");
-				if (r < 800) throw new DuplicateWaitObjectException("Test");
-				if (r < 900) throw new DivideByZeroException("Test");
-				throw new Exception("Test");
-			}
-			catch (Exception ex)
-			{
-				_exceptionService.Exception = ex;
-				return RedirectToAction(nameof(ExceptionController.ReportBug),
-					ExceptionController.Name);
-			}
+			var rnd = new Random();
+			var r = rnd.Next(1000);
+			if (r < 100) throw new ArgumentException("Test");
+			if (r < 200) throw new AggregateException("Test");
+			if (r < 300) throw new ApplicationException("Test");
+			if (r < 400) throw new ArgumentOutOfRangeException("Test");
+			if (r < 500) throw new COMException("Test");
+			if (r < 600) throw new BadImageFormatException("Test");
+			if (r < 700) throw new DataException("Test");
+			if (r < 800) throw new DuplicateWaitObjectException("Test");
+			if (r < 900) throw new DivideByZeroException("Test");
+			throw new Exception("Test");
 		}
 		[HttpPost]
 		public async Task<IActionResult> ChangeMonth(string json)

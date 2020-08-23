@@ -1,5 +1,5 @@
-﻿using System.Runtime.Serialization;
-using Furmanov.Data.Data;
+﻿using Furmanov.Data.Data;
+using System.Runtime.Serialization;
 
 namespace Furmanov.Models.Home
 {

@@ -1,43 +1,65 @@
-﻿@model Furmanov.MVP.BugEventArgs
+﻿@using Furmanov.Controllers
+@model Furmanov.MVP.BugEventArgs
 
 @{
     ViewData["Title"] = "Ошибка";
 }
 
-@if (Model != null)
-{
-    var bug = Model.Bug;
-    var ex = Model.Exception;
+<div class="container">
 
-    <div class="container">
-
-        <h1 style="margin: 50px auto">Табель учёта рабочего времени</h1>
-
-
-        @if (bug.IsNew)
-        {
-            <h3 class="text-danger">Возникла неизвестная проблема</h3>
-            <h4>
-                Тип: @ex.GetType()?.Name<br />
-                @ex.Message<br /><br />
-                Все необходимые сведения уже отправлены разработчикам<br />
-                Сборка: @bug.Project<br />
-                Номер ошибки: @bug.Id<br />
-            </h4>
-        }
-        else
-        {
-            <h3 class="text-success">Возникла известная проблема</h3>
-            <h4>
-                Тип: @ex.GetType()?.Name<br />
-                @ex.Message<br /><br />
-                Сборка: @bug.Project<br />
-                Номер ошибки: @bug.Id<br />
-                Решение проблемы уже в работе.<br />
-                @(bug.SolvedDate != null ? $"Планируемая дата решения: {bug.SolvedDate:d}<br /><br />" : "")<br />
-                @bug.InfoToUser
-            </h4>
-        }
-
+    <div class="row" style="margin: 50px auto">
+        <div class="col-2">
+            <img src="~/img/app-icon.png" class="float-right" alt="Иконка">
+        </div>
+        <div>
+            <h1 class="display-4">Табель учёта рабочего времени</h1>
+        </div>
     </div>
-}
+
+    <div class="text-center">
+        @if (Model != null) //Ошибки из контроллеров с атрибутом [ReportBug]
+        {
+            var bug = Model.Bug;
+            var ex = Model.Exception;
+
+
+            @if (bug.IsNew)
+            {
+                <h3 class="text-danger">Возникла неизвестная проблема</h3>
+                <h4>
+                    Тип: @ex.GetType()?.Name<br />
+                    @ex.Message<br /><br />
+                    Все необходимые сведения уже отправлены разработчикам<br />
+                    Сборка: @bug.Project<br />
+                    Номер ошибки: @bug.Id<br />
+                </h4>
+            }
+            else
+            {
+                <h3 class="text-success">Возникла известная проблема</h3>
+                <h4>
+                    Тип: @ex.GetType()?.Name<br />
+                    @ex.Message<br /><br />
+                    Сборка: @bug.Project<br />
+                    Номер ошибки: @bug.Id<br />
+                    Решение проблемы уже в работе.<br />
+                    @(bug.SolvedDate != null ? $"Планируемая дата решения: {bug.SolvedDate:d}<br /><br />" : "")<br />
+                    @bug.InfoToUser
+                </h4>
+            }
+        }
+        else //ошибки из JavaScript
+        {
+            <h3 class="text-danger">Возникла непредвиденная ошибка</h3>
+            <h4>Url: @ViewBag.Path</h4>
+            <h4>Статус: @ViewBag.Status</h4>
+            <h4>Ошибка: @ViewBag.ErrorMsg</h4>
+        }
+        <br />
+        <h4>
+            <a asp-controller="@HomeController.Name" asp-action="@nameof(HomeController.Index)">
+                Вернуться на главную страницу
+            </a>
+        </h4>
+    </div>
+</div>

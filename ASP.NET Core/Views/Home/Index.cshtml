@@ -13,7 +13,7 @@
 @section TopMenu  {
     <ul class="nav navbar-nav">
         <li>
-            <a id="btRefillDataBase" class="btn btn-top-menu" href="~/@HomeController.Name/@nameof(HomeController.RefillDataBase)">
+            <a id="btRefillDataBase" class="btn btn-top-menu" onclick="RefillDataBase()">
                 <img src="~/img/RefillDataBase.png" alt="RefillDataBase">
                 <h6>Сгенерировать<br />новые данные</h6>
             </a>
@@ -111,7 +111,7 @@
 
     <script type="text/javascript" src="~/js/bootstrap-datetimepicker.min.js" charset="UTF-8"></script>
     <script type="text/javascript" src="~/js/locales/bootstrap-datetimepicker.ru.js" charset="UTF-8"></script>
-    <script src="~/js/main-view.js"></script>
+    <script type="text/javascript" src="~/js/main-view.js"></script>
     <script type="text/javascript">
         $('.edit_month').datetimepicker({
             language: 'ru',
