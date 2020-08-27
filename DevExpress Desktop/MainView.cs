@@ -203,7 +203,14 @@ namespace Furmanov.UI
 		}
 		private void BtWorkDaysOnly_ItemClick(object sender, ItemClickEventArgs e)
 		{
-			WorkDaysOnlyClick?.Invoke(this, _currentPay);
+			try
+			{
+				WorkDaysOnlyClick?.Invoke(this, _currentPay);
+			}
+			catch (Exception ex)
+			{
+				ReportingBug?.Invoke(this, new BugEventArgs(Application.ProductName, ex));
+			}
 		}
 		private void BtAllDays_ItemClick(object sender, ItemClickEventArgs e)
 		{
@@ -218,7 +225,14 @@ namespace Furmanov.UI
 		}
 		private void BtDeleteAllDays_ItemClick(object sender, ItemClickEventArgs e)
 		{
-			DeletingAllDays?.Invoke(this, _currentPay);
+			try
+			{
+				DeletingAllDays?.Invoke(this, _currentPay);
+			}
+			catch (Exception ex)
+			{
+				ReportingBug?.Invoke(this, new BugEventArgs(Application.ProductName, ex));
+			}
 		}
 		#endregion
 
@@ -603,12 +617,12 @@ namespace Furmanov.UI
 		private void ShowNoImplementedCode(object sender, ItemClickEventArgs e)
 		{
 			MessageService.Message("В реальном приложении нам этой кнопке не очень интересный код.\n\n" +
-                   "Для демонстрации доступны следующие функции:\n" +
-                   "-Заполнение базы данных новыми записями;\n" +
-                   "-Тест отчёта о баге (желательно при запущенном приложении 'Bugs');\n" +
-                   "-Изменение месяца в пределах 2019г;\n" +
+				   "Для демонстрации доступны следующие функции:\n" +
+				   "-Заполнение базы данных новыми записями;\n" +
+				   "-Тест отчёта о баге (желательно при запущенном приложении 'Bugs');\n" +
+				   "-Изменение месяца в пределах 2019г;\n" +
 				   "-Изменение дней выхода сотрудника на работу;\n" +
-                   "-Изменение данных по выплате зарплаты: штраф, премия и т.д");
+				   "-Изменение данных по выплате зарплаты: штраф, премия и т.д");
 		}
 		private void MainView_FormClosed(object sender, FormClosedEventArgs e)
 		{

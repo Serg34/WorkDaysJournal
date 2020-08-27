@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{EE6A2B8B-5C3E-496A-8200-CC232F06DD4F}</ProjectGuid>
+    <ProjectGuid>{0B960422-91EE-48FB-9FBD-C2F9372CD395}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>Furmanov.UI</RootNamespace>
     <AssemblyName>WorkDaysJournal</AssemblyName>
@@ -39,29 +39,32 @@
     <StartupObject>Furmanov.UI.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Autofac, Version=4.9.4.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
-      <HintPath>..\packages\Autofac.4.9.4\lib\net45\Autofac.dll</HintPath>
+    <Reference Include="Autofac, Version=5.2.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.5.2.0\lib\net461\Autofac.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.Data.v19.1, Version=19.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.PivotGrid.v19.1.Core, Version=19.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="DevExpress.Utils.v19.1, Version=19.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.XtraBars.v19.1, Version=19.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.XtraEditors.v19.1, Version=19.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.XtraGrid.v19.1, Version=19.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.XtraPivotGrid.v19.1, Version=19.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.XtraTreeList.v19.1, Version=19.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="FluentValidation, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7de548da2fbae0f0, processorArchitecture=MSIL">
-      <HintPath>..\packages\FluentValidation.8.5.0\lib\net45\FluentValidation.dll</HintPath>
+    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.1.1.0\lib\net461\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="ObjectListView">
+      <HintPath>.\ObjectListView.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.ComponentModel.Annotations, Version=4.2.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.ComponentModel.Annotations.4.4.1\lib\net461\System.ComponentModel.Annotations.dll</HintPath>
-    </Reference>
+    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.2\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.2\lib\netstandard2.0\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>
@@ -77,7 +80,7 @@
     <Compile Include="LoginView.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="LoginView.designer.cs">
+    <Compile Include="LoginView.Designer.cs">
       <DependentUpon>LoginView.cs</DependentUpon>
     </Compile>
     <Compile Include="MainView.cs">
@@ -88,11 +91,8 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\GridViewStateSaver.cs" />
-    <Compile Include="Services\LayoutSaver.cs" />
-    <Compile Include="Services\TreeListService.cs" />
+    <Compile Include="Services\DataGridViewService.cs" />
     <Compile Include="Services\TreeListStateSaver.cs" />
-    <Compile Include="Services\ValidateService.cs" />
     <EmbeddedResource Include="FrmReportBug.resx">
       <DependentUpon>FrmReportBug.cs</DependentUpon>
     </EmbeddedResource>
@@ -102,7 +102,6 @@
     <EmbeddedResource Include="MainView.resx">
       <DependentUpon>MainView.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -114,8 +113,7 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <None Include="packages.config" />
-    <None Include="Properties\DataSources\Furmanov.Dal.Dto.SalaryPayVisual.datasource" />
-    <None Include="Properties\DataSources\Furmanov.Dal.Dto.WorkedDayVisual.datasource" />
+    <None Include="Properties\DataSources\Furmanov.Data.Data.WorkedDay.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -130,27 +128,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\AddUser.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\EditUser.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\DeleteUser.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\undo.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\redo.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\RedoNoEnabled.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\UndoNoEnabled.png" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\Data\Data.csproj">
       <Project>{f0a6c913-5a13-4da9-97e2-e75d2f469ec9}</Project>
       <Name>Data</Name>
@@ -160,12 +137,27 @@
       <Name>MVP</Name>
     </ProjectReference>
     <ProjectReference Include="..\Services\Services.csproj">
-      <Project>{CDD99DBE-F76B-4988-A9E3-621963E46A82}</Project>
+      <Project>{cdd99dbe-f76b-4988-a9e3-621963e46a82}</Project>
       <Name>Services</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\AddUser.png" />
+  </ItemGroup>
+  <ItemGroup>
     <None Include="Resources\AllDays.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\cancel_32x32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\DeleteUser.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\EditUser.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Fsi.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\login.png" />
@@ -177,24 +169,35 @@
     <None Include="Resources\OnlyWorkDays.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\redo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\RedoNoEnabled.png" />
+  </ItemGroup>
+  <ItemGroup>
     <None Include="Resources\Report.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\ReportAll.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\ResetSettings.png" />
+  </ItemGroup>
+  <ItemGroup>
     <None Include="Resources\save.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="icon.ico" />
-    <None Include="Resources\security_bug.svg" />
-    <None Include="Resources\open.svg" />
-    <None Include="Resources\delete.svg" />
-    <None Include="Resources\cancel_32x32.png" />
-    <None Include="Resources\security_key.svg" />
-    <None Include="Resources\updatedataextract.svg" />
-    <None Include="Resources\ResetSettings.png" />
-    <None Include="Resources\Fsi.png" />
+    <None Include="Resources\undo.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\UndoNoEnabled.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="icon.ico" />
+    <Content Include="ObjectListView.dll" />
+    <None Include="Resources\bug.png" />
+    <None Include="Resources\RefillDataBase.png" />
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

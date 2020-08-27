@@ -109,7 +109,7 @@ namespace Furmanov.MVP.MainView
 			}
 			catch (Exception ex)
 			{
-				ReportBug(this, new BugEventArgs("", ex));
+				ReportBug(this, new BugEventArgs(AppName, ex));
 			}
 		}
 		#endregion
