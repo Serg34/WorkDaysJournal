@@ -69,12 +69,12 @@
 			this.btRefillDataBase = new System.Windows.Forms.Button();
 			this.mainMenu = new System.Windows.Forms.ToolStrip();
 			this.lblVersion = new System.Windows.Forms.ToolStripLabel();
+			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.btLogOut = new System.Windows.Forms.ToolStripButton();
 			this.btLogin = new System.Windows.Forms.ToolStripButton();
 			this.lblUser = new System.Windows.Forms.ToolStripLabel();
 			this.btUndo = new System.Windows.Forms.ToolStripSplitButton();
 			this.btRedo = new System.Windows.Forms.ToolStripSplitButton();
-			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
 			((System.ComponentModel.ISupportInitialize)(this.treeSalary)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.gvWorkedDays)).BeginInit();
 			this.topMenu.SuspendLayout();
@@ -279,9 +279,9 @@
 			this.topMenu.Controls.Add(this.separator3);
 			this.topMenu.Controls.Add(this.tableLayoutPanel1);
 			this.topMenu.Controls.Add(this.separator2);
-			this.topMenu.Controls.Add(this.btAddUser);
-			this.topMenu.Controls.Add(this.btEditUser);
 			this.topMenu.Controls.Add(this.btDeleteUser);
+			this.topMenu.Controls.Add(this.btEditUser);
+			this.topMenu.Controls.Add(this.btAddUser);
 			this.topMenu.Controls.Add(this.separator1);
 			this.topMenu.Controls.Add(this.btReportBugTest);
 			this.topMenu.Controls.Add(this.btRefillDataBase);
@@ -508,11 +508,11 @@
 			this.btAddUser.FlatAppearance.BorderSize = 0;
 			this.btAddUser.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.btAddUser.Image = global::Furmanov.UI.Properties.Resources.AddUser;
-			this.btAddUser.Location = new System.Drawing.Point(419, 0);
+			this.btAddUser.Location = new System.Drawing.Point(223, 0);
 			this.btAddUser.Name = "btAddUser";
 			this.btAddUser.Size = new System.Drawing.Size(98, 90);
 			this.btAddUser.TabIndex = 0;
-			this.btAddUser.Text = "Удалить\r\nсотрудника";
+			this.btAddUser.Text = "Создать\r\nсотрудника";
 			this.btAddUser.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
 			this.btAddUser.UseVisualStyleBackColor = true;
 			this.btAddUser.Click += new System.EventHandler(this.ShowNoImplementedCode);
@@ -544,11 +544,11 @@
 			this.btDeleteUser.FlatAppearance.BorderSize = 0;
 			this.btDeleteUser.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.btDeleteUser.Image = global::Furmanov.UI.Properties.Resources.DeleteUser;
-			this.btDeleteUser.Location = new System.Drawing.Point(223, 0);
+			this.btDeleteUser.Location = new System.Drawing.Point(419, 0);
 			this.btDeleteUser.Name = "btDeleteUser";
 			this.btDeleteUser.Size = new System.Drawing.Size(98, 90);
 			this.btDeleteUser.TabIndex = 2;
-			this.btDeleteUser.Text = "Создать\r\nсотрудника";
+			this.btDeleteUser.Text = "Удалить\r\nсотрудника";
 			this.btDeleteUser.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
 			this.btDeleteUser.UseVisualStyleBackColor = true;
 			this.btDeleteUser.Click += new System.EventHandler(this.ShowNoImplementedCode);
@@ -620,6 +620,12 @@
 			this.lblVersion.Size = new System.Drawing.Size(82, 22);
 			this.lblVersion.Text = "Версия 1.0.0.0";
 			// 
+			// toolStripSeparator1
+			// 
+			this.toolStripSeparator1.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+			this.toolStripSeparator1.Name = "toolStripSeparator1";
+			this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+			// 
 			// btLogOut
 			// 
 			this.btLogOut.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
@@ -664,12 +670,6 @@
 			this.btRedo.Name = "btRedo";
 			this.btRedo.Size = new System.Drawing.Size(32, 22);
 			this.btRedo.Text = "toolStripSplitButton2";
-			// 
-			// toolStripSeparator1
-			// 
-			this.toolStripSeparator1.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-			this.toolStripSeparator1.Name = "toolStripSeparator1";
-			this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
 			// 
 			// MainView
 			// 
